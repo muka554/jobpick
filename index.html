@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<!--
+  © 2026 UAE Job Hub. All rights reserved.
+  This page's design, layout, source code, and compilation of links are the
+  property of the site owner. No part of this page may be copied, scraped,
+  reproduced, or redistributed, in whole or in part, without prior written
+  permission. Unauthorized reproduction may be pursued under applicable
+  copyright law (including DMCA takedown where hosted in the US).
+  Contact: wiz.mkawe@gmail.com
+-->
+<html lang="en">
+<head>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6874304698042148"
+     crossorigin="anonymous"></script><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAE Job Hub — Search Every Board at Once</title>
+<meta name="description" content="Search Bayt, LinkedIn, Indeed, GulfTalent, Naukrigulf, Dubizzle and 15+ other UAE job platforms from one departure-board style page.">
+<meta name="copyright" content="© 2026 UAE Job Hub. All rights reserved.">
+<meta name="author" content="UAE Job Hub">
+<meta property="og:title" content="UAE Job Hub — Departures">
+<meta property="og:description" content="One search, 20 UAE & Gulf job platforms. No login, no scraping — just fast links to real results.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230D1016'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%23FFB020' font-family='monospace' font-weight='bold'%3E%E2%9C%88%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0D1016;
+    --panel: #151923;
+    --board: #10141B;
+    --amber: #FFB020;
+    --teal: #33A896;
+    --red: #E2574C;
+    --gray-dot: #5B6270;
+    --ink: #ECE8DE;
+    --ink-dim: #8B93A3;
+    --line: #262C39;
+  }
+  *{ box-sizing:border-box; }
+  body{ -webkit-user-select:none; -moz-user-select:none; user-select:none; }
+  input, textarea, select{ -webkit-user-select:text; -moz-user-select:text; user-select:text; }
+  html,body{ margin:0; padding:0; background:var(--bg); }
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:28px 14px 60px;
+  }
+  .wrap{ width:100%; max-width:940px; }
+
+  .sitenav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:16px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--line);
+  }
+  .sitenav .brand{
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    font-size:15px;
+    color:var(--amber);
+    text-decoration:none;
+  }
+  .sitenav .links{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    font-family:'Barlow Condensed', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    font-size:12.5px;
+  }
+  .sitenav .links a{
+    color:var(--ink-dim);
+    text-decoration:none;
+  }
+  .sitenav .links a:hover, .sitenav .links a[aria-current="page"]{ color:var(--amber); }
+
+  .eyebrow{
+    font-family:'Barlow Condensed', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    font-size:12px;
+    color:var(--amber);
+    font-weight:600;
+  }
+
+  header.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:14px;
+    border-bottom:2px solid var(--line);
+    padding-bottom:18px;
+    margin-bottom:20px;
+  }
+  h1{
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:700;
+    font-size:44px;
+    letter-spacing:.01em;
+    margin:4px 0 0;
+    line-height:.95;
+  }
+  h1 span{ color:var(--amber); }
+  .sub{
+    color:var(--ink-dim);
+    font-size:14.5px;
+    max-width:460px;
+    margin-top:8px;
+    line-height:1.5;
+  }
+  .clockbox{
+    text-align:right;
+    font-family:'Space Mono', monospace;
+  }
+  .clockbox .time{
+    font-size:30px;
+    color:var(--amber);
+    letter-spacing:.03em;
+  }
+  .clockbox .zone{
+    font-size:11px;
+    color:var(--ink-dim);
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+
+  .searchpanel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:18px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    margin-bottom:14px;
+  }
+  .field{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+  }
+  .field label{
+    font-family:'Barlow Condensed', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:11px;
+    color:var(--ink-dim);
+  }
+  #role{
+    background:var(--board);
+    border:1px solid var(--line);
+    color:var(--ink);
+    font-family:'Space Mono', monospace;
+    font-size:16px;
+    padding:11px 12px;
+    border-radius:4px;
+    width:260px;
+    outline:none;
+  }
+  #role:focus{ border-color:var(--amber); }
+  #city{
+    background:var(--board);
+    border:1px solid var(--line);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-size:14px;
+    padding:11px 10px;
+    border-radius:4px;
+    outline:none;
+  }
+  .go{
+    background:var(--amber);
+    color:#1A1300;
+    border:none;
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    font-size:15px;
+    padding:12px 22px;
+    border-radius:4px;
+    cursor:pointer;
+    transition:filter .15s ease, transform .1s ease;
+  }
+  .go:hover{ filter:brightness(1.08); }
+  .go:active{ transform:translateY(1px); }
+  .hint{
+    width:100%;
+    font-size:12px;
+    color:var(--ink-dim);
+    margin-top:-2px;
+  }
+
+  .legend{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    font-size:11.5px;
+    color:var(--ink-dim);
+    margin-bottom:20px;
+    padding:0 2px;
+  }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .legend .sw{ width:8px; height:8px; border-radius:50%; display:inline-block; }
+
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+  .skip-link{
+    position:absolute; left:8px; top:-48px;
+    background:var(--amber); color:#1A1300;
+    padding:10px 14px; border-radius:4px;
+    font-family:'Barlow Condensed', sans-serif; font-weight:700;
+    text-decoration:none; z-index:100; transition:top .15s ease;
+  }
+  .skip-link:focus{ top:8px; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+    outline:3px solid var(--amber);
+    outline-offset:2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .marker .dot{ animation:none !important; }
+    *{ scroll-behavior:auto !important; }
+  }
+
+  .ad-slot{
+    background:var(--panel);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    padding:12px;
+    margin:22px 2px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+  }
+  .ad-slot .ad-label{
+    font-family:'Barlow Condensed', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:10.5px;
+    color:var(--ink-dim);
+    align-self:flex-start;
+  }
+  .ad-slot .ad-body{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:90px;
+    overflow:hidden;
+    border-radius:4px;
+  }
+  .ad-slot--leaderboard .ad-body{ max-width:728px; }
+  .ad-slot--native{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .groupbar{
+    font-family:'Barlow Condensed', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    font-size:12px;
+    color:var(--amber);
+    font-weight:600;
+    margin:26px 2px 8px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+  }
+  .groupbar span.count{ color:var(--ink-dim); letter-spacing:.06em; }
+  .wrap > .groupbar:first-of-type{ margin-top:6px; }
+
+  .boardhead{
+    display:grid;
+    grid-template-columns:64px 1fr 130px 92px;
+    gap:10px;
+    padding:0 14px 8px;
+    font-family:'Barlow Condensed', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:11px;
+    color:var(--ink-dim);
+  }
+  .boardhead .r{ text-align:right; }
+
+  .board{
+    background:var(--board);
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .row{
+    display:grid;
+    grid-template-columns:64px 1fr 130px 92px;
+    gap:10px;
+    align-items:center;
+    padding:13px 14px;
+    border-bottom:1px solid var(--line);
+  }
+  .row:last-child{ border-bottom:none; }
+  .row:hover{ background:rgba(255,176,32,0.04); }
+
+  .code{
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:15px;
+    color:var(--amber);
+  }
+  .dest{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    min-width:0;
+  }
+  .dest .name{
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:600;
+    font-size:17px;
+    letter-spacing:.02em;
+  }
+  .flap{
+    font-family:'Space Mono', monospace;
+    font-size:12.5px;
+    color:var(--teal);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .tag{
+    font-family:'Barlow Condensed', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    font-size:12px;
+    color:var(--ink-dim);
+  }
+  .status{
+    text-align:right;
+  }
+  .status a{
+    display:inline-block;
+    font-family:'Barlow Condensed', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    font-weight:600;
+    font-size:13px;
+    color:var(--bg);
+    padding:7px 12px;
+    border-radius:3px;
+    text-decoration:none;
+    transition:filter .15s ease;
+  }
+  .status a:hover{ filter:brightness(1.12); }
+  .status a.t-direct{ background:var(--teal); }
+  .status a.t-google{ background:var(--amber); }
+  .status a.t-portal{ background:var(--gray-dot); color:var(--ink); }
+  .status a.t-ad{ background:var(--red); color:var(--ink); }
+
+  .status .marker{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-family:'Space Mono', monospace;
+    font-size:10px;
+    letter-spacing:.04em;
+  }
+  .marker .dot{ width:6px; height:6px; border-radius:50%; }
+  .marker.m-direct .dot{ background:var(--teal); animation:pulse 1.6s infinite ease-in-out; }
+  .marker.m-google .dot{ background:var(--amber); }
+  .marker.m-portal .dot{ background:var(--gray-dot); }
+  .marker.m-direct{ color:var(--teal); }
+  .marker.m-google{ color:var(--amber); }
+  .marker.m-portal{ color:var(--gray-dot); }
+  .marker.m-ad .dot{ background:var(--red); }
+  .marker.m-ad{ color:var(--red); }
+  .row--ad{
+    background:rgba(226,87,76,0.06);
+    border-left:3px solid var(--red);
+  }
+  .row--ad .name::after{
+    content:'Sponsored — third-party link, not a job listing';
+    display:block;
+    font-family:'Inter', sans-serif;
+    font-weight:400;
+    font-size:11.5px;
+    color:var(--ink-dim);
+    margin-top:2px;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:1; } 50%{ opacity:.25; }
+  }
+
+  footer{
+    margin-top:26px;
+    font-size:12px;
+    color:var(--ink-dim);
+    line-height:1.6;
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
+  footer b{ color:var(--ink); }
+  footer p{ margin:0 0 10px; }
+
+  @media (max-width:560px){
+    h1{ font-size:32px; }
+    .boardhead{ display:none; }
+    .row{
+      grid-template-columns:1fr;
+      gap:8px;
+      position:relative;
+      padding:14px 14px 16px;
+    }
+    .code{ position:absolute; top:14px; right:14px; }
+    .status{ text-align:left; }
+    #role{ width:100%; }
+    .searchpanel{ flex-direction:column; align-items:stretch; }
+    .go{ align-self:stretch; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#boardhost">Skip to job board links</a>
+<div class="wrap">
+
+  <nav class="sitenav" aria-label="Site">
+    <a class="brand" href="index.html">UAE JOB HUB</a>
+    <div class="links">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="about.html">About</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-of-use.html">Terms of Use</a>
+      <a href="advertising-disclosure.html">Advertising</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <header class="top">
+    <div>
+      <div class="eyebrow">Departures · Every UAE Job Board</div>
+      <h1>UAE JOB <span>HUB</span></h1>
+      <div class="sub">One search, 20 platforms across general boards, Gulf specialists, recruitment agencies, classifieds and Emiratisation programmes.</div>
+    </div>
+    <div class="clockbox">
+      <div class="time" id="clock">--:--:--</div>
+      <div class="zone">Gulf Standard Time</div>
+    </div>
+  </header>
+
+  <div class="searchpanel">
+    <div class="field">
+      <label for="role">Role / keyword</label>
+      <input id="role" type="text" placeholder="e.g. accountant, software engineer" value="" aria-describedby="searchHint">
+    </div>
+    <div class="field">
+      <label for="city">City</label>
+      <select id="city">
+        <option value="any">Any city, UAE</option>
+        <option value="dubai">Dubai</option>
+        <option value="abudhabi">Abu Dhabi</option>
+        <option value="sharjah">Sharjah</option>
+      </select>
+    </div>
+    <button class="go" id="goBtn">Search all boards</button>
+    <div class="hint" id="searchHint">Board updates below as you search — press Enter or tap a row's link any time.</div>
+  </div>
+
+  <p id="searchStatus" class="sr-only" role="status" aria-live="polite"></p>
+
+  <fieldset class="legend" style="border:0; padding:0; margin-left:0; margin-right:0;">
+    <legend class="sr-only">Link type key</legend>
+    <span><i class="sw" style="background:var(--teal)" aria-hidden="true"></i>Direct search on the platform</span>
+    <span><i class="sw" style="background:var(--amber)" aria-hidden="true"></i>Via Google (platform has no public search link)</span>
+    <span><i class="sw" style="background:var(--gray-dot)" aria-hidden="true"></i>Portal — browse after login/registration</span>
+  </fieldset>
+
+  <!-- Top leaderboard ad -->
+  <div class="ad-slot ad-slot--leaderboard" role="complementary" aria-label="Advertisement">
+    <span class="ad-label">Advertisement</span>
+    <div class="ad-body">
+      <ins class="adsbygoogle"
+           style="display:block; width:100%;"
+           data-ad-client="ca-pub-6874304698042148"
+           data-ad-slot="6351608708"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+  </div>
+  <script>
+    try{ (window.adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+  </script>
+
+  <div id="boardhost"></div>
+
+  <!-- Bottom banner ad -->
+  <div class="ad-slot ad-slot--leaderboard" role="complementary" aria-label="Advertisement">
+    <span class="ad-label">Advertisement</span>
+    <div class="ad-body">
+      <ins class="adsbygoogle"
+           style="display:block; width:100%;"
+           data-ad-client="ca-pub-6874304698042148"
+           data-ad-slot="9250797882"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+  </div>
+  <script>
+    try{ (window.adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+  </script>
+
+  <footer>
+    <p><b>How this works:</b> nothing is scraped or stored. Most rows build a direct search link to that platform's own site using your keyword and open it in a new tab. A few recruitment agencies and niche boards don't expose a public search URL, so those rows route through a Google site-search instead — same destination, just built differently. Government/Emiratisation programmes require your own login, so they link straight to the portal.</p>
+    <p>This page is a static, self-contained HTML file — free to host anywhere (GitHub Pages, Netlify, your own server) or open locally. It calls no backend and stores nothing about you.</p>
+    <p style="margin-top:14px; padding-top:14px; border-top:1px solid var(--line); color:var(--ink-dim);">© 2026 UAE Job Hub. All rights reserved. This page's design and code may not be copied or redistributed without permission.</p>
+    <p style="display:flex; gap:14px; flex-wrap:wrap; font-family:'Barlow Condensed', sans-serif; text-transform:uppercase; letter-spacing:.06em; font-size:12px;">
+      <a href="about.html" style="color:var(--ink-dim);">About</a>
+      <a href="privacy-policy.html" style="color:var(--ink-dim);">Privacy Policy</a>
+      <a href="terms-of-use.html" style="color:var(--ink-dim);">Terms of Use</a>
+      <a href="advertising-disclosure.html" style="color:var(--ink-dim);">Advertising Disclosure</a>
+      <a href="contact.html" style="color:var(--ink-dim);">Contact</a>
+    </p>
+  </footer>
+</div>
+
+<script>
+const GROUPS = [
+  {
+    title: 'General & Global Boards',
+    items: [
+      { code:'AD', name:'Advertisement', gate:'Sponsored', type:'ad',
+        url:'https://www.effectivecpmnetwork.com/b81p27gi?key=20b31018c96d590e78172296d7141e1b' },
+      { code:'BYT', name:'Bayt.com', gate:'General · MENA', type:'direct',
+        build:(q,slug,city,cityName)=>`https://www.bayt.com/en/uae/jobs/?keyword=${q}` },
+      { code:'LKD', name:'LinkedIn Jobs', gate:'General · Global', type:'direct',
+        build:(q,slug,city,cityName)=>`https://www.linkedin.com/jobs/search/?keywords=${q}&location=${encodeURIComponent((cityName?cityName+', ':'')+'United Arab Emirates')}` },
+      { code:'IND', name:'Indeed UAE', gate:'General · Global', type:'direct',
+        build:(q,slug,city,cityName)=>`https://ae.indeed.com/jobs?q=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
+      { code:'GGL', name:'Google for Jobs', gate:'Aggregator', type:'direct',
+        build:(q,slug,city,cityName)=>`https://www.google.com/search?q=${q}+jobs+in+${encodeURIComponent(cityName||'United Arab Emirates')}&ibp=htl;jobs` },
+      { code:'GLD', name:'Glassdoor', gate:'General · Global', type:'google', domain:'glassdoor.com' },
+      { code:'CJT', name:'CareerJet UAE', gate:'Aggregator', type:'direct',
+        build:(q,slug,city,cityName)=>`https://www.careerjet.ae/jobs?s=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
+      { code:'TLC', name:'Talent.com UAE', gate:'Aggregator', type:'direct',
+        build:(q,slug,city,cityName)=>`https://ae.talent.com/jobs?k=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
+    ]
+  },
+  {
+    title: 'Gulf Specialist Boards',
+    items: [
+      { code:'GLF', name:'GulfTalent', gate:'Gulf specialist', type:'direct',
+        build:(q,slug)=>`https://www.gulftalent.com/uae/jobs/title/${slug}` },
+      { code:'NKG', name:'Naukrigulf', gate:'Gulf specialist', type:'direct',
+        build:(q,slug)=>`https://www.naukrigulf.com/${slug}-jobs-in-uae` },
+      { code:'FND', name:'foundit Gulf (Monster)', gate:'Gulf specialist', type:'direct',
+        build:(q,slug)=>`https://www.founditgulf.com/search/${slug}-jobs` },
+      { code:'LMN', name:'Laimoon', gate:'Gulf specialist', type:'google', domain:'laimoon.com' },
+      { code:'AKB', name:'Akhtaboot', gate:'Gulf · Levant', type:'google', domain:'akhtaboot.com' },
+      { code:'RGZ', name:'Rigzone', gate:'Energy · Oil & Gas', type:'google', domain:'rigzone.com' },
+    ]
+  },
+  {
+    title: 'Recruitment Agencies',
+    items: [
+      { code:'MPG', name:'Michael Page UAE', gate:'Professional · Exec', type:'google', domain:'michaelpage.ae' },
+      { code:'RHF', name:'Robert Half UAE', gate:'Professional · Finance', type:'google', domain:'roberthalf.ae' },
+      { code:'HYS', name:'Hays Gulf', gate:'Professional · Multi', type:'google', domain:'hays.ae' },
+      { code:'CHH', name:'Charterhouse ME', gate:'Professional · Multi', type:'google', domain:'charterhouse.ae' },
+    ]
+  },
+  {
+    title: 'Classifieds',
+    items: [
+      { code:'DBZ', name:'Dubizzle Jobs', gate:'Classifieds', type:'direct',
+        build:(q)=>`https://dubai.dubizzle.com/jobs/search/?keywords=${q}` },
+    ]
+  },
+  {
+    title: 'Government & Emiratisation',
+    items: [
+      { code:'NFS', name:'Nafis', gate:'UAE Nationals · login req.', type:'portal',
+        url:'https://nafis.gov.ae/en/' },
+      { code:'UAE', name:'U.AE — Job Portals Guide', gate:'Government guidance', type:'portal',
+        url:'https://u.ae/en/information-and-services/jobs/searching-for-a-job/register-on-job-portals' },
+    ]
+  },
+];
+
+const CITY_NAMES = { any:'', dubai:'Dubai', abudhabi:'Abu Dhabi', sharjah:'Sharjah' };
+const FLAP_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/·-';
+
+function slugify(str){
+  return str.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') || 'jobs';
+}
+
+const host = document.getElementById('boardhost');
+let rowIndex = 0;
+const rowMap = [];
+
+function renderBoard(){
+  host.innerHTML = '';
+  rowIndex = 0;
+  rowMap.length = 0;
+
+  GROUPS.forEach(group => {
+    const bar = document.createElement('h2');
+    bar.className = 'groupbar';
+    bar.innerHTML = `<span>${group.title}</span><span class="count">${group.items.length} board${group.items.length>1?'s':''}</span>`;
+    host.appendChild(bar);
+
+    const head = document.createElement('div');
+    head.className = 'boardhead';
+    head.setAttribute('aria-hidden', 'true');
+    head.innerHTML = `<div>Code</div><div>Destination</div><div>Gate</div><div class="r">Status</div>`;
+    host.appendChild(head);
+
+    const boardEl = document.createElement('div');
+    boardEl.className = 'board';
+    boardEl.setAttribute('role', 'list');
+    boardEl.setAttribute('aria-label', group.title + ' links');
+
+    group.items.forEach(item => {
+      const i = rowIndex++;
+      rowMap.push(item);
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.setAttribute('role', 'listitem');
+
+      const methodWord = item.type === 'direct' ? 'direct search' : item.type === 'google' ? 'Google search' : 'portal';
+
+      let statusHtml;
+      if(item.type === 'ad'){
+        row.classList.add('row--ad');
+        row.id = 'ad-row';
+        statusHtml = `
+          <span class="marker m-ad" aria-hidden="true"><span class="dot"></span>SPONSORED</span><br>
+          <a class="t-ad" id="ad-bayt-row" href="${item.url}" target="_blank" rel="noopener sponsored"
+             aria-label="Advertisement (opens in new tab, external sponsored link)">Advertisement →</a>`;
+      } else if(item.type === 'portal'){
+        statusHtml = `
+          <span class="marker m-portal" aria-hidden="true"><span class="dot"></span>PORTAL</span><br>
+          <a class="t-portal" href="${item.url}" target="_blank" rel="noopener"
+             aria-label="Visit ${item.name} (${methodWord}, opens in new tab)">Visit →</a>`;
+      } else {
+        const markerClass = item.type === 'direct' ? 'm-direct' : 'm-google';
+        const markerLabel = item.type === 'direct' ? 'LIVE' : 'VIA GOOGLE';
+        const linkClass = item.type === 'direct' ? 't-direct' : 't-google';
+        statusHtml = `
+          <span class="marker ${markerClass}" aria-hidden="true"><span class="dot"></span>${markerLabel}</span><br>
+          <a class="${linkClass}" href="#" target="_blank" rel="noopener" id="link-${i}"
+             aria-label="Search ${item.name} (${methodWord}, opens in new tab)">Open →</a>`;
+      }
+
+      row.innerHTML = `
+        <div class="code" aria-hidden="true">${item.code}</div>
+        <div class="dest">
+          <div class="name">${item.name}</div>
+          <div class="flap" id="flap-${i}" aria-hidden="true">${item.type === 'ad' ? 'THIRD-PARTY OFFER' : 'SEARCH · UAE'}</div>
+        </div>
+        <div class="tag">${item.gate}</div>
+        <div class="status">${statusHtml}</div>
+      `;
+      boardEl.appendChild(row);
+    });
+
+    host.appendChild(boardEl);
+
+    if(group.title === 'Gulf Specialist Boards'){
+      const adSlot = document.createElement('div');
+      adSlot.className = 'ad-slot ad-slot--native';
+      adSlot.setAttribute('role', 'complementary');
+      adSlot.setAttribute('aria-label', 'Advertisement');
+      adSlot.innerHTML = `
+        <span class="ad-label">Advertisement</span>
+        <div class="ad-body">
+          <ins class="adsbygoogle"
+               style="display:block; width:100%;"
+               data-ad-client="ca-pub-6874304698042148"
+               data-ad-slot="5258018884"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>`;
+      host.appendChild(adSlot);
+      try{
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      }catch(e){ /* ad blocked or client/slot ID not yet configured */ }
+    }
+  });
+}
+renderBoard();
+
+const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function flapTo(el, target, delay){
+  if(prefersReducedMotion){
+    el.textContent = target;
+    el.dataset.current = target;
+    return;
+  }
+  const from = el.dataset.current || '';
+  const len = Math.max(from.length, target.length);
+  let frame = 0;
+  const totalFrames = 8;
+  clearInterval(el._flapTimer);
+  setTimeout(() => {
+    el._flapTimer = setInterval(() => {
+      frame++;
+      if(frame >= totalFrames){
+        el.textContent = target;
+        el.dataset.current = target;
+        clearInterval(el._flapTimer);
+        return;
+      }
+      let out = '';
+      for(let c = 0; c < len; c++){
+        if(c < target.length && Math.random() < frame/totalFrames){
+          out += target[c];
+        } else {
+          out += FLAP_CHARS[Math.floor(Math.random()*FLAP_CHARS.length)];
+        }
+      }
+      el.textContent = out;
+    }, 35);
+  }, delay);
+}
+
+function buildGoogleSite(domain, q, cityName){
+  return `https://www.google.com/search?q=site:${domain}+${q}+jobs+${encodeURIComponent(cityName||'UAE')}`;
+}
+
+function runSearch(){
+  const roleRaw = document.getElementById('role').value.trim() || 'jobs';
+  const cityKey = document.getElementById('city').value;
+  const cityName = CITY_NAMES[cityKey];
+  const q = encodeURIComponent(roleRaw);
+  const slug = slugify(roleRaw);
+
+  rowMap.forEach((item, i) => {
+    if(item.type === 'portal' || item.type === 'ad') return;
+    const url = item.type === 'direct'
+      ? item.build(q, slug, cityKey, cityName)
+      : buildGoogleSite(item.domain, q, cityName);
+    const link = document.getElementById(`link-${i}`);
+    const methodWord = item.type === 'direct' ? 'direct search' : 'Google search';
+    if(link){
+      link.href = url;
+      link.setAttribute('aria-label', `Search ${item.name} for ${roleRaw}${cityName ? ' in '+cityName : ''} (${methodWord}, opens in new tab)`);
+    }
+    const flapEl = document.getElementById(`flap-${i}`);
+    const label = (roleRaw.toUpperCase()) + (cityName ? ' · ' + cityName.toUpperCase() : ' · UAE');
+    if(flapEl) flapTo(flapEl, label, i * 45);
+  });
+
+  const statusEl = document.getElementById('searchStatus');
+  if(statusEl){
+    statusEl.textContent = `Links updated for "${roleRaw}"${cityName ? ' in ' + cityName : ' across the UAE'}.`;
+  }
+}
+
+document.getElementById('goBtn').addEventListener('click', runSearch);
+document.getElementById('role').addEventListener('keydown', e => {
+  if(e.key === 'Enter') runSearch();
+});
+document.getElementById('city').addEventListener('change', () => {
+  if(document.getElementById('role').value.trim()) runSearch();
+});
+
+runSearch();
+function tick(){
+  const now = new Date();
+  const gst = new Date(now.getTime() + (now.getTimezoneOffset()*60000) + (4*3600000));
+  const hh = String(gst.getHours()).padStart(2,'0');
+  const mm = String(gst.getMinutes()).padStart(2,'0');
+  const ss = String(gst.getSeconds()).padStart(2,'0');
+  document.getElementById('clock').textContent = `${hh}:${mm}:${ss}`;
+}
+tick();
+setInterval(tick, 1000);
+
+// --- Basic copy-protection friction ---
+// NOTE: this deters casual copying (right-click "Save As", casual
+// Ctrl+U) but is NOT real security — anyone using browser dev tools'
+// menu, disabling JS, or a command-line fetch tool can still get the
+// full source. True protection requires server-side rendering/auth,
+// which a static file can't provide. The copyright notice above and
+// in the footer is what actually gives you legal standing if someone
+// copies this page.
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  const k = e.key.toLowerCase();
+  const blockCombo =
+    e.key === 'F12' ||
+    (e.ctrlKey && e.shiftKey && (k === 'i' || k === 'j' || k === 'c')) ||
+    (e.metaKey && e.altKey && (k === 'i' || k === 'j' || k === 'c')) || // Mac devtools
+    (e.ctrlKey && k === 'u') ||
+    (e.metaKey && k === 'u');
+  if(blockCombo) e.preventDefault();
+});
+
+</script>
+</body>
+</html>
