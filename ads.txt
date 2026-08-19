@@ -1,5 +1,5 @@
 # ads.txt for uaejobhub — required at your domain root:
-#   https://yourdomain.com/ads.txt   (NOT in a subfolder)
+#   https://jobpick.netlify.app/ads.txt   (NOT in a subfolder)
 #
 # This is your real publisher ID (from ca-pub-6874304698042148).
 # Double-check it against AdSense -> Sites -> your site ->
