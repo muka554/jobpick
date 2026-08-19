@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  © 2026 UAE Job Hub. All rights reserved.
+  © 2026 Gulf Job Hub. All rights reserved.
   This page's design, layout, source code, and compilation of links are the
   property of the site owner. No part of this page may be copied, scraped,
   reproduced, or redistributed, in whole or in part, without prior written
@@ -14,15 +14,34 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6874304698042148"
      crossorigin="anonymous"></script><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UAE Job Hub — Search Every Board at Once</title>
+<title>Gulf Job Hub — Search Every Board at Once</title>
 <meta name="description" content="Search Bayt, LinkedIn, Indeed, GulfTalent, Naukrigulf, Dubizzle and 15+ other UAE job platforms from one departure-board style page.">
-<meta name="copyright" content="© 2026 UAE Job Hub. All rights reserved.">
-<meta name="author" content="UAE Job Hub">
-<meta property="og:title" content="UAE Job Hub — Departures">
-<meta property="og:description" content="One search, 20 UAE & Gulf job platforms. No login, no scraping — just fast links to real results.">
+<meta name="copyright" content="© 2026 Gulf Job Hub. All rights reserved.">
+<meta name="author" content="Gulf Job Hub">
+<meta property="og:title" content="Gulf Job Hub — Departures">
+<meta property="og:description" content="One search, 20+ job platforms across the UAE and Saudi Arabia. No login, no scraping — just fast links to real results.">
+<link rel="canonical" href="https://jobpick.netlify.app/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Gulf Job Hub",
+  "url": "https://jobpick.netlify.app/",
+  "description": "Search Bayt, LinkedIn, Indeed, GulfTalent, Naukrigulf, Dubizzle, Taqat and 20+ other UAE and Saudi Arabia job platforms from one departure-board style page.",
+  "inLanguage": ["en", "ar", "hi", "ur"],
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://jobpick.netlify.app/?role={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230D1016'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%23FFB020' font-family='monospace' font-weight='bold'%3E%E2%9C%88%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #0D1016;
@@ -37,6 +56,43 @@
     --line: #262C39;
   }
   *{ box-sizing:border-box; }
+
+  /* Per-language font stacks. Brand name and Space Mono board codes stay Latin;
+     everything else swaps to a script-appropriate font. */
+  html[lang="ar"] body, html[lang="ar"] .eyebrow, html[lang="ar"] .sub,
+  html[lang="ar"] .field label, html[lang="ar"] .go, html[lang="ar"] .hint,
+  html[lang="ar"] .legend, html[lang="ar"] .groupbar, html[lang="ar"] .tag,
+  html[lang="ar"] .status a, html[lang="ar"] .sitenav .links, html[lang="ar"] footer,
+  html[lang="ar"] .dest .name{
+    font-family:'Noto Sans Arabic', 'Inter', sans-serif;
+  }
+  html[lang="ur"] body, html[lang="ur"] .eyebrow, html[lang="ur"] .sub,
+  html[lang="ur"] .field label, html[lang="ur"] .go, html[lang="ur"] .hint,
+  html[lang="ur"] .legend, html[lang="ur"] .groupbar, html[lang="ur"] .tag,
+  html[lang="ur"] .status a, html[lang="ur"] .sitenav .links, html[lang="ur"] footer,
+  html[lang="ur"] .dest .name{
+    font-family:'Noto Nastaliq Urdu', 'Noto Sans Arabic', 'Inter', sans-serif;
+  }
+  html[lang="hi"] body, html[lang="hi"] .eyebrow, html[lang="hi"] .sub,
+  html[lang="hi"] .field label, html[lang="hi"] .go, html[lang="hi"] .hint,
+  html[lang="hi"] .legend, html[lang="hi"] .groupbar, html[lang="hi"] .tag,
+  html[lang="hi"] .status a, html[lang="hi"] .sitenav .links, html[lang="hi"] footer,
+  html[lang="hi"] .dest .name{
+    font-family:'Noto Sans Devanagari', 'Inter', sans-serif;
+  }
+
+  html[dir="rtl"] .sitenav{ flex-direction:row-reverse; }
+  html[dir="rtl"] .sitenav .links{ flex-direction:row-reverse; }
+  html[dir="rtl"] .top{ flex-direction:row-reverse; }
+  html[dir="rtl"] .clockbox{ text-align:left; }
+  html[dir="rtl"] .status{ text-align:left; }
+  html[dir="rtl"] .code{ text-align:right; }
+  html[dir="rtl"] .r{ text-align:left; }
+  html[dir="rtl"] .skip-link{ left:auto; right:8px; }
+  html[dir="rtl"] .groupbar{ flex-direction:row-reverse; }
+  @media (max-width:560px){
+    html[dir="rtl"] .code{ left:14px; right:auto; }
+  }
   body{ -webkit-user-select:none; -moz-user-select:none; user-select:none; }
   input, textarea, select{ -webkit-user-select:text; -moz-user-select:text; user-select:text; }
   html,body{ margin:0; padding:0; background:var(--bg); }
@@ -171,7 +227,7 @@
     outline:none;
   }
   #role:focus{ border-color:var(--amber); }
-  #city{
+  .field select, select.langselect{
     background:var(--board);
     border:1px solid var(--line);
     color:var(--ink);
@@ -180,7 +236,9 @@
     padding:11px 10px;
     border-radius:4px;
     outline:none;
+    cursor:pointer;
   }
+  .field select:focus, select.langselect:focus{ border-color:var(--amber); }
   .go{
     background:var(--amber);
     color:#1A1300;
@@ -372,7 +430,6 @@
   .status a.t-direct{ background:var(--teal); }
   .status a.t-google{ background:var(--amber); }
   .status a.t-portal{ background:var(--gray-dot); color:var(--ink); }
-  .status a.t-ad{ background:var(--red); color:var(--ink); }
 
   .status .marker{
     display:inline-flex;
@@ -389,21 +446,6 @@
   .marker.m-direct{ color:var(--teal); }
   .marker.m-google{ color:var(--amber); }
   .marker.m-portal{ color:var(--gray-dot); }
-  .marker.m-ad .dot{ background:var(--red); }
-  .marker.m-ad{ color:var(--red); }
-  .row--ad{
-    background:rgba(226,87,76,0.06);
-    border-left:3px solid var(--red);
-  }
-  .row--ad .name::after{
-    content:'Sponsored — third-party link, not a job listing';
-    display:block;
-    font-family:'Inter', sans-serif;
-    font-weight:400;
-    font-size:11.5px;
-    color:var(--ink-dim);
-    margin-top:2px;
-  }
   @keyframes pulse{
     0%,100%{ opacity:1; } 50%{ opacity:.25; }
   }
@@ -441,54 +483,65 @@
 <div class="wrap">
 
   <nav class="sitenav" aria-label="Site">
-    <a class="brand" href="index.html">UAE JOB HUB</a>
+    <a class="brand" href="index.html">GULF JOB HUB</a>
     <div class="links">
-      <a href="index.html" aria-current="page">Home</a>
-      <a href="about.html">About</a>
-      <a href="privacy-policy.html">Privacy Policy</a>
-      <a href="terms-of-use.html">Terms of Use</a>
-      <a href="advertising-disclosure.html">Advertising</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" aria-current="page" data-i18n="nav.home">Home</a>
+      <a href="about.html" data-i18n="nav.about">About</a>
+      <a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a>
+      <a href="terms-of-use.html" data-i18n="nav.terms">Terms of Use</a>
+      <a href="advertising-disclosure.html" data-i18n="nav.advertising">Advertising</a>
+      <a href="contact.html" data-i18n="nav.contact">Contact</a>
+    </div>
+    <div class="field" style="margin-left:auto;">
+      <label for="lang" class="sr-only">Language</label>
+      <select id="lang" aria-label="Language">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+        <option value="hi">हिन्दी</option>
+        <option value="ur">اردو</option>
+      </select>
     </div>
   </nav>
 
   <header class="top">
     <div>
-      <div class="eyebrow">Departures · Every UAE Job Board</div>
-      <h1>UAE JOB <span>HUB</span></h1>
-      <div class="sub">One search, 20 platforms across general boards, Gulf specialists, recruitment agencies, classifieds and Emiratisation programmes.</div>
+      <div class="eyebrow" data-i18n="eyebrow">Departures · Every Gulf Job Board</div>
+      <h1>GULF JOB <span>HUB</span></h1>
+      <div class="sub" data-i18n="subtitle">One search, platforms across the UAE and Saudi Arabia — general boards, Gulf specialists, recruitment agencies, classifieds and national employment programmes.</div>
     </div>
     <div class="clockbox">
       <div class="time" id="clock">--:--:--</div>
-      <div class="zone">Gulf Standard Time</div>
+      <div class="zone" data-i18n="zone">Gulf Standard Time</div>
     </div>
   </header>
 
   <div class="searchpanel">
     <div class="field">
-      <label for="role">Role / keyword</label>
+      <label for="role" data-i18n="label.role">Role / keyword</label>
       <input id="role" type="text" placeholder="e.g. accountant, software engineer" value="" aria-describedby="searchHint">
     </div>
     <div class="field">
-      <label for="city">City</label>
-      <select id="city">
-        <option value="any">Any city, UAE</option>
-        <option value="dubai">Dubai</option>
-        <option value="abudhabi">Abu Dhabi</option>
-        <option value="sharjah">Sharjah</option>
+      <label for="country" data-i18n="label.country">Country</label>
+      <select id="country">
+        <option value="uae" data-i18n="country.uae">United Arab Emirates</option>
+        <option value="ksa" data-i18n="country.ksa">Saudi Arabia</option>
       </select>
     </div>
-    <button class="go" id="goBtn">Search all boards</button>
-    <div class="hint" id="searchHint">Board updates below as you search — press Enter or tap a row's link any time.</div>
+    <div class="field">
+      <label for="city" data-i18n="label.city">City</label>
+      <select id="city"></select>
+    </div>
+    <button class="go" id="goBtn" data-i18n="button.search">Search all boards</button>
+    <div class="hint" id="searchHint" data-i18n="hint">Board updates below as you search — press Enter or tap a row's link any time.</div>
   </div>
 
   <p id="searchStatus" class="sr-only" role="status" aria-live="polite"></p>
 
   <fieldset class="legend" style="border:0; padding:0; margin-left:0; margin-right:0;">
     <legend class="sr-only">Link type key</legend>
-    <span><i class="sw" style="background:var(--teal)" aria-hidden="true"></i>Direct search on the platform</span>
-    <span><i class="sw" style="background:var(--amber)" aria-hidden="true"></i>Via Google (platform has no public search link)</span>
-    <span><i class="sw" style="background:var(--gray-dot)" aria-hidden="true"></i>Portal — browse after login/registration</span>
+    <span><i class="sw" style="background:var(--teal)" aria-hidden="true"></i><span data-i18n="legend.direct">Direct search on the platform</span></span>
+    <span><i class="sw" style="background:var(--amber)" aria-hidden="true"></i><span data-i18n="legend.google">Via Google (platform has no public search link)</span></span>
+    <span><i class="sw" style="background:var(--gray-dot)" aria-hidden="true"></i><span data-i18n="legend.portal">Portal — browse after login/registration</span></span>
   </fieldset>
 
   <!-- Top leaderboard ad -->
@@ -526,9 +579,9 @@
   </script>
 
   <footer>
-    <p><b>How this works:</b> nothing is scraped or stored. Most rows build a direct search link to that platform's own site using your keyword and open it in a new tab. A few recruitment agencies and niche boards don't expose a public search URL, so those rows route through a Google site-search instead — same destination, just built differently. Government/Emiratisation programmes require your own login, so they link straight to the portal.</p>
-    <p>This page is a static, self-contained HTML file — free to host anywhere (GitHub Pages, Netlify, your own server) or open locally. It calls no backend and stores nothing about you.</p>
-    <p style="margin-top:14px; padding-top:14px; border-top:1px solid var(--line); color:var(--ink-dim);">© 2026 UAE Job Hub. All rights reserved. This page's design and code may not be copied or redistributed without permission.</p>
+    <p id="footerHow"><b>How this works:</b> nothing is scraped or stored. Most rows build a direct search link to that platform's own site using your keyword and open it in a new tab. A few recruitment agencies and niche boards don't expose a public search URL, so those rows route through a Google site-search instead — same destination, just built differently. Government/Emiratisation programmes require your own login, so they link straight to the portal.</p>
+    <p id="footerStatic">This page is a static, self-contained HTML file — free to host anywhere (GitHub Pages, Netlify, your own server) or open locally. It calls no backend and stores nothing about you.</p>
+    <p id="footerCopyright" style="margin-top:14px; padding-top:14px; border-top:1px solid var(--line); color:var(--ink-dim);">© 2026 Gulf Job Hub. All rights reserved. This page's design and code may not be copied or redistributed without permission.</p>
     <p style="display:flex; gap:14px; flex-wrap:wrap; font-family:'Barlow Condensed', sans-serif; text-transform:uppercase; letter-spacing:.06em; font-size:12px;">
       <a href="about.html" style="color:var(--ink-dim);">About</a>
       <a href="privacy-policy.html" style="color:var(--ink-dim);">Privacy Policy</a>
@@ -540,69 +593,247 @@
 </div>
 
 <script>
-const GROUPS = [
-  {
-    title: 'General & Global Boards',
-    items: [
-      { code:'AD', name:'Advertisement', gate:'Sponsored', type:'ad',
-        url:'https://www.effectivecpmnetwork.com/b81p27gi?key=20b31018c96d590e78172296d7141e1b' },
-      { code:'BYT', name:'Bayt.com', gate:'General · MENA', type:'direct',
-        build:(q,slug,city,cityName)=>`https://www.bayt.com/en/uae/jobs/?keyword=${q}` },
-      { code:'LKD', name:'LinkedIn Jobs', gate:'General · Global', type:'direct',
-        build:(q,slug,city,cityName)=>`https://www.linkedin.com/jobs/search/?keywords=${q}&location=${encodeURIComponent((cityName?cityName+', ':'')+'United Arab Emirates')}` },
-      { code:'IND', name:'Indeed UAE', gate:'General · Global', type:'direct',
-        build:(q,slug,city,cityName)=>`https://ae.indeed.com/jobs?q=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
-      { code:'GGL', name:'Google for Jobs', gate:'Aggregator', type:'direct',
-        build:(q,slug,city,cityName)=>`https://www.google.com/search?q=${q}+jobs+in+${encodeURIComponent(cityName||'United Arab Emirates')}&ibp=htl;jobs` },
-      { code:'GLD', name:'Glassdoor', gate:'General · Global', type:'google', domain:'glassdoor.com' },
-      { code:'CJT', name:'CareerJet UAE', gate:'Aggregator', type:'direct',
-        build:(q,slug,city,cityName)=>`https://www.careerjet.ae/jobs?s=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
-      { code:'TLC', name:'Talent.com UAE', gate:'Aggregator', type:'direct',
-        build:(q,slug,city,cityName)=>`https://ae.talent.com/jobs?k=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
-    ]
+const I18N = {
+  en: {
+    'nav.home':'Home', 'nav.about':'About', 'nav.privacy':'Privacy Policy',
+    'nav.terms':'Terms of Use', 'nav.advertising':'Advertising', 'nav.contact':'Contact',
+    'eyebrow':'Departures · Every Gulf Job Board',
+    'subtitle':'One search, platforms across the UAE and Saudi Arabia — general boards, Gulf specialists, recruitment agencies, classifieds and national employment programmes.',
+    'zone':'Gulf Standard Time',
+    'label.role':'Role / keyword', 'label.country':'Country', 'label.city':'City',
+    'country.uae':'United Arab Emirates', 'country.ksa':'Saudi Arabia',
+    'city.any':'Any city', 'city.dubai':'Dubai', 'city.abudhabi':'Abu Dhabi', 'city.sharjah':'Sharjah',
+    'city.riyadh':'Riyadh', 'city.jeddah':'Jeddah', 'city.dammam':'Dammam',
+    'button.search':'Search all boards',
+    'hint':'Board updates below as you search — press Enter or tap a row\'s link any time.',
+    'legend.direct':'Direct search on the platform',
+    'legend.google':'Via Google (platform has no public search link)',
+    'legend.portal':'Portal — browse after login/registration',
+    'col.code':'Code', 'col.destination':'Destination', 'col.gate':'Gate', 'col.status':'Status',
+    'group.generalGlobal':'General & Global Boards',
+    'group.gulfSpecialist':'Gulf Specialist Boards',
+    'group.recruitment':'Recruitment Agencies',
+    'group.classifieds':'Classifieds',
+    'group.govNational.uae':'Government & Emiratisation',
+    'group.govNational.ksa':'Saudi National Platforms',
+    'marker.live':'LIVE', 'marker.google':'VIA GOOGLE', 'marker.portal':'PORTAL',
+    'btn.open':'Open →', 'btn.visit':'Visit →', 'ad.label':'Advertisement',
+    'footer.how':'How this works: nothing is scraped or stored. Most rows build a direct search link to that platform\'s own site using your keyword and open it in a new tab. A few recruitment agencies and niche boards don\'t expose a public search URL, so those rows route through a Google site-search instead — same destination, just built differently. Government and national-employment programmes require your own login, so they link straight to the portal.',
+    'footer.static':'This page is a static, self-contained HTML file — free to host anywhere (GitHub Pages, Netlify, your own server) or open locally. It calls no backend and stores nothing about you.',
+    'footer.copyright':'© 2026 Gulf Job Hub. All rights reserved. This page\'s design and code may not be copied or redistributed without permission.',
   },
-  {
-    title: 'Gulf Specialist Boards',
-    items: [
-      { code:'GLF', name:'GulfTalent', gate:'Gulf specialist', type:'direct',
-        build:(q,slug)=>`https://www.gulftalent.com/uae/jobs/title/${slug}` },
-      { code:'NKG', name:'Naukrigulf', gate:'Gulf specialist', type:'direct',
-        build:(q,slug)=>`https://www.naukrigulf.com/${slug}-jobs-in-uae` },
-      { code:'FND', name:'foundit Gulf (Monster)', gate:'Gulf specialist', type:'direct',
-        build:(q,slug)=>`https://www.founditgulf.com/search/${slug}-jobs` },
-      { code:'LMN', name:'Laimoon', gate:'Gulf specialist', type:'google', domain:'laimoon.com' },
-      { code:'AKB', name:'Akhtaboot', gate:'Gulf · Levant', type:'google', domain:'akhtaboot.com' },
-      { code:'RGZ', name:'Rigzone', gate:'Energy · Oil & Gas', type:'google', domain:'rigzone.com' },
-    ]
+  ar: {
+    'nav.home':'الرئيسية', 'nav.about':'حول', 'nav.privacy':'سياسة الخصوصية',
+    'nav.terms':'شروط الاستخدام', 'nav.advertising':'الإعلانات', 'nav.contact':'اتصل بنا',
+    'eyebrow':'المغادرات · كل لوحة وظائف خليجية',
+    'subtitle':'بحث واحد، منصات في الإمارات والسعودية — لوحات عامة، متخصصون في الخليج، وكالات توظيف، إعلانات مبوبة وبرامج توظيف وطنية.',
+    'zone':'توقيت الخليج',
+    'label.role':'الوظيفة / الكلمة المفتاحية', 'label.country':'الدولة', 'label.city':'المدينة',
+    'country.uae':'الإمارات العربية المتحدة', 'country.ksa':'المملكة العربية السعودية',
+    'city.any':'أي مدينة', 'city.dubai':'دبي', 'city.abudhabi':'أبوظبي', 'city.sharjah':'الشارقة',
+    'city.riyadh':'الرياض', 'city.jeddah':'جدة', 'city.dammam':'الدمام',
+    'button.search':'ابحث في كل اللوحات',
+    'hint':'تتحدث اللوحة أدناه أثناء البحث — اضغط Enter أو انقر على أي رابط في أي وقت.',
+    'legend.direct':'بحث مباشر على المنصة',
+    'legend.google':'عبر جوجل (لا يوجد رابط بحث عام للمنصة)',
+    'legend.portal':'بوابة — تصفح بعد تسجيل الدخول',
+    'col.code':'الرمز', 'col.destination':'الوجهة', 'col.gate':'الفئة', 'col.status':'الحالة',
+    'group.generalGlobal':'لوحات عامة وعالمية',
+    'group.gulfSpecialist':'لوحات خليجية متخصصة',
+    'group.recruitment':'وكالات التوظيف',
+    'group.classifieds':'إعلانات مبوبة',
+    'group.govNational.uae':'الحكومة وبرنامج التوطين',
+    'group.govNational.ksa':'المنصات الوطنية السعودية',
+    'marker.live':'مباشر', 'marker.google':'عبر جوجل', 'marker.portal':'بوابة',
+    'btn.open':'فتح ←', 'btn.visit':'زيارة ←', 'ad.label':'إعلان',
+    'footer.how':'كيف يعمل هذا: لا يتم استخراج أو تخزين أي بيانات. تبني معظم الصفوف رابط بحث مباشر إلى موقع تلك المنصة باستخدام كلمتك المفتاحية وتفتحه في تبويب جديد. بعض وكالات التوظيف والمنصات المتخصصة لا توفر رابط بحث عام، لذا تمر تلك الصفوف عبر بحث جوجل المخصص للموقع بدلاً من ذلك — نفس الوجهة، بطريقة بناء مختلفة فقط. البرامج الحكومية وبرامج التوظيف الوطنية تتطلب تسجيل دخول خاص بك، لذا ترتبط مباشرة بالبوابة.',
+    'footer.static':'هذه الصفحة ملف HTML ثابت ومستقل بذاته — مجاني الاستضافة في أي مكان (GitHub Pages أو Netlify أو خادمك الخاص) أو فتحه محليًا. لا يستدعي أي خادم خلفي ولا يخزن أي شيء عنك.',
+    'footer.copyright':'© 2026 Gulf Job Hub. جميع الحقوق محفوظة. لا يجوز نسخ تصميم هذه الصفحة أو كودها أو إعادة توزيعها دون إذن.',
   },
-  {
-    title: 'Recruitment Agencies',
-    items: [
-      { code:'MPG', name:'Michael Page UAE', gate:'Professional · Exec', type:'google', domain:'michaelpage.ae' },
-      { code:'RHF', name:'Robert Half UAE', gate:'Professional · Finance', type:'google', domain:'roberthalf.ae' },
-      { code:'HYS', name:'Hays Gulf', gate:'Professional · Multi', type:'google', domain:'hays.ae' },
-      { code:'CHH', name:'Charterhouse ME', gate:'Professional · Multi', type:'google', domain:'charterhouse.ae' },
-    ]
+  hi: {
+    'nav.home':'होम', 'nav.about':'हमारे बारे में', 'nav.privacy':'गोपनीयता नीति',
+    'nav.terms':'उपयोग की शर्तें', 'nav.advertising':'विज्ञापन', 'nav.contact':'संपर्क करें',
+    'eyebrow':'डिपार्चर · हर खाड़ी जॉब बोर्ड',
+    'subtitle':'एक खोज, यूएई और सऊदी अरब भर के प्लेटफ़ॉर्म — सामान्य बोर्ड, खाड़ी विशेषज्ञ, भर्ती एजेंसियां, वर्गीकृत विज्ञापन और राष्ट्रीय रोज़गार कार्यक्रम।',
+    'zone':'खाड़ी मानक समय',
+    'label.role':'पद / कीवर्ड', 'label.country':'देश', 'label.city':'शहर',
+    'country.uae':'संयुक्त अरब अमीरात', 'country.ksa':'सऊदी अरब',
+    'city.any':'कोई भी शहर', 'city.dubai':'दुबई', 'city.abudhabi':'अबू धाबी', 'city.sharjah':'शारजाह',
+    'city.riyadh':'रियाद', 'city.jeddah':'जेद्दाह', 'city.dammam':'दम्मम',
+    'button.search':'सभी बोर्ड खोजें',
+    'hint':'खोजते समय नीचे बोर्ड अपडेट होता है — Enter दबाएं या किसी भी पंक्ति के लिंक पर टैप करें।',
+    'legend.direct':'प्लेटफ़ॉर्म पर सीधी खोज',
+    'legend.google':'गूगल के ज़रिए (प्लेटफ़ॉर्म का कोई सार्वजनिक खोज लिंक नहीं है)',
+    'legend.portal':'पोर्टल — लॉगिन/पंजीकरण के बाद ब्राउज़ करें',
+    'col.code':'कोड', 'col.destination':'गंतव्य', 'col.gate':'श्रेणी', 'col.status':'स्थिति',
+    'group.generalGlobal':'सामान्य और वैश्विक बोर्ड',
+    'group.gulfSpecialist':'खाड़ी विशेषज्ञ बोर्ड',
+    'group.recruitment':'भर्ती एजेंसियां',
+    'group.classifieds':'वर्गीकृत विज्ञापन',
+    'group.govNational.uae':'सरकार और इमिराटीकरण',
+    'group.govNational.ksa':'सऊदी राष्ट्रीय प्लेटफ़ॉर्म',
+    'marker.live':'लाइव', 'marker.google':'गूगल के ज़रिए', 'marker.portal':'पोर्टल',
+    'btn.open':'खोलें →', 'btn.visit':'देखें →', 'ad.label':'विज्ञापन',
+    'footer.how':'यह कैसे काम करता है: कुछ भी स्क्रैप या संग्रहीत नहीं किया जाता। अधिकांश पंक्तियां आपके कीवर्ड का उपयोग करके उस प्लेटफ़ॉर्म की अपनी साइट पर सीधा खोज लिंक बनाती हैं और उसे नए टैब में खोलती हैं। कुछ भर्ती एजेंसियों और विशेष बोर्ड सार्वजनिक खोज URL उपलब्ध नहीं कराते, इसलिए वे पंक्तियां इसके बजाय गूगल साइट-खोज से होकर गुजरती हैं — वही गंतव्य, बस अलग तरीके से बनाया गया। सरकारी और राष्ट्रीय रोज़गार कार्यक्रमों के लिए आपका अपना लॉगिन चाहिए, इसलिए वे सीधे पोर्टल से जुड़ते हैं।',
+    'footer.static':'यह पेज एक स्थिर, स्व-निहित HTML फ़ाइल है — कहीं भी मुफ़्त में होस्ट करें (GitHub Pages, Netlify, आपका अपना सर्वर) या स्थानीय रूप से खोलें। यह किसी बैकएंड को कॉल नहीं करता और आपके बारे में कुछ भी संग्रहीत नहीं करता।',
+    'footer.copyright':'© 2026 Gulf Job Hub. सर्वाधिकार सुरक्षित। इस पेज के डिज़ाइन और कोड को बिना अनुमति के कॉपी या पुनर्वितरित नहीं किया जा सकता।',
   },
-  {
-    title: 'Classifieds',
-    items: [
-      { code:'DBZ', name:'Dubizzle Jobs', gate:'Classifieds', type:'direct',
-        build:(q)=>`https://dubai.dubizzle.com/jobs/search/?keywords=${q}` },
-    ]
+  ur: {
+    'nav.home':'ہوم', 'nav.about':'ہمارے بارے میں', 'nav.privacy':'رازداری کی پالیسی',
+    'nav.terms':'استعمال کی شرائط', 'nav.advertising':'اشتہارات', 'nav.contact':'رابطہ کریں',
+    'eyebrow':'روانگیاں · ہر خلیجی جاب بورڈ',
+    'subtitle':'ایک سرچ، یو اے ای اور سعودی عرب کے پلیٹ فارمز — عمومی بورڈز، خلیجی ماہرین، بھرتی ایجنسیاں، درجہ بند اشتہارات اور قومی روزگار پروگرام۔',
+    'zone':'خلیجی معیاری وقت',
+    'label.role':'عہدہ / کلیدی لفظ', 'label.country':'ملک', 'label.city':'شہر',
+    'country.uae':'متحدہ عرب امارات', 'country.ksa':'سعودی عرب',
+    'city.any':'کوئی بھی شہر', 'city.dubai':'دبئی', 'city.abudhabi':'ابوظہبی', 'city.sharjah':'شارجہ',
+    'city.riyadh':'ریاض', 'city.jeddah':'جدہ', 'city.dammam':'دمام',
+    'button.search':'تمام بورڈز میں تلاش کریں',
+    'hint':'تلاش کے دوران نیچے بورڈ اپڈیٹ ہوتا ہے — Enter دبائیں یا کسی بھی لائن کے لنک پر ٹیپ کریں۔',
+    'legend.direct':'پلیٹ فارم پر براہ راست تلاش',
+    'legend.google':'گوگل کے ذریعے (پلیٹ فارم کا کوئی عوامی سرچ لنک نہیں)',
+    'legend.portal':'پورٹل — لاگ ان/رجسٹریشن کے بعد براؤز کریں',
+    'col.code':'کوڈ', 'col.destination':'منزل', 'col.gate':'قسم', 'col.status':'حیثیت',
+    'group.generalGlobal':'عمومی اور عالمی بورڈز',
+    'group.gulfSpecialist':'خلیجی ماہر بورڈز',
+    'group.recruitment':'بھرتی ایجنسیاں',
+    'group.classifieds':'درجہ بند اشتہارات',
+    'group.govNational.uae':'حکومت اور توطین پروگرام',
+    'group.govNational.ksa':'سعودی قومی پلیٹ فارمز',
+    'marker.live':'لائیو', 'marker.google':'گوگل کے ذریعے', 'marker.portal':'پورٹل',
+    'btn.open':'کھولیں ←', 'btn.visit':'ملاحظہ کریں ←', 'ad.label':'اشتہار',
+    'footer.how':'یہ کیسے کام کرتا ہے: کچھ بھی اسکریپ یا محفوظ نہیں کیا جاتا۔ زیادہ تر لائنیں آپ کے کلیدی لفظ کا استعمال کرتے ہوئے اس پلیٹ فارم کی اپنی سائٹ پر براہ راست سرچ لنک بناتی ہیں اور اسے نئے ٹیب میں کھولتی ہیں۔ کچھ بھرتی ایجنسیاں اور مخصوص بورڈز عوامی سرچ یو آر ایل فراہم نہیں کرتے، اس لیے وہ لائنیں اس کے بجائے گوگل سائٹ سرچ سے گزرتی ہیں — وہی منزل، بس مختلف طریقے سے بنائی گئی۔ حکومتی اور قومی روزگار پروگراموں کے لیے آپ کا اپنا لاگ ان درکار ہے، اس لیے وہ براہ راست پورٹل سے جڑتی ہیں۔',
+    'footer.static':'یہ صفحہ ایک جامد، خود کفیل HTML فائل ہے — کہیں بھی مفت ہوسٹ کریں (GitHub Pages، Netlify، اپنا سرور) یا مقامی طور پر کھولیں۔ یہ کسی بیک اینڈ کو کال نہیں کرتا اور آپ کے بارے میں کچھ بھی محفوظ نہیں کرتا۔',
+    'footer.copyright':'© 2026 Gulf Job Hub۔ جملہ حقوق محفوظ ہیں۔ اس صفحے کا ڈیزائن اور کوڈ اجازت کے بغیر کاپی یا دوبارہ تقسیم نہیں کیا جا سکتا۔',
   },
-  {
-    title: 'Government & Emiratisation',
-    items: [
-      { code:'NFS', name:'Nafis', gate:'UAE Nationals · login req.', type:'portal',
-        url:'https://nafis.gov.ae/en/' },
-      { code:'UAE', name:'U.AE — Job Portals Guide', gate:'Government guidance', type:'portal',
-        url:'https://u.ae/en/information-and-services/jobs/searching-for-a-job/register-on-job-portals' },
-    ]
-  },
-];
+};
 
-const CITY_NAMES = { any:'', dubai:'Dubai', abudhabi:'Abu Dhabi', sharjah:'Sharjah' };
+let currentLang = (localStorage.getItem('jobhub_lang')) || 'en';
+
+function applyLanguage(lang){
+  currentLang = lang;
+  try{ localStorage.setItem('jobhub_lang', lang); }catch(e){}
+  const t = I18N[lang] || I18N.en;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = (lang === 'ar' || lang === 'ur') ? 'rtl' : 'ltr';
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(t[key]) el.textContent = t[key];
+  });
+
+  const footerHow = document.getElementById('footerHow');
+  const footerStatic = document.getElementById('footerStatic');
+  const footerCopy = document.getElementById('footerCopyright');
+  if(footerHow) footerHow.textContent = t['footer.how'];
+  if(footerStatic) footerStatic.textContent = t['footer.static'];
+  if(footerCopy) footerCopy.textContent = t['footer.copyright'];
+
+  const langSelect = document.getElementById('lang');
+  if(langSelect) langSelect.value = lang;
+
+  populateCityOptions();
+  renderBoard();
+  runSearch();
+}
+
+function getGroups(country){
+  return [
+    {
+      title: 'General & Global Boards',
+      key: 'generalGlobal',
+      items: [
+        { code:'BYT', name:'Bayt.com', gate:'General · MENA', type:'direct',
+          build:(q,slug,city,cityName,ctry)=>`https://www.bayt.com/en/${ctry==='ksa'?'saudi-arabia':'uae'}/jobs/?keyword=${q}` },
+        { code:'LKD', name:'LinkedIn Jobs', gate:'General · Global', type:'direct',
+          build:(q,slug,city,cityName,ctry)=>`https://www.linkedin.com/jobs/search/?keywords=${q}&location=${encodeURIComponent((cityName?cityName+', ':'')+(ctry==='ksa'?'Saudi Arabia':'United Arab Emirates'))}` },
+        { code:'IND', name:'Indeed', gate:'General · Global', type:'direct',
+          build:(q,slug,city,cityName,ctry)=>`https://${ctry==='ksa'?'sa':'ae'}.indeed.com/jobs?q=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
+        { code:'GGL', name:'Google for Jobs', gate:'Aggregator', type:'direct',
+          build:(q,slug,city,cityName,ctry)=>`https://www.google.com/search?q=${q}+jobs+in+${encodeURIComponent(cityName||(ctry==='ksa'?'Saudi Arabia':'United Arab Emirates'))}&ibp=htl;jobs` },
+        { code:'GLD', name:'Glassdoor', gate:'General · Global', type:'direct',
+          build:(q,slug,city,cityName)=>`https://www.glassdoor.com/Job/jobs.htm?sc.keyword=${q}`+(cityName?`&locKeyword=${encodeURIComponent(cityName)}`:'') },
+        { code:'CJT', name:'CareerJet', gate:'Aggregator', type:'direct',
+          build:(q,slug,city,cityName,ctry)=>`https://www.careerjet.${ctry==='ksa'?'sa':'ae'}/jobs?s=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
+        { code:'TLC', name:'Talent.com', gate:'Aggregator', type:'direct',
+          build:(q,slug,city,cityName,ctry)=>`https://${ctry==='ksa'?'sa':'ae'}.talent.com/jobs?k=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
+      ]
+    },
+    {
+      title: 'Gulf Specialist Boards',
+      key: 'gulfSpecialist',
+      items: [
+        { code:'GLF', name:'GulfTalent', gate:'Gulf specialist', type:'direct',
+          build:(q,slug,city,cityName,ctry)=>`https://www.gulftalent.com/${ctry==='ksa'?'saudi-arabia':'uae'}/jobs/title/${slug}` },
+        { code:'NKG', name:'Naukrigulf', gate:'Gulf specialist', type:'direct',
+          build:(q,slug,city,cityName,ctry)=>`https://www.naukrigulf.com/${slug}-jobs-in-${ctry==='ksa'?'saudi-arabia':'uae'}` },
+        { code:'FND', name:'foundit Gulf (Monster)', gate:'Gulf specialist', type:'direct',
+          build:(q,slug)=>`https://www.founditgulf.com/search/${slug}-jobs` },
+        { code:'LMN', name:'Laimoon', gate:'Gulf specialist', type:'direct',
+          build:(q,slug)=>`https://jobs.laimoon.com/uae/${slug}` },
+        { code:'AKB', name:'Akhtaboot', gate:'Gulf · Levant', type:'google', domain:'akhtaboot.com' },
+        { code:'RGZ', name:'Rigzone', gate:'Energy · Oil & Gas', type:'direct',
+          build:(q)=>`https://www.rigzone.com/oil/jobs/search/?sk=${q}` },
+      ]
+    },
+    {
+      title: 'Recruitment Agencies',
+      key: 'recruitment',
+      items: [
+        { code:'MPG', name:'Michael Page', gate:'Professional · Exec', type:'direct',
+          build:(q,slug,city,cityName,ctry)=>`https://www.michaelpage.${ctry==='ksa'?'com.sa':'ae'}/jobs/${slug}` },
+        { code:'RHF', name:'Robert Half', gate:'Professional · Finance', type:'direct',
+          build:(q,slug)=>`https://www.roberthalf.com/ae/en/jobs/all/${slug}` },
+        { code:'HYS', name:'Hays', gate:'Professional · Multi', type:'google',
+          domain: country==='ksa' ? 'hays.com.sa' : 'hays.ae' },
+        { code:'CHH', name:'Charterhouse ME', gate:'Professional · Multi', type:'google', domain:'charterhouseme.ae' },
+      ]
+    },
+    country === 'ksa' ? {
+      title: 'Classifieds',
+      key: 'classifieds',
+      items: [
+        { code:'HRJ', name:'Haraj (حراج)', gate:'Classifieds', type:'direct',
+          build:(q)=>`https://haraj.com.sa/en/search/${q}%20${encodeURIComponent('وظائف')}/` },
+      ]
+    } : {
+      title: 'Classifieds',
+      key: 'classifieds',
+      items: [
+        { code:'DBZ', name:'Dubizzle Jobs', gate:'Classifieds', type:'direct',
+          build:(q)=>`https://dubai.dubizzle.com/jobs/search/?keywords=${q}` },
+      ]
+    },
+    country === 'ksa' ? {
+      title: 'Saudi National Platforms',
+      key: 'govNational',
+      items: [
+        { code:'TQT', name:'Taqat', gate:'Saudi Nationals · login req.', type:'portal',
+          url:'https://www.taqat.sa/en/web/guest/individual' },
+        { code:'JDR', name:'Jadarat', gate:'Saudi Nationals · login req.', type:'portal',
+          url:'https://jadarat.sa/' },
+      ]
+    } : {
+      title: 'Government & Emiratisation',
+      key: 'govNational',
+      items: [
+        { code:'NFS', name:'Nafis', gate:'UAE Nationals · login req.', type:'portal',
+          url:'https://nafis.gov.ae/en/' },
+        { code:'UAE', name:'U.AE — Job Portals Guide', gate:'Government guidance', type:'portal',
+          url:'https://u.ae/en/information-and-services/jobs/searching-for-a-job/register-on-job-portals' },
+      ]
+    },
+  ];
+}
+
+const CITY_NAMES = {
+  uae: { any:'', dubai:'Dubai', abudhabi:'Abu Dhabi', sharjah:'Sharjah' },
+  ksa: { any:'', riyadh:'Riyadh', jeddah:'Jeddah', dammam:'Dammam' },
+};
+const CITY_OPTIONS = {
+  uae: [ ['any','city.any'], ['dubai','city.dubai'], ['abudhabi','city.abudhabi'], ['sharjah','city.sharjah'] ],
+  ksa: [ ['any','city.any'], ['riyadh','city.riyadh'], ['jeddah','city.jeddah'], ['dammam','city.dammam'] ],
+};
 const FLAP_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/·-';
 
 function slugify(str){
@@ -614,26 +845,32 @@ let rowIndex = 0;
 const rowMap = [];
 
 function renderBoard(){
+  const country = document.getElementById('country').value;
+  const GROUPS = getGroups(country);
+  const t = I18N[currentLang] || I18N.en;
   host.innerHTML = '';
   rowIndex = 0;
   rowMap.length = 0;
 
   GROUPS.forEach(group => {
+    const titleKey = group.key === 'govNational' ? `group.govNational.${country}` : `group.${group.key}`;
+    const groupTitle = t[titleKey] || I18N.en[titleKey] || group.title;
+
     const bar = document.createElement('h2');
     bar.className = 'groupbar';
-    bar.innerHTML = `<span>${group.title}</span><span class="count">${group.items.length} board${group.items.length>1?'s':''}</span>`;
+    bar.innerHTML = `<span>${groupTitle}</span><span class="count">${group.items.length}</span>`;
     host.appendChild(bar);
 
     const head = document.createElement('div');
     head.className = 'boardhead';
     head.setAttribute('aria-hidden', 'true');
-    head.innerHTML = `<div>Code</div><div>Destination</div><div>Gate</div><div class="r">Status</div>`;
+    head.innerHTML = `<div>${t['col.code']}</div><div>${t['col.destination']}</div><div>${t['col.gate']}</div><div class="r">${t['col.status']}</div>`;
     host.appendChild(head);
 
     const boardEl = document.createElement('div');
     boardEl.className = 'board';
     boardEl.setAttribute('role', 'list');
-    boardEl.setAttribute('aria-label', group.title + ' links');
+    boardEl.setAttribute('aria-label', groupTitle + ' links');
 
     group.items.forEach(item => {
       const i = rowIndex++;
@@ -645,33 +882,26 @@ function renderBoard(){
       const methodWord = item.type === 'direct' ? 'direct search' : item.type === 'google' ? 'Google search' : 'portal';
 
       let statusHtml;
-      if(item.type === 'ad'){
-        row.classList.add('row--ad');
-        row.id = 'ad-row';
+      if(item.type === 'portal'){
         statusHtml = `
-          <span class="marker m-ad" aria-hidden="true"><span class="dot"></span>SPONSORED</span><br>
-          <a class="t-ad" id="ad-bayt-row" href="${item.url}" target="_blank" rel="noopener sponsored"
-             aria-label="Advertisement (opens in new tab, external sponsored link)">Advertisement →</a>`;
-      } else if(item.type === 'portal'){
-        statusHtml = `
-          <span class="marker m-portal" aria-hidden="true"><span class="dot"></span>PORTAL</span><br>
+          <span class="marker m-portal" aria-hidden="true"><span class="dot"></span>${t['marker.portal']}</span><br>
           <a class="t-portal" href="${item.url}" target="_blank" rel="noopener"
-             aria-label="Visit ${item.name} (${methodWord}, opens in new tab)">Visit →</a>`;
+             aria-label="Visit ${item.name} (${methodWord}, opens in new tab)">${t['btn.visit']}</a>`;
       } else {
         const markerClass = item.type === 'direct' ? 'm-direct' : 'm-google';
-        const markerLabel = item.type === 'direct' ? 'LIVE' : 'VIA GOOGLE';
+        const markerLabel = item.type === 'direct' ? t['marker.live'] : t['marker.google'];
         const linkClass = item.type === 'direct' ? 't-direct' : 't-google';
         statusHtml = `
           <span class="marker ${markerClass}" aria-hidden="true"><span class="dot"></span>${markerLabel}</span><br>
           <a class="${linkClass}" href="#" target="_blank" rel="noopener" id="link-${i}"
-             aria-label="Search ${item.name} (${methodWord}, opens in new tab)">Open →</a>`;
+             aria-label="Search ${item.name} (${methodWord}, opens in new tab)">${t['btn.open']}</a>`;
       }
 
       row.innerHTML = `
         <div class="code" aria-hidden="true">${item.code}</div>
         <div class="dest">
           <div class="name">${item.name}</div>
-          <div class="flap" id="flap-${i}" aria-hidden="true">${item.type === 'ad' ? 'THIRD-PARTY OFFER' : 'SEARCH · UAE'}</div>
+          <div class="flap" id="flap-${i}" aria-hidden="true">SEARCH</div>
         </div>
         <div class="tag">${item.gate}</div>
         <div class="status">${statusHtml}</div>
@@ -681,13 +911,13 @@ function renderBoard(){
 
     host.appendChild(boardEl);
 
-    if(group.title === 'Gulf Specialist Boards'){
+    if(group.key === 'gulfSpecialist'){
       const adSlot = document.createElement('div');
       adSlot.className = 'ad-slot ad-slot--native';
       adSlot.setAttribute('role', 'complementary');
       adSlot.setAttribute('aria-label', 'Advertisement');
       adSlot.innerHTML = `
-        <span class="ad-label">Advertisement</span>
+        <span class="ad-label">${t['ad.label']}</span>
         <div class="ad-body">
           <ins class="adsbygoogle"
                style="display:block; width:100%;"
@@ -703,7 +933,6 @@ function renderBoard(){
     }
   });
 }
-renderBoard();
 
 const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -740,36 +969,51 @@ function flapTo(el, target, delay){
   }, delay);
 }
 
-function buildGoogleSite(domain, q, cityName){
-  return `https://www.google.com/search?q=site:${domain}+${q}+jobs+${encodeURIComponent(cityName||'UAE')}`;
+function buildGoogleSite(domain, q, cityName, country){
+  return `https://www.google.com/search?q=site:${domain}+${q}+jobs+${encodeURIComponent(cityName||(country==='ksa'?'Saudi Arabia':'UAE'))}`;
+}
+
+function populateCityOptions(){
+  const country = document.getElementById('country').value;
+  const citySelect = document.getElementById('city');
+  const t = I18N[currentLang] || I18N.en;
+  citySelect.innerHTML = '';
+  CITY_OPTIONS[country].forEach(([value, key]) => {
+    const opt = document.createElement('option');
+    opt.value = value;
+    opt.textContent = t[key] || I18N.en[key];
+    citySelect.appendChild(opt);
+  });
 }
 
 function runSearch(){
+  const country = document.getElementById('country').value;
   const roleRaw = document.getElementById('role').value.trim() || 'jobs';
   const cityKey = document.getElementById('city').value;
-  const cityName = CITY_NAMES[cityKey];
+  const cityName = CITY_NAMES[country][cityKey];
+  const countryName = country === 'ksa' ? 'Saudi Arabia' : 'UAE';
   const q = encodeURIComponent(roleRaw);
   const slug = slugify(roleRaw);
 
   rowMap.forEach((item, i) => {
-    if(item.type === 'portal' || item.type === 'ad') return;
+    if(item.type === 'portal') return;
     const url = item.type === 'direct'
-      ? item.build(q, slug, cityKey, cityName)
-      : buildGoogleSite(item.domain, q, cityName);
+      ? item.build(q, slug, cityKey, cityName, country)
+      : buildGoogleSite(item.domain, q, cityName, country);
     const link = document.getElementById(`link-${i}`);
     const methodWord = item.type === 'direct' ? 'direct search' : 'Google search';
     if(link){
       link.href = url;
-      link.setAttribute('aria-label', `Search ${item.name} for ${roleRaw}${cityName ? ' in '+cityName : ''} (${methodWord}, opens in new tab)`);
+      link.setAttribute('aria-label', `Search ${item.name} for ${roleRaw}${cityName ? ' in '+cityName : ' in '+countryName} (${methodWord}, opens in new tab)`);
     }
     const flapEl = document.getElementById(`flap-${i}`);
-    const label = (roleRaw.toUpperCase()) + (cityName ? ' · ' + cityName.toUpperCase() : ' · UAE');
+    const label = (roleRaw.toUpperCase()) + (cityName ? ' · ' + cityName.toUpperCase() : ' · ' + countryName.toUpperCase());
     if(flapEl) flapTo(flapEl, label, i * 45);
   });
 
   const statusEl = document.getElementById('searchStatus');
   if(statusEl){
-    statusEl.textContent = `Links updated for "${roleRaw}"${cityName ? ' in ' + cityName : ' across the UAE'}.`;
+    statusEl.textContent = `Links updated for "${roleRaw}"${cityName ? ' in ' + cityName : ' across ' + countryName}.`;
   }
 }
 
@@ -780,8 +1024,14 @@ document.getElementById('role').addEventListener('keydown', e => {
 document.getElementById('city').addEventListener('change', () => {
   if(document.getElementById('role').value.trim()) runSearch();
 });
+document.getElementById('country').addEventListener('change', () => {
+  applyLanguage(currentLang);
+});
+document.getElementById('lang').addEventListener('change', (e) => {
+  applyLanguage(e.target.value);
+});
 
-runSearch();
+applyLanguage(currentLang);
 function tick(){
   const now = new Date();
   const gst = new Date(now.getTime() + (now.getTimezoneOffset()*60000) + (4*3600000));
