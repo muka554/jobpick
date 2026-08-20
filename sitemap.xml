@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Replace https://jobpick.netlify.app below with your real domain once deployed. -->
+<!-- Sitemap for jobpick20.com -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jobpick.netlify.app/</loc>
-    <lastmod>2026-08-19</lastmod>
+    <loc>https://jobpick20.com/</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://jobpick.netlify.app/about.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <loc>https://jobpick20.com/about.html</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://jobpick.netlify.app/privacy-policy.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <loc>https://jobpick20.com/privacy-policy.html</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://jobpick.netlify.app/terms-of-use.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <loc>https://jobpick20.com/terms-of-use.html</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://jobpick.netlify.app/advertising-disclosure.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <loc>https://jobpick20.com/advertising-disclosure.html</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://jobpick.netlify.app/contact.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <loc>https://jobpick20.com/contact.html</loc>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>

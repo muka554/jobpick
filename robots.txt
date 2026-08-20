@@ -1,7 +1,6 @@
-# robots.txt for Gulf Job Hub
-# Replace https://jobpick.netlify.app below with your real domain once deployed.
+# robots.txt for jobpick20.com
 
 User-agent: *
 Allow: /
 
-Sitemap: https://jobpick.netlify.app/sitemap.xml
+Sitemap: https://jobpick20.com/sitemap.xml
