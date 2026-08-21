@@ -109,6 +109,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   html[dir="rtl"] .groupbar{ flex-direction:row-reverse; }
   @media (max-width:560px){
     html[dir="rtl"] .code{ left:14px; right:auto; }
+    html[dir="rtl"] .star-btn{ right:14px; left:auto; }
   }
   body{ -webkit-user-select:none; -moz-user-select:none; user-select:none; }
   input, textarea, select{ -webkit-user-select:text; -moz-user-select:text; user-select:text; }
@@ -366,7 +367,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   .boardhead{
     display:grid;
-    grid-template-columns:64px 1fr 130px 92px;
+    grid-template-columns:26px 64px 1fr 130px 92px;
     gap:10px;
     padding:0 14px 8px;
     font-family:'Barlow Condensed', sans-serif;
@@ -385,7 +386,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   .row{
     display:grid;
-    grid-template-columns:64px 1fr 130px 92px;
+    grid-template-columns:26px 64px 1fr 130px 92px;
     gap:10px;
     align-items:center;
     padding:13px 14px;
@@ -467,6 +468,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     0%,100%{ opacity:1; } 50%{ opacity:.25; }
   }
 
+  .star-btn{
+    background:transparent;
+    border:none;
+    color:var(--line);
+    font-size:17px;
+    line-height:1;
+    cursor:pointer;
+    padding:2px;
+    justify-self:start;
+    transition:color .15s ease, transform .1s ease;
+  }
+  .star-btn:hover{ color:var(--amber); }
+  .star-btn.active{ color:var(--amber); }
+  .star-btn:active{ transform:scale(0.9); }
+  .row.pinned{ background:rgba(255,176,32,0.05); }
+  .row.pinned .code{ color:var(--amber); }
+  .groupbar.favorites-bar{ color:var(--amber); }
+  .groupbar.favorites-bar .count{ color:var(--amber); opacity:.7; }
+
   footer{
     margin-top:26px;
     font-size:12px;
@@ -488,6 +508,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       padding:14px 14px 16px;
     }
     .code{ position:absolute; top:14px; right:14px; }
+    .star-btn{ position:absolute; top:11px; left:14px; }
     .status{ text-align:left; }
     #role{ width:100%; }
     .searchpanel{ flex-direction:column; align-items:stretch; }
@@ -637,6 +658,8 @@ const I18N = {
     'group.classifieds':'Classifieds',
     'group.govNational.uae':'Government & Emiratisation',
     'group.govNational.ksa':'Saudi National Platforms',
+    'group.favorites':'Your Favorites',
+    'fav.add':'Add to favorites:', 'fav.remove':'Remove from favorites:',
     'marker.live':'LIVE', 'marker.google':'VIA GOOGLE', 'marker.portal':'PORTAL',
     'btn.open':'Open →', 'btn.visit':'Visit →', 'ad.label':'Advertisement',
     'footer.how':'How this works: nothing is scraped or stored. Most rows build a direct search link to that platform\'s own site using your keyword and open it in a new tab. A few recruitment agencies and niche boards don\'t expose a public search URL, so those rows route through a Google site-search instead — same destination, just built differently. Government and national-employment programmes require your own login, so they link straight to the portal.',
@@ -665,6 +688,8 @@ const I18N = {
     'group.classifieds':'إعلانات مبوبة',
     'group.govNational.uae':'الحكومة وبرنامج التوطين',
     'group.govNational.ksa':'المنصات الوطنية السعودية',
+    'group.favorites':'المفضلة لديك',
+    'fav.add':'إضافة إلى المفضلة:', 'fav.remove':'إزالة من المفضلة:',
     'marker.live':'مباشر', 'marker.google':'عبر جوجل', 'marker.portal':'بوابة',
     'btn.open':'فتح ←', 'btn.visit':'زيارة ←', 'ad.label':'إعلان',
     'footer.how':'كيف يعمل هذا: لا يتم استخراج أو تخزين أي بيانات. تبني معظم الصفوف رابط بحث مباشر إلى موقع تلك المنصة باستخدام كلمتك المفتاحية وتفتحه في تبويب جديد. بعض وكالات التوظيف والمنصات المتخصصة لا توفر رابط بحث عام، لذا تمر تلك الصفوف عبر بحث جوجل المخصص للموقع بدلاً من ذلك — نفس الوجهة، بطريقة بناء مختلفة فقط. البرامج الحكومية وبرامج التوظيف الوطنية تتطلب تسجيل دخول خاص بك، لذا ترتبط مباشرة بالبوابة.',
@@ -693,6 +718,8 @@ const I18N = {
     'group.classifieds':'वर्गीकृत विज्ञापन',
     'group.govNational.uae':'सरकार और इमिराटीकरण',
     'group.govNational.ksa':'सऊदी राष्ट्रीय प्लेटफ़ॉर्म',
+    'group.favorites':'आपकी पसंदीदा',
+    'fav.add':'पसंदीदा में जोड़ें:', 'fav.remove':'पसंदीदा से हटाएं:',
     'marker.live':'लाइव', 'marker.google':'गूगल के ज़रिए', 'marker.portal':'पोर्टल',
     'btn.open':'खोलें →', 'btn.visit':'देखें →', 'ad.label':'विज्ञापन',
     'footer.how':'यह कैसे काम करता है: कुछ भी स्क्रैप या संग्रहीत नहीं किया जाता। अधिकांश पंक्तियां आपके कीवर्ड का उपयोग करके उस प्लेटफ़ॉर्म की अपनी साइट पर सीधा खोज लिंक बनाती हैं और उसे नए टैब में खोलती हैं। कुछ भर्ती एजेंसियों और विशेष बोर्ड सार्वजनिक खोज URL उपलब्ध नहीं कराते, इसलिए वे पंक्तियां इसके बजाय गूगल साइट-खोज से होकर गुजरती हैं — वही गंतव्य, बस अलग तरीके से बनाया गया। सरकारी और राष्ट्रीय रोज़गार कार्यक्रमों के लिए आपका अपना लॉगिन चाहिए, इसलिए वे सीधे पोर्टल से जुड़ते हैं।',
@@ -721,6 +748,8 @@ const I18N = {
     'group.classifieds':'درجہ بند اشتہارات',
     'group.govNational.uae':'حکومت اور توطین پروگرام',
     'group.govNational.ksa':'سعودی قومی پلیٹ فارمز',
+    'group.favorites':'آپ کی پسندیدہ',
+    'fav.add':'پسندیدہ میں شامل کریں:', 'fav.remove':'پسندیدہ سے ہٹائیں:',
     'marker.live':'لائیو', 'marker.google':'گوگل کے ذریعے', 'marker.portal':'پورٹل',
     'btn.open':'کھولیں ←', 'btn.visit':'ملاحظہ کریں ←', 'ad.label':'اشتہار',
     'footer.how':'یہ کیسے کام کرتا ہے: کچھ بھی اسکریپ یا محفوظ نہیں کیا جاتا۔ زیادہ تر لائنیں آپ کے کلیدی لفظ کا استعمال کرتے ہوئے اس پلیٹ فارم کی اپنی سائٹ پر براہ راست سرچ لنک بناتی ہیں اور اسے نئے ٹیب میں کھولتی ہیں۔ کچھ بھرتی ایجنسیاں اور مخصوص بورڈز عوامی سرچ یو آر ایل فراہم نہیں کرتے، اس لیے وہ لائنیں اس کے بجائے گوگل سائٹ سرچ سے گزرتی ہیں — وہی منزل، بس مختلف طریقے سے بنائی گئی۔ حکومتی اور قومی روزگار پروگراموں کے لیے آپ کا اپنا لاگ ان درکار ہے، اس لیے وہ براہ راست پورٹل سے جڑتی ہیں۔',
@@ -865,27 +894,66 @@ const host = document.getElementById('boardhost');
 let rowIndex = 0;
 const rowMap = [];
 
+let favorites;
+try{
+  favorites = new Set(JSON.parse(localStorage.getItem('jobhub_favorites') || '[]'));
+}catch(e){
+  favorites = new Set();
+}
+
+function saveFavorites(){
+  try{ localStorage.setItem('jobhub_favorites', JSON.stringify(Array.from(favorites))); }catch(e){}
+}
+
+function toggleFavorite(code){
+  if(favorites.has(code)) favorites.delete(code);
+  else favorites.add(code);
+  saveFavorites();
+  renderBoard();
+  runSearch();
+}
+
+host.addEventListener('click', e => {
+  const btn = e.target.closest('.star-btn');
+  if(!btn) return;
+  toggleFavorite(btn.dataset.code);
+});
+
 function renderBoard(){
   const country = document.getElementById('country').value;
-  const GROUPS = getGroups(country);
+  let GROUPS = getGroups(country);
   const t = I18N[currentLang] || I18N.en;
   host.innerHTML = '';
   rowIndex = 0;
   rowMap.length = 0;
+
+  if(favorites.size){
+    const favItems = [];
+    const seen = new Set();
+    GROUPS.forEach(g => g.items.forEach(item => {
+      if(favorites.has(item.code) && !seen.has(item.code)){
+        favItems.push(item);
+        seen.add(item.code);
+      }
+    }));
+    if(favItems.length){
+      GROUPS = [{ title:'Your Favorites', key:'favorites', items:favItems }, ...GROUPS];
+    }
+  }
 
   GROUPS.forEach(group => {
     const titleKey = group.key === 'govNational' ? `group.govNational.${country}` : `group.${group.key}`;
     const groupTitle = t[titleKey] || I18N.en[titleKey] || group.title;
 
     const bar = document.createElement('h2');
-    bar.className = 'groupbar';
-    bar.innerHTML = `<span>${groupTitle}</span><span class="count">${group.items.length}</span>`;
+    bar.className = 'groupbar' + (group.key === 'favorites' ? ' favorites-bar' : '');
+    bar.innerHTML = `<span>${group.key === 'favorites' ? '\u2605 ' : ''}${groupTitle}</span><span class="count">${group.items.length}</span>`;
     host.appendChild(bar);
 
     const head = document.createElement('div');
     head.className = 'boardhead';
     head.setAttribute('aria-hidden', 'true');
-    head.innerHTML = `<div>${t['col.code']}</div><div>${t['col.destination']}</div><div>${t['col.gate']}</div><div class="r">${t['col.status']}</div>`;
+    head.innerHTML = `<div aria-hidden="true"></div><div>${t['col.code']}</div><div>${t['col.destination']}</div><div>${t['col.gate']}</div><div class="r">${t['col.status']}</div>`;
     host.appendChild(head);
 
     const boardEl = document.createElement('div');
@@ -896,8 +964,9 @@ function renderBoard(){
     group.items.forEach(item => {
       const i = rowIndex++;
       rowMap.push(item);
+      const isFav = favorites.has(item.code);
       const row = document.createElement('div');
-      row.className = 'row';
+      row.className = 'row' + (isFav ? ' pinned' : '');
       row.setAttribute('role', 'listitem');
 
       const methodWord = item.type === 'direct' ? 'direct search' : item.type === 'google' ? 'Google search' : 'portal';
@@ -919,6 +988,8 @@ function renderBoard(){
       }
 
       row.innerHTML = `
+        <button type="button" class="star-btn${isFav ? ' active' : ''}" data-code="${item.code}"
+                aria-pressed="${isFav}" aria-label="${isFav ? t['fav.remove'] : t['fav.add']} ${item.name}">${isFav ? '\u2605' : '\u2606'}</button>
         <div class="code" aria-hidden="true">${item.code}</div>
         <div class="dest">
           <div class="name">${item.name}</div>
@@ -998,6 +1069,8 @@ function populateCityOptions(){
   const country = document.getElementById('country').value;
   const citySelect = document.getElementById('city');
   const t = I18N[currentLang] || I18N.en;
+  let savedCity = null;
+  try{ savedCity = localStorage.getItem('jobhub_city'); }catch(e){}
   citySelect.innerHTML = '';
   CITY_OPTIONS[country].forEach(([value, key]) => {
     const opt = document.createElement('option');
@@ -1005,12 +1078,22 @@ function populateCityOptions(){
     opt.textContent = t[key] || I18N.en[key];
     citySelect.appendChild(opt);
   });
+  if(savedCity && CITY_OPTIONS[country].some(([v]) => v === savedCity)){
+    citySelect.value = savedCity;
+  }
 }
 
 function runSearch(){
   const country = document.getElementById('country').value;
-  const roleRaw = document.getElementById('role').value.trim() || 'jobs';
+  const roleInputVal = document.getElementById('role').value.trim();
+  const roleRaw = roleInputVal || 'jobs';
   const cityKey = document.getElementById('city').value;
+
+  try{
+    localStorage.setItem('jobhub_role', roleInputVal);
+    localStorage.setItem('jobhub_country', country);
+    localStorage.setItem('jobhub_city', cityKey);
+  }catch(e){}
   const cityName = CITY_NAMES[country][cityKey];
   const countryName = country === 'ksa' ? 'Saudi Arabia' : 'UAE';
   const q = encodeURIComponent(roleRaw);
@@ -1051,6 +1134,13 @@ document.getElementById('country').addEventListener('change', () => {
 document.getElementById('lang').addEventListener('change', (e) => {
   applyLanguage(e.target.value);
 });
+
+try{
+  const savedRole = localStorage.getItem('jobhub_role');
+  const savedCountry = localStorage.getItem('jobhub_country');
+  if(savedCountry) document.getElementById('country').value = savedCountry;
+  if(savedRole) document.getElementById('role').value = savedRole;
+}catch(e){}
 
 applyLanguage(currentLang);
 function tick(){
