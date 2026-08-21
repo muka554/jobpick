@@ -1,9 +1,1 @@
-# ads.txt for jobpick20.com — required at your domain root:
-#   https://jobpick20.com/ads.txt   (NOT in a subfolder)
-#
-# This is your real publisher ID (from ca-pub-6874304698042148).
-# Double-check it against AdSense -> Sites -> your site ->
-# "View ads.txt instructions" before going live, in case Google
-# ever issues you a second reseller/relationship line to add here.
-
 google.com, pub-6874304698042148, DIRECT, f08c47fec0942fa0
