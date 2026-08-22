@@ -97,8 +97,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   footer .flinks a{ color:var(--ink-dim); }
 </style>
+
+<style>
+  /* ===== Page background theme ===== */
+  body[data-page="legal"]{
+    background:
+      radial-gradient(circle at 50% 0%, rgba(139,147,163,0.03), transparent 60%),
+      linear-gradient(180deg, #0D1016 0%, #0C0F14 100%);
+    background-attachment:fixed;
+  }
+  @media (max-width:560px){
+    body[data-page]{ background-attachment:scroll; }
+  }
+</style>
 </head>
-<body>
+<body data-page="legal">
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N64BK74G"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>

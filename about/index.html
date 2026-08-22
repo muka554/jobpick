@@ -103,8 +103,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   footer .flinks a{ color:var(--ink-dim); }
 </style>
+
+<style>
+  /* ===== Page background theme ===== */
+  body[data-page="about"]{
+    background:
+      radial-gradient(circle at 20% 0%, rgba(255,176,32,0.06), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(167,139,250,0.05), transparent 55%),
+      linear-gradient(160deg, #0D1016 0%, #0F1219 100%);
+    background-attachment:fixed;
+  }
+  @media (max-width:560px){
+    body[data-page]{ background-attachment:scroll; }
+  }
+</style>
 </head>
-<body>
+<body data-page="about">
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N64BK74G"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
