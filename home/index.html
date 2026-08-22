@@ -119,6 +119,59 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     #role{ width:100%; }
     .searchpanel{ flex-direction:column; align-items:stretch; }
   }
+  /* ===== Added visual effects ===== */
+  .searchpanel{ position:relative; }
+  .searchpanel::before{
+    content:'';
+    position:absolute;
+    inset:-14px;
+    border-radius:16px;
+    background:radial-gradient(200px circle at var(--mx,50%) var(--my,50%), rgba(45,217,192,0.12), transparent 70%);
+    pointer-events:none;
+    opacity:0;
+    transition:opacity .3s ease;
+    z-index:-1;
+  }
+  .searchpanel:hover::before{ opacity:1; }
+  .groupwrap{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .groupwrap.is-visible{ opacity:1; transform:translateY(0); }
+  .groupbar span.count{ display:inline-block; min-width:1.4em; text-align:right; font-variant-numeric:tabular-nums; }
+  .rescard{ position:relative; overflow:hidden; }
+  .rescard::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(120deg, transparent 30%, rgba(45,217,192,0.08) 50%, transparent 70%);
+    transform:translateX(-100%);
+    transition:transform .6s ease;
+    pointer-events:none;
+  }
+  .rescard:hover::after{ transform:translateX(100%); }
+  .rescard:hover{ transform:translateY(-4px); box-shadow:0 10px 24px rgba(0,0,0,0.4); }
+  .pill{ transition:transform .15s ease, box-shadow .15s ease; }
+  .row:hover .pill{ transform:scale(1.06); }
+  .go{ position:relative; overflow:hidden; }
+  .go::after{
+    content:'';
+    position:absolute;
+    top:50%; left:50%;
+    width:0; height:0;
+    border-radius:50%;
+    background:rgba(255,255,255,0.35);
+    transform:translate(-50%,-50%);
+    transition:width .4s ease, height .4s ease, opacity .6s ease;
+    opacity:0;
+    pointer-events:none;
+  }
+  .go:active::after{ width:220px; height:220px; opacity:1; transition:width 0s, height 0s, opacity 0s; }
+  @media (prefers-reduced-motion: reduce){
+    .groupwrap{ opacity:1; transform:none; transition:none; }
+    .rescard::after, .go::after{ display:none; }
+  }
 </style>
 </head>
 <body>
@@ -537,6 +590,64 @@ if(paramsTriggerSearch){
   const boardhost=document.getElementById('boardhost');
   if(boardhost)boardhost.scrollIntoView({behavior:'smooth',block:'start'});
 }
+</script>
+<script>
+(function(){
+  var panel = document.querySelector('.searchpanel');
+  if(panel){
+    panel.addEventListener('mousemove', function(e){
+      var r = panel.getBoundingClientRect();
+      panel.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      panel.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  }
+  function animateCount(el, target){
+    var duration = 500;
+    var start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      el.textContent = Math.floor(progress * target);
+      if(progress < 1){
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+  function observeGroups(){
+    var groups = document.querySelectorAll('.groupwrap:not([data-observed])');
+    if(!groups.length) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          var el = entry.target;
+          el.classList.add('is-visible');
+          var countEl = el.querySelector('.groupbar .count');
+          if(countEl && !countEl.dataset.animated){
+            var target = parseInt(countEl.textContent, 10);
+            if(!isNaN(target)){
+              countEl.dataset.animated = 'true';
+              animateCount(countEl, target);
+            }
+          }
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.15 });
+    groups.forEach(function(g){
+      g.dataset.observed = 'true';
+      io.observe(g);
+    });
+  }
+  var host2 = document.getElementById('boardhost');
+  if(host2 && 'MutationObserver' in window){
+    var mo = new MutationObserver(function(){ observeGroups(); });
+    mo.observe(host2, { childList:true });
+  }
+  observeGroups();
+})();
 </script>
 </body>
 </html>
