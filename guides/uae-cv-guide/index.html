@@ -68,8 +68,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   footer .flinks{ display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; font-family:'Inter', sans-serif; font-size:12px; }
   footer .flinks a{ color:var(--ink-dim); }
 </style>
+<style>
+  /* ===== Page background photo (subtle, heavily dimmed) ===== */
+  body[data-page="guide-cv"]{
+    background:
+      radial-gradient(circle at 80% 100%, rgba(45,217,192,0.08), transparent 55%),
+      linear-gradient(180deg, rgba(10,15,20,0.96) 0%, rgba(10,15,20,0.98) 100%),
+      url('https://commons.wikimedia.org/wiki/Special:FilePath/Young_Man_in_a_Interview.jpg') center 30% / cover no-repeat fixed;
+  }
+  @media (max-width:560px){
+    body[data-page]{ background-attachment:scroll; }
+  }
+</style>
 </head>
-<body>
+<body data-page="guide-cv">
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N64BK74G" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="wrap">
   <nav class="sitenav" aria-label="Site">
