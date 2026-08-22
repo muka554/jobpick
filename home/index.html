@@ -88,8 +88,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .pill-google{ color:var(--amber); border-color:var(--amber); background:rgba(255,176,32,0.08); }
   .pill-portal{ color:var(--purple); border-color:var(--purple); background:rgba(167,139,250,0.08); }
   .opensearch{ text-align:right; }
-  .opensearch a{ font-weight:600; font-size:13.5px; color:var(--ink); text-decoration:none; white-space:nowrap; display:inline-flex; align-items:center; gap:4px; }
-  .opensearch a:hover{ color:var(--teal); text-decoration:underline; }
+  .opensearch a{ font-weight:700; font-size:13px; color:var(--bg); text-decoration:none; white-space:nowrap; display:inline-flex; align-items:center; gap:5px; background:var(--teal); padding:8px 14px; border-radius:7px; transition:background .15s ease, transform .1s ease, box-shadow .15s ease; }
+  .opensearch a:hover{ background:#3EF2D6; box-shadow:0 4px 12px rgba(45,217,192,0.35); }
+  .opensearch a:active{ transform:scale(0.96); }
   .star-btn{ background:transparent; border:none; color:var(--line); font-size:17px; cursor:pointer; padding:2px; justify-self:start; }
   .star-btn:hover{ color:var(--amber); }
   .star-btn.active{ color:var(--amber); }
@@ -310,7 +311,7 @@ const I18N = {
     'city.any':'أي مدينة','city.dubai':'دبي','city.abudhabi':'أبوظبي','city.sharjah':'الشارقة',
     'city.riyadh':'الرياض','city.jeddah':'جدة','city.dammam':'الدمام',
     'button.search':'ابحث في كل اللوحات','hint':'عرض منصات الوظائف الخليجية المتاحة.','filter.placeholder':'تصفية المنصات بالاسم...',
-    'col.destination':'المنصة','col.gate':'التغطية','col.type':'النوع','col.status':'فتح البحث',
+    'col.destination':'المنصة','col.gate':'التقطية','col.type':'النوع','col.status':'فتح البحث',
     'pill.direct':'بحث مباشر','pill.google':'عبر جوجل','pill.portal':'بوابة',
     'resources.heading':'موارد البحث عن عمل','resources.uaeGuide':'كيفية البحث عن وظيفة في الإمارات',
     'resources.cvGuide':'دليل السيرة الذاتية الإماراتية',
@@ -320,7 +321,7 @@ const I18N = {
     'group.generalGlobal':'لوحات عامة وعالمية','group.gulfSpecialist':'لوحات خليجية متخصصة','group.recruitment':'وكالات التوظيف',
     'group.classifieds':'إعلانات مبوبة','group.govNational.uae':'الحكومة وبرنامج التوطين','group.govNational.ksa':'المنصات الوطنية السعودية','group.favorites':'المفضلة لديك',
     'fav.add':'إضافة إلى المفضلة:','fav.remove':'إزالة من المفضلة:','btn.open':'فتح ←','btn.visit':'زيارة ←','ad.label':'إعلان',
-    'footer.how':'كيف يعمل هذا: لا يتم استخراج أو تخزين أي بيانات. تبني معظم الصفوف رابط بحث مباشر إلى موقع تلك المنصة باستخدام كلمتك المفتاحية وتفتحه في تبويب جديد. بعض وكالات التوظيف والمنصات المتخصصة لا توفر رابط بحث عام، لذا تمر تلك الصفوف عبر بحث جوجل المخصص للموقع بدلاً من ذلك — نفس الوجهة، بطريقة بناء مختلفة فقط. البرامج الحكومية وبرامج التوظيف الوطنية تتطلب تسجيل دخول خاص بك، لذا ترتبط مباشرة بالبوابة.',
+    'footer.how':'كيف يعمل هذا: لا يتم استخراج أو تخزين أي بيانات. تبني معظم الصفوف رابط بحث مباشر إلى موقع تلك المنصة باستخدام كلمتك المفتاحية وتفتحه في تبويب جديد. بعض وكالات التوظيف والمنصات المتخصصة لا توفر رابط بحث عام، لذا تمر تلك الصفوف عبر بحث جوجل المختص للموقع بدلاً من ذلك — نفس الوجهة، بطريقة بناء مختلفة فقط. البرامج الحكومية وبرامج التوظيف الوطنية تتطلب تسجيل دخول خاص بك، لذا ترتبط مباشرة بالبوابة.',
     'footer.static':'هذه الصفحة ملف HTML ثابت ومستقل بذاته — مجاني الاستضافة في أي مكان (GitHub Pages أو Netlify أو خادمك الخاص) أو فتحه محليًا. لا يستدعي أي خادم خلفي ولا يخزن أي شيء عنك.',
     'footer.copyright':'© 2026 Gulf Job Hub. جميع الحقوق محفوظة. لا يجوز نسخ تصميم هذه الصفحة أو كودها أو إعادة توزيعها دون إذن.',
   },
@@ -344,9 +345,9 @@ const I18N = {
     'group.generalGlobal':'सामान्य और वैश्विक बोर्ड','group.gulfSpecialist':'खाड़ी विशेषज्ञ बोर्ड','group.recruitment':'भर्ती एजेंसियां',
     'group.classifieds':'वर्गीकृत विज्ञापन','group.govNational.uae':'सरकार और इमिराटीकरण','group.govNational.ksa':'सऊदी राष्ट्रीय प्लेटफ़ॉर्म','group.favorites':'आपकी पसंदीदा',
     'fav.add':'पसंदीदा में जोड़ें:','fav.remove':'पसंदीदा से हटाएं:','btn.open':'खोलें →','btn.visit':'देखें →','ad.label':'विज्ञापन',
-    'footer.how':'यह कैसे काम करता है: कुछ भी स्क्रैप या संग्रहीत नहीं किया जाता। अधिकांश पंक्तियां आपके कीवर्ड का उपयोग करके उस प्लेटफ़ॉर्म की अपनी साइट पर सीधा खोज लिंक बनाती हैं और उसे नए टैब में खोलती हैं। कुछ भर्ती एजेंसियों और विशेष बोर्ड सार्वजनिक खोज URL उपलब्ध नहीं कराते, इसलिए वे पंक्तियां इसके बजाय गूगल साइट-खोज से होकर गुजरती हैं — वही गंतव्य, बस अलग तरीके से बनाई गई। सरकारी और राष्ट्रीय रोज़गार कार्यक्रमों के लिए आपका अपना लॉगिन चाहिए, इसलिए वे सीधे पोर्टल से जुड़ते हैं।',
-    'footer.static':'यह पेज एक स्थिर, स्व-निहित HTML फ़ाइल है — कहीं भी मुफ़्त में होस्ट करें (GitHub Pages, Netlify, आपका अपना सर्वर) या स्थानीय रूप से खोलें। यह किसी बैकएंड को कॉल नहीं करता और आपके बारे में कुछ भी संग्रहीत नहीं करता।',
-    'footer.copyright':'© 2026 Gulf Job Hub. सर्वाधिकार सुरक्षित। इस पेज के डिज़ाइन और कोड को बिना अनुमति के कॉपी या पुनर्वितरित नहीं किया जा सकता।',
+    'footer.how':'यह कैसे काम करता है: कुछ भी स्क्रैप या संग्रहीत नहीं किया जाता। अधिकांश पंक्तियां आपके कीवर्ड का उपयोग करके उस प्लेटफ़ॉर्म की अपनी साइट पर सीधा खोज लिंक बनाती हैं और उसे नए टैब में खोलती हैं।',
+    'footer.static':'यह पेज एक स्थिर, स्व-निहित HTML फ़ाइल है — कहीं भी मुफ़्त में होस्ट करें (GitHub Pages, Netlify, आपका अपना सर्वर) या स्थानीय रूप से खोलें।',
+    'footer.copyright':'© 2026 Gulf Job Hub. सर्वाधिकार सुरक्षित।',
   },
   ur: {
     'nav.home':'ہوم','nav.about':'ہمارے بارے میں','nav.privacy':'رازداری کی پالیسی',
@@ -364,7 +365,7 @@ const I18N = {
     'resources.heading':'جاب سرچ وسائل','resources.uaeGuide':'یو اے ای میں نوکری کیسے تلاش کریں',
     'resources.cvGuide':'یو اے ای سی وی گائیڈ','resources.scamGuide':'بھرتی فراڈ کی وارننگ علامات',
     'resources.platformsGuide':'خلیجی جاب پلیٹ فارمز کی وضاحت',
-    'resources.dubai':'دبئی میں نوکریاں تلاش کریں','resources.abudhabi':'ابوظہبی میں نوکریاں تلاش کریں','resources.riyadh':'ریاض میں نوکریاں تلاش کریں',
+    'resources.dubai':'دبئی میں نوکریاں تلاش کریں','resources.abudhabi':'ابوظہبی میں نوکریاں تلاش کریں','resources.riyadh':'ریاژ میں نوکریاں تلاش کریں',
     'group.generalGlobal':'عمومی اور عالمی بورڈز','group.gulfSpecialist':'خلیجی ماہر بورڈز','group.recruitment':'بھرتی ایجنسیاں',
     'group.classifieds':'درجہ بند اشتہارات','group.govNational.uae':'حکومت اور توطین پروگرام','group.govNational.ksa':'سعودی قومی پلیٹ فارمز','group.favorites':'آپ کی پسندیدہ',
     'fav.add':'پسندیدہ میں شامل کریں:','fav.remove':'پسندیدہ سے ہٹائیں:','btn.open':'کھولیں ←','btn.visit':'ملاحظہ کریں ←','ad.label':'اشتہار',
