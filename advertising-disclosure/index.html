@@ -96,8 +96,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   footer .flinks a{ color:var(--ink-dim); }
 </style>
+<style>
+  /* ===== Page background photo (subtle, heavily dimmed) ===== */
+  body[data-page="legal-ads"]{
+    background:
+      radial-gradient(circle at 70% 100%, rgba(45,217,192,0.08), transparent 55%),
+      linear-gradient(180deg, rgba(13,16,22,0.96) 0%, rgba(12,15,20,0.98) 100%),
+      url('https://commons.wikimedia.org/wiki/Special:FilePath/Legal_Contract_%26_Signature_-_Warm_Tones.jpg') center 65% / cover no-repeat fixed;
+  }
+  @media (max-width:560px){
+    body[data-page]{ background-attachment:scroll; }
+  }
+</style>
 </head>
-<body>
+<body data-page="legal-ads">
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N64BK74G"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -140,6 +152,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <footer>
     <p>© 2026 Gulf Job Hub. All rights reserved.</p>
+    <p style="font-size:11px;">Background photo by Blogtrepreneur, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>, via Wikimedia Commons.</p>
     <div class="flinks">
       <a href="/home">Home</a>
       <a href="/about">About</a>
