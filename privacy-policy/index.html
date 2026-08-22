@@ -43,7 +43,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     display:flex; justify-content:center; padding:28px 14px 60px;
   }
   a{ color:var(--amber); }
-  a:focus-visible, button:focus-visible{ outline:3px solid var(--amber); outline-offset:2px; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:3px solid var(--amber); outline-offset:2px;
+  }
   .wrap{ width:100%; max-width:760px; }
 
   .sitenav{
@@ -70,7 +72,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   h1{
     font-family:'Barlow Condensed', sans-serif; font-weight:700;
-    font-size:38px; margin:4px 0 6px; line-height:1.05;
+    font-size:38px; margin:4px 0 22px; line-height:1.05;
+    border-bottom:2px solid var(--line); padding-bottom:18px;
   }
   h2{
     font-family:'Barlow Condensed', sans-serif; font-weight:600;
@@ -81,7 +84,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .meta{ font-size:12.5px; color:var(--ink-dim); margin:0 0 26px; padding-bottom:18px; border-bottom:2px solid var(--line); }
   .card{
     background:var(--panel); border:1px solid var(--line); border-radius:6px;
-    padding:16px 18px; margin:20px 0; font-size:13.5px; color:var(--ink-dim);
+    padding:16px 18px; margin:20px 0;
   }
   footer{
     margin-top:40px; font-size:12px; color:var(--ink-dim); line-height:1.6;
@@ -132,7 +135,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <p>This site displays ads served by Google AdSense. Google and its partners may use cookies (including the DoubleClick DART cookie) to serve ads based on your visits to this site and other sites on the internet.</p>
   <ul>
     <li>You can opt out of personalized advertising by visiting <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google Ads Settings</a>.</li>
-    <li>You can also visit <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">www.aboutads.info</a> to opt out of third-party vendors' use of cookies for personalized advertising.</li>
+    <li>You can also visit <a href="https://www.aboutads.info/choices" target="_blank" rel="noopener">www.aboutads.info</a> to opt out of third-party vendors' use of cookies for personalized advertising.</li>
     <li>Google's own use of advertising cookies is governed by its <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Advertising Policies</a>.</li>
   </ul>
   <p>Some rows on this site link to sponsored or affiliate offers, clearly marked "Advertisement" — see our <a href="/advertising-disclosure">Advertising Disclosure</a> for details.</p>
@@ -166,5 +169,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </footer>
 </div>
+
 </body>
 </html>
