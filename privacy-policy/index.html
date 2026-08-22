@@ -97,14 +97,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   footer .flinks a{ color:var(--ink-dim); }
 </style>
-
 <style>
-  /* ===== Page background theme ===== */
+  /* ===== Page background photo (subtle, heavily dimmed) ===== */
   body[data-page="legal"]{
     background:
-      radial-gradient(circle at 50% 0%, rgba(139,147,163,0.03), transparent 60%),
-      linear-gradient(180deg, #0D1016 0%, #0C0F14 100%);
-    background-attachment:fixed;
+      linear-gradient(180deg, rgba(13,16,22,0.96) 0%, rgba(12,15,20,0.98) 100%),
+      url('https://commons.wikimedia.org/wiki/Special:FilePath/Dubai_night_skyline.jpg') center 20% / cover no-repeat fixed;
   }
   @media (max-width:560px){
     body[data-page]{ background-attachment:scroll; }
