@@ -173,8 +173,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .rescard::after, .go::after{ display:none; }
   }
 </style>
+<style>
+  /* ===== Page background photo (subtle, heavily dimmed) ===== */
+  body[data-page="home"]{
+    background:
+      radial-gradient(circle at 15% 20%, rgba(45,217,192,0.09), transparent 45%),
+      radial-gradient(circle at 85% 75%, rgba(255,176,32,0.07), transparent 50%),
+      linear-gradient(180deg, rgba(10,15,20,0.95) 0%, rgba(10,15,20,0.98) 100%),
+      url('https://commons.wikimedia.org/wiki/Special:FilePath/Departure_board,_Portrush_station_-_geograph.org.uk_-_1670972.jpg') center 35% / cover no-repeat fixed;
+  }
+  @media (max-width:560px){
+    body[data-page]{ background-attachment:scroll; }
+  }
+</style>
 </head>
-<body>
+<body data-page="home">
 <a class="skip-link" href="#boardhost">Skip to job board links</a>
 <div class="wrap">
   <nav class="sitenav" aria-label="Site">
