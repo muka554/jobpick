@@ -1,5 +1,5 @@
 const GULF_PLATFORM_CONFIG = {
-  version: 3,
+  version: 4,
   countries: {
     uae: { label: 'United Arab Emirates', searchLocation: 'United Arab Emirates', cities: { any: 'Any city', dubai: 'Dubai', abudhabi: 'Abu Dhabi', sharjah: 'Sharjah' } },
     ksa: { label: 'Saudi Arabia', searchLocation: 'Saudi Arabia', cities: { any: 'Any city', riyadh: 'Riyadh', jeddah: 'Jeddah', dammam: 'Dammam' } }
@@ -9,8 +9,8 @@ const GULF_PLATFORM_CONFIG = {
       { id: 'bayt', name: 'Bayt.com', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, city, country }) => `https://www.bayt.com/en/${country === 'ksa' ? 'saudi-arabia' : 'uae'}/jobs/${slug(role)}${city ? `/?location=${encodeURIComponent(city)}` : '/'}` },
       { id: 'linkedin', name: 'LinkedIn Jobs', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, location }) => `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(role)}&location=${encodeURIComponent(location)}` },
       { id: 'indeed', name: 'Indeed', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, location, country }) => `https://${country === 'ksa' ? 'sa.indeed.com' : 'ae.indeed.com'}/jobs?q=${encodeURIComponent(role)}&l=${encodeURIComponent(location)}` },
-      { id: 'glassdoor', name: 'Glassdoor', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, location }) => `https://www.glassdoor.com/Job/jobs.htm?sc.keyword=${encodeURIComponent(role)}&locKeyword=${encodeURIComponent(location)}` },
-      { id: 'google-jobs', name: 'Google for Jobs', type: 'google', coverage: 'Aggregated listings', buildUrl: ({ role, location }) => googleFallback('jobs', role, location) }
+      { id: 'google-jobs', name: 'Google for Jobs', type: 'google', coverage: 'Aggregated listings', buildUrl: ({ role, location }) => googleFallback('jobs', role, location) },
+      { id: 'glassdoor', name: 'Glassdoor', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, location }) => `https://www.glassdoor.com/Job/jobs.htm?sc.keyword=${encodeURIComponent(role)}&locKeyword=${encodeURIComponent(location)}` }
     ] },
     { id: 'gulf', title: 'Gulf Specialist Boards', platforms: [
       { id: 'gulftalent', name: 'GulfTalent', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, location }) => `https://www.gulftalent.com/jobs/search?search=${encodeURIComponent(role)}&location=${encodeURIComponent(location)}` },
@@ -21,8 +21,8 @@ const GULF_PLATFORM_CONFIG = {
       { id: 'rigzone', name: 'Rigzone', type: 'direct', coverage: 'Energy jobs', buildUrl: ({ role, location }) => `https://www.rigzone.com/oil/jobs/search/?q=${encodeURIComponent(role)}&location=${encodeURIComponent(location)}` }
     ] },
     { id: 'agencies', title: 'Recruitment Agencies', platforms: [
-      { id: 'michael-page', name: 'Michael Page', type: 'direct', coverage: 'Recruitment agency', buildUrl: ({ role, location }) => `https://www.michaelpage.ae/en/search-jobs?keyword=${encodeURIComponent(role)}&location=${encodeURIComponent(location)}` },
-      { id: 'robert-half', name: 'Robert Half', type: 'direct', coverage: 'Recruitment agency', buildUrl: ({ role, location }) => `https://www.roberthalf.com/ae/en/jobs?keywords=${encodeURIComponent(role)}&location=${encodeURIComponent(location)}` },
+      { id: 'michael-page', name: 'Michael Page', type: 'direct', coverage: 'Recruitment agency', buildUrl: ({ role, location, country }) => country === 'ksa' ? googleFallback('site:michaelpage.com jobs', role, location) : `https://www.michaelpage.ae/en/search-jobs?keyword=${encodeURIComponent(role)}&location=${encodeURIComponent(location)}` },
+      { id: 'robert-half', name: 'Robert Half', type: 'direct', coverage: 'Recruitment agency', buildUrl: ({ role, location, country }) => country === 'ksa' ? googleFallback('site:roberthalf.com jobs', role, location) : `https://www.roberthalf.com/ae/en/jobs?keywords=${encodeURIComponent(role)}&location=${encodeURIComponent(location)}` },
       { id: 'hays', name: 'Hays', type: 'google', coverage: 'Recruitment agency', buildUrl: ({ role, location }) => googleFallback('site:hays.ae jobs', role, location) },
       { id: 'charterhouse', name: 'Charterhouse ME', type: 'google', coverage: 'Recruitment agency', buildUrl: ({ role, location }) => googleFallback('site:charterhouseme.ae jobs', role, location) }
     ] }
