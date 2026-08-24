@@ -1,11 +1,123 @@
 <!DOCTYPE html>
+<!--
+  © 2026 Gulf Job Hub. All rights reserved.
+  Contact: wiz.mkawe@gmail.com
+-->
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N64BK74G');</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HP8NJBF7K8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HP8NJBF7K8');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About — Gulf Job Hub</title>
-<link rel="stylesheet" href="/assets/site.css">
+<meta name="description" content="What Gulf Job Hub is, how it works, and who runs it.">
+<meta name="copyright" content="© 2026 Gulf Job Hub. All rights reserved.">
+<link rel="canonical" href="https://jobpick20.com/about/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230A0F14'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%23FFB020' font-family='monospace' font-weight='bold'%3E%E2%9C%88%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0A0F14; --panel:#101820; --board:#0D131A; --amber:#FFB020; --teal:#2DD9C0; --purple:#A78BFA; --ink:#ECE8DE; --ink-dim:#8B93A3; --line:#222B36; }
+  *{ box-sizing:border-box; }
+  body{ -webkit-user-select:none; user-select:none; }
+  html,body{ margin:0; padding:0; background:var(--bg); }
+  body{ font-family:'Inter',sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; min-height:100vh; display:flex; justify-content:center; padding:28px 14px 60px; }
+  .wrap{ width:100%; max-width:760px; }
+  a{ color:var(--amber); }
+  a:focus-visible, button:focus-visible{ outline:3px solid var(--amber); outline-offset:2px; }
+  .sitenav{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--line); }
+  .sitenav .brand{ font-family:'Manrope',sans-serif; font-weight:800; font-size:19px; color:var(--teal); text-decoration:none; }
+  .sitenav .links{ display:flex; gap:16px; flex-wrap:wrap; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.06em; font-size:12.5px; }
+  .sitenav .links a{ color:var(--ink-dim); text-decoration:none; }
+  .sitenav .links a:hover,.sitenav .links a[aria-current="page"]{ color:var(--amber); }
+  .eyebrow{ font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:12px; color:var(--amber); font-weight:600; }
+  h1{ font-family:'Manrope',sans-serif; font-weight:800; font-size:38px; margin:10px 0 22px; line-height:1.1; border-bottom:2px solid var(--line); padding-bottom:18px; }
+  /* ===== Section heads styled like home's .groupbar ===== */
+  h2{
+    text-transform:uppercase; letter-spacing:.1em; font-size:12.5px; color:var(--teal);
+    font-weight:700; font-family:'Barlow Condensed',sans-serif;
+    margin:28px 0 10px; padding:12px 14px; background:var(--panel);
+    border-radius:6px; display:flex; justify-content:space-between;
+  }
+  p, li{ font-size:15px; line-height:1.65; color:var(--ink); }
+  ul{ padding-left:20px; }
+  .meta{ font-size:12.5px; color:var(--ink-dim); margin:0 0 26px; padding-bottom:18px; border-bottom:2px solid var(--line); }
+  .card{ background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:16px 18px; margin:20px 0; position:relative; overflow:hidden; }
+  .card::after{ content:''; position:absolute; inset:0; background:linear-gradient(120deg, transparent 30%, rgba(45,217,192,0.06) 50%, transparent 70%); transform:translateX(-100%); transition:transform .6s ease; pointer-events:none; }
+  .card:hover::after{ transform:translateX(100%); }
+  .card:hover{ border-color:var(--teal); }
+  footer{ margin-top:40px; font-size:12px; color:var(--ink-dim); line-height:1.6; border-top:1px solid var(--line); padding-top:16px; }
+  footer .flinks{ display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.06em; font-size:12px; }
+  footer .flinks a{ color:var(--ink-dim); }
+  @media (prefers-reduced-motion: reduce){ .card::after{ display:none; } }
+</style>
+<style>
+  /* ===== Page background photo (subtle, dimmed) ===== */
+  body[data-page="about"]{
+    background:
+      radial-gradient(circle at 15% 20%, rgba(45,217,192,0.09), transparent 45%),
+      radial-gradient(circle at 85% 75%, rgba(255,176,32,0.07), transparent 50%),
+      linear-gradient(180deg, rgba(10,15,20,0.78) 0%, rgba(10,15,20,0.85) 100%),
+      url('https://commons.wikimedia.org/wiki/Special:FilePath/Dubai_night_skyline.jpg') center 30% / cover no-repeat fixed;
+  }
+  @media (max-width:560px){
+    body[data-page]{ background-attachment:scroll; }
+  }
+</style>
 </head>
-<body>
-<div class="wrap"><nav class="sitenav"><a class="brand" href="/">GULF JOB HUB</a><div id="authBox"><span id="userGreeting" hidden></span><a id="loginBtn" href="/account/">Sign in</a><button id="logoutBtn" type="button" hidden>Log out</button></div><div class="links"><a href="/">Home</a><a href="/about/">About</a><a href="/privacy-policy/">Privacy Policy</a><a href="/terms-of-use/">Terms of Use</a><a href="/advertising-disclosure/">Advertising</a><a href="/contact/">Contact</a></div></nav><main><p class="eyebrow">About</p><h1>What Gulf Job Hub is</h1><p>Gulf Job Hub is a free search-aggregator page for people looking for work in the United Arab Emirates and Saudi Arabia. Instead of opening ten different job sites one at a time, you type a role once here and get direct search links into each platform's own results.</p><h2>What this site is not</h2><p>Gulf Job Hub does not host, store, or control job listings itself. It does not scrape, republish, or claim ownership of content from linked platforms.</p><h2>Who runs it</h2><p>Gulf Job Hub is run by Ahmed Abayzeed.</p><h2>Contact</h2><p>Questions and feedback are welcome via the <a href="/contact/">Contact page</a>.</p></main></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="/assets/auth-nav.js"></script>
-</body></html>
+<body data-page="about">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N64BK74G" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="wrap">
+  <nav class="sitenav" aria-label="Site">
+    <a class="brand" href="/">GULF JOB HUB</a>
+    <div class="links">
+      <a href="/">Home</a>
+      <a href="/about/" aria-current="page">About</a>
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-of-use/">Terms of Use</a>
+      <a href="/advertising-disclosure/">Advertising</a>
+      <a href="/contact/">Contact</a>
+    </div>
+  </nav>
+
+  <div class="eyebrow">About</div>
+  <h1>What Gulf Job Hub is</h1>
+
+  <p>Gulf Job Hub is a free search-aggregator page for people looking for work in the United Arab Emirates and Saudi Arabia. Instead of opening ten different job sites one at a time, you type a role once here and get direct search links into each platform's own results — Bayt, LinkedIn, Indeed, GulfTalent, Naukrigulf, and around a dozen more general, Gulf-specialist, recruitment-agency, and national-employment sources.</p>
+
+  <h2><span>What this site is not</span></h2>
+  <p>Gulf Job Hub does not host, store, or control any job listings itself. It does not scrape, republish, or claim ownership of content from the platforms it links to. Every search takes you to that platform's own site, under that platform's own terms. We are not affiliated with, endorsed by, or officially connected to any of the job boards, recruitment agencies, or government portals listed.</p>
+
+  <div class="card">
+    <p style="margin:0;">Think of this page as a well-organized bookmarks list with a smart search box attached — not a job board in its own right.</p>
+  </div>
+
+  <h2><span>Who runs it</span></h2>
+  <p>Gulf Job Hub is run by Ahmed Abayzeed. Questions, feedback, or partnership inquiries are welcome via the contact details below.</p>
+
+  <h2><span>Contact</span></h2>
+  <p>Questions, corrections, or removal requests are welcome — see the <a href="/contact/">Contact page</a>.</p>
+
+  <footer>
+    <p>© 2026 Gulf Job Hub. All rights reserved.</p>
+    <div class="flinks">
+      <a href="/">Home</a>
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-of-use/">Terms of Use</a>
+      <a href="/advertising-disclosure/">Advertising Disclosure</a>
+      <a href="/contact/">Contact</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
