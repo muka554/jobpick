@@ -6,7 +6,7 @@ const GULF_PLATFORM_CONFIG = {
   },
   groups: [
     { id: 'general', title: 'General & Global Boards', platforms: [
-      { id: 'bayt', name: 'Bayt.com', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, location, country }) => `https://www.bayt.com/en/${country === 'ksa' ? 'saudi-arabia' : 'uae'}/jobs/search/?keyword=${encodeURIComponent(role)}&location=${encodeURIComponent(location)}` },
+      { id: 'bayt', name: 'Bayt.com', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, location, country }) => `https://www.bayt.com/en/${country === 'ksa' ? 'saudi-arabia' : 'uae'}/jobs/search/?q=${encodeURIComponent(role)}&location=${encodeURIComponent(location)}` },
       { id: 'linkedin', name: 'LinkedIn Jobs', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, location }) => `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(role)}&location=${encodeURIComponent(location)}` },
       { id: 'indeed', name: 'Indeed', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, location, country }) => `https://${country === 'ksa' ? 'sa.indeed.com' : 'ae.indeed.com'}/jobs?q=${encodeURIComponent(role)}&l=${encodeURIComponent(location)}` },
       { id: 'google-jobs', name: 'Google for Jobs', type: 'google', coverage: 'Aggregated listings', buildUrl: ({ role, location }) => googleFallback('jobs', role, location) },
