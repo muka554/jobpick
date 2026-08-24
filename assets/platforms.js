@@ -1,22 +1,22 @@
 const GULF_PLATFORM_CONFIG = {
-  version: 1,
+  version: 2,
   countries: {
-    uae: { label: 'United Arab Emirates', cities: { any: '', dubai: 'Dubai', abudhabi: 'Abu Dhabi', sharjah: 'Sharjah' } },
-    ksa: { label: 'Saudi Arabia', cities: { any: '', riyadh: 'Riyadh', jeddah: 'Jeddah', dammam: 'Dammam' } }
+    uae: { label: 'United Arab Emirates', cities: { any: 'Any city', dubai: 'Dubai', abudhabi: 'Abu Dhabi', sharjah: 'Sharjah' } },
+    ksa: { label: 'Saudi Arabia', cities: { any: 'Any city', riyadh: 'Riyadh', jeddah: 'Jeddah', dammam: 'Dammam' } }
   },
   groups: [
     { id: 'general', title: 'General & Global Boards', platforms: [
       { id: 'bayt', name: 'Bayt.com', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, city, country }) => `https://www.bayt.com/en/${country === 'ksa' ? 'saudi-arabia' : 'uae'}/jobs/${slug(role)}${city ? `/?location=${encodeURIComponent(city)}` : '/'}` },
       { id: 'linkedin', name: 'LinkedIn Jobs', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, city }) => `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(role)}${city ? `&location=${encodeURIComponent(city)}` : ''}` },
       { id: 'indeed', name: 'Indeed', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, city, country }) => `https://${country === 'ksa' ? 'sa.indeed.com' : 'ae.indeed.com'}/jobs?q=${encodeURIComponent(role)}${city ? `&l=${encodeURIComponent(city)}` : ''}` },
-      { id: 'glassdoor', name: 'Glassdoor', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, city }) => `https://www.glassdoor.com/Job/jobs.htm?sc.keyword=${encodeURIComponent(role)}${city ? `&locT=C&locId=&locKeyword=${encodeURIComponent(city)}` : ''}` },
+      { id: 'glassdoor', name: 'Glassdoor', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, city }) => `https://www.glassdoor.com/Job/jobs.htm?sc.keyword=${encodeURIComponent(role)}${city ? `&locT=C&locKeyword=${encodeURIComponent(city)}` : ''}` },
       { id: 'google-jobs', name: 'Google for Jobs', type: 'google', coverage: 'Aggregated listings', buildUrl: ({ role, city }) => googleFallback('jobs', role, city) }
     ] },
     { id: 'gulf', title: 'Gulf Specialist Boards', platforms: [
       { id: 'gulftalent', name: 'GulfTalent', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, city }) => `https://www.gulftalent.com/jobs/search?search=${encodeURIComponent(role)}${city ? `&location=${encodeURIComponent(city)}` : ''}` },
       { id: 'naukrigulf', name: 'Naukrigulf', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, city }) => `https://www.naukrigulf.com/${slug(role)}-jobs${city ? `?location=${encodeURIComponent(city)}` : ''}` },
       { id: 'foundit', name: 'foundit Gulf', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, city }) => `https://www.founditgulf.com/srp/results?query=${encodeURIComponent(role)}${city ? `&locations=${encodeURIComponent(city)}` : ''}` },
-      { id: 'laimoon', name: 'Laimoon', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, city, country }) => `https://uae.laimoon.com/jobs/${slug(role)}${city ? `?location=${encodeURIComponent(city)}` : ''}` },
+      { id: 'laimoon', name: 'Laimoon', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, city, country }) => `https://${country === 'ksa' ? 'saudi-arabia' : 'uae'}.laimoon.com/jobs/${slug(role)}${city ? `?location=${encodeURIComponent(city)}` : ''}` },
       { id: 'akhtaboot', name: 'Akhtaboot', type: 'google', coverage: 'Gulf jobs', buildUrl: ({ role, city }) => googleFallback('site:akhtaboot.com', role, city) },
       { id: 'rigzone', name: 'Rigzone', type: 'direct', coverage: 'Energy jobs', buildUrl: ({ role, city }) => `https://www.rigzone.com/oil/jobs/search/?q=${encodeURIComponent(role)}${city ? `&location=${encodeURIComponent(city)}` : ''}` }
     ] },
@@ -39,18 +39,18 @@ function googleFallback(scope, role, city) {
 }
 
 function getPlatformGroups() {
-  return GULF_PLATFORM_CONFIG.groups;
+  return Array.isArray(GULF_PLATFORM_CONFIG.groups) ? GULF_PLATFORM_CONFIG.groups : [];
 }
 
-function getPlatformSearchUrl(platform, query) {
+function getPlatformSearchUrl(platform, query = {}) {
+  const role = String(query.role || '').trim();
+  const city = String(query.city || '').trim();
+  const country = query.country || 'uae';
   try {
-    return platform.buildUrl({
-      role: String(query.role || '').trim(),
-      city: String(query.city || '').trim(),
-      country: query.country || 'uae'
-    });
+    const url = platform.buildUrl({ role, city, country });
+    return url || googleFallback(`site:${platform.id}`, role, city);
   } catch (error) {
-    return googleFallback(`site:${platform.id}`, query.role, query.city);
+    return googleFallback(`site:${platform.id}`, role, city);
   }
 }
 
