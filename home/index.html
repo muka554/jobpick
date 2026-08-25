@@ -190,6 +190,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .go.is-searching{animation:searchPulse .7s ease-out;transform-origin:center;}
   @keyframes searchPulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(45,217,192,.55)}45%{transform:scale(1.045);box-shadow:0 0 0 10px rgba(45,217,192,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(45,217,192,0)}}
   @media (prefers-reduced-motion: reduce){.go.is-searching{animation:none;}}
+
+  .field select{min-width:176px;transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease;}
+  .field select:hover{border-color:var(--accent);background-color:var(--panel);}
+  .field select:focus-visible{border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,217,192,.22);}
+  .field select option{background:var(--board);color:var(--ink);}
+  @media (max-width:640px){.field select{width:100%;min-width:0;}}
 </style>
 <style>
   /* ===== Page background photo (subtle, heavily dimmed) ===== */
@@ -257,7 +263,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   </nav>
   <main id="main-content" tabindex="-1">
   <header class="top">
-    <div class="eyebrow" data-i18n="eyebrow">UAE · Saudi Arabia · Egypt · Qatar · Gulf Careers</div>
+    <div class="eyebrow" data-i18n="eyebrow">UAE · Saudi Arabia · Egypt · Qatar · Kuwait · Gulf Careers</div>
     <h1 id="search-heading" data-i18n="headline">Find your next opportunity.</h1>
     <div class="sub" data-i18n="subtitle">Search across major job platforms and employment portals from one focused Gulf job-search hub. We organize links to external sources; always verify the original listing before applying.</div>
   </header>
@@ -273,6 +279,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <option value="ksa" data-i18n="country.ksa">Saudi Arabia</option>
         <option value="egypt" data-i18n="country.egypt">Egypt</option>
         <option value="qatar" data-i18n="country.qatar">Qatar</option>
+        <option value="kuwait" data-i18n="country.kuwait">Kuwait</option>
       </select>
     </div>
     <div class="field">
@@ -335,8 +342,8 @@ const I18N = {
     'headline':'Find your next opportunity.',
     'subtitle':'Search across major job platforms and employment portals from one focused Gulf job-search hub. We organize links to external sources; always verify the original listing before applying.',
     'label.role':'Role or keyword','label.country':'Country','label.city':'City',
-    'country.uae':'United Arab Emirates','country.ksa':'Saudi Arabia','country.egypt':'Egypt','country.qatar':'Qatar',
-    'city.any':'Any city','city.dubai':'Dubai','city.abudhabi':'Abu Dhabi','city.sharjah':'Sharjah','city.riyadh':'Riyadh','city.jeddah':'Jeddah','city.dammam':'Dammam','city.cairo':'Cairo','city.giza':'Giza','city.alexandria':'Alexandria','city.newcairo':'New Cairo','city.october':'6th of October City','city.mansoura':'Mansoura','city.tanta':'Tanta','city.portsaid':'Port Said','city.suez':'Suez','city.asyut':'Asyut','city.doha':'Doha','city.alrayyan':'Al Rayyan','city.alwakrah':'Al Wakrah','city.alkhor':'Al Khor','city.lusail':'Lusail','city.ummsalal':'Umm Salal','city.mesaieed':'Mesaieed',
+    'country.uae':'United Arab Emirates','country.ksa':'Saudi Arabia','country.egypt':'Egypt','country.qatar':'Qatar','country.kuwait':'Kuwait',
+    'city.any':'Any city','city.dubai':'Dubai','city.abudhabi':'Abu Dhabi','city.sharjah':'Sharjah','city.riyadh':'Riyadh','city.jeddah':'Jeddah','city.dammam':'Dammam','city.cairo':'Cairo','city.giza':'Giza','city.alexandria':'Alexandria','city.newcairo':'New Cairo','city.october':'6th of October City','city.mansoura':'Mansoura','city.tanta':'Tanta','city.portsaid':'Port Said','city.suez':'Suez','city.asyut':'Asyut','city.doha':'Doha','city.alrayyan':'Al Rayyan','city.alwakrah':'Al Wakrah','city.alkhor':'Al Khor','city.lusail':'Lusail','city.ummsalal':'Umm Salal','city.mesaieed':'Mesaieed','city.kuwaitcity':'Kuwait City','city.hawally':'Hawally','city.salmiya':'Salmiya','city.farwaniya':'Farwaniya','city.ahmadi':'Al Ahmadi','city.fahaheel':'Fahaheel','city.jahra':'Jahra','city.mubarak':'Mubarak Al-Kabeer','city.sabahsalem':'Sabah Al-Salem',
     'button.search':'Search all boards','hint':'Showing available Gulf and regional job platforms.','filter.placeholder':'Filter platforms by name...',
     'col.destination':'Platform','col.gate':'Coverage','col.type':'Type','col.status':'Open search',
     'pill.direct':'Direct search','pill.google':'Google fallback','pill.portal':'Portal',
@@ -445,9 +452,9 @@ function applyLanguage(lang){
   if(langSelect)langSelect.value=lang;
   populateCityOptions();renderBoard();runSearch();
 }
-const COUNTRY_INFO={uae:{name:'United Arab Emirates',slug:'uae',domain:'ae'},ksa:{name:'Saudi Arabia',slug:'saudi-arabia',domain:'sa'},egypt:{name:'Egypt',slug:'egypt',domain:'eg'},qatar:{name:'Qatar',slug:'qatar',domain:'qa'}};
-const CITY_NAMES={uae:{any:'',dubai:'Dubai',abudhabi:'Abu Dhabi',sharjah:'Sharjah'},ksa:{any:'',riyadh:'Riyadh',jeddah:'Jeddah',dammam:'Dammam'},egypt:{any:'',cairo:'Cairo',giza:'Giza',alexandria:'Alexandria',newcairo:'New Cairo',october:'6th of October City',mansoura:'Mansoura',tanta:'Tanta',portsaid:'Port Said',suez:'Suez',asyut:'Asyut'},qatar:{any:'',doha:'Doha',alrayyan:'Al Rayyan',alwakrah:'Al Wakrah',alkhor:'Al Khor',lusail:'Lusail',ummsalal:'Umm Salal',mesaieed:'Mesaieed'}};
-const CITY_OPTIONS={uae:[['any','city.any'],['dubai','city.dubai'],['abudhabi','city.abudhabi'],['sharjah','city.sharjah']],ksa:[['any','city.any'],['riyadh','city.riyadh'],['jeddah','city.jeddah'],['dammam','city.dammam']],egypt:[['any','city.any'],['cairo','city.cairo'],['giza','city.giza'],['alexandria','city.alexandria'],['newcairo','city.newcairo'],['october','city.october'],['mansoura','city.mansoura'],['tanta','city.tanta'],['portsaid','city.portsaid'],['suez','city.suez'],['asyut','city.asyut']],qatar:[['any','city.any'],['doha','city.doha'],['alrayyan','city.alrayyan'],['alwakrah','city.alwakrah'],['alkhor','city.alkhor'],['lusail','city.lusail'],['ummsalal','city.ummsalal'],['mesaieed','city.mesaieed']]};
+const COUNTRY_INFO={uae:{name:'United Arab Emirates',slug:'uae',domain:'ae'},ksa:{name:'Saudi Arabia',slug:'saudi-arabia',domain:'sa'},egypt:{name:'Egypt',slug:'egypt',domain:'eg'},qatar:{name:'Qatar',slug:'qatar',domain:'qa'},kuwait:{name:'Kuwait',slug:'kuwait',domain:'kw'}};
+const CITY_NAMES={uae:{any:'',dubai:'Dubai',abudhabi:'Abu Dhabi',sharjah:'Sharjah'},ksa:{any:'',riyadh:'Riyadh',jeddah:'Jeddah',dammam:'Dammam'},egypt:{any:'',cairo:'Cairo',giza:'Giza',alexandria:'Alexandria',newcairo:'New Cairo',october:'6th of October City',mansoura:'Mansoura',tanta:'Tanta',portsaid:'Port Said',suez:'Suez',asyut:'Asyut'},qatar:{any:'',doha:'Doha',alrayyan:'Al Rayyan',alwakrah:'Al Wakrah',alkhor:'Al Khor',lusail:'Lusail',ummsalal:'Umm Salal',mesaieed:'Mesaieed'},kuwait:{any:'',kuwaitcity:'Kuwait City',hawally:'Hawally',salmiya:'Salmiya',farwaniya:'Farwaniya',ahmadi:'Al Ahmadi',fahaheel:'Fahaheel',jahra:'Jahra',mubarak:'Mubarak Al-Kabeer',sabahsalem:'Sabah Al-Salem'}};
+const CITY_OPTIONS={uae:[['any','city.any'],['dubai','city.dubai'],['abudhabi','city.abudhabi'],['sharjah','city.sharjah']],ksa:[['any','city.any'],['riyadh','city.riyadh'],['jeddah','city.jeddah'],['dammam','city.dammam']],egypt:[['any','city.any'],['cairo','city.cairo'],['giza','city.giza'],['alexandria','city.alexandria'],['newcairo','city.newcairo'],['october','city.october'],['mansoura','city.mansoura'],['tanta','city.tanta'],['portsaid','city.portsaid'],['suez','city.suez'],['asyut','city.asyut']],qatar:[['any','city.any'],['doha','city.doha'],['alrayyan','city.alrayyan'],['alwakrah','city.alwakrah'],['alkhor','city.alkhor'],['lusail','city.lusail'],['ummsalal','city.ummsalal'],['mesaieed','city.mesaieed']],kuwait:[['any','city.any'],['kuwaitcity','city.kuwaitcity'],['hawally','city.hawally'],['salmiya','city.salmiya'],['farwaniya','city.farwaniya'],['ahmadi','city.ahmadi'],['fahaheel','city.fahaheel'],['jahra','city.jahra'],['mubarak','city.mubarak'],['sabahsalem','city.sabahsalem']]};
 function slugify(str){return str.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')||'jobs';}
 const host=document.getElementById('boardhost');
 let rowIndex=0;
@@ -508,11 +515,13 @@ function getGroups(country){
   if(country==='ksa') local={title:'Classifieds',key:'classifieds',items:[{code:'HRJ',name:'Haraj (حراج)',gate:'Classifieds',type:'direct',build:(q,slug,cityKey,cityName)=>`https://haraj.com.sa/en/search/${q}%20${encodeURIComponent('وظائف')}/${cityName?'?city='+encodeURIComponent(cityName):''}`}]};
   else if(country==='uae') local={title:'Classifieds',key:'classifieds',items:[{code:'DBZ',name:'Dubizzle Jobs',gate:'Classifieds',type:'direct',build:(q,slug,cityKey,cityName)=>`https://dubai.dubizzle.com/jobs/search/?keywords=${q}${cityName?'&locations='+encodeURIComponent(cityName):''}`}]};
   else if(country==='egypt') local={title:'Classifieds',key:'classifieds',items:[{code:'DBZ',name:'Dubizzle Egypt Jobs',gate:'Egypt classifieds',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.dubizzle.com.eg/en/jobs/${cityName?'?locations='+encodeURIComponent(cityName)+'&':''}keywords=${q}`}]};
+  else if(country==='kuwait') local={title:'Classifieds',key:'classifieds',items:[{code:'1KW',name:'1 Kuwait Jobs',gate:'Kuwait job board',type:'portal',url:'https://1kuwaitjobs.com/'}]};
   else local={title:'Classifieds',key:'classifieds',items:[{code:'QTL-C',name:'Qatar Living Jobs',gate:'Qatar classifieds',type:'portal',url:'https://www.qatarliving.com/jobs'}]};
   let national;
   if(country==='ksa') national={title:'Saudi National Platforms',key:'govNational',items:[{code:'TQT',name:'Taqat',gate:'Saudi Nationals · login req.',type:'portal',url:'https://www.taqat.sa/en/web/guest/individual'},{code:'JDR',name:'Jadarat',gate:'Saudi Nationals · login req.',type:'portal',url:'https://jadarat.sa/'}]};
   else if(country==='uae') national={title:'Government & Emiratisation',key:'govNational',items:[{code:'NFS',name:'Nafis',gate:'UAE Nationals · login req.',type:'portal',url:'https://nafis.gov.ae/en/'},{code:'UAE',name:'U.AE — Job Portals Guide',gate:'Government guidance',type:'portal',url:'https://u.ae/en/information-and-services/jobs'}]};
   else if(country==='egypt') national={title:'Egyptian Public Platforms',key:'govNational',items:[{code:'EJG',name:'Egypt Government Jobs',gate:'Government portal',type:'portal',url:'https://jobs.gov.eg/'},{code:'MNP',name:'Egypt Ministry of Labour',gate:'Government employment services',type:'portal',url:'https://www.manpower.gov.eg/'}]};
+  else if(country==='kuwait') national={title:'Kuwait Public Platforms',key:'govNational',items:[{code:'KGO',name:'Kuwait Government Online',gate:'Government portal',type:'portal',url:'https://e.gov.kw/'},{code:'CSC',name:'Kuwait Civil Service Commission',gate:'Public-sector careers',type:'portal',url:'https://www.csc.gov.kw/'}]};
   else national={title:'Qatar Public Platforms',key:'govNational',items:[{code:'QAR',name:'Qatar Airways Careers',gate:'Qatar employer careers',type:'portal',url:'https://careers.qatarairways.com/'},{code:'QGP',name:'Qatar Government Portal',gate:'Government employment guidance',type:'portal',url:'https://www.gov.qa/wps/portal/topics/employment'}]};
   return [{title:'General & Global Boards',key:'generalGlobal',items:global},{title:'Gulf Specialist Boards',key:'gulfSpecialist',items:specialist},{title:'Recruitment Agencies',key:'recruitment',items:agencies},local,national];
 }
