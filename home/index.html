@@ -186,6 +186,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   @media (max-width:700px){ body[data-page]{background-attachment:scroll !important;} }
   .resources,.board,.card{content-visibility:auto;contain-intrinsic-size:1px 600px;}
+
+  .go.is-searching{animation:searchPulse .7s ease-out;transform-origin:center;}
+  @keyframes searchPulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(45,217,192,.55)}45%{transform:scale(1.045);box-shadow:0 0 0 10px rgba(45,217,192,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(45,217,192,0)}}
+  @media (prefers-reduced-motion: reduce){.go.is-searching{animation:none;}}
 </style>
 <style>
   /* ===== Page background photo (subtle, heavily dimmed) ===== */
@@ -253,7 +257,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   </nav>
   <main id="main-content" tabindex="-1">
   <header class="top">
-    <div class="eyebrow" data-i18n="eyebrow">UAE · Saudi Arabia · Gulf Careers</div>
+    <div class="eyebrow" data-i18n="eyebrow">UAE · Saudi Arabia · Egypt · Qatar · Gulf Careers</div>
     <h1 id="search-heading" data-i18n="headline">Find your next opportunity.</h1>
     <div class="sub" data-i18n="subtitle">Search across major job platforms and employment portals from one focused Gulf job-search hub. We organize links to external sources; always verify the original listing before applying.</div>
   </header>
@@ -267,6 +271,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <select id="country">
         <option value="uae" data-i18n="country.uae">United Arab Emirates</option>
         <option value="ksa" data-i18n="country.ksa">Saudi Arabia</option>
+        <option value="egypt" data-i18n="country.egypt">Egypt</option>
+        <option value="qatar" data-i18n="country.qatar">Qatar</option>
       </select>
     </div>
     <div class="field">
@@ -325,13 +331,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 const I18N = {
   en: {
     'nav.home':'Home','nav.about':'About','nav.privacy':'Privacy Policy','nav.terms':'Terms of Use','nav.advertising':'Advertising','nav.contact':'Contact',
-    'eyebrow':'UAE · Saudi Arabia · Gulf Careers',
+    'eyebrow':'UAE · Saudi Arabia · Egypt · Qatar · Gulf Careers',
     'headline':'Find your next opportunity.',
     'subtitle':'Search across major job platforms and employment portals from one focused Gulf job-search hub. We organize links to external sources; always verify the original listing before applying.',
     'label.role':'Role or keyword','label.country':'Country','label.city':'City',
-    'country.uae':'United Arab Emirates','country.ksa':'Saudi Arabia',
-    'city.any':'Any city','city.dubai':'Dubai','city.abudhabi':'Abu Dhabi','city.sharjah':'Sharjah','city.riyadh':'Riyadh','city.jeddah':'Jeddah','city.dammam':'Dammam',
-    'button.search':'Search all boards','hint':'Showing available Gulf job platforms.','filter.placeholder':'Filter platforms by name...',
+    'country.uae':'United Arab Emirates','country.ksa':'Saudi Arabia','country.egypt':'Egypt','country.qatar':'Qatar',
+    'city.any':'Any city','city.dubai':'Dubai','city.abudhabi':'Abu Dhabi','city.sharjah':'Sharjah','city.riyadh':'Riyadh','city.jeddah':'Jeddah','city.dammam':'Dammam','city.cairo':'Cairo','city.giza':'Giza','city.alexandria':'Alexandria','city.newcairo':'New Cairo','city.october':'6th of October City','city.mansoura':'Mansoura','city.tanta':'Tanta','city.portsaid':'Port Said','city.suez':'Suez','city.asyut':'Asyut','city.doha':'Doha','city.alrayyan':'Al Rayyan','city.alwakrah':'Al Wakrah','city.alkhor':'Al Khor','city.lusail':'Lusail','city.ummsalal':'Umm Salal','city.mesaieed':'Mesaieed',
+    'button.search':'Search all boards','hint':'Showing available Gulf and regional job platforms.','filter.placeholder':'Filter platforms by name...',
     'col.destination':'Platform','col.gate':'Coverage','col.type':'Type','col.status':'Open search',
     'pill.direct':'Direct search','pill.google':'Google fallback','pill.portal':'Portal',
     'resources.heading':'Job-search resources','resources.uaeGuide':'How to search for jobs in the UAE','resources.cvGuide':'UAE CV guide',
@@ -439,47 +445,9 @@ function applyLanguage(lang){
   if(langSelect)langSelect.value=lang;
   populateCityOptions();renderBoard();runSearch();
 }
-function getGroups(country){
-  return [
-    { title:'General & Global Boards', key:'generalGlobal', items:[
-      { code:'BYT', name:'Bayt.com', gate:'General · MENA', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.bayt.com/en/${ctry==='ksa'?'saudi-arabia':'uae'}/jobs/?keyword=${q}` },
-      { code:'LKD', name:'LinkedIn Jobs', gate:'General · Global', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.linkedin.com/jobs/search/?keywords=${q}&location=${encodeURIComponent((cityName?cityName+', ':'')+(ctry==='ksa'?'Saudi Arabia':'United Arab Emirates'))}` },
-      { code:'IND', name:'Indeed', gate:'General · Global', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://${ctry==='ksa'?'sa':'ae'}.indeed.com/jobs?q=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
-      { code:'GGL', name:'Google for Jobs', gate:'Aggregator', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.google.com/search?q=${q}+jobs+in+${encodeURIComponent(cityName||(ctry==='ksa'?'Saudi Arabia':'United Arab Emirates'))}&ibp=htl;jobs` },
-      { code:'GLD', name:'Glassdoor', gate:'General · Global', type:'direct', build:(q,slug,city,cityName)=>`https://www.glassdoor.com/Job/jobs.htm?sc.keyword=${q}`+(cityName?`&locKeyword=${encodeURIComponent(cityName)}`:'') },
-      { code:'CJT', name:'CareerJet', gate:'Aggregator', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.careerjet.${ctry==='ksa'?'sa':'ae'}/jobs?s=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
-      { code:'TLC', name:'Talent.com', gate:'Aggregator', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://${ctry==='ksa'?'sa':'ae'}.talent.com/jobs?k=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
-    ]},
-    { title:'Gulf Specialist Boards', key:'gulfSpecialist', items:[
-      { code:'GLF', name:'GulfTalent', gate:'Gulf specialist', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.gulftalent.com/${ctry==='ksa'?'saudi-arabia':'uae'}/jobs/title/${slug}${cityName?'?location='+encodeURIComponent(cityName):''}` },
-      { code:'NKG', name:'Naukrigulf', gate:'Gulf specialist', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.naukrigulf.com/${slug}-jobs-in-${ctry==='ksa'?'saudi-arabia':'uae'}${cityName?'?location='+encodeURIComponent(cityName):''}` },
-      { code:'FND', name:'foundit Gulf (Monster)', gate:'Gulf specialist', type:'google', domain:'founditgulf.com' },
-      { code:'LMN', name:'Laimoon', gate:'Gulf specialist', type:'google', domain:'jobs.laimoon.com' },
-      { code:'AKB', name:'Akhtaboot', gate:'Gulf · Levant', type:'google', domain:'akhtaboot.com' },
-      { code:'RGZ', name:'Rigzone', gate:'Energy · Oil & Gas · city filter when supported', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.rigzone.com/oil/jobs/search/?sk=${q}${cityName?'&l='+encodeURIComponent(cityName):''}` },
-    ]},
-    { title:'Recruitment Agencies', key:'recruitment', items:[
-      { code:'MPG', name:'Michael Page', gate:'Professional · Exec', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.michaelpage.${ctry==='ksa'?'com.sa':'ae'}/jobs/${slug}${cityName?'?location='+encodeURIComponent(cityName):''}` },
-      { code:'RHF', name:'Robert Half', gate:'Professional · Finance', type:'google', domain:'roberthalf.com' },
-      { code:'HYS', name:'Hays', gate:'Professional · Multi', type:'google', domain: country==='ksa'?'hays.com.sa':'hays.ae' },
-      { code:'CHH', name:'Charterhouse ME', gate:'Professional · Multi', type:'google', domain:'charterhouseme.ae' },
-    ]},
-    country==='ksa' ? { title:'Classifieds', key:'classifieds', items:[
-      { code:'HRJ', name:'Haraj (حراج)', gate:'Classifieds', type:'direct', build:(q,slug,city,cityName)=>`https://haraj.com.sa/en/search/${q}%20${encodeURIComponent('وظائف')}/${cityName?'?city='+encodeURIComponent(cityName):''}` },
-    ]} : { title:'Classifieds', key:'classifieds', items:[
-      { code:'DBZ', name:'Dubizzle Jobs', gate:'Classifieds', type:'direct', build:(q,slug,city,cityName)=>`https://dubai.dubizzle.com/jobs/search/?keywords=${q}${cityName?'&locations='+encodeURIComponent(cityName):''}` },
-    ]},
-    country==='ksa' ? { title:'Saudi National Platforms', key:'govNational', items:[
-      { code:'TQT', name:'Taqat', gate:'Saudi Nationals · login req.', type:'portal', url:'https://www.taqat.sa/en/web/guest/individual' },
-      { code:'JDR', name:'Jadarat', gate:'Saudi Nationals · login req.', type:'portal', url:'https://jadarat.sa/' },
-    ]} : { title:'Government & Emiratisation', key:'govNational', items:[
-      { code:'NFS', name:'Nafis', gate:'UAE Nationals · login req.', type:'portal', url:'https://nafis.gov.ae/en/' },
-      { code:'UAE', name:'U.AE — Job Portals Guide', gate:'Government guidance', type:'portal', url:'https://u.ae/en/information-and-services/jobs/searching-for-a-job/register-on-job-portals' },
-    ]},
-  ];
-}
-const CITY_NAMES={ uae:{any:'',dubai:'Dubai',abudhabi:'Abu Dhabi',sharjah:'Sharjah'}, ksa:{any:'',riyadh:'Riyadh',jeddah:'Jeddah',dammam:'Dammam'} };
-const CITY_OPTIONS={ uae:[['any','city.any'],['dubai','city.dubai'],['abudhabi','city.abudhabi'],['sharjah','city.sharjah']], ksa:[['any','city.any'],['riyadh','city.riyadh'],['jeddah','city.jeddah'],['dammam','city.dammam']] };
+const COUNTRY_INFO={uae:{name:'United Arab Emirates',slug:'uae',domain:'ae'},ksa:{name:'Saudi Arabia',slug:'saudi-arabia',domain:'sa'},egypt:{name:'Egypt',slug:'egypt',domain:'eg'},qatar:{name:'Qatar',slug:'qatar',domain:'qa'}};
+const CITY_NAMES={uae:{any:'',dubai:'Dubai',abudhabi:'Abu Dhabi',sharjah:'Sharjah'},ksa:{any:'',riyadh:'Riyadh',jeddah:'Jeddah',dammam:'Dammam'},egypt:{any:'',cairo:'Cairo',giza:'Giza',alexandria:'Alexandria',newcairo:'New Cairo',october:'6th of October City',mansoura:'Mansoura',tanta:'Tanta',portsaid:'Port Said',suez:'Suez',asyut:'Asyut'},qatar:{any:'',doha:'Doha',alrayyan:'Al Rayyan',alwakrah:'Al Wakrah',alkhor:'Al Khor',lusail:'Lusail',ummsalal:'Umm Salal',mesaieed:'Mesaieed'}};
+const CITY_OPTIONS={uae:[['any','city.any'],['dubai','city.dubai'],['abudhabi','city.abudhabi'],['sharjah','city.sharjah']],ksa:[['any','city.any'],['riyadh','city.riyadh'],['jeddah','city.jeddah'],['dammam','city.dammam']],egypt:[['any','city.any'],['cairo','city.cairo'],['giza','city.giza'],['alexandria','city.alexandria'],['newcairo','city.newcairo'],['october','city.october'],['mansoura','city.mansoura'],['tanta','city.tanta'],['portsaid','city.portsaid'],['suez','city.suez'],['asyut','city.asyut']],qatar:[['any','city.any'],['doha','city.doha'],['alrayyan','city.alrayyan'],['alwakrah','city.alwakrah'],['alkhor','city.alkhor'],['lusail','city.lusail'],['ummsalal','city.ummsalal'],['mesaieed','city.mesaieed']]};
 function slugify(str){return str.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')||'jobs';}
 const host=document.getElementById('boardhost');
 let rowIndex=0;
@@ -487,7 +455,7 @@ const rowMap=[];
 let favorites;
 try{favorites=new Set(JSON.parse(localStorage.getItem('jobhub_favorites')||'[]'));}catch(e){favorites=new Set();}
 function saveFavorites(){try{localStorage.setItem('jobhub_favorites',JSON.stringify(Array.from(favorites)));}catch(e){}}
-function toggleFavorite(code){if(favorites.has(code))favorites.delete(code);else favorites.add(code);saveFavorites();renderBoard();runSearch();requestAnimationFrame(()=>document.querySelector(`.star-btn[data-code="${CSS.escape(code)}"]`)?.focus());}
+function toggleFavorite(code){if(favorites.has(code))favorites.delete(code);else favorites.add(code);saveFavorites();renderBoard();runSearch();requestAnimationFrame(()=>document.querySelector(`.star-btn[data-code=\"${CSS.escape(code)}\"]`)?.focus());}
 host.addEventListener('click',e=>{const btn=e.target.closest('.star-btn');if(!btn)return;toggleFavorite(btn.dataset.code);});
 function applyPlatformFilter(){
   const filterInput=document.getElementById('platformFilter');
@@ -510,6 +478,45 @@ function applyPlatformFilter(){
   if(countEl)countEl.textContent=q?`${visible} / ${total}`:'';
 }
 document.getElementById('platformFilter').addEventListener('input',applyPlatformFilter);
+function getGroups(country){
+  const cfg=COUNTRY_INFO[country]||COUNTRY_INFO.uae;
+  const countryPath=cfg.slug;
+  const global=[
+    {code:'BYT',name:'Bayt.com',gate:'General · MENA',type:'direct',build:(q)=>`https://www.bayt.com/en/${countryPath}/jobs/?keyword=${q}`},
+    {code:'LKD',name:'LinkedIn Jobs',gate:'General · Global',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.linkedin.com/jobs/search/?keywords=${q}&location=${encodeURIComponent((cityName?cityName+', ':'')+cfg.name)}`},
+    {code:'IND',name:'Indeed',gate:'General · Global',type:'direct',build:(q,slug,cityKey,cityName)=>`https://${cfg.domain}.indeed.com/jobs?q=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'')},
+    {code:'GGL',name:'Google for Jobs',gate:'Aggregator',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.google.com/search?q=${q}+jobs+in+${encodeURIComponent(cityName||cfg.name)}&ibp=htl;jobs`},
+    {code:'GLD',name:'Glassdoor',gate:'General · Global',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.glassdoor.com/Job/jobs.htm?sc.keyword=${q}`+(cityName?`&locKeyword=${encodeURIComponent(cityName)}`:'')},
+    {code:'CJT',name:'CareerJet',gate:'Aggregator',type:'google',domain:'careerjet.com'},
+    {code:'TLC',name:'Talent.com',gate:'Aggregator',type:'direct',build:(q,slug,cityKey,cityName)=>`https://${cfg.domain}.talent.com/jobs?k=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'')},
+  ];
+  const specialist=[
+    {code:'GLF',name:'GulfTalent',gate:'Gulf specialist',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.gulftalent.com/${countryPath}/jobs/title/${slug}${cityName?'?location='+encodeURIComponent(cityName):''}`},
+    {code:'NKG',name:'Naukrigulf',gate:'Gulf specialist',type:'google',domain:'naukrigulf.com'},
+    {code:'TNB',name:'Tanqeeb',gate:'Regional aggregator',type:'google',domain:'tanqeeb.com'},
+    country==='egypt'?{code:'WZF',name:'WUZZUF',gate:'Egypt specialist',type:'google',domain:'wuzzuf.net'}:country==='qatar'?{code:'QTL',name:'Qatar Living Jobs',gate:'Qatar specialist',type:'portal',url:'https://www.qatarliving.com/jobs'}:{code:'AKB',name:'Akhtaboot',gate:'Regional specialist',type:'google',domain:'akhtaboot.com'},
+    {code:'RGZ',name:'Rigzone',gate:'Energy · Oil & Gas',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.rigzone.com/oil/jobs/search/?sk=${q}`+(cityName?'&l='+encodeURIComponent(cityName):'')},
+    {code:'FND',name:'foundit',gate:'Regional aggregator',type:'google',domain:'founditgulf.com'},
+  ];
+  const agencies=[
+    {code:'MPG',name:'Michael Page',gate:'Professional · Exec',type:'google',domain:'michaelpage.com'},
+    {code:'RHF',name:'Robert Half',gate:'Professional · Finance',type:'google',domain:'roberthalf.com'},
+    {code:'HYS',name:'Hays',gate:'Professional · Multi',type:'google',domain:country==='ksa'?'hays.com.sa':country==='qatar'?'hays.com':'hays.ae'},
+    {code:'CHH',name:'Charterhouse ME',gate:'Professional · Multi',type:'google',domain:'charterhouseme.ae'},
+  ];
+  let local;
+  if(country==='ksa') local={title:'Classifieds',key:'classifieds',items:[{code:'HRJ',name:'Haraj (حراج)',gate:'Classifieds',type:'direct',build:(q,slug,cityKey,cityName)=>`https://haraj.com.sa/en/search/${q}%20${encodeURIComponent('وظائف')}/${cityName?'?city='+encodeURIComponent(cityName):''}`}]};
+  else if(country==='uae') local={title:'Classifieds',key:'classifieds',items:[{code:'DBZ',name:'Dubizzle Jobs',gate:'Classifieds',type:'direct',build:(q,slug,cityKey,cityName)=>`https://dubai.dubizzle.com/jobs/search/?keywords=${q}${cityName?'&locations='+encodeURIComponent(cityName):''}`}]};
+  else if(country==='egypt') local={title:'Classifieds',key:'classifieds',items:[{code:'DBZ',name:'Dubizzle Egypt Jobs',gate:'Egypt classifieds',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.dubizzle.com.eg/en/jobs/${cityName?'?locations='+encodeURIComponent(cityName)+'&':''}keywords=${q}`}]};
+  else local={title:'Classifieds',key:'classifieds',items:[{code:'QTL-C',name:'Qatar Living Jobs',gate:'Qatar classifieds',type:'portal',url:'https://www.qatarliving.com/jobs'}]};
+  let national;
+  if(country==='ksa') national={title:'Saudi National Platforms',key:'govNational',items:[{code:'TQT',name:'Taqat',gate:'Saudi Nationals · login req.',type:'portal',url:'https://www.taqat.sa/en/web/guest/individual'},{code:'JDR',name:'Jadarat',gate:'Saudi Nationals · login req.',type:'portal',url:'https://jadarat.sa/'}]};
+  else if(country==='uae') national={title:'Government & Emiratisation',key:'govNational',items:[{code:'NFS',name:'Nafis',gate:'UAE Nationals · login req.',type:'portal',url:'https://nafis.gov.ae/en/'},{code:'UAE',name:'U.AE — Job Portals Guide',gate:'Government guidance',type:'portal',url:'https://u.ae/en/information-and-services/jobs'}]};
+  else if(country==='egypt') national={title:'Egyptian Public Platforms',key:'govNational',items:[{code:'EJG',name:'Egypt Government Jobs',gate:'Government portal',type:'portal',url:'https://jobs.gov.eg/'},{code:'MNP',name:'Egypt Ministry of Labour',gate:'Government employment services',type:'portal',url:'https://www.manpower.gov.eg/'}]};
+  else national={title:'Qatar Public Platforms',key:'govNational',items:[{code:'QAR',name:'Qatar Airways Careers',gate:'Qatar employer careers',type:'portal',url:'https://careers.qatarairways.com/'},{code:'QGP',name:'Qatar Government Portal',gate:'Government employment guidance',type:'portal',url:'https://www.gov.qa/wps/portal/topics/employment'}]};
+  return [{title:'General & Global Boards',key:'generalGlobal',items:global},{title:'Gulf Specialist Boards',key:'gulfSpecialist',items:specialist},{title:'Recruitment Agencies',key:'recruitment',items:agencies},local,national];
+}
+
 function renderBoard(){
   const country=document.getElementById('country').value;
   let GROUPS=getGroups(country);
@@ -579,7 +586,8 @@ function renderBoard(){
   applyPlatformFilter();
 }
 function buildGoogleSite(domain,q,cityName,country){
-  return `https://www.google.com/search?q=site:${domain}+${q}+jobs+${encodeURIComponent(cityName||(country==='ksa'?'Saudi Arabia':'UAE'))}`;
+  const cfg=COUNTRY_INFO[country]||COUNTRY_INFO.uae;
+  return `https://www.google.com/search?q=site:${domain}+${q}+jobs+${encodeURIComponent(cityName||cfg.name)}`;
 }
 function populateCityOptions(){
   const country=document.getElementById('country').value;
@@ -607,7 +615,7 @@ function runSearch(){
     localStorage.setItem('jobhub_city',cityKey);
   }catch(e){}
   const cityName=CITY_NAMES[country][cityKey];
-  const countryName=country==='ksa'?'Saudi Arabia':'UAE';
+  const countryName=(COUNTRY_INFO[country]||COUNTRY_INFO.uae).name;
   const q=encodeURIComponent(roleRaw);
   const slug=slugify(roleRaw);
   rowMap.forEach((item,i)=>{
@@ -630,7 +638,7 @@ function runSearch(){
     history.replaceState(null,'',url.pathname+'?'+url.searchParams.toString());
   }catch(e){}
 }
-document.getElementById('searchForm').addEventListener('submit',e=>{e.preventDefault();runSearch();});
+document.getElementById('searchForm').addEventListener('submit',e=>{e.preventDefault();const button=document.getElementById('goBtn');button.classList.remove('is-searching');void button.offsetWidth;button.classList.add('is-searching');button.setAttribute('aria-busy','true');runSearch();window.setTimeout(()=>{button.classList.remove('is-searching');button.removeAttribute('aria-busy');},700);});
 document.getElementById('city').addEventListener('change',()=>{if(document.getElementById('role').value.trim())runSearch();});
 document.getElementById('country').addEventListener('change',()=>{applyLanguage(currentLang);});
 document.getElementById('lang').addEventListener('change',(e)=>{applyLanguage(e.target.value);});
@@ -644,7 +652,7 @@ try{
   const pRole=params.get('role');
   const pCountry=params.get('country');
   const pCity=params.get('city');
-  if(pCountry==='uae'||pCountry==='ksa'){document.getElementById('country').value=pCountry;paramsTriggerSearch=true;}
+  if(COUNTRY_INFO[pCountry]){document.getElementById('country').value=pCountry;paramsTriggerSearch=true;}
   if(pRole){document.getElementById('role').value=pRole;paramsTriggerSearch=true;}
   if(pCity){try{localStorage.setItem('jobhub_city',pCity);}catch(e){}paramsTriggerSearch=true;}
 }catch(e){}
