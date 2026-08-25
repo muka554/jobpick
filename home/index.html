@@ -33,8 +33,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:title" content="Gulf Job Hub — Departures">
 <meta property="og:description" content="One search, 20+ job platforms across the UAE and Saudi Arabia. No account required to search, no scraping — just fast links to real results.">
 <link rel="canonical" href="https://jobpick20.com/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0A0F14">
+<meta property="og:url" content="https://jobpick20.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Gulf Job Hub">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gulf Job Hub — Search Every Board at Once">
+<meta name="twitter:description" content="Search Bayt, LinkedIn, Indeed, GulfTalent, Naukrigulf, Dubizzle, Taqat and 20+ other UAE and Saudi Arabia job platforms from one departure-board style page. Available in English, Arabic, Hindi, and Urdu.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230D1016'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%23FFB020' font-family='monospace' font-weight='bold'%3E%E2%9C%88%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{ --bg:#0A0F14; --panel:#101820; --board:#0D131A; --amber:#FFB020; --teal:#2DD9C0; --purple:#A78BFA; --ink:#ECE8DE; --ink-dim:#8B93A3; --line:#222B36; }
@@ -45,27 +55,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   html[dir="rtl"] .sitenav{ flex-direction:row-reverse; }
   html[dir="rtl"] .sitenav .links{ flex-direction:row-reverse; }
   html[dir="rtl"] .opensearch{ text-align:left; }
-  body{ -webkit-user-select:none; user-select:none; }
+  body{ -webkit-user-select:text; user-select:text; }
   input,textarea,select{ user-select:text; }
   html,body{ margin:0; padding:0; background:var(--bg); }
   body{ font-family:'Inter',sans-serif; color:var(--ink); min-height:100vh; display:flex; justify-content:center; padding:28px 14px 60px; }
   .wrap{ width:100%; max-width:940px; }
   .sitenav{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--line); }
-  .sitenav .brand{ font-family:'Manrope',sans-serif; font-weight:800; font-size:19px; color:var(--teal); text-decoration:none; }#userGreeting {
-  color: var(--teal);
-  font-size: 13px;
-  margin-left: 12px;
-}
-
-#logoutBtn {
-  background: transparent;
-  border: 1px solid var(--amber);
-  color: var(--amber);
-  border-radius: 6px;
-  padding: 5px 9px;
-  margin-left: 8px;
-  cursor: pointer;
-}
+  :focus-visible{ outline:3px solid var(--amber); outline-offset:3px; }
+  .sitenav .brand{ font-family:'Manrope',sans-serif; font-weight:800; font-size:19px; color:var(--teal); text-decoration:none; }
   .sitenav .links{ display:flex; gap:16px; flex-wrap:wrap; font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.06em; font-size:12.5px; }
   .sitenav .links a{ color:var(--ink-dim); text-decoration:none; }
   .sitenav .links a:hover,.sitenav .links a[aria-current="page"]{ color:var(--amber); }
@@ -187,6 +184,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .groupwrap{ opacity:1; transform:none; transition:none; }
     .rescard::after, .go::after{ display:none; }
   }
+  @media (max-width:700px){ body[data-page]{background-attachment:scroll !important;} }
+  .resources,.board,.card{content-visibility:auto;contain-intrinsic-size:1px 600px;}
 </style>
 <style>
   /* ===== Page background photo (subtle, heavily dimmed) ===== */
@@ -198,14 +197,43 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       url('https://commons.wikimedia.org/wiki/Special:FilePath/Job_interview.jpg') center 40% / cover no-repeat fixed;
   }
 </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Gulf Job Hub — Search Every Board at Once",
+  "url": "https://jobpick20.com/",
+  "description": "Search Bayt, LinkedIn, Indeed, GulfTalent, Naukrigulf, Dubizzle, Taqat and 20+ other UAE and Saudi Arabia job platforms from one departure-board style page. Available in English, Arabic, Hindi, and Urdu.",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Gulf Job Hub",
+    "url": "https://jobpick20.com/"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Gulf Job Hub",
+  "url": "https://jobpick20.com/",
+  "description": "Search Gulf job platforms across the United Arab Emirates and Saudi Arabia from one public job-search hub.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://jobpick20.com/home/?role={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
 </head>
 <body data-page="home">
 <a class="skip-link" href="#boardhost">Skip to job board links</a>
 <div class="wrap">
   <nav class="sitenav" aria-label="Site">
-    <a class="brand" href="/">GULF JOB HUB</a> <span id="userGreeting" hidden></span> <button id="logoutBtn" type="button" hidden>Log out</button>
+    <a class="brand" href="/">GULF JOB HUB</a>
     <div class="links">
-      <a href="/account/">Login</a>
       <a href="/" aria-current="page" data-i18n="nav.home">Home</a>
       <a href="/about/" data-i18n="nav.about">About</a>
       <a href="/privacy-policy/" data-i18n="nav.privacy">Privacy Policy</a>
@@ -419,23 +447,23 @@ function getGroups(country){
       { code:'TLC', name:'Talent.com', gate:'Aggregator', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://${ctry==='ksa'?'sa':'ae'}.talent.com/jobs?k=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'') },
     ]},
     { title:'Gulf Specialist Boards', key:'gulfSpecialist', items:[
-      { code:'GLF', name:'GulfTalent', gate:'Gulf specialist', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.gulftalent.com/${ctry==='ksa'?'saudi-arabia':'uae'}/jobs/title/${slug}` },
-      { code:'NKG', name:'Naukrigulf', gate:'Gulf specialist', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.naukrigulf.com/${slug}-jobs-in-${ctry==='ksa'?'saudi-arabia':'uae'}` },
-      { code:'FND', name:'foundit Gulf (Monster)', gate:'Gulf specialist', type:'direct', build:(q,slug)=>`https://www.founditgulf.com/search/${slug}-jobs` },
-      { code:'LMN', name:'Laimoon', gate:'Gulf specialist', type:'direct', build:(q,slug)=>`https://jobs.laimoon.com/uae/${slug}` },
+      { code:'GLF', name:'GulfTalent', gate:'Gulf specialist', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.gulftalent.com/${ctry==='ksa'?'saudi-arabia':'uae'}/jobs/title/${slug}${cityName?'?location='+encodeURIComponent(cityName):''}` },
+      { code:'NKG', name:'Naukrigulf', gate:'Gulf specialist', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.naukrigulf.com/${slug}-jobs-in-${ctry==='ksa'?'saudi-arabia':'uae'}${cityName?'?location='+encodeURIComponent(cityName):''}` },
+      { code:'FND', name:'foundit Gulf (Monster)', gate:'Gulf specialist', type:'google', domain:'founditgulf.com' },
+      { code:'LMN', name:'Laimoon', gate:'Gulf specialist', type:'google', domain:'jobs.laimoon.com' },
       { code:'AKB', name:'Akhtaboot', gate:'Gulf · Levant', type:'google', domain:'akhtaboot.com' },
-      { code:'RGZ', name:'Rigzone', gate:'Energy · Oil & Gas', type:'direct', build:(q)=>`https://www.rigzone.com/oil/jobs/search/?sk=${q}` },
+      { code:'RGZ', name:'Rigzone', gate:'Energy · Oil & Gas · city filter when supported', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.rigzone.com/oil/jobs/search/?sk=${q}${cityName?'&l='+encodeURIComponent(cityName):''}` },
     ]},
     { title:'Recruitment Agencies', key:'recruitment', items:[
-      { code:'MPG', name:'Michael Page', gate:'Professional · Exec', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.michaelpage.${ctry==='ksa'?'com.sa':'ae'}/jobs/${slug}` },
-      { code:'RHF', name:'Robert Half', gate:'Professional · Finance', type:'direct', build:(q,slug)=>`https://www.roberthalf.com/ae/en/jobs/all/${slug}` },
+      { code:'MPG', name:'Michael Page', gate:'Professional · Exec', type:'direct', build:(q,slug,city,cityName,ctry)=>`https://www.michaelpage.${ctry==='ksa'?'com.sa':'ae'}/jobs/${slug}${cityName?'?location='+encodeURIComponent(cityName):''}` },
+      { code:'RHF', name:'Robert Half', gate:'Professional · Finance', type:'google', domain:'roberthalf.com' },
       { code:'HYS', name:'Hays', gate:'Professional · Multi', type:'google', domain: country==='ksa'?'hays.com.sa':'hays.ae' },
       { code:'CHH', name:'Charterhouse ME', gate:'Professional · Multi', type:'google', domain:'charterhouseme.ae' },
     ]},
     country==='ksa' ? { title:'Classifieds', key:'classifieds', items:[
-      { code:'HRJ', name:'Haraj (حراج)', gate:'Classifieds', type:'direct', build:(q)=>`https://haraj.com.sa/en/search/${q}%20${encodeURIComponent('وظائف')}/` },
+      { code:'HRJ', name:'Haraj (حراج)', gate:'Classifieds', type:'direct', build:(q,slug,city,cityName)=>`https://haraj.com.sa/en/search/${q}%20${encodeURIComponent('وظائف')}/${cityName?'?city='+encodeURIComponent(cityName):''}` },
     ]} : { title:'Classifieds', key:'classifieds', items:[
-      { code:'DBZ', name:'Dubizzle Jobs', gate:'Classifieds', type:'direct', build:(q)=>`https://dubai.dubizzle.com/jobs/search/?keywords=${q}` },
+      { code:'DBZ', name:'Dubizzle Jobs', gate:'Classifieds', type:'direct', build:(q,slug,city,cityName)=>`https://dubai.dubizzle.com/jobs/search/?keywords=${q}${cityName?'&locations='+encodeURIComponent(cityName):''}` },
     ]},
     country==='ksa' ? { title:'Saudi National Platforms', key:'govNational', items:[
       { code:'TQT', name:'Taqat', gate:'Saudi Nationals · login req.', type:'portal', url:'https://www.taqat.sa/en/web/guest/individual' },
@@ -590,6 +618,13 @@ function runSearch(){
   });
   const statusEl=document.getElementById('searchStatus');
   if(statusEl)statusEl.textContent=`Links updated for "${roleRaw}"${cityName?' in '+cityName:' across '+countryName}.`;
+  try{
+    const url=new URL(window.location.href);
+    url.searchParams.set('role', roleInputVal);
+    url.searchParams.set('country', country);
+    if(cityKey && cityKey!=='any') url.searchParams.set('city', cityKey); else url.searchParams.delete('city');
+    history.replaceState(null,'',url.pathname+'?'+url.searchParams.toString());
+  }catch(e){}
 }
 document.getElementById('goBtn').addEventListener('click',runSearch);
 document.getElementById('role').addEventListener('keydown',e=>{if(e.key==='Enter')runSearch();});
@@ -674,63 +709,6 @@ if(paramsTriggerSearch){
   }
   observeGroups();
 })();
-</script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-  if (!window.supabaseClient) {
-    window.supabaseClient = window.supabase.createClient(
-      'https://rvitqbkgtgjharxqaxmv.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2aXRxYmtndGdqaGFyeHFheG12Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MzI3NDksImV4cCI6MjEwMzAwODc0OX0.ZFymY7coSxwP-7-TM9FqCzQk4wBVTtHb-V0XcVfVLJE'
-    );
-  }
-
-  const userGreeting = document.getElementById('userGreeting');
-  const logoutBtn = document.getElementById('logoutBtn');
-
-  async function updateUserDisplay(session) {
-    if (!userGreeting || !logoutBtn) return;
-
-    const user = session?.user;
-
-    if (!user) {
-      userGreeting.hidden = true;
-      logoutBtn.hidden = true;
-      return;
-    }
-
-    const metadata = user.user_metadata || {};
-
-    const name =
-      metadata.full_name ||
-      metadata.name ||
-      metadata.user_name ||
-      metadata.preferred_username ||
-      user.email ||
-      'Account';
-
-    userGreeting.textContent = `Hi, ${name}`;
-    userGreeting.hidden = false;
-    logoutBtn.hidden = false;
-  }
-
-  const { data } =
-    await window.supabaseClient.auth.getSession();
-
-  updateUserDisplay(data.session);
-
-  window.supabaseClient.auth.onAuthStateChange(
-    (_event, session) => {
-      updateUserDisplay(session);
-    }
-  );
-
-  logoutBtn.addEventListener('click', async () => {
-    await window.supabaseClient.auth.signOut();
-    window.location.href = '/account/';
-  });
-});
 </script>
 </body>
 </html>

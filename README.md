@@ -1,6 +1,6 @@
 # Gulf Job Hub
 
-A static, self-contained job-search aggregator covering the UAE and Saudi Arabia. One search box builds direct search links into 8 configured job platforms, using platform-specific URLs where available and Google search as a fallback. The platform list and URL builders are embedded in `home/index.html`, so the homepage does not depend on a separate data file. Grouped by category and styled as an airport departure board.
+A static, self-contained job-search aggregator covering the UAE and Saudi Arabia. One search box builds market-aware search links into 20 configured job platforms, using platform-specific URLs where available and Google search as a fallback. The platform list and URL builders are maintained in `home/index.html` as the single source of truth. Grouped by category and styled as an airport departure board.
 
 No backend, no build step, no database is required for the core search tool. Just HTML/CSS/JS files you can host anywhere.
 
@@ -40,7 +40,7 @@ The site organizes outbound links to third-party job platforms. It does not scra
 
 ## Maintenance checklist
 
-- Test the homepage search controls after changing platform URLs.
+- Test the homepage search controls for UAE/any city, UAE/Dubai, Saudi Arabia/any city, and Saudi Arabia/Riyadh after changing platform URLs.
 - Check city pages and guides for broken internal links.
 - Keep canonical URLs, sitemap entries, and the custom domain aligned.
 - Review external destinations periodically because third-party URL formats can change.
