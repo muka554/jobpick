@@ -67,10 +67,6 @@
   .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; white-space:nowrap; border:0; }
   .skip-link{ position:absolute; left:8px; top:-48px; background:var(--amber); color:#1A1300; padding:10px 14px; border-radius:4px; text-decoration:none; z-index:100; }
   .skip-link:focus{ top:8px; }
-  .ad-slot{ background:transparent; border:1px dashed var(--line); border-radius:6px; padding:14px; margin:24px 2px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; min-height:44px; }
-  .ad-slot .ad-label{ text-transform:uppercase; letter-spacing:.14em; font-size:10.5px; color:var(--ink-dim); }
-  .ad-slot .ad-body{ width:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-  .ad-slot--leaderboard .ad-body{ max-width:728px; }
   .groupbar{ text-transform:uppercase; letter-spacing:.1em; font-size:12.5px; color:var(--teal); font-weight:700; margin:28px 2px 10px; padding:12px 14px; background:var(--panel); border-radius:6px; display:flex; justify-content:space-between; }
   .groupbar span.count{ color:var(--ink-dim); font-weight:400; text-transform:none; }
   .boardhead{ display:grid; grid-template-columns:26px 1.6fr 1fr 150px 120px; gap:14px; padding:10px 14px; background:var(--panel); border-radius:6px 6px 0 0; text-transform:uppercase; letter-spacing:.1em; font-size:10.5px; font-weight:700; color:var(--amber); }
@@ -186,8 +182,6 @@
 
   .search-feedback{min-height:20px;margin:2px auto 8px;text-align:center;color:var(--teal);font-size:13px;font-weight:600;opacity:0;transform:translateY(-4px);transition:opacity .25s ease,transform .25s ease;}
   .search-feedback.has-message{opacity:1;transform:translateY(0);}
-  .ad-slot--leaderboard{margin:12px 2px 14px;min-height:92px;}
-  .ad-slot--native{min-height:70px;}
   #boardhost{scroll-margin-top:8px;}
   #boardhost.results-updated{animation:resultsUpdated .8s ease-out;}
   @keyframes resultsUpdated{0%{opacity:.58;transform:translateY(8px)}55%{opacity:1;transform:translateY(0);box-shadow:0 0 0 5px rgba(45,217,192,.08)}100%{box-shadow:none}}
@@ -304,11 +298,6 @@
     <div class="hint" id="searchHint" data-i18n="hint">Showing available Middle East job platforms.</div>
   </form>
   <p id="searchStatus" class="search-feedback" role="status" aria-live="polite"></p>
-  <div class="ad-slot ad-slot--leaderboard" role="complementary" aria-label="Advertisement">
-    <span class="ad-label">Advertisement</span>
-    <div class="ad-body"><ins class="adsbygoogle" style="display:block;width:100%;" data-ad-client="ca-pub-6874304698042148" data-ad-slot="6351608708" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
-  </div>
-
   <div class="filterbar">
     <input id="platformFilter" type="text" data-i18n-ph="filter.placeholder" placeholder="Filter platforms by name..." aria-label="Filter platforms by name">
     <span id="filterCount" class="filter-count" aria-live="polite"></span>
@@ -317,11 +306,12 @@
   <div id="boardhost" role="region" aria-labelledby="results-heading" tabindex="-1"></div>
   <section class="publisher-context" aria-labelledby="searchContextHeading">
     <h2 id="searchContextHeading">Search with context</h2>
-    <p>Middle East Job Hub helps you organize searches across public job platforms. We do not scrape vacancies, collect applications, or promise hiring outcomes. Before applying, verify the employer and role on the original source and read our independent guidance on <a href="/how-we-review-job-platforms/">how we review platforms</a>, <a href="/editorial-standards/">editorial standards</a>, and <a href="/guides/recruitment-scam-warning-signs/">recruitment scam warning signs</a>.</p>
+    <p>Middle East Job Hub combines a practical platform directory with independently maintained job-search guides. We do not scrape vacancies, collect applications, or promise hiring outcomes. Before applying, verify the employer and role on the original source, read <a href="/how-we-review-job-platforms/">how we review platforms</a>, and use our <a href="/resources/">editorial resource library</a> for country checklists, application planning, and job-search safety guidance.</p>
   </section>
   <section class="resources" aria-labelledby="resourcesHeading">
     <h2 id="resourcesHeading" data-i18n="resources.heading">Job-search resources</h2>
-    <p class="resources-intro">Browse practical Middle East job websites, country job boards, city job-search guides, application planning, employer research, and safer platform-use resources. Updated resources are independent from advertising and external job platforms.</p>
+    <p class="resources-intro">Browse independently maintained country and city guides, application planning, employer research, and safer platform-use resources. Our editorial resources explain how to use public platforms thoughtfully; they are separate from third-party listings and are reviewed as the site evolves.</p>
+    <p class="resources-intro"><a href="/resources/">Explore all guides, city resources, methodology, and update notes →</a></p>
     <div class="resources-grid">
       <a class="rescard" href="/guides/uae-job-search-guide/">How to search for jobs in the UAE</a>
       <a class="rescard" href="/guides/egypt-job-search-guide/">How to search for jobs in Egypt</a>
@@ -341,16 +331,11 @@
       <a class="rescard" href="/cities/amman-jobs/">Finding jobs in Amman</a>
     </div>
   </section>
-  <div class="ad-slot ad-slot--leaderboard" role="complementary" aria-label="Advertisement">
-    <span class="ad-label">Advertisement</span>
-    <div class="ad-body"><ins class="adsbygoogle" style="display:block;width:100%;" data-ad-client="ca-pub-6874304698042148" data-ad-slot="9250797882" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
-  </div>
-
   </main>
 
   <footer>
     <p id="footerHow"><b>How this works:</b> nothing is scraped or stored. Search rows open a direct platform search or a verified public jobs page in a new tab. Government and national-employment programmes may require your own account or eligibility, so they link directly to the relevant public portal. Our guides are independent informational resources; always verify a vacancy with the original employer or platform before applying.</p>
-    <p id="footerStatic">This page is a static, self-contained HTML file — free to host anywhere (GitHub Pages, Netlify, your own server) or open locally. It calls no backend and stores nothing about you.</p>
+    <p id="footerPublisher">Middle East Job Hub publishes independently maintained job-search guides, platform methodology, and safety resources for the region. Editorial pages identify their update dates and should be used alongside the original employer or public authority source.</p>
     <p id="footerCopyright" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink-dim);">© 2026 Middle East Job Hub. All rights reserved. This page's design and code may not be copied or redistributed without permission.</p>
     <p style="display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;">
       <a href="/" style="color:var(--ink-dim);">Home</a>
@@ -359,6 +344,7 @@
       <a href="/terms-of-use/" style="color:var(--ink-dim);">Terms of Use</a>
       <a href="/advertising-disclosure/" style="color:var(--ink-dim);">Advertising Disclosure</a>
       <a href="/editorial-standards/" style="color:var(--ink-dim);">Editorial standards</a>
+      <a href="/resources/" style="color:var(--ink-dim);">Resources</a>
       <a href="/contact/" style="color:var(--ink-dim);">Contact</a>
     </p>
   </footer>
@@ -381,9 +367,9 @@ const I18N = {
     'resources.dubai':'Find jobs in Dubai','resources.abudhabi':'Find jobs in Abu Dhabi','resources.riyadh':'Find jobs in Riyadh',
     'group.generalGlobal':'General & Global Boards','group.gulfSpecialist':'Gulf Specialist Boards','group.recruitment':'Recruitment Agencies',
     'group.classifieds':'Classifieds','group.govNational.uae':'Government & Emiratisation','group.govNational.ksa':'Saudi National Platforms','group.favorites':'Your Favorites',
-    'fav.add':'Add to favorites:','fav.remove':'Remove from favorites:','btn.open':'Open →','btn.visit':'Visit →','ad.label':'Advertisement',
-    'footer.how':"How this works: nothing is scraped or stored. Most rows build a direct search link to that platform's own site using your keyword and open it in a new tab. A few recruitment agencies and niche boards don't expose a public search URL, so those rows route through a Google site-search instead — same destination, just built differently. Government and national-employment programmes require your own login, so they link straight to the portal.",
-    'footer.static':'This page is a static, self-contained HTML file — free to host anywhere (GitHub Pages, Netlify, your own server) or open locally. It calls no backend and stores nothing about you.',
+    'fav.add':'Add to favorites:','fav.remove':'Remove from favorites:','btn.open':'Open →','btn.visit':'Visit →',
+    'footer.how':"How this works: nothing is scraped or stored. Search rows open a direct platform search or a verified public jobs page in a new tab. Government and national-employment programmes may require your own account or eligibility, so they link directly to the relevant public portal. Always verify a vacancy with the original employer or platform before applying.",
+    'footer.publisher':'Middle East Job Hub publishes independently maintained job-search guides, platform methodology, and safety resources for the region. Editorial pages identify their update dates and should be used alongside the original employer or public authority source.',
     'footer.copyright':"© 2026 Middle East Job Hub. All rights reserved. This page's design and code may not be copied or redistributed without permission.",
   },
   ar: {
@@ -406,9 +392,9 @@ const I18N = {
     'resources.dubai':'وظائف في دبي','resources.abudhabi':'وظائف في أبوظبي','resources.riyadh':'وظائف في الرياض',
     'group.generalGlobal':'لوحات عامة وعالمية','group.gulfSpecialist':'لوحات خليجية متخصصة','group.recruitment':'وكالات التوظيف',
     'group.classifieds':'إعلانات مبوبة','group.govNational.uae':'الحكومة وبرنامج التوطين','group.govNational.ksa':'المنصات الوطنية السعودية','group.favorites':'المفضلة لديك',
-    'fav.add':'إضافة إلى المفضلة:','fav.remove':'إزالة من المفضلة:','btn.open':'فتح ←','btn.visit':'زيارة ←','ad.label':'إعلان',
+    'fav.add':'إضافة إلى المفضلة:','fav.remove':'إزالة من المفضلة:','btn.open':'فتح ←','btn.visit':'زيارة ←',
     'footer.how':'كيف يعمل هذا: لا يتم استخراج أو تخزين أي بيانات. تبني معظم الصفوف رابط بحث مباشر إلى موقع تلك المنصة باستخدام كلمتك المفتاحية وتفتحه في تبويب جديد. بعض وكالات التوظيف والمنصات المتخصصة لا توفر رابط بحث عام، لذا تمر تلك الصفوف عبر بحث جوجل المختص للموقع بدلاً من ذلك — نفس الوجهة، بطريقة بناء مختلفة فقط. البرامج الحكومية وبرامج التوظيف الوطنية تتطلب تسجيل دخول خاص بك، لذا ترتبط مباشرة بالبوابة.',
-    'footer.static':'هذه الصفحة ملف HTML ثابت ومستقل بذاته — مجاني الاستضافة في أي مكان (GitHub Pages أو Netlify أو خادمك الخاص) أو فتحه محليًا. لا يستدعي أي خادم خلفي ولا يخزن أي شيء عنك.',
+    'footer.publisher':'ينشر مركز وظائف الشرق الأوسط أدلة بحث عن عمل ومنهجية منصات وموارد سلامة تُراجع بصورة مستقلة. توضح الصفحات التحريرية تواريخ التحديث ويجب استخدامها إلى جانب المصدر الأصلي لصاحب العمل أو الجهة العامة.',
     'footer.copyright':'© 2026 Middle East Job Hub. جميع الحقوق محفوظة. لا يجوز نسخ تصميم هذه الصفحة أو كودها أو إعادة توزيعها دون إذن.',
   },
   hi: {
@@ -430,9 +416,9 @@ const I18N = {
     'resources.dubai':'दुबई में नौकरियां खोजें','resources.abudhabi':'अबू धाबी में नौकरियां खोजें','resources.riyadh':'रियाद में नौकरियां खोजें',
     'group.generalGlobal':'सामान्य और वैश्विक बोर्ड','group.gulfSpecialist':'खाड़ी विशेषज्ञ बोर्ड','group.recruitment':'भर्ती एजेंसियां',
     'group.classifieds':'वर्गीकृत विज्ञापन','group.govNational.uae':'सरकार और इमिराटीकरण','group.govNational.ksa':'सऊदी राष्ट्रीय प्लेटफ़ॉर्म','group.favorites':'आपकी पसंदीदा',
-    'fav.add':'पसंदीदा में जोड़ें:','fav.remove':'पसंदीदा से हटाएं:','btn.open':'खोलें →','btn.visit':'देखें →','ad.label':'विज्ञापन',
+    'fav.add':'पसंदीदा में जोड़ें:','fav.remove':'पसंदीदा से हटाएं:','btn.open':'खोलें →','btn.visit':'देखें →',
     'footer.how':'यह कैसे काम करता है: कुछ भी स्क्रैप या संग्रहीत नहीं किया जाता। अधिकांश पंक्तियां आपके कीवर्ड का उपयोग करके उस प्लेटफ़ॉर्म की अपनी साइट पर सीधा खोज लिंक बनाती हैं और उसे नए टैब में खोलती हैं।',
-    'footer.static':'यह पेज एक स्थिर, स्व-निहित HTML फ़ाइल है — कहीं भी मुफ़्त में होस्ट करें (GitHub Pages, Netlify, आपका अपना सर्वर) या स्थानीय रूप से खोलें।',
+    'footer.publisher':'मिडिल ईस्ट जॉब हब स्वतंत्र रूप से रखरखाव किए गए नौकरी-खोज मार्गदर्शक, प्लेटफ़ॉर्म कार्यप्रणाली और सुरक्षा संसाधन प्रकाशित करता है। संपादकीय पृष्ठ अपनी अद्यतन तिथियां बताते हैं और उन्हें मूल नियोक्ता या सार्वजनिक प्राधिकरण स्रोत के साथ उपयोग किया जाना चाहिए।',
     'footer.copyright':'© 2026 Middle East Job Hub. सर्वाधिकार सुरक्षित।',
   },
   ur: {
@@ -454,9 +440,9 @@ const I18N = {
     'resources.dubai':'دبئی میں نوکریاں تلاش کریں','resources.abudhabi':'ابوظہبی میں نوکریاں تلاش کریں','resources.riyadh':'ریاض میں نوکریاں تلاش کریں',
     'group.generalGlobal':'عمومی اور عالمی بورڈز','group.gulfSpecialist':'خلیجی ماہر بورڈز','group.recruitment':'بھرتی ایجنسیاں',
     'group.classifieds':'درجہ بند اشتہارات','group.govNational.uae':'حکومت اور توطین پروگرام','group.govNational.ksa':'سعودی قومی پلیٹ فارمز','group.favorites':'آپ کی پسندیدہ',
-    'fav.add':'پسندیدہ میں شامل کریں:','fav.remove':'پسندیدہ سے ہٹائیں:','btn.open':'کھولیں ←','btn.visit':'ملاحظہ کریں ←','ad.label':'اشتہار',
+    'fav.add':'پسندیدہ میں شامل کریں:','fav.remove':'پسندیدہ سے ہٹائیں:','btn.open':'کھولیں ←','btn.visit':'ملاحظہ کریں ←',
     'footer.how':'یہ کیسے کام کرتا ہے: کوئی بھی ڈیٹا سکریپ یا محفوظ نہیں کیا جاتا۔ زیادہ تر لائنیں آپ کے کلیدی لفظ کا استعمال کرتے ہوئے اس پلیٹ فارم کی اپنی سائٹ پر براہ راست سرچ لنک بناتی ہیں۔',
-    'footer.static':'یہ صفحہ ایک جامد، خود کفیل HTML فائل ہے — کہیں بھی مفت ہوسٹ کریں (GitHub Pages، Netlify، اپنا سرور) یا مقامی طور پر کھولیں۔',
+    'footer.publisher':'مڈل ایسٹ جاب ہب آزادانہ طور پر برقرار رکھے گئے ملازمت تلاش کے رہنما، پلیٹ فارم طریقۂ کار اور حفاظتی وسائل شائع کرتا ہے۔ اداریاتی صفحات اپنی تازہ کاری کی تاریخیں بتاتے ہیں اور انہیں اصل آجر یا عوامی اتھارٹی کے ماخذ کے ساتھ استعمال کیا جانا چاہیے۔',
     'footer.copyright':'© 2026 Middle East Job Hub۔ جملہ حقوق محفوظ ہیں۔',
   },
 };
@@ -472,10 +458,10 @@ function applyLanguage(lang){
   const filterInput=document.getElementById('platformFilter');
   if(filterInput)filterInput.setAttribute('aria-label',t['filter.placeholder']||'Filter platforms by name');
   const footerHow=document.getElementById('footerHow');
-  const footerStatic=document.getElementById('footerStatic');
+  const footerPublisher=document.getElementById('footerPublisher');
   const footerCopy=document.getElementById('footerCopyright');
   if(footerHow)footerHow.textContent=t['footer.how'];
-  if(footerStatic)footerStatic.textContent=t['footer.static'];
+  if(footerPublisher)footerPublisher.textContent=t['footer.publisher'];
   if(footerCopy)footerCopy.textContent=t['footer.copyright'];
   const langSelect=document.getElementById('lang');
   if(langSelect)langSelect.value=lang;
@@ -530,7 +516,7 @@ function getGroups(country){
     {code:'GLF',name:'GulfTalent',gate:'Gulf specialist',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.gulftalent.com/${countryPath}/jobs/title/${slug}${cityName?'?location='+encodeURIComponent(cityName):''}`},
     {code:'NKG',name:'Naukrigulf',gate:'Gulf specialist · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.naukrigulf.com/search-jobs?keyword=${q}&location=${encodeURIComponent(cityName||cfg.name)}`} ,
     {code:'TNB',name:'Tanqeeb',gate:'Regional aggregator · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.tanqeeb.com/jobs?search=${q}&location=${encodeURIComponent(cityName||cfg.name)}`} ,
-    country==='egypt'?{code:'WZF',name:'WUZZUF',gate:'Egypt specialist · Direct',type:'direct',build:(q)=>`https://wuzzuf.net/search/jobs/?a=h&q=${q}`} :country==='qatar'?{code:'QTL',name:'Qatar Living Jobs',gate:'Qatar specialist',type:'portal',url:'https://www.qatarliving.com/jobs'}:country==='oman'?{code:'OMJ',name:'Oman Jobs',gate:'Oman specialist · Direct',type:'direct',build:(q)=>`https://omanjobs.om/?s=${q}`} :country==='bahrain'?{code:'BHJ',name:'Bahrain Jobs',gate:'Bahrain specialist · Direct',type:'direct',build:(q)=>`https://bahrainjobs.com/?s=${q}`} :country==='jordan'?{code:'AKB',name:'Akhtaboot',gate:'Jordan specialist · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.akhtaboot.com/en/jordan/jobs?query=${q}&location=${encodeURIComponent(cityName||cfg.name)}`} :{code:'AKB',name:'Akhtaboot',gate:'Regional specialist · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.akhtaboot.com/en/jobs?query=${q}&location=${encodeURIComponent(cityName||cfg.name)}`} ,
+    country==='egypt'?{code:'WZF',name:'WUZZUF',gate:'Egypt specialist · Direct',type:'direct',build:(q)=>`https://wuzzuf.net/search/jobs/?a=h&q=${q}`} :country==='qatar'?{code:'QTL',name:'Qatar Living Jobs',gate:'Qatar specialist',type:'portal',url:'https://www.qatarliving.com/jobs'}:country==='oman'?{code:'OMJ',name:'Oman Jobs',gate:'Oman specialist · Direct',type:'direct',build:(q)=>`https://omanjobs.om/?s=${q}`} :country==='bahrain'?{code:'BHT',name:'Bahrain Talent Portal',gate:'Bahrain employment service',type:'portal',url:'https://www.talentportal.bh/'} :country==='jordan'?{code:'AKB',name:'Akhtaboot',gate:'Jordan specialist · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.akhtaboot.com/en/jordan/jobs?query=${q}&location=${encodeURIComponent(cityName||cfg.name)}`} :{code:'AKB',name:'Akhtaboot',gate:'Regional specialist · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.akhtaboot.com/en/jobs?query=${q}&location=${encodeURIComponent(cityName||cfg.name)}`} ,
     {code:'RGZ',name:'Rigzone',gate:'Energy · Oil & Gas · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.rigzone.com/oil/jobs/search/?sk=${q}`+(cityName?'&l='+encodeURIComponent(cityName):'')},
     {code:'FND',name:'foundit',gate:'Regional aggregator · Direct',type:'portal',url:'https://www.founditgulf.com/'} ,
   ];
@@ -546,7 +532,7 @@ function getGroups(country){
   else if(country==='egypt') local={title:'Classifieds',key:'classifieds',items:[{code:'DBZ',name:'Dubizzle Egypt Jobs',gate:'Egypt classifieds',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.dubizzle.com.eg/en/jobs/${cityName?'?locations='+encodeURIComponent(cityName)+'&':''}keywords=${q}`}]};
   else if(country==='kuwait') local={title:'Classifieds',key:'classifieds',items:[{code:'1KW',name:'1 Kuwait Jobs',gate:'Kuwait job board',type:'portal',url:'https://1kuwaitjobs.com/'}]};
   else if(country==='oman') local={title:'Classifieds',key:'classifieds',items:[{code:'OMJ-C',name:'Oman Jobs',gate:'Oman job board · Direct',type:'direct',build:(q)=>`https://omanjobs.om/?s=${q}`} ]};
-  else if(country==='bahrain') local={title:'Classifieds',key:'classifieds',items:[{code:'BHJ-C',name:'Bahrain Jobs',gate:'Bahrain job board · Direct',type:'direct',build:(q)=>`https://bahrainjobs.com/?s=${q}`} ]};
+  else if(country==='bahrain') local={title:'Public job-seeker services',key:'govNational',items:[{code:'BHR',name:'Bahrain Government Jobseeker Registration',gate:'Government service · eligibility applies',type:'portal',url:'https://services.bahrain.bh/wps/portal/en/BSP/GSX-UI-EServiceDetails?esID=2274'}]};
   else if(country==='jordan') local={title:'Classifieds',key:'classifieds',items:[{code:'JTN',name:'Jordan Tanqeeb',gate:'Jordan job board',type:'portal',url:'https://jordan.tanqeeb.com/'}]};
   else local={title:'Classifieds',key:'classifieds',items:[{code:'QTL-C',name:'Qatar Living Jobs',gate:'Qatar classifieds',type:'portal',url:'https://www.qatarliving.com/jobs'}]};
   let national;
@@ -617,15 +603,6 @@ function renderBoard(){
     });
     groupWrap.appendChild(boardEl);
     host.appendChild(groupWrap);
-    if(group.key==='gulfSpecialist'){
-      const adSlot=document.createElement('div');
-      adSlot.className='ad-slot ad-slot--native';
-      adSlot.setAttribute('role','complementary');
-      adSlot.setAttribute('aria-label','Advertisement');
-      adSlot.innerHTML=`<span class="ad-label">${t['ad.label']}</span><div class="ad-body"><ins class="adsbygoogle" style="display:block;width:100%;" data-ad-client="ca-pub-6874304698042148" data-ad-slot="5258018884" data-ad-format="auto" data-full-width-responsive="true"></ins></div>`;
-      host.appendChild(adSlot);
-      if(window.JobHubPrivacy){window.JobHubPrivacy.refreshAds();}
-    }
   });
   applyPlatformFilter();
 }
