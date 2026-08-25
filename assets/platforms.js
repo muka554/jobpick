@@ -1,12 +1,12 @@
 const GULF_PLATFORM_CONFIG = {
-  version: 5,
+  version: 7,
   countries: {
-    uae: { label: 'United Arab Emirates', searchLocation: 'United Arab Emirates', cities: { any: 'Any city', dubai: 'Dubai', abudhabi: 'Abu Dhabi', sharjah: 'Sharjah' } },
-    ksa: { label: 'Saudi Arabia', searchLocation: 'Saudi Arabia', cities: { any: 'Any city', riyadh: 'Riyadh', jeddah: 'Jeddah', dammam: 'Dammam' } }
+    uae: { label: 'United Arab Emirates', searchLocation: 'United Arab Emirates', baytPath: 'uae', cities: { any: 'Any city', dubai: 'Dubai', abudhabi: 'Abu Dhabi', sharjah: 'Sharjah' } },
+    ksa: { label: 'Saudi Arabia', searchLocation: 'Saudi Arabia', baytPath: 'saudi-arabia', cities: { any: 'Any city', riyadh: 'Riyadh', jeddah: 'Jeddah', dammam: 'Dammam' } }
   },
   groups: [
     { id: 'general', title: 'General & Global Boards', platforms: [
-      { id: 'bayt', name: 'Bayt.com', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, location, country }) => `https://www.bayt.com/en/${country === 'ksa' ? 'saudi-arabia' : 'uae'}/jobs/search/?q=${encodeURIComponent(role)}&location=${encodeURIComponent(location)}` },
+      { id: 'bayt', name: 'Bayt.com', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, city, location, country }) => { const config = GULF_PLATFORM_CONFIG.countries[country] || GULF_PLATFORM_CONFIG.countries.uae; const scope = city ? config.baytPath : 'international'; const term = slug(role || 'all-categories'); return `https://www.bayt.com/en/${scope}/jobs/${term}-jobs/${city ? `?location=${encodeURIComponent(location)}` : ''}`; } },
       { id: 'linkedin', name: 'LinkedIn Jobs', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, location }) => `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(role)}&location=${encodeURIComponent(location)}` },
       { id: 'indeed', name: 'Indeed', type: 'direct', coverage: 'Gulf jobs', buildUrl: ({ role, location, country }) => `https://${country === 'ksa' ? 'sa.indeed.com' : 'ae.indeed.com'}/jobs?q=${encodeURIComponent(role)}&l=${encodeURIComponent(location)}` },
       { id: 'google-jobs', name: 'Google for Jobs', type: 'google', coverage: 'Aggregated listings', buildUrl: ({ role, location }) => googleFallback('jobs', role, location) },
