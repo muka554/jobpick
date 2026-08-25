@@ -229,7 +229,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
 </head>
 <body data-page="home">
-<a class="skip-link" href="#boardhost">Skip to job board links</a>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="wrap">
   <nav class="sitenav" aria-label="Site">
     <a class="brand" href="/">GULF JOB HUB</a>
@@ -251,15 +251,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </select>
     </div>
   </nav>
+  <main id="main-content" tabindex="-1">
   <header class="top">
     <div class="eyebrow" data-i18n="eyebrow">UAE · Saudi Arabia · Gulf Careers</div>
-    <h1 data-i18n="headline">Find your next opportunity.</h1>
+    <h1 id="search-heading" data-i18n="headline">Find your next opportunity.</h1>
     <div class="sub" data-i18n="subtitle">Search across major job platforms and employment portals from one focused Gulf job-search hub. We organize links to external sources; always verify the original listing before applying.</div>
   </header>
-  <div class="searchpanel">
+  <form class="searchpanel" id="searchForm" role="search" aria-labelledby="search-heading">
     <div class="field">
       <label for="role" data-i18n="label.role">Role or keyword</label>
-      <input id="role" type="text" placeholder="Role / keyword e.g. technical">
+      <input id="role" type="text" autocomplete="off" aria-describedby="searchHint" placeholder="Role / keyword e.g. technical">
     </div>
     <div class="field">
       <label for="country" data-i18n="label.country">Country</label>
@@ -272,9 +273,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <label for="city" data-i18n="label.city">City</label>
       <select id="city"></select>
     </div>
-    <button class="go" id="goBtn" data-i18n="button.search">Search all boards</button>
+    <button class="go" id="goBtn" type="submit" aria-controls="boardhost" data-i18n="button.search">Search all boards</button>
     <div class="hint" id="searchHint" data-i18n="hint">Showing available Gulf job platforms.</div>
-  </div>
+  </form>
   <p id="searchStatus" class="sr-only" role="status" aria-live="polite"></p>
   <div class="ad-slot ad-slot--leaderboard" role="complementary" aria-label="Advertisement">
     <span class="ad-label">Advertisement</span>
@@ -285,7 +286,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <input id="platformFilter" type="text" data-i18n-ph="filter.placeholder" placeholder="Filter platforms by name..." aria-label="Filter platforms by name">
     <span id="filterCount" class="filter-count" aria-live="polite"></span>
   </div>
-  <div id="boardhost"></div>
+  <h2 id="results-heading" class="sr-only">Available job platforms</h2>
+  <div id="boardhost" role="region" aria-labelledby="results-heading" tabindex="-1"></div>
   <section class="resources" aria-labelledby="resourcesHeading">
     <h2 id="resourcesHeading" data-i18n="resources.heading">Job-search resources</h2>
     <div class="resources-grid">
@@ -303,6 +305,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="ad-body"><ins class="adsbygoogle" style="display:block;width:100%;" data-ad-client="ca-pub-6874304698042148" data-ad-slot="9250797882" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
   </div>
   <script>try{(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}</script>
+  </main>
+
   <footer>
     <p id="footerHow"><b>How this works:</b> nothing is scraped or stored. Most rows build a direct search link to that platform's own site using your keyword and open it in a new tab. A few recruitment agencies and niche boards don't expose a public search URL, so those rows route through a Google site-search instead — same destination, just built differently. Government/Emiratisation programmes require your own login, so they link straight to the portal.</p>
     <p id="footerStatic">This page is a static, self-contained HTML file — free to host anywhere (GitHub Pages, Netlify, your own server) or open locally. It calls no backend and stores nothing about you.</p>
@@ -483,7 +487,7 @@ const rowMap=[];
 let favorites;
 try{favorites=new Set(JSON.parse(localStorage.getItem('jobhub_favorites')||'[]'));}catch(e){favorites=new Set();}
 function saveFavorites(){try{localStorage.setItem('jobhub_favorites',JSON.stringify(Array.from(favorites)));}catch(e){}}
-function toggleFavorite(code){if(favorites.has(code))favorites.delete(code);else favorites.add(code);saveFavorites();renderBoard();runSearch();}
+function toggleFavorite(code){if(favorites.has(code))favorites.delete(code);else favorites.add(code);saveFavorites();renderBoard();runSearch();requestAnimationFrame(()=>document.querySelector(`.star-btn[data-code="${CSS.escape(code)}"]`)?.focus());}
 host.addEventListener('click',e=>{const btn=e.target.closest('.star-btn');if(!btn)return;toggleFavorite(btn.dataset.code);});
 function applyPlatformFilter(){
   const filterInput=document.getElementById('platformFilter');
@@ -626,8 +630,7 @@ function runSearch(){
     history.replaceState(null,'',url.pathname+'?'+url.searchParams.toString());
   }catch(e){}
 }
-document.getElementById('goBtn').addEventListener('click',runSearch);
-document.getElementById('role').addEventListener('keydown',e=>{if(e.key==='Enter')runSearch();});
+document.getElementById('searchForm').addEventListener('submit',e=>{e.preventDefault();runSearch();});
 document.getElementById('city').addEventListener('change',()=>{if(document.getElementById('role').value.trim())runSearch();});
 document.getElementById('country').addEventListener('change',()=>{applyLanguage(currentLang);});
 document.getElementById('lang').addEventListener('change',(e)=>{applyLanguage(e.target.value);});

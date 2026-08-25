@@ -85,6 +85,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   @media (prefers-reduced-motion: reduce){ .callout::after{ display:none; } }
   @media (max-width:700px){ body[data-page]{background-attachment:scroll !important;} }
   .resources,.board,.card{content-visibility:auto;contain-intrinsic-size:1px 600px;}
+
+  .skip-link{position:absolute;left:8px;top:-48px;background:var(--amber);color:#1A1300;padding:10px 14px;border-radius:4px;text-decoration:none;font-weight:700;z-index:100;}
+  .skip-link:focus{top:8px;}
 </style>
 <style>
   /* ===== Page background photo (subtle, dimmed) ===== */
@@ -101,6 +104,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </head>
 <body data-page="city-dubai">
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N64BK74G" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="wrap">
   <nav class="sitenav" aria-label="Site">
     <a class="brand" href="../../">GULF JOB HUB</a>
@@ -114,6 +118,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </div>
   </nav>
 
+  <main id="main-content" tabindex="-1">
   <div class="eyebrow">City Guide</div>
   <h1>Find Jobs in Dubai</h1>
   <p class="meta">By Ahmed Abayzeed · Gulf Job Hub · Last updated: August 21, 2026</p>
@@ -146,6 +151,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="txt">Search Dubai roles across every platform on this site.</div>
     <a class="btn" href="../../?country=uae&city=dubai">Browse Dubai jobs →</a>
   </div>
+
+  </main>
 
   <footer>
     <p>© 2026 Gulf Job Hub. All rights reserved.</p>
