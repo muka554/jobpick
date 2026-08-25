@@ -16,17 +16,18 @@
 <script>
 const message=document.getElementById('message');
 const params=new URLSearchParams(window.location.search);
-const next=typeof window.gulfSafeNext==='function'?window.gulfSafeNext(params.get('next')):'/';
+function safeNext(value){try{const candidate=new URL(value||'/',window.location.origin);if(candidate.origin!==window.location.origin)return'/';return candidate.pathname+candidate.search+candidate.hash}catch{return'/'}}
+const next=safeNext(params.get('next'));
 const client=window.gulfSupabaseClient;
 function setMessage(text){message.textContent=text||''}
 function go(url){window.location.assign(url||'/')}
+document.getElementById('skipBtn').addEventListener('click',()=>go('/'));
 if(!client||!client.auth){setMessage('Login is temporarily unavailable. You can continue to the homepage.')}else{
   client.auth.getUser().then(({data,error})=>{if(!error&&data?.user)go(next)}).catch(()=>{});
   document.getElementById('loginForm').addEventListener('submit',async event=>{event.preventDefault();setMessage('Signing in…');const email=document.getElementById('email').value.trim();const password=document.getElementById('password').value;const {error}=await client.auth.signInWithPassword({email,password});if(error){setMessage(error.message);return}go(next)});
   document.getElementById('signupBtn').addEventListener('click',async()=>{setMessage('Creating account…');const email=document.getElementById('email').value.trim();const password=document.getElementById('password').value;if(!email||!password){setMessage('Enter an email and password first.');return}const {data,error}=await client.auth.signUp({email,password,emailRedirectTo:`${window.location.origin}/account/?next=${encodeURIComponent(next)}`});if(error){setMessage(error.message);return}setMessage(data.session?'Account created. Redirecting…':'Account created. Check your email to confirm, then log in.');if(data.session)go(next)});
   document.getElementById('googleBtn').addEventListener('click',async()=>{setMessage('Redirecting to Google…');const {error}=await client.auth.signInWithOAuth({provider:'google',options:{redirectTo:`${window.location.origin}/account/?next=${encodeURIComponent(next)}`}});if(error)setMessage(error.message)});
 }
-document.getElementById('skipBtn').addEventListener('click',()=>go('/'));
 </script>
 </body>
 </html>
