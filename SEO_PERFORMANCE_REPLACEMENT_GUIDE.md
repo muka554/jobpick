@@ -2,7 +2,7 @@
 
 ## How to install
 
-Replace the contents of the GitHub repository with the contents of this package. Preserve the existing custom-domain setting and repository settings. The site remains a static public website and does not require Gulf Job Hub login.
+Replace the contents of the GitHub repository with the contents of this package. Preserve the existing custom-domain setting and repository settings. The site remains a static public website and does not require Middle East Job Hub login.
 
 If applying the patch instead, run this from the repository root:
 

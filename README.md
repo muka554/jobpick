@@ -1,4 +1,4 @@
-# Gulf Job Hub
+# Middle East Job Hub
 
 A static, self-contained job-search aggregator covering the UAE and Saudi Arabia. One search box builds market-aware search links into 20 configured job platforms, using platform-specific URLs where available and Google search as a fallback. The platform list and URL builders are maintained in `home/index.html` as the single source of truth. Grouped by category and styled as an airport departure board.
 
@@ -34,7 +34,7 @@ The site organizes outbound links to third-party job platforms. It does not scra
 
 - Platform descriptions and editorial pages should remain neutral and clearly distinguish outbound links from paid placements.
 - Any sponsored placement should be labeled.
-- Job seekers should never be asked to pay Gulf Job Hub to access a job listing.
+- Job seekers should never be asked to pay Middle East Job Hub to access a job listing.
 - The site may use advertising or affiliate links; any commercial relationship should be disclosed.
 - External destinations may require registration or login on their own websites.
 
