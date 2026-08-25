@@ -476,6 +476,17 @@ function applyLanguage(lang){
   populateCityOptions();renderBoard();runSearch();
 }
 const COUNTRY_INFO={uae:{name:'United Arab Emirates',slug:'uae',domain:'ae'},ksa:{name:'Saudi Arabia',slug:'saudi-arabia',domain:'sa'},egypt:{name:'Egypt',slug:'egypt',domain:'eg'},qatar:{name:'Qatar',slug:'qatar',domain:'qa'},kuwait:{name:'Kuwait',slug:'kuwait',domain:'kw'},oman:{name:'Oman',slug:'oman',domain:'om'},bahrain:{name:'Bahrain',slug:'bahrain',domain:'bh'},jordan:{name:'Jordan',slug:'jordan',domain:'jo'}};
+// Glassdoor requires a platform location identifier. Free-text locKeyword links can default to U.S. results, so use only verified Middle East country/city result pages.
+const GLASSDOOR_COUNTRY_URLS={
+  uae:'https://www.glassdoor.com/Job/united-arab-emirates-jobs-SRCH_IL.0,20_IN6.htm',
+  ksa:'https://www.glassdoor.com/Job/saudi-arabia-jobs-SRCH_IL.0,12_IN207.htm',
+  egypt:'https://www.glassdoor.com/Job/egypt-jobs-SRCH_IL.0,5_IN69.htm',
+  qatar:'https://www.glassdoor.com/Job/qatar-jobs-SRCH_IL.0,5_IN199.htm',
+  kuwait:'https://www.glassdoor.com/Job/kuwait-jobs-SRCH_IL.0,6_IC3470419.htm',
+  oman:'https://www.glassdoor.com/Job/oman-jobs-SRCH_IL.0,4_IN167.htm',
+  bahrain:'https://www.glassdoor.com/Job/bahrain-jobs-SRCH_IL.0,7_IN21.htm',
+  jordan:'https://www.glassdoor.com/Job/index.htm'
+};
 const CITY_NAMES={uae:{any:'',dubai:'Dubai',abudhabi:'Abu Dhabi',sharjah:'Sharjah'},ksa:{any:'',riyadh:'Riyadh',jeddah:'Jeddah',dammam:'Dammam'},egypt:{any:'',cairo:'Cairo',giza:'Giza',alexandria:'Alexandria',newcairo:'New Cairo',october:'6th of October City',mansoura:'Mansoura',tanta:'Tanta',portsaid:'Port Said',suez:'Suez',asyut:'Asyut'},qatar:{any:'',doha:'Doha',alrayyan:'Al Rayyan',alwakrah:'Al Wakrah',alkhor:'Al Khor',lusail:'Lusail',ummsalal:'Umm Salal',mesaieed:'Mesaieed'},kuwait:{any:'',kuwaitcity:'Kuwait City',hawally:'Hawally',salmiya:'Salmiya',farwaniya:'Farwaniya',ahmadi:'Al Ahmadi',fahaheel:'Fahaheel',jahra:'Jahra',mubarak:'Mubarak Al-Kabeer',sabahsalem:'Sabah Al-Salem'},oman:{any:'',muscat:'Muscat',salalah:'Salalah',sohar:'Sohar',nizwa:'Nizwa',sur:'Sur',ibri:'Ibri',rustaq:'Rustaq',barka:'Barka'},bahrain:{any:'',manama:'Manama',riffa:'Riffa',muharraq:'Muharraq',hamadtown:'Hamad Town',isatown:'Isa Town',aali:"A'ali",sitra:'Sitra'},jordan:{any:'',amman:'Amman',zarqa:'Zarqa',irbid:'Irbid',aqaba:'Aqaba',salt:'As-Salt',madaba:'Madaba'}};
 const CITY_OPTIONS={uae:[['any','city.any'],['dubai','city.dubai'],['abudhabi','city.abudhabi'],['sharjah','city.sharjah']],ksa:[['any','city.any'],['riyadh','city.riyadh'],['jeddah','city.jeddah'],['dammam','city.dammam']],egypt:[['any','city.any'],['cairo','city.cairo'],['giza','city.giza'],['alexandria','city.alexandria'],['newcairo','city.newcairo'],['october','city.october'],['mansoura','city.mansoura'],['tanta','city.tanta'],['portsaid','city.portsaid'],['suez','city.suez'],['asyut','city.asyut']],qatar:[['any','city.any'],['doha','city.doha'],['alrayyan','city.alrayyan'],['alwakrah','city.alwakrah'],['alkhor','city.alkhor'],['lusail','city.lusail'],['ummsalal','city.ummsalal'],['mesaieed','city.mesaieed']],kuwait:[['any','city.any'],['kuwaitcity','city.kuwaitcity'],['hawally','city.hawally'],['salmiya','city.salmiya'],['farwaniya','city.farwaniya'],['ahmadi','city.ahmadi'],['fahaheel','city.fahaheel'],['jahra','city.jahra'],['mubarak','city.mubarak'],['sabahsalem','city.sabahsalem']],oman:[['any','city.any'],['muscat','city.muscat'],['salalah','city.salalah'],['sohar','city.sohar'],['nizwa','city.nizwa'],['sur','city.sur'],['ibri','city.ibri'],['rustaq','city.rustaq'],['barka','city.barka']],bahrain:[['any','city.any'],['manama','city.manama'],['riffa','city.riffa'],['muharraq','city.muharraq'],['hamadtown','city.hamadtown'],['isatown','city.isatown'],['aali','city.aali'],['sitra','city.sitra']],jordan:[['any','city.any'],['amman','city.amman'],['zarqa','city.zarqa'],['irbid','city.irbid'],['aqaba','city.aqaba'],['salt','city.salt'],['madaba','city.madaba']]};
 function slugify(str){return str.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')||'jobs';}
@@ -512,11 +523,11 @@ function getGroups(country){
   const cfg=COUNTRY_INFO[country]||COUNTRY_INFO.uae;
   const countryPath=cfg.slug;
   const global=[
-    {code:'BYT',name:'Bayt.com',gate:'General · MENA',type:'direct',build:(q)=>`https://www.bayt.com/en/${countryPath}/jobs/?keyword=${q}`},
+    {code:'BYT',name:'Bayt.com',gate:'MENA · official country search',type:'direct',build:(q)=>`https://www.bayt.com/en/${countryPath}/jobs/?keyword=${q}`},
     {code:'LKD',name:'LinkedIn Jobs',gate:'General · Global',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.linkedin.com/jobs/search/?keywords=${q}&location=${encodeURIComponent((cityName?cityName+', ':'')+cfg.name)}`},
     {code:'IND',name:'Indeed',gate:'General · Global',type:'direct',build:(q,slug,cityKey,cityName)=>`https://${cfg.domain}.indeed.com/jobs?q=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'')},
     {code:'GGL',name:'Google for Jobs',gate:'Aggregator',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.google.com/search?q=${q}+jobs+in+${encodeURIComponent(cityName||cfg.name)}&ibp=htl;jobs`},
-    {code:'GLD',name:'Glassdoor',gate:'General · Global',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.glassdoor.com/Job/jobs.htm?sc.keyword=${q}`+(cityName?`&locKeyword=${encodeURIComponent(cityName)}`:'')},
+    ...(GLASSDOOR_COUNTRY_URLS[country]?[{code:'GLD',name:'Glassdoor Jobs',gate:country==='jordan'?'Platform search · set Jordan location':'Verified country destination',type:'portal',url:GLASSDOOR_COUNTRY_URLS[country]}]:[]),
     {code:'CJT',name:'CareerJet',gate:'Aggregator · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.careerjet.com/search/jobs?s=${q}&l=${encodeURIComponent(cityName||cfg.name)}`} ,
     {code:'TLC',name:'Talent.com',gate:'Aggregator',type:'direct',build:(q,slug,cityKey,cityName)=>`https://${cfg.domain}.talent.com/jobs?k=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'')},
   ];
