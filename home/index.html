@@ -14,18 +14,26 @@
 <header class="top"><div class="eyebrow">UAE · Saudi Arabia · Gulf Careers</div><h1>Find your next opportunity.</h1><div class="sub">Search across major job platforms and employment portals from one focused Gulf job-search hub. Always verify the original listing before applying.</div></header>
 <section class="searchpanel"><div class="field"><label for="role">Role or keyword</label><input id="role" placeholder="e.g. accountant"></div><div class="field"><label for="country">Country</label><select id="country"><option value="uae">United Arab Emirates</option><option value="ksa">Saudi Arabia</option></select></div><div class="field"><label for="city">City</label><select id="city" aria-label="Select city"></select></div><button class="go" id="goBtn" type="button">Search all boards</button><div class="hint">Showing available Gulf job platforms.</div></section><div class="ad-slot">Advertisement</div><div class="filterbar"><input id="platformFilter" placeholder="Filter platforms by name..." aria-label="Filter platforms by name"></div><main id="boardhost" aria-live="polite"><div class="status">Loading job platforms…</div></main>
 <section class="resources"><h2>Job-search resources</h2><div class="resources-grid"><a class="rescard" href="/guides/uae-job-search-guide/">How to search for jobs in the UAE</a><a class="rescard" href="/guides/uae-cv-guide/">UAE CV guide</a><a class="rescard" href="/guides/recruitment-scam-warning-signs/">Recruitment scam warning signs</a><a class="rescard" href="/guides/gulf-job-platforms-explained/">Gulf job platforms explained</a><a class="rescard" href="/cities/dubai-jobs/">Find jobs in Dubai</a><a class="rescard" href="/cities/abu-dhabi-jobs/">Find jobs in Abu Dhabi</a><a class="rescard" href="/cities/riyadh-jobs/">Find jobs in Riyadh</a></div></section><div class="ad-slot">Advertisement</div><footer>How this works: this page organizes links to external job platforms. Nothing is scraped or stored. Always verify the original listing before applying.<br><br>© 2026 Gulf Job Hub. All rights reserved.</footer></div>
-<script src="/assets/platforms.js" onerror="window.platformsLoadError=true"></script><script>
+<script>
 const country=document.getElementById('country'),city=document.getElementById('city'),role=document.getElementById('role'),host=document.getElementById('boardhost'),filter=document.getElementById('platformFilter');
 function esc(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
 function fillCities(){const list=window.gulfPlatforms?.cities?.[country.value]||[];city.innerHTML='<option value="">All cities</option>'+list.map(x=>`<option value="${esc(x.value)}">${esc(x.label)}</option>`).join('')}
 function render(){
-  if(window.platformsLoadError||!window.gulfPlatforms||!Array.isArray(window.gulfPlatforms.boards)){host.innerHTML='<div class="status">Job platforms could not be loaded. Please refresh the page or try again later.</div>';return}
+  if(!window.gulfSupabaseClient&&false){}
+  if(!window.gulfPlatforms||!Array.isArray(window.gulfPlatforms.boards)){host.innerHTML='<div class="status">Job platforms could not be loaded. Please refresh the page or try again later.</div>';return}
   const q=role.value.trim(),c=country.value,ci=city.value,term=filter.value.trim().toLowerCase();
   const items=window.gulfPlatforms.boards.filter(b=>b&&(!term||String(b.name||'').toLowerCase().includes(term)));
   if(!items.length){host.innerHTML='<div class="status">No platforms match your filter.</div>';return}
   host.innerHTML=items.map(b=>{let href='#';try{href=b.buildUrl({query:q,country:c,city:ci})||'#'}catch(error){href='#'}return `<article class="board"><div><h2>${esc(b.name||'Job platform')}</h2><p>${esc(b.description||'Search available jobs on this platform.')}</p><div class="meta">${esc(b.type||'External job board')}</div></div><a href="${esc(href)}" target="_blank" rel="noopener">Open jobs</a></article>`}).join('')
 }
-country.addEventListener('change',()=>{fillCities();render()});[role,filter,city].forEach(el=>el.addEventListener('input',render));document.getElementById('goBtn').addEventListener('click',render);fillCities();render();
+function loadPlatforms(){
+  const script=document.createElement('script');
+  script.src='/assets/platforms.js';
+  script.onload=()=>{fillCities();render()};
+  script.onerror=()=>{host.innerHTML='<div class="status">Job platforms could not be loaded. Please refresh the page or try again later.</div>'};
+  document.head.appendChild(script);
+}
+country.addEventListener('change',()=>{fillCities();render()});[role,filter,city].forEach(el=>el.addEventListener('input',render));document.getElementById('goBtn').addEventListener('click',render);loadPlatforms();
 </script>
 </body>
 </html>
