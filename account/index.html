@@ -19,7 +19,7 @@ client.auth.getUser().then(({data})=>{if(data?.user) window.location.replace(nex
 document.getElementById('loginForm').addEventListener('submit',async event=>{event.preventDefault();message.textContent='Signing in…';const {error}=await client.auth.signInWithPassword({email:document.getElementById('email').value.trim(),password:document.getElementById('password').value});if(error){message.textContent=error.message;return}window.location.replace(next)});
 document.getElementById('signupBtn').addEventListener('click',async()=>{message.textContent='Creating account…';const email=document.getElementById('email').value.trim();const password=document.getElementById('password').value;if(!email||!password){message.textContent='Enter an email and password first.';return}const {data,error}=await client.auth.signUp({email,password,emailRedirectTo:`${window.location.origin}/account/?next=${encodeURIComponent(next)}`});message.textContent=error?error.message:(data.session?'Account created. Redirecting…':'Account created. Check your email to confirm, then log in.');if(data.session) window.location.replace(next)});
 document.getElementById('googleBtn').addEventListener('click',async()=>{message.textContent='Redirecting to Google…';const {error}=await client.auth.signInWithOAuth({provider:'google',options:{redirectTo:`${window.location.origin}/account/?next=${encodeURIComponent(next)}`}});if(error){message.textContent=error.message}});
-document.getElementById('skipBtn').addEventListener('click',()=>{window.location.replace(next)});
+document.getElementById('skipBtn').addEventListener('click',()=>{window.location.replace('/')});
 </script>
 </body>
 </html>
