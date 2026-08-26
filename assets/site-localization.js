@@ -121,6 +121,22 @@
     holder.innerHTML = pickerMarkup();
     if (nav) nav.appendChild(holder); else document.body.insertBefore(holder, document.body.firstChild);
   }
+  function addExperienceAssets() {
+    if (!document.getElementById('jobhubExperienceStyles')) {
+      var stylesheet = document.createElement('link');
+      stylesheet.id = 'jobhubExperienceStyles';
+      stylesheet.rel = 'stylesheet';
+      stylesheet.href = '/assets/site-experience.css?v=20260826b';
+      document.head.appendChild(stylesheet);
+    }
+    if (!document.getElementById('jobhubExperienceScript')) {
+      var script = document.createElement('script');
+      script.id = 'jobhubExperienceScript';
+      script.src = '/assets/auth-experience.js?v=20260826b';
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+  }
   function addStyles() {
     if (document.getElementById('siteLocalizationStyles')) return;
     var style = document.createElement('style');
@@ -130,6 +146,7 @@
   }
   function init() {
     addStyles();
+    addExperienceAssets();
     addPicker();
     capturePage();
     document.addEventListener('change', function (event) {
