@@ -185,6 +185,7 @@
     ui.access.hidden = true;
     ui.skip.hidden = true;
     if (ui.launcher) { ui.launcher.textContent = text('account'); ui.launcher.hidden = false; }
+    if (ui.logoutLauncher) { ui.logoutLauncher.textContent = text('signout'); ui.logoutLauncher.hidden = false; }
     if (user && user.email) ui.signed.setAttribute('title', text('signed'));
   }
   function showAccess() {
@@ -195,6 +196,7 @@
     ui.access.hidden = false;
     ui.skip.hidden = false;
     if (ui.launcher) { ui.launcher.textContent = text('account'); ui.launcher.hidden = false; }
+    if (ui.logoutLauncher) ui.logoutLauncher.hidden = true;
   }
   function setMode(nextMode) {
     mode = nextMode === 'signup' ? 'signup' : 'signin';
@@ -218,6 +220,7 @@
     if (ui.signed && !ui.signed.hidden && ui.signedUser) ui.signedLabel.textContent = welcomeFor(ui.signedUser);
     if (ui.welcome && !ui.welcome.hidden && ui.welcomeUser) ui.welcome.textContent = welcomeFor(ui.welcomeUser);
     if (ui.launcher) ui.launcher.textContent = text('account');
+    if (ui.logoutLauncher) ui.logoutLauncher.textContent = text('signout');
   }
   function createUI() {
     if (document.getElementById('jobhubAuthLayer')) return;
@@ -231,6 +234,10 @@
     launcher.type = 'button'; launcher.className = 'jobhub-auth-launcher'; launcher.hidden = true; launcher.setAttribute('data-no-localize', '');
     document.body.appendChild(launcher);
 
+    var logoutLauncher = document.createElement('button');
+    logoutLauncher.type = 'button'; logoutLauncher.className = 'jobhub-auth-logout-launcher'; logoutLauncher.hidden = true; logoutLauncher.setAttribute('data-no-localize', '');
+    document.body.appendChild(logoutLauncher);
+
     var welcome = document.createElement('p');
     welcome.className = 'jobhub-welcome'; welcome.hidden = true; welcome.setAttribute('role', 'status'); welcome.setAttribute('aria-live', 'polite'); welcome.setAttribute('data-no-localize', '');
     document.body.appendChild(welcome);
@@ -242,7 +249,7 @@
     document.body.appendChild(layer);
 
     ui = {
-      layer: layer, launcher: launcher, welcome: welcome, close: layer.querySelector('.jobhub-auth-close'), badge: layer.querySelector('.jobhub-auth-badge'), title: layer.querySelector('.jobhub-auth-title'), body: layer.querySelector('.jobhub-auth-copy'),
+      layer: layer, launcher: launcher, logoutLauncher: logoutLauncher, welcome: welcome, close: layer.querySelector('.jobhub-auth-close'), badge: layer.querySelector('.jobhub-auth-badge'), title: layer.querySelector('.jobhub-auth-title'), body: layer.querySelector('.jobhub-auth-copy'),
       access: layer.querySelector('.jobhub-auth-access'), google: layer.querySelector('.jobhub-auth-google'), divider: layer.querySelector('.jobhub-auth-divider'), signinTab: layer.querySelectorAll('.jobhub-auth-tab')[0], signupTab: layer.querySelectorAll('.jobhub-auth-tab')[1],
       form: layer.querySelector('.jobhub-auth-password-form'), emailLabel: layer.querySelector('label[for="jobhubAuthEmail"]'), email: layer.querySelector('#jobhubAuthEmail'), passwordLabel: layer.querySelector('label[for="jobhubAuthPassword"]'), password: layer.querySelector('#jobhubAuthPassword'), passwordHint: layer.querySelector('.jobhub-auth-password-hint'), submit: layer.querySelector('.jobhub-auth-password-form button[type="submit"]'), magic: layer.querySelector('.jobhub-auth-magic-link'),
       skip: layer.querySelector('.jobhub-auth-skip'), status: layer.querySelector('.jobhub-auth-status'), signed: layer.querySelector('.jobhub-auth-signedin'), signedLabel: layer.querySelector('.jobhub-auth-signedin span'), signout: layer.querySelector('.jobhub-auth-signout')
@@ -252,6 +259,12 @@
     ui.close.addEventListener('click', function () { hide(true); });
     ui.skip.addEventListener('click', function () { hide(true); });
     ui.launcher.addEventListener('click', function () { show(true); });
+    ui.logoutLauncher.addEventListener('click', function () {
+      setBusy(true);
+      getClient().then(function (supabase) { return supabase.auth.signOut(); }).then(function () {
+        showAccess(); setStatus(''); hide(true);
+      }).catch(function () { setStatus(text('signInError'), 'error'); }).finally(function () { setBusy(false); });
+    });
     layer.addEventListener('click', function (event) { if (event.target === layer) hide(true); });
     document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !layer.hidden) hide(true); });
     ui.signinTab.addEventListener('click', function () { setMode('signin'); });
