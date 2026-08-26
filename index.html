@@ -823,7 +823,7 @@ function runSearch(){
   if(statusEl){const location=displayCity?(currentLang==='ar'||currentLang==='ur'?' في '+displayCity:' in '+displayCity):(currentLang==='ar'||currentLang==='ur'?' عبر '+displayCountry:' across '+displayCountry);statusEl.textContent=dynamicText('status').replace('{role}',roleRaw).replace('{location}',location);}
   try{
     const url=new URL(window.location.href);
-    const isAuthCallback=url.searchParams.has('code')||url.searchParams.has('error')||url.hash.indexOf('access_token=')!==-1;
+    const isAuthCallback=url.searchParams.has('code')||url.searchParams.has('error')||url.searchParams.has('jobhub_return_to')||url.hash.indexOf('access_token=')!==-1;
     if(!isAuthCallback){
       url.searchParams.set('role', roleInputVal);
       url.searchParams.set('country', country);
