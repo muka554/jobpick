@@ -64,10 +64,11 @@
   #role,.field select{ width:100%; min-width:0; background:var(--board); border:1px solid var(--line); color:var(--ink); font-size:15px; padding:11px 14px; border-radius:8px; outline:none; }
   .field select{ font-size:14px; padding:11px 12px; cursor:pointer; }
   .search-actions{ display:flex; gap:10px; align-items:stretch; justify-content:flex-start; }
-  .go,.reset-search{ border:none; font-weight:700; font-size:15px; padding:12px 18px; border-radius:8px; cursor:pointer; min-height:46px; }
+  .go,.reset-search,.share-search{ border:none; font-weight:700; font-size:15px; padding:12px 18px; border-radius:8px; cursor:pointer; min-height:46px; }
   .go{ background:var(--teal); color:#062420; flex:1; }
-  .reset-search{ background:transparent; color:var(--ink); border:1px solid #536171; }
-  .reset-search:hover{ border-color:var(--amber); color:var(--amber); }
+  .reset-search,.share-search{ background:transparent; color:var(--ink); border:1px solid #536171; }
+  .reset-search:hover,.share-search:hover{ border-color:var(--amber); color:var(--amber); }
+  .share-search:disabled{ cursor:not-allowed; opacity:.52; border-color:#3B4655; color:var(--ink-dim); }
   .hint{ grid-column:1 / -1; text-align:center; font-size:13px; color:var(--teal); margin:0; opacity:.85; }
   .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; white-space:nowrap; border:0; }
   .skip-link{ position:absolute; left:8px; top:-48px; background:var(--amber); color:#1A1300; padding:10px 14px; border-radius:4px; text-decoration:none; z-index:100; }
@@ -115,6 +116,7 @@
     .searchpanel{ grid-template-columns:1fr; gap:12px; }
     .field{ width:100%; grid-template-columns:118px minmax(0,1fr); }
     .search-actions{ display:grid; grid-template-columns:1fr 1fr; }
+    .share-search{ grid-column:1 / -1; }
     .row{ grid-template-columns:1fr; gap:8px; position:relative; padding:16px 14px 16px 34px; }
     .star-btn{ position:absolute; top:14px; left:10px; }
     .opensearch{ text-align:left; }
@@ -318,6 +320,7 @@
     <div class="search-actions" aria-label="Search actions">
       <button class="go" id="goBtn" type="submit" aria-controls="boardhost" data-i18n="button.search">Search all boards</button>
       <button class="reset-search" id="resetBtn" type="button" aria-controls="boardhost" data-i18n="button.reset">Reset search</button>
+      <button class="share-search" id="shareSearchBtn" type="button" aria-describedby="searchStatus" data-i18n="button.share" disabled>Copy search link</button>
     </div>
     <div class="hint" id="searchHint" data-i18n="hint">Showing available Middle East job platforms.</div>
   </form>
@@ -406,7 +409,7 @@ const I18N = {
     'label.role':'Role or keyword','label.country':'Country','label.city':'City',
     'country.choose':'Choose a country','country.uae':'United Arab Emirates','country.ksa':'Saudi Arabia','country.egypt':'Egypt','country.qatar':'Qatar','country.kuwait':'Kuwait',
     'city.choose':'Choose a city','city.any':'Any city','city.dubai':'Dubai','city.abudhabi':'Abu Dhabi','city.sharjah':'Sharjah','city.ajman':'Ajman','city.alain':'Al Ain','city.rak':'Ras Al Khaimah','city.fujairah':'Fujairah','city.uaq':'Umm Al Quwain','city.khorfakkan':'Khor Fakkan','city.riyadh':'Riyadh','city.jeddah':'Jeddah','city.dammam':'Dammam','city.makkah':'Makkah','city.madinah':'Madinah','city.khobar':'Khobar','city.dhahran':'Dhahran','city.taif':'Taif','city.tabuk':'Tabuk','city.abha':'Abha','city.buraidah':'Buraidah','city.jubail':'Jubail','city.hail':'Hail','city.jazan':'Jazan','city.yanbu':'Yanbu','city.cairo':'Cairo','city.giza':'Giza','city.alexandria':'Alexandria','city.newcairo':'New Cairo','city.october':'6th of October City','city.mansoura':'Mansoura','city.tanta':'Tanta','city.portsaid':'Port Said','city.suez':'Suez','city.asyut':'Asyut','city.doha':'Doha','city.alrayyan':'Al Rayyan','city.alwakrah':'Al Wakrah','city.alkhor':'Al Khor','city.lusail':'Lusail','city.ummsalal':'Umm Salal','city.mesaieed':'Mesaieed','city.kuwaitcity':'Kuwait City','city.hawally':'Hawally','city.salmiya':'Salmiya','city.farwaniya':'Farwaniya','city.ahmadi':'Al Ahmadi','city.fahaheel':'Fahaheel','city.jahra':'Jahra','city.mubarak':'Mubarak Al-Kabeer','city.sabahsalem':'Sabah Al-Salem','city.muscat':'Muscat','city.salalah':'Salalah','city.sohar':'Sohar','city.nizwa':'Nizwa','city.sur':'Sur','city.ibri':'Ibri','city.rustaq':'Rustaq','city.barka':'Barka','city.manama':'Manama','city.riffa':'Riffa','city.muharraq':'Muharraq','city.hamadtown':'Hamad Town','city.isatown':'Isa Town','city.aali':"A'ali",'city.sitra':'Sitra','city.amman':'Amman','city.zarqa':'Zarqa','city.irbid':'Irbid','city.aqaba':'Aqaba','city.salt':'As-Salt','city.madaba':'Madaba',
-    'button.search':'Search all boards','button.reset':'Reset search','status.reset':'Search reset. Showing available platforms for the United Arab Emirates.','search.countryRequired':'Choose a country before searching.','hint':'Showing available Middle East and regional job platforms.','filter.placeholder':'Filter platforms by name...',
+    'button.search':'Search all boards','button.reset':'Reset search','button.share':'Copy search link','status.reset':'Search reset. Showing available platforms for the United Arab Emirates.','status.shareCopied':'Search link copied. It includes only the role, country, and city you selected.','status.shareUnavailable':'Choose a country before creating a search link.','status.shareFailed':'Could not copy the link. Copy it from the browser address bar instead.','search.countryRequired':'Choose a country before searching.','hint':'Showing available Middle East and regional job platforms.','filter.placeholder':'Filter platforms by name...',
     'col.destination':'Platform','col.gate':'Coverage','col.type':'Type','col.status':'Open search',
     'pill.direct':'Direct search','pill.google':'Google fallback','pill.portal':'Portal',
     'resources.heading':'Job-search resources','resources.uaeGuide':'How to search for jobs in the UAE','resources.cvGuide':'UAE CV guide',
@@ -429,7 +432,7 @@ const I18N = {
     'country.choose':'اختر الدولة','country.uae':'الإمارات العربية المتحدة','country.ksa':'المملكة العربية السعودية',
     'city.choose':'اختر المدينة','city.any':'أي مدينة','city.dubai':'دبي','city.abudhabi':'أبوظبي','city.sharjah':'الشارقة','city.ajman':'عجمان','city.alain':'العين','city.rak':'رأس الخيمة','city.fujairah':'الفجيرة','city.uaq':'أم القيوين','city.khorfakkan':'خورفكان',
     'city.riyadh':'الرياض','city.jeddah':'جدة','city.dammam':'الدمام','city.makkah':'مكة','city.madinah':'المدينة المنورة','city.khobar':'الخبر','city.dhahran':'الظهران','city.taif':'الطائف','city.tabuk':'تبوك','city.abha':'أبها','city.buraidah':'بريدة','city.jubail':'الجبيل','city.hail':'حائل','city.jazan':'جازان','city.yanbu':'ينبع',
-    'button.search':'ابحث في كل اللوحات','button.reset':'إعادة ضبط البحث','status.reset':'تمت إعادة ضبط البحث. يتم عرض المنصات المتاحة في الإمارات العربية المتحدة.','search.countryRequired':'اختر الدولة قبل البحث.','hint':'عرض منصات الوظائف الخليجية المتاحة.','filter.placeholder':'تصفية المنصات بالاسم...',
+    'button.search':'ابحث في كل اللوحات','button.reset':'إعادة ضبط البحث','button.share':'نسخ رابط البحث','status.reset':'تمت إعادة ضبط البحث. يتم عرض المنصات المتاحة في الإمارات العربية المتحدة.','status.shareCopied':'تم نسخ رابط البحث. يتضمن فقط الوظيفة والدولة والمدينة التي اخترتها.','status.shareUnavailable':'اختر دولة قبل إنشاء رابط بحث.','status.shareFailed':'تعذّر نسخ الرابط. انسخه من شريط عنوان المتصفح بدلًا من ذلك.','search.countryRequired':'اختر الدولة قبل البحث.','hint':'عرض منصات الوظائف الخليجية المتاحة.','filter.placeholder':'تصفية المنصات بالاسم...',
     'col.destination':'المنصة','col.gate':'التقطية','col.type':'النوع','col.status':'فتح البحث',
     'pill.direct':'بحث مباشر','pill.google':'عبر جوجل','pill.portal':'بوابة',
     'resources.heading':'موارد البحث عن عمل','resources.uaeGuide':'كيفية البحث عن وظيفة في الإمارات',
@@ -454,7 +457,7 @@ const I18N = {
     'country.choose':'देश चुनें','country.uae':'संयुक्त अरब अमीरात','country.ksa':'सऊदी अरब',
     'city.choose':'शहर चुनें','city.any':'कोई भी शहर','city.dubai':'दुबई','city.abudhabi':'अबू धाबी','city.sharjah':'शारजाह','city.ajman':'अजमान','city.alain':'अल ऐन','city.rak':'रास अल खैमाह','city.fujairah':'फुजैरा','city.uaq':'उम्म अल क्वैन','city.khorfakkan':'खोर फ़क्कान',
     'city.riyadh':'रियाद','city.jeddah':'जेद्दाह','city.dammam':'दम्मम','city.makkah':'मक्का','city.madinah':'मदीना','city.khobar':'खोबर','city.dhahran':'धहरान','city.taif':'ताइफ़','city.tabuk':'तबूक','city.abha':'अभा','city.buraidah':'बुरैदह','city.jubail':'जुबैल','city.hail':'हाइल','city.jazan':'जाज़ान','city.yanbu':'यनबू',
-    'button.search':'सभी बोर्ड खोजें','button.reset':'खोज रीसेट करें','status.reset':'खोज रीसेट की गई। संयुक्त अरब अमीरात के उपलब्ध प्लेटफ़ॉर्म दिखाए जा रहे हैं।','search.countryRequired':'खोजने से पहले देश चुनें।','hint':'उपलब्ध खाड़ी जॉब प्लेटफ़ॉर्म दिखाए जा रहे हैं।','filter.placeholder':'नाम से प्लेटफ़ॉर्म फ़िल्टर करें...',
+    'button.search':'सभी बोर्ड खोजें','button.reset':'खोज रीसेट करें','button.share':'खोज लिंक कॉपी करें','status.reset':'खोज रीसेट की गई। संयुक्त अरब अमीरात के उपलब्ध प्लेटफ़ॉर्म दिखाए जा रहे हैं।','status.shareCopied':'खोज लिंक कॉपी हो गया। इसमें केवल आपके चुने हुए पद, देश और शहर शामिल हैं।','status.shareUnavailable':'खोज लिंक बनाने से पहले देश चुनें।','status.shareFailed':'लिंक कॉपी नहीं हो सका। इसे ब्राउज़र के एड्रेस बार से कॉपी करें।','search.countryRequired':'खोजने से पहले देश चुनें।','hint':'उपलब्ध खाड़ी जॉब प्लेटफ़ॉर्म दिखाए जा रहे हैं।','filter.placeholder':'नाम से प्लेटफ़ॉर्म फ़िल्टर करें...',
     'col.destination':'प्लेटफ़ॉर्म','col.gate':'कवरेज','col.type':'प्रकार','col.status':'खोज खोलें',
     'pill.direct':'सीधी खोज','pill.google':'गूगल फ़ॉलबैक','pill.portal':'पोर्टल',
     'resources.heading':'जॉब-सर्च संसाधन','resources.uaeGuide':'यूएई में नौकरी कैसे खोजें',
@@ -478,7 +481,7 @@ const I18N = {
     'country.choose':'ملک منتخب کریں','country.uae':'متحدہ عرب امارات','country.ksa':'سعودی عرب',
     'city.choose':'شہر منتخب کریں','city.any':'کوئی بھی شہر','city.dubai':'دبئی','city.abudhabi':'ابوظہبی','city.sharjah':'شارجہ','city.ajman':'عجمان','city.alain':'العین','city.rak':'راس الخیمہ','city.fujairah':'فجیرہ','city.uaq':'ام القیوین','city.khorfakkan':'خورفکان',
     'city.riyadh':'ریاض','city.jeddah':'جدہ','city.dammam':'دمام','city.makkah':'مکہ','city.madinah':'مدینہ','city.khobar':'خبر','city.dhahran':'ظہران','city.taif':'طائف','city.tabuk':'تبوک','city.abha':'ابہا','city.buraidah':'بریدہ','city.jubail':'جبیل','city.hail':'حائل','city.jazan':'جازان','city.yanbu':'ینبع',
-    'button.search':'تمام بورڈز میں تلاش کریں','button.reset':'تلاش ری سیٹ کریں','status.reset':'تلاش ری سیٹ کر دی گئی۔ متحدہ عرب امارات کے دستیاب پلیٹ فارم دکھائے جا رہے ہیں۔','search.countryRequired':'تلاش سے پہلے ملک منتخب کریں۔','hint':'دستیاب خلیجی جاب پلیٹ فارمز دکھائے جا رہے ہیں۔','filter.placeholder':'نام سے پلیٹ فارمز فلٹر کریں...',
+    'button.search':'تمام بورڈز میں تلاش کریں','button.reset':'تلاش ری سیٹ کریں','button.share':'تلاش کا لنک کاپی کریں','status.reset':'تلاش ری سیٹ کر دی گئی۔ متحدہ عرب امارات کے دستیاب پلیٹ فارم دکھائے جا رہے ہیں۔','status.shareCopied':'تلاش کا لنک کاپی ہو گیا۔ اس میں صرف آپ کا منتخب کردہ عہدہ، ملک اور شہر شامل ہیں۔','status.shareUnavailable':'تلاش کا لنک بنانے سے پہلے ملک منتخب کریں۔','status.shareFailed':'لنک کاپی نہیں ہو سکا۔ اسے براؤزر کے ایڈریس بار سے کاپی کریں۔','search.countryRequired':'تلاش سے پہلے ملک منتخب کریں۔','hint':'دستیاب خلیجی جاب پلیٹ فارمز دکھائے جا رہے ہیں۔','filter.placeholder':'نام سے پلیٹ فارمز فلٹر کریں...',
     'col.destination':'پلیٹ فارم','col.gate':'دائرہ کار','col.type':'قسم','col.status':'سرچ کھولیں',
     'pill.direct':'براہ راست تلاش','pill.google':'گوگل فال بیک','pill.portal':'پورٹل',
     'resources.heading':'جاب سرچ وسائل','resources.uaeGuide':'یو اے ای میں نوکری کیسے تلاش کریں',
@@ -763,6 +766,10 @@ function populateCityOptions(){
     opt.textContent=t[key]||translateFromSite(I18N.en[key]||CITY_NAMES[country][value]||value);
     citySelect.appendChild(opt);
   });
+  try{
+    const requestedCity=new URL(window.location.href).searchParams.get('city')||'';
+    if(CITY_OPTIONS[country].some(([value])=>value===requestedCity))citySelect.value=requestedCity;
+  }catch(e){}
   renderCustomSelector('city');
 }
 const SEARCH_HISTORY_KEY='jobhub_search_history_v1';
@@ -817,6 +824,34 @@ function runHistoricSearch(index){
   if(typeof window.JobHubTrack==='function')window.JobHubTrack('job_search_history_used',{search_country:entry.country,search_city:entry.city,has_keyword:entry.role?1:0});
   document.getElementById('boardhost')?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
 }
+function updateShareSearchButton(){
+  const button=document.getElementById('shareSearchBtn');
+  if(button)button.disabled=!document.getElementById('country')?.value;
+}
+function copySearchLink(){
+  const country=document.getElementById('country')?.value||'';
+  const statusEl=document.getElementById('searchStatus');
+  if(!country){
+    if(statusEl){statusEl.textContent=localText('status.shareUnavailable',I18N.en['status.shareUnavailable']);statusEl.classList.add('has-message');}
+    document.getElementById('countryToggle')?.focus();
+    return;
+  }
+  const url=new URL(window.location.href);
+  url.searchParams.delete('code');url.searchParams.delete('error');url.searchParams.delete('jobhub_return_to');
+  const shareUrl=url.origin+url.pathname+(url.search?url.search:'');
+  const copied=()=>{
+    if(statusEl){statusEl.textContent=localText('status.shareCopied',I18N.en['status.shareCopied']);statusEl.classList.add('has-message');}
+    const city=document.getElementById('city')?.value||'';
+    const hasKeyword=document.getElementById('role')?.value.trim()?1:0;
+    if(typeof window.JobHubTrack==='function')window.JobHubTrack('job_search_link_copied',{search_country:country,search_city:city&&city!=='any'?city:'',has_keyword:hasKeyword});
+  };
+  const failed=()=>{if(statusEl){statusEl.textContent=localText('status.shareFailed',I18N.en['status.shareFailed']);statusEl.classList.add('has-message');}};
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(shareUrl).then(copied).catch(failed);return;}
+  try{
+    const textarea=document.createElement('textarea');textarea.value=shareUrl;textarea.setAttribute('readonly','');textarea.style.position='fixed';textarea.style.opacity='0';document.body.appendChild(textarea);textarea.select();
+    const didCopy=document.execCommand('copy');textarea.remove();if(didCopy)copied();else failed();
+  }catch(e){failed();}
+}
 function runSearch(){
   const selectedCountry=document.getElementById('country').value;
   const country=selectedCountry||'uae';
@@ -856,6 +891,7 @@ function runSearch(){
       history.replaceState(null,'',url.pathname+(search?'?'+search:'')+url.hash);
     }
   }catch(e){}
+  updateShareSearchButton();
 }
 function resetSearch(){
   const role=document.getElementById('role');
@@ -906,12 +942,14 @@ document.getElementById('searchForm').addEventListener('submit',e=>{
   window.setTimeout(()=>{button.classList.remove('is-searching');button.removeAttribute('aria-busy');},700);
 });
 document.getElementById('resetBtn').addEventListener('click',resetSearch);
+document.getElementById('shareSearchBtn').addEventListener('click',copySearchLink);
 document.getElementById('historyList').addEventListener('click',event=>{const button=event.target.closest('[data-history-index]');if(button)runHistoricSearch(Number(button.dataset.historyIndex));});
 document.getElementById('clearHistory').addEventListener('click',()=>{try{localStorage.removeItem(SEARCH_HISTORY_KEY);}catch(e){}if(window.JobHubSearchSync?.enabled)window.JobHubSearchSync.clearEverywhere().catch(()=>{});renderSearchHistory();});
 document.getElementById('city').addEventListener('change',()=>{if(document.getElementById('role').value.trim())runSearch();});
 document.getElementById('country').addEventListener('change',()=>{applyLanguage(currentLang);});
 document.getElementById('lang').addEventListener('change',(e)=>{applyLanguage(e.target.value);});
 let paramsTriggerSearch=false;
+let initialCityParam='';
 try{
   const savedRole=localStorage.getItem('jobhub_role');
   if(savedRole)document.getElementById('role').value=savedRole;
@@ -921,10 +959,14 @@ try{
   const pCity=params.get('city');
   if(COUNTRY_INFO[pCountry]){document.getElementById('country').value=pCountry;paramsTriggerSearch=true;}
   if(pRole){document.getElementById('role').value=pRole;paramsTriggerSearch=true;}
-  if(pCity){try{localStorage.setItem('jobhub_city',pCity);}catch(e){}paramsTriggerSearch=true;}
+  if(pCity&&COUNTRY_INFO[pCountry]&&CITY_OPTIONS[pCountry].some(([city])=>city===pCity)){initialCityParam=pCity;paramsTriggerSearch=true;}
 }catch(e){}
 initCustomSelectors();
 applyLanguage(currentLang);
+if(initialCityParam){
+  const initialCitySelect=document.getElementById('city');
+  if(initialCitySelect){initialCitySelect.value=initialCityParam;renderCustomSelectors();runSearch();}
+}
 renderSearchHistory();
 function activateSearchSync(){
   const sync=window.JobHubSearchSync;const panel=document.getElementById('historySync');const form=document.getElementById('syncEmailForm');const message=document.getElementById('syncMessage');const button=document.getElementById('syncHistoryBtn');
