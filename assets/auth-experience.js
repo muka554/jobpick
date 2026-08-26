@@ -4,6 +4,7 @@
   var SKIP_KEY = 'jobhub_account_prompt_skipped';
   var RETURN_KEY = 'jobhub_auth_return_to';
   var RETURN_PARAM = 'jobhub_return_to';
+  var WELCOME_KEY = 'jobhub_welcome_pending';
   var config = window.JOBHUB_SUPABASE_CONFIG;
   var clientPromise = null;
   var client = null;
@@ -11,6 +12,8 @@
   var language = 'en';
   var mode = 'signin';
   var initialised = false;
+  var returnInProgress = false;
+  var welcomeTimer = null;
 
   var copy = {
     en: {
@@ -19,7 +22,7 @@
       google: 'Continue with Google', or: 'or', email: 'Email address', placeholder: 'you@example.com', password: 'Password', passwordPlaceholder: 'Enter your password',
       signIn: 'Sign in', signUp: 'Create account', signInButton: 'Sign in securely', signUpButton: 'Create account',
       passwordHint: 'Use at least 12 characters with uppercase, lowercase, a number, and a symbol.', magic: 'Email me a Magic Link',
-      skip: 'Skip for now', checking: 'Checking your account…', signed: 'You are signed in', signout: 'Sign out', account: 'Account', close: 'Close',
+      skip: 'Skip for now', checking: 'Checking your account…', signed: 'You are signed in', welcome: 'Welcome back, {name}.', signout: 'Sign out', account: 'Account', close: 'Close',
       magicSent: 'Check your email for a secure Magic Link.', signupSent: 'Check your email to confirm your new account, then return here to sign in.',
       signInError: 'We could not sign you in. Check your email and password, then try again.', signUpError: 'We could not create the account. Check the password requirements and try again.',
       unavailable: 'Account access is not available right now.', returnNotice: 'Signed in successfully. Returning you to your page…', signedNotice: 'Signed in successfully.'
@@ -30,7 +33,7 @@
       google: 'المتابعة باستخدام Google', or: 'أو', email: 'البريد الإلكتروني', placeholder: 'you@example.com', password: 'كلمة المرور', passwordPlaceholder: 'أدخل كلمة المرور',
       signIn: 'تسجيل الدخول', signUp: 'إنشاء حساب', signInButton: 'تسجيل الدخول بأمان', signUpButton: 'إنشاء حساب',
       passwordHint: 'استخدم 12 حرفًا على الأقل مع أحرف كبيرة وصغيرة ورقم ورمز.', magic: 'أرسل لي رابط دخول',
-      skip: 'تخطَّ الآن', checking: 'جارٍ التحقق من حسابك…', signed: 'تم تسجيل دخولك', signout: 'تسجيل الخروج', account: 'الحساب', close: 'إغلاق',
+      skip: 'تخطَّ الآن', checking: 'جارٍ التحقق من حسابك…', signed: 'تم تسجيل دخولك', welcome: 'أهلاً بعودتك، {name}.', signout: 'تسجيل الخروج', account: 'الحساب', close: 'إغلاق',
       magicSent: 'تحقق من بريدك الإلكتروني للحصول على رابط دخول آمن.', signupSent: 'تحقق من بريدك الإلكتروني لتأكيد حسابك الجديد، ثم عُد هنا لتسجيل الدخول.',
       signInError: 'تعذّر تسجيل دخولك. تحقق من البريد الإلكتروني وكلمة المرور ثم حاول مجددًا.', signUpError: 'تعذّر إنشاء الحساب. تحقق من متطلبات كلمة المرور ثم حاول مجددًا.',
       unavailable: 'الوصول إلى الحساب غير متاح الآن.', returnNotice: 'تم تسجيل الدخول بنجاح. نعيدك إلى صفحتك…', signedNotice: 'تم تسجيل الدخول بنجاح.'
@@ -41,7 +44,7 @@
       google: 'Google से जारी रखें', or: 'या', email: 'ईमेल पता', placeholder: 'you@example.com', password: 'पासवर्ड', passwordPlaceholder: 'अपना पासवर्ड दर्ज करें',
       signIn: 'साइन इन', signUp: 'खाता बनाएँ', signInButton: 'सुरक्षित रूप से साइन इन करें', signUpButton: 'खाता बनाएँ',
       passwordHint: 'कम-से-कम 12 अक्षर, अपरकेस, लोअरकेस, अंक और प्रतीक का उपयोग करें।', magic: 'मुझे Magic Link भेजें',
-      skip: 'अभी छोड़ें', checking: 'आपका खाता जाँचा जा रहा है…', signed: 'आप साइन इन हैं', signout: 'साइन आउट', account: 'खाता', close: 'बंद करें',
+      skip: 'अभी छोड़ें', checking: 'आपका खाता जाँचा जा रहा है…', signed: 'आप साइन इन हैं', welcome: 'वापसी पर स्वागत है, {name}।', signout: 'साइन आउट', account: 'खाता', close: 'बंद करें',
       magicSent: 'सुरक्षित Magic Link के लिए अपना ईमेल देखें।', signupSent: 'अपने नए खाते की पुष्टि के लिए ईमेल देखें, फिर साइन इन करने के लिए यहाँ लौटें।',
       signInError: 'साइन इन नहीं हो सका। अपना ईमेल और पासवर्ड जाँचकर फिर कोशिश करें।', signUpError: 'खाता नहीं बन सका। पासवर्ड नियम जाँचकर फिर कोशिश करें।',
       unavailable: 'खाता एक्सेस अभी उपलब्ध नहीं है।', returnNotice: 'साइन इन सफल रहा। आपको आपके पेज पर वापस भेजा जा रहा है…', signedNotice: 'साइन इन सफल रहा।'
@@ -52,7 +55,7 @@
       google: 'Google کے ساتھ جاری رکھیں', or: 'یا', email: 'ای میل ایڈریس', placeholder: 'you@example.com', password: 'پاس ورڈ', passwordPlaceholder: 'اپنا پاس ورڈ درج کریں',
       signIn: 'سائن اِن', signUp: 'اکاؤنٹ بنائیں', signInButton: 'محفوظ سائن اِن', signUpButton: 'اکاؤنٹ بنائیں',
       passwordHint: 'کم از کم 12 حروف، بڑے اور چھوٹے حروف، عدد اور علامت استعمال کریں۔', magic: 'مجھے Magic Link بھیجیں',
-      skip: 'ابھی چھوڑ دیں', checking: 'آپ کا اکاؤنٹ چیک کیا جا رہا ہے…', signed: 'آپ سائن اِن ہیں', signout: 'سائن آؤٹ', account: 'اکاؤنٹ', close: 'بند کریں',
+      skip: 'ابھی چھوڑ دیں', checking: 'آپ کا اکاؤنٹ چیک کیا جا رہا ہے…', signed: 'آپ سائن اِن ہیں', welcome: 'واپسی پر خوش آمدید، {name}۔', signout: 'سائن آؤٹ', account: 'اکاؤنٹ', close: 'بند کریں',
       magicSent: 'محفوظ Magic Link کے لیے اپنا ای میل دیکھیں۔', signupSent: 'نئے اکاؤنٹ کی تصدیق کے لیے ای میل دیکھیں، پھر سائن اِن کرنے کے لیے یہاں واپس آئیں۔',
       signInError: 'سائن اِن نہیں ہو سکا۔ اپنا ای میل اور پاس ورڈ چیک کرکے دوبارہ کوشش کریں۔', signUpError: 'اکاؤنٹ نہیں بن سکا۔ پاس ورڈ کی شرائط چیک کرکے دوبارہ کوشش کریں۔',
       unavailable: 'اکاؤنٹ تک رسائی اس وقت دستیاب نہیں ہے۔', returnNotice: 'سائن اِن کامیاب رہا۔ آپ کو آپ کے صفحے پر واپس بھیجا جا رہا ہے…', signedNotice: 'سائن اِن کامیاب رہا۔'
@@ -102,9 +105,44 @@
     if (ui.password) ui.password.disabled = !!busy;
   }
   function clearStoredReturn() { try { localStorage.removeItem(RETURN_KEY); } catch (error) {} }
+  function displayName(user) {
+    var metadata = user && user.user_metadata ? user.user_metadata : {};
+    var candidate = metadata.full_name || metadata.name || metadata.given_name || metadata.preferred_username || '';
+    if (typeof candidate !== 'string' || !candidate.trim()) {
+      candidate = user && typeof user.email === 'string' ? user.email.split('@')[0] : '';
+    }
+    return typeof candidate === 'string' ? candidate.trim().replace(/\s+/g, ' ').slice(0, 48) : '';
+  }
+  function welcomeFor(user) {
+    var name = displayName(user);
+    return name ? text('welcome').replace('{name}', name) : text('signed');
+  }
+  function setWelcomePending() { try { sessionStorage.setItem(WELCOME_KEY, '1'); } catch (error) {} }
+  function consumeWelcomePending() {
+    try {
+      var pending = sessionStorage.getItem(WELCOME_KEY) === '1';
+      sessionStorage.removeItem(WELCOME_KEY);
+      return pending;
+    } catch (error) { return false; }
+  }
+  function showWelcome(user) {
+    if (!ui.welcome) return;
+    ui.welcomeUser = user || null;
+    ui.welcome.textContent = welcomeFor(user);
+    ui.welcome.hidden = false;
+    if (welcomeTimer) window.clearTimeout(welcomeTimer);
+    welcomeTimer = window.setTimeout(function () { if (ui.welcome) ui.welcome.hidden = true; }, 5200);
+  }
+  function hideWelcome() {
+    if (welcomeTimer) window.clearTimeout(welcomeTimer);
+    welcomeTimer = null;
+    if (ui.welcome) ui.welcome.hidden = true;
+  }
   function completeReturn() {
+    if (returnInProgress) return true;
     var target = returnTarget();
     if (!target || !rootCallback() || target === '/' || target === '/index.html') return false;
+    returnInProgress = true;
     clearStoredReturn();
     var root = new URL(window.location.href);
     root.searchParams.delete(RETURN_PARAM);
@@ -141,8 +179,9 @@
   }
   function showSignedIn(user) {
     if (!ui.signed) return;
+    ui.signedUser = user || null;
     ui.signed.hidden = false;
-    ui.signedLabel.textContent = text('signed');
+    ui.signedLabel.textContent = welcomeFor(user);
     ui.access.hidden = true;
     ui.skip.hidden = true;
     if (ui.launcher) { ui.launcher.textContent = text('account'); ui.launcher.hidden = false; }
@@ -150,6 +189,8 @@
   }
   function showAccess() {
     if (!ui.signed) return;
+    ui.signedUser = null;
+    hideWelcome();
     ui.signed.hidden = true;
     ui.access.hidden = false;
     ui.skip.hidden = false;
@@ -174,6 +215,8 @@
     ui.emailLabel.textContent = text('email'); ui.email.placeholder = text('placeholder'); ui.passwordLabel.textContent = text('password'); ui.password.placeholder = text('passwordPlaceholder');
     ui.passwordHint.textContent = text('passwordHint'); ui.submit.textContent = mode === 'signup' ? text('signUpButton') : text('signInButton'); ui.magic.textContent = text('magic');
     ui.skip.textContent = text('skip'); ui.close.setAttribute('aria-label', text('close')); ui.close.title = text('close'); ui.signout.textContent = text('signout');
+    if (ui.signed && !ui.signed.hidden && ui.signedUser) ui.signedLabel.textContent = welcomeFor(ui.signedUser);
+    if (ui.welcome && !ui.welcome.hidden && ui.welcomeUser) ui.welcome.textContent = welcomeFor(ui.welcomeUser);
     if (ui.launcher) ui.launcher.textContent = text('account');
   }
   function createUI() {
@@ -188,6 +231,10 @@
     launcher.type = 'button'; launcher.className = 'jobhub-auth-launcher'; launcher.hidden = true; launcher.setAttribute('data-no-localize', '');
     document.body.appendChild(launcher);
 
+    var welcome = document.createElement('p');
+    welcome.className = 'jobhub-welcome'; welcome.hidden = true; welcome.setAttribute('role', 'status'); welcome.setAttribute('aria-live', 'polite'); welcome.setAttribute('data-no-localize', '');
+    document.body.appendChild(welcome);
+
     var layer = document.createElement('section');
     layer.id = 'jobhubAuthLayer'; layer.className = 'jobhub-auth-layer'; layer.hidden = true; layer.setAttribute('data-no-localize', '');
     layer.setAttribute('role', 'dialog'); layer.setAttribute('aria-modal', 'true'); layer.setAttribute('aria-labelledby', 'jobhubAuthTitle');
@@ -195,7 +242,7 @@
     document.body.appendChild(layer);
 
     ui = {
-      layer: layer, launcher: launcher, close: layer.querySelector('.jobhub-auth-close'), badge: layer.querySelector('.jobhub-auth-badge'), title: layer.querySelector('.jobhub-auth-title'), body: layer.querySelector('.jobhub-auth-copy'),
+      layer: layer, launcher: launcher, welcome: welcome, close: layer.querySelector('.jobhub-auth-close'), badge: layer.querySelector('.jobhub-auth-badge'), title: layer.querySelector('.jobhub-auth-title'), body: layer.querySelector('.jobhub-auth-copy'),
       access: layer.querySelector('.jobhub-auth-access'), google: layer.querySelector('.jobhub-auth-google'), divider: layer.querySelector('.jobhub-auth-divider'), signinTab: layer.querySelectorAll('.jobhub-auth-tab')[0], signupTab: layer.querySelectorAll('.jobhub-auth-tab')[1],
       form: layer.querySelector('.jobhub-auth-password-form'), emailLabel: layer.querySelector('label[for="jobhubAuthEmail"]'), email: layer.querySelector('#jobhubAuthEmail'), passwordLabel: layer.querySelector('label[for="jobhubAuthPassword"]'), password: layer.querySelector('#jobhubAuthPassword'), passwordHint: layer.querySelector('.jobhub-auth-password-hint'), submit: layer.querySelector('.jobhub-auth-password-form button[type="submit"]'), magic: layer.querySelector('.jobhub-auth-magic-link'),
       skip: layer.querySelector('.jobhub-auth-skip'), status: layer.querySelector('.jobhub-auth-status'), signed: layer.querySelector('.jobhub-auth-signedin'), signedLabel: layer.querySelector('.jobhub-auth-signedin span'), signout: layer.querySelector('.jobhub-auth-signout')
@@ -267,17 +314,23 @@
     if (!usableConfig()) { showAccess(); setStatus(text('unavailable'), 'error'); show(); return; }
     setStatus(text('checking'));
     getClient().then(function (supabase) {
-      supabase.auth.onAuthStateChange(function (_event, session) {
+      supabase.auth.onAuthStateChange(function (eventName, session) {
         if (session && session.user) {
           showSignedIn(session.user);
-          if (!completeReturn()) { setStatus(text('signedNotice'), 'success'); window.setTimeout(function () { hide(false); }, 600); }
+          if (eventName === 'SIGNED_IN') {
+            if (completeReturn()) setWelcomePending();
+            else showWelcome(session.user);
+          }
         } else showAccess();
       });
       return supabase.auth.getUser().then(function (result) {
         var current = result.data && result.data.user;
         if (current) {
           showSignedIn(current);
-          if (!completeReturn()) { hide(false); }
+          if (!completeReturn()) {
+            if (consumeWelcomePending()) showWelcome(current);
+            hide(false);
+          }
         } else {
           showAccess();
           show();
