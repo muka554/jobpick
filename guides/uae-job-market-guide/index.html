@@ -69,7 +69,7 @@
         </aside>
       </header>
 
-      <div class="quicklinks noprint" aria-label="Quick actions"><a class="button" href="#checklist-section">Use the free checklist</a><a class="button secondary" href="/?country=uae">Search UAE platforms</a><a class="button secondary" href="#official-routes">View official portals</a></div>
+      <div class="quicklinks noprint" aria-label="Quick actions"><a class="button" data-guide-cta="checklist" href="#checklist-section">Use the free checklist</a><a class="button secondary" data-guide-cta="platform_directory" href="/?country=uae">Search UAE platforms</a><a class="button secondary" data-guide-cta="official_portals" href="#official-routes">View official portals</a></div>
 
       <section class="section" aria-labelledby="start-heading">
         <div class="label">A focused first week</div>
@@ -138,7 +138,7 @@
         <h2 id="checklist-heading" class="noprint">UAE job-search checklist.</h2>
         <p class="section-intro noprint">Tick the steps as you complete them. The checklist stays in your browser only. Use the button to print it or save it as a PDF—no account or download is required.</p>
         <div class="checklist">
-          <div class="checklist-header"><div><div class="label">Middle East Job Hub · UAE job-search checklist</div><h3>My focused application plan</h3><p>For personal use. This checklist does not collect, send, or store your entries.</p></div><button class="button noprint" type="button" onclick="window.print()">Print or save as PDF</button></div>
+          <div class="checklist-header"><div><div class="label">Middle East Job Hub · UAE job-search checklist</div><h3>My focused application plan</h3><p>For personal use. This checklist does not collect, send, or store your entries.</p></div><button class="button noprint" id="checklistPrint" type="button">Print or save as PDF</button></div>
           <div class="check-groups">
             <div class="check-group"><h3>Target and materials</h3><div class="check-row"><input id="c1" type="checkbox"><label for="c1">I selected two or three target job titles and relevant title variations.</label></div><div class="check-row"><input id="c2" type="checkbox"><label for="c2">I prepared a current, role-specific CV with accurate dates and achievements.</label></div><div class="check-row"><input id="c3" type="checkbox"><label for="c3">I checked my portfolio, LinkedIn, or work samples for consistency with my CV.</label></div><div class="check-row"><input id="c4" type="checkbox"><label for="c4">I noted accurate availability, location preferences, and any information an employer asks me to state.</label></div></div>
             <div class="check-group"><h3>Search routes</h3><div class="check-row"><input id="c5" type="checkbox"><label for="c5">I created searches on relevant UAE job platforms and selected employer career pages.</label></div><div class="check-row"><input id="c6" type="checkbox"><label for="c6">I checked the relevant official government portal only where my eligibility and target roles make it useful.</label></div><div class="check-row"><input id="c7" type="checkbox"><label for="c7">I set a reasonable schedule to review new listings and saved searches rather than repeatedly searching without a plan.</label></div><div class="check-row"><input id="c8" type="checkbox"><label for="c8">I used a simple application log with the employer, original URL, date, role, and CV version.</label></div></div>
@@ -153,12 +153,24 @@
         <div class="label">Continue your search</div>
         <h2 id="next-heading">Use the guide alongside the directory.</h2>
         <p class="section-intro">The intelligence hub helps you plan and verify. The directory helps you reach suitable external search routes. Use both, then return to your application log rather than losing the evidence behind each decision.</p>
-        <div class="quicklinks noprint" style="padding:25px 0 0"><a class="button" href="/?country=uae">Browse UAE job platforms</a><a class="button secondary" href="/guides/uae-job-search-guide/">Read the UAE search guide</a><a class="button secondary" href="/guides/uae-cv-guide/">Read the UAE CV guide</a></div>
+        <div class="quicklinks noprint" style="padding:25px 0 0"><a class="button" data-guide-cta="platform_directory" href="/?country=uae">Browse UAE job platforms</a><a class="button secondary" data-guide-cta="search_guide" href="/guides/uae-job-search-guide/">Read the UAE search guide</a><a class="button secondary" data-guide-cta="cv_guide" href="/guides/uae-cv-guide/">Read the UAE CV guide</a></div>
         <ol class="sources"><li id="source-1"><strong>UAE Government — Government jobs.</strong> The official page lists federal and emirate-level job portals. <a href="https://u.ae/en/resources/government-jobs" target="_blank" rel="noopener">Read source ↗</a></li><li id="source-2"><strong>UAE Government — Jobseeker visit visa.</strong> Official eligibility, document, validity, and service information. <a href="https://u.ae/en/information-and-services/visa-and-emirates-id/Types-of-visas/Visit-visa/jobseeker-visit-visa" target="_blank" rel="noopener">Read source ↗</a></li><li id="source-3"><strong>UAE Government — Work permits.</strong> Official work-permit overview, linked to MoHRE. <a href="https://u.ae/en/information-and-services/jobs/Sector-of-employment/employment-in-the-private-sector/work-permits" target="_blank" rel="noopener">Read source ↗</a></li><li id="source-4"><strong>MOHRE — View Approved Contract.</strong> Service details for viewing an approved contract. <a href="https://mohre.gov.ae/en/services/view-approved-contract" target="_blank" rel="noopener">Read source ↗</a></li></ol>
       </section>
     </main>
 
     <footer><p>Middle East Job Hub publishes independently maintained job-search resources and links to external sources. We do not recruit, place candidates, collect CVs, or guarantee third-party vacancies. This page is general information only; official source pages and qualified advisers are the appropriate place for individual legal, immigration, employment, or financial questions.</p><div class="footer-links"><a href="/">Home</a><a href="/resources/">Resources</a><a href="/how-we-review-job-platforms/">Methodology</a><a href="/editorial-standards/">Editorial standards</a><a href="/privacy-policy/">Privacy</a><a href="/terms-of-use/">Terms</a><a href="/contact/">Contact</a></div></footer>
   </div>
+  <script>
+  (function(){
+    function track(name,params){if(typeof window.JobHubTrack==='function')window.JobHubTrack(name,params||{});}
+    document.addEventListener('DOMContentLoaded',function(){
+      document.querySelectorAll('[data-guide-cta]').forEach(function(link){link.addEventListener('click',function(){track('uae_guide_cta_click',{cta_name:link.dataset.guideCta});});});
+      document.querySelectorAll('a[target="_blank"]').forEach(function(link){link.addEventListener('click',function(){var group=link.closest('.portal-table')?'official_portal':link.closest('.sources')?'source_reference':'external_reference';track('uae_guide_outbound_click',{link_group:group});});});
+      var printButton=document.getElementById('checklistPrint');if(printButton)printButton.addEventListener('click',function(){track('uae_guide_checklist_print');window.print();});
+      var checklist=document.getElementById('checklist-section');var viewed=false;if(checklist&&'IntersectionObserver' in window){new IntersectionObserver(function(entries,observer){if(entries[0].isIntersecting&&!viewed){viewed=true;track('uae_guide_checklist_viewed');observer.disconnect();}},{threshold:.45}).observe(checklist);}
+      var started=false;document.querySelectorAll('.check-row input').forEach(function(input){input.addEventListener('change',function(){if(!started&&input.checked){started=true;track('uae_guide_checklist_started');}});});
+    });
+  })();
+  </script>
 </body>
 </html>

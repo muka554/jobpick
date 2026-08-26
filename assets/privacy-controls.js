@@ -85,6 +85,12 @@
   style.textContent='#jobhub-consent-banner{position:fixed;z-index:9999;left:max(14px,env(safe-area-inset-left));right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));max-width:760px;margin:auto;background:#101820;color:#ECE8DE;border:1px solid #2DD9C0;border-radius:12px;box-shadow:0 16px 44px rgba(0,0,0,.5);padding:18px;display:flex;gap:18px;align-items:center;justify-content:space-between;font:14px/1.5 Inter,Arial,sans-serif}#jobhub-consent-banner strong{font:700 16px Manrope,Arial,sans-serif}#jobhub-consent-banner p{margin:5px 0;color:#C6CFD8}#jobhub-consent-banner a{color:#FFB020}.jobhub-consent-actions{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end}.jobhub-consent-actions button,#jobhub-privacy-settings{font:700 13px Inter,Arial,sans-serif;border-radius:7px;padding:10px 13px;cursor:pointer}.jobhub-consent-actions button{border:1px solid #536171;background:#151F29;color:#ECE8DE}.jobhub-consent-actions .jobhub-accept{background:#2DD9C0;color:#062420;border-color:#2DD9C0}#jobhub-privacy-settings{position:fixed;z-index:9998;right:14px;bottom:14px;border:1px solid #FFB020;background:#101820;color:#FFB020;box-shadow:0 5px 16px rgba(0,0,0,.35)}@media(max-width:620px){#jobhub-consent-banner{align-items:flex-start;flex-direction:column}.jobhub-consent-actions{justify-content:flex-start}#jobhub-privacy-settings{bottom:10px;right:10px}}@media(prefers-reduced-motion:reduce){#jobhub-consent-banner,#jobhub-privacy-settings{transition:none!important}}';
   document.head.appendChild(style);
 
+  window.JobHubTrack=function(eventName,params){
+    if(state!=='accepted'||typeof window.gtag!=='function')return;
+    var safeParams=params&&typeof params==='object'?params:{};
+    window.gtag('event',eventName,safeParams);
+  };
+
   window.JobHubPrivacy={
     choice:function(){return state;},
     openSettings:function(){
