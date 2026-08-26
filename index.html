@@ -685,12 +685,18 @@ const GLASSDOOR_COUNTRY_URLS={
 };
 const CITY_NAMES={uae:{any:'',dubai:'Dubai',abudhabi:'Abu Dhabi',sharjah:'Sharjah',ajman:'Ajman',alain:'Al Ain',rak:'Ras Al Khaimah',fujairah:'Fujairah',uaq:'Umm Al Quwain',khorfakkan:'Khor Fakkan'},ksa:{any:'',riyadh:'Riyadh',jeddah:'Jeddah',dammam:'Dammam',makkah:'Makkah',madinah:'Madinah',khobar:'Khobar',dhahran:'Dhahran',taif:'Taif',tabuk:'Tabuk',abha:'Abha',buraidah:'Buraidah',jubail:'Jubail',hail:'Hail',jazan:'Jazan',yanbu:'Yanbu'},egypt:{any:'',cairo:'Cairo',giza:'Giza',alexandria:'Alexandria',newcairo:'New Cairo',october:'6th of October City',mansoura:'Mansoura',tanta:'Tanta',portsaid:'Port Said',suez:'Suez',asyut:'Asyut'},qatar:{any:'',doha:'Doha',alrayyan:'Al Rayyan',alwakrah:'Al Wakrah',alkhor:'Al Khor',lusail:'Lusail',ummsalal:'Umm Salal',mesaieed:'Mesaieed'},kuwait:{any:'',kuwaitcity:'Kuwait City',hawally:'Hawally',salmiya:'Salmiya',farwaniya:'Farwaniya',ahmadi:'Al Ahmadi',fahaheel:'Fahaheel',jahra:'Jahra',mubarak:'Mubarak Al-Kabeer',sabahsalem:'Sabah Al-Salem'},oman:{any:'',muscat:'Muscat',salalah:'Salalah',sohar:'Sohar',nizwa:'Nizwa',sur:'Sur',ibri:'Ibri',rustaq:'Rustaq',barka:'Barka'},bahrain:{any:'',manama:'Manama',riffa:'Riffa',muharraq:'Muharraq',hamadtown:'Hamad Town',isatown:'Isa Town',aali:"A'ali",sitra:'Sitra'},jordan:{any:'',amman:'Amman',zarqa:'Zarqa',irbid:'Irbid',aqaba:'Aqaba',salt:'As-Salt',madaba:'Madaba'}};
 const CITY_OPTIONS={uae:[['any','city.any'],['dubai','city.dubai'],['abudhabi','city.abudhabi'],['sharjah','city.sharjah'],['ajman','city.ajman'],['alain','city.alain'],['rak','city.rak'],['fujairah','city.fujairah'],['uaq','city.uaq'],['khorfakkan','city.khorfakkan']],ksa:[['any','city.any'],['riyadh','city.riyadh'],['jeddah','city.jeddah'],['dammam','city.dammam'],['makkah','city.makkah'],['madinah','city.madinah'],['khobar','city.khobar'],['dhahran','city.dhahran'],['taif','city.taif'],['tabuk','city.tabuk'],['abha','city.abha'],['buraidah','city.buraidah'],['jubail','city.jubail'],['hail','city.hail'],['jazan','city.jazan'],['yanbu','city.yanbu']],egypt:[['any','city.any'],['cairo','city.cairo'],['giza','city.giza'],['alexandria','city.alexandria'],['newcairo','city.newcairo'],['october','city.october'],['mansoura','city.mansoura'],['tanta','city.tanta'],['portsaid','city.portsaid'],['suez','city.suez'],['asyut','city.asyut']],qatar:[['any','city.any'],['doha','city.doha'],['alrayyan','city.alrayyan'],['alwakrah','city.alwakrah'],['alkhor','city.alkhor'],['lusail','city.lusail'],['ummsalal','city.ummsalal'],['mesaieed','city.mesaieed']],kuwait:[['any','city.any'],['kuwaitcity','city.kuwaitcity'],['hawally','city.hawally'],['salmiya','city.salmiya'],['farwaniya','city.farwaniya'],['ahmadi','city.ahmadi'],['fahaheel','city.fahaheel'],['jahra','city.jahra'],['mubarak','city.mubarak'],['sabahsalem','city.sabahsalem']],oman:[['any','city.any'],['muscat','city.muscat'],['salalah','city.salalah'],['sohar','city.sohar'],['nizwa','city.nizwa'],['sur','city.sur'],['ibri','city.ibri'],['rustaq','city.rustaq'],['barka','city.barka']],bahrain:[['any','city.any'],['manama','city.manama'],['riffa','city.riffa'],['muharraq','city.muharraq'],['hamadtown','city.hamadtown'],['isatown','city.isatown'],['aali','city.aali'],['sitra','city.sitra']],jordan:[['any','city.any'],['amman','city.amman'],['zarqa','city.zarqa'],['irbid','city.irbid'],['aqaba','city.aqaba'],['salt','city.salt'],['madaba','city.madaba']]};
+const LOCALIZED_CITY_LABELS={
+  ar:{cairo:'القاهرة',giza:'الجيزة',alexandria:'الإسكندرية',newcairo:'القاهرة الجديدة',october:'مدينة السادس من أكتوبر',mansoura:'المنصورة',tanta:'طنطا',portsaid:'بورسعيد',suez:'السويس',asyut:'أسيوط',doha:'الدوحة',alrayyan:'الريان',alwakrah:'الوكرة',alkhor:'الخور',lusail:'لوسيل',ummsalal:'أم صلال',mesaieed:'مسيعيد',kuwaitcity:'مدينة الكويت',hawally:'حولي',salmiya:'السالمية',farwaniya:'الفروانية',ahmadi:'الأحمدي',fahaheel:'الفحيحيل',jahra:'الجهراء',mubarak:'مبارك الكبير',sabahsalem:'صباح السالم',muscat:'مسقط',salalah:'صلالة',sohar:'صحار',nizwa:'نزوى',sur:'صور',ibri:'عبري',rustaq:'الرستاق',barka:'بركاء',manama:'المنامة',riffa:'الرفاع',muharraq:'المحرق',hamadtown:'مدينة حمد',isatown:'مدينة عيسى',aali:'عالي',sitra:'سترة',amman:'عمّان',zarqa:'الزرقاء',irbid:'إربد',aqaba:'العقبة',salt:'السلط',madaba:'مادبا'},
+  hi:{cairo:'काहिरा',giza:'गीज़ा',alexandria:'अलेक्ज़ेंड्रिया',newcairo:'न्यू काहिरा',october:'सिक्स्थ ऑफ़ अक्टूबर सिटी',mansoura:'मंसूरा',tanta:'तांता',portsaid:'पोर्ट सईद',suez:'स्वेज़',asyut:'अस्यूत',doha:'दोहा',alrayyan:'अल रय्यान',alwakrah:'अल वकराह',alkhor:'अल खोर',lusail:'लुसैल',ummsalal:'उम्म सलाल',mesaieed:'मेसाईद',kuwaitcity:'कुवैत सिटी',hawally:'हवाली',salmiya:'सलमिया',farwaniya:'फ़रवानिया',ahmadi:'अल अह्मदी',fahaheel:'फ़हाहील',jahra:'जाहरा',mubarak:'मुबारक अल-कबीर',sabahsalem:'सबाह अल-सालेम',muscat:'मस्कट',salalah:'सलालाह',sohar:'सोहार',nizwa:'निज़वा',sur:'सूर',ibri:'इबरी',rustaq:'रुस्ताक',barka:'बरका',manama:'मनामा',riffa:'रिफ़ा',muharraq:'मुहर्रक',hamadtown:'हमद टाउन',isatown:'ईसा टाउन',aali:'आली',sitra:'सितरा',amman:'अम्मान',zarqa:'ज़रका',irbid:'इरबिद',aqaba:'अक़ाबा',salt:'अस-सल्ट',madaba:'मादबा'},
+  ur:{cairo:'قاہرہ',giza:'جیزہ',alexandria:'اسکندریہ',newcairo:'نیا قاہرہ',october:'چھ اکتوبر شہر',mansoura:'منصورہ',tanta:'طنطا',portsaid:'پورٹ سعید',suez:'سویز',asyut:'اسیوط',doha:'دوحہ',alrayyan:'الریان',alwakrah:'الوکرہ',alkhor:'الخور',lusail:'لوسیل',ummsalal:'ام صلال',mesaieed:'مسیعید',kuwaitcity:'کویت سٹی',hawally:'حولی',salmiya:'سالمیہ',farwaniya:'فروانیہ',ahmadi:'الاحمدی',fahaheel:'فحیحیل',jahra:'الجہرا',mubarak:'مبارک الکبیر',sabahsalem:'صباح السالم',muscat:'مسقط',salalah:'صلالہ',sohar:'صحار',nizwa:'نزوی',sur:'صور',ibri:'عبری',rustaq:'الرستاق',barka:'برکا',manama:'منامہ',riffa:'رفاہ',muharraq:'محرق',hamadtown:'حمد ٹاؤن',isatown:'عیسیٰ ٹاؤن',aali:'عالی',sitra:'سترہ',amman:'عمان',zarqa:'زرقا',irbid:'اربد',aqaba:'عقبہ',salt:'السلط',madaba:'مادبا'}
+};
+function cityLabel(value,key){const t=I18N[currentLang]||I18N.en;return t[key]||LOCALIZED_CITY_LABELS[currentLang]?.[value]||I18N.en[key]||value;}
 function selectorOptions(type){
   const t=I18N[currentLang]||I18N.en;
   if(type==='country')return [{value:'',label:t['country.choose']||I18N.en['country.choose']},...Object.keys(COUNTRY_INFO).map(value=>({value,label:t[`country.${value}`]||translateFromSite(I18N.en[`country.${value}`]||COUNTRY_INFO[value].name)}))];
   const country=document.getElementById('country').value;
   if(!country)return [{value:'',label:t['city.choose']||I18N.en['city.choose']}];
-  return CITY_OPTIONS[country].map(([value,key])=>({value,label:t[key]||translateFromSite(I18N.en[key]||CITY_NAMES[country][value]||value)}));
+  return CITY_OPTIONS[country].map(([value,key])=>({value,label:cityLabel(value,key)}));
 }
 function closeCustomSelectors(except){
   ['country','city'].forEach(type=>{if(type===except)return;const menu=document.getElementById(`${type}Menu`);const toggle=document.getElementById(`${type}Toggle`);if(menu)menu.hidden=true;if(toggle)toggle.setAttribute('aria-expanded','false');});
@@ -905,7 +911,7 @@ function populateCityOptions(){
   CITY_OPTIONS[country].forEach(([value,key])=>{
     const opt=document.createElement('option');
     opt.value=value;
-    opt.textContent=t[key]||translateFromSite(I18N.en[key]||CITY_NAMES[country][value]||value);
+    opt.textContent=cityLabel(value,key);
     citySelect.appendChild(opt);
   });
   try{
@@ -925,7 +931,7 @@ function getSearchHistory(){
 function historyLabel(entry){
   const role=(entry.role||'jobs').trim()||'jobs';
   const countryName=translateFromSite((COUNTRY_INFO[entry.country]||COUNTRY_INFO.uae).name);
-  const cityName=translateFromSite((CITY_NAMES[entry.country]||{})[entry.city]||'');
+  const cityName=entry.city&&entry.city!=='any'?cityLabel(entry.city,`city.${entry.city}`):'';
   return `${role} · ${cityName||countryName}`;
 }
 function renderSearchHistory(){
@@ -1050,7 +1056,7 @@ function runSearch(){
   }catch(e){}
   const cityName=CITY_NAMES[country][cityKey];
   const countryName=(COUNTRY_INFO[country]||COUNTRY_INFO.uae).name;
-  const displayCity=cityKey==='any'?'':translateFromSite(cityName||'');
+  const displayCity=cityKey==='any'?'':cityLabel(cityKey,`city.${cityKey}`);
   const displayCountry=localText(`country.${country}`,countryName);
   const q=encodeURIComponent(roleRaw);
   const slug=slugify(roleRaw);
