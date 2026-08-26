@@ -3,10 +3,10 @@
   var KEY='jobhub_privacy_choice_v1', GA='G-HP8NJBF7K8';
   var state;
   var COPY={
-    en:{dialog:'Privacy choices',title:'Your privacy choices',body:'We load optional analytics only if you choose to allow it. You can continue with essential site functions only and change this choice at any time.',policy:'Read the Privacy Policy',essential:'Essential only',accept:'Accept optional analytics',settings:'Privacy choices',settingsAria:'Change privacy choices'},
-    ar:{dialog:'خيارات الخصوصية',title:'خيارات الخصوصية الخاصة بك',body:'نحمّل التحليلات الاختيارية فقط إذا اخترت السماح بها. يمكنك الاستمرار باستخدام وظائف الموقع الأساسية فقط وتغيير هذا الاختيار في أي وقت.',policy:'اقرأ سياسة الخصوصية',essential:'الأساسية فقط',accept:'قبول التحليلات الاختيارية',settings:'خيارات الخصوصية',settingsAria:'تغيير خيارات الخصوصية'},
-    hi:{dialog:'गोपनीयता विकल्प',title:'आपके गोपनीयता विकल्प',body:'हम वैकल्पिक एनालिटिक्स केवल आपकी अनुमति पर लोड करते हैं। आप केवल आवश्यक साइट सुविधाओं के साथ जारी रख सकते हैं और इस विकल्प को कभी भी बदल सकते हैं।',policy:'गोपनीयता नीति पढ़ें',essential:'केवल आवश्यक',accept:'वैकल्पिक एनालिटिक्स स्वीकार करें',settings:'गोपनीयता विकल्प',settingsAria:'गोपनीयता विकल्प बदलें'},
-    ur:{dialog:'رازداری کے اختیارات',title:'آپ کے رازداری کے اختیارات',body:'ہم اختیاری تجزیات صرف آپ کی اجازت پر لوڈ کرتے ہیں۔ آپ صرف ضروری سائٹ خصوصیات کے ساتھ جاری رہ سکتے ہیں اور اس انتخاب کو کسی بھی وقت تبدیل کر سکتے ہیں۔',policy:'رازداری کی پالیسی پڑھیں',essential:'صرف ضروری',accept:'اختیاری تجزیات قبول کریں',settings:'رازداری کے اختیارات',settingsAria:'رازداری کے اختیارات تبدیل کریں'}
+    en:{dialog:'Privacy choices',title:'Your privacy choices',body:'We load optional analytics only if you choose to allow it. JobPick does not currently serve ads, and this choice is not used for advertising. You can continue with essential site functions only and change this choice at any time.',policy:'Read the Privacy Policy',essential:'Essential only',accept:'Accept optional analytics',settings:'Privacy choices',settingsAria:'Change privacy choices'},
+    ar:{dialog:'خيارات الخصوصية',title:'خيارات الخصوصية الخاصة بك',body:'نحمّل التحليلات الاختيارية فقط إذا اخترت السماح بها. لا يعرض JobPick إعلانات حاليًا ولا يُستخدم هذا الاختيار للإعلانات. يمكنك الاستمرار باستخدام وظائف الموقع الأساسية فقط وتغيير هذا الاختيار في أي وقت.',policy:'اقرأ سياسة الخصوصية',essential:'الأساسية فقط',accept:'قبول التحليلات الاختيارية',settings:'خيارات الخصوصية',settingsAria:'تغيير خيارات الخصوصية'},
+    hi:{dialog:'गोपनीयता विकल्प',title:'आपके गोपनीयता विकल्प',body:'हम वैकल्पिक एनालिटिक्स केवल आपकी अनुमति पर लोड करते हैं। JobPick वर्तमान में विज्ञापन नहीं दिखाता और इस विकल्प का उपयोग विज्ञापन के लिए नहीं होता। आप केवल आवश्यक साइट सुविधाओं के साथ जारी रख सकते हैं और इस विकल्प को कभी भी बदल सकते हैं।',policy:'गोपनीयता नीति पढ़ें',essential:'केवल आवश्यक',accept:'वैकल्पिक एनालिटिक्स स्वीकार करें',settings:'गोपनीयता विकल्प',settingsAria:'गोपनीयता विकल्प बदलें'},
+    ur:{dialog:'رازداری کے اختیارات',title:'آپ کے رازداری کے اختیارات',body:'ہم اختیاری تجزیات صرف آپ کی اجازت پر لوڈ کرتے ہیں۔ JobPick فی الحال اشتہارات نہیں دکھاتا اور یہ انتخاب اشتہارات کے لیے استعمال نہیں ہوتا۔ آپ صرف ضروری سائٹ خصوصیات کے ساتھ جاری رہ سکتے ہیں اور اس انتخاب کو کسی بھی وقت تبدیل کر سکتے ہیں۔',policy:'رازداری کی پالیسی پڑھیں',essential:'صرف ضروری',accept:'اختیاری تجزیات قبول کریں',settings:'رازداری کے اختیارات',settingsAria:'رازداری کے اختیارات تبدیل کریں'}
   };
   try{state=localStorage.getItem(KEY);}catch(e){state=null;}
 
@@ -30,13 +30,13 @@
     window.gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});
     loadScript('https://www.googletagmanager.com/gtag/js?id='+GA).then(function(){window.gtag('js',new Date());window.gtag('config',GA,{anonymize_ip:true});});
   }
-  function removeBanner(){var el=document.getElementById('jobhub-consent-banner');if(el)el.remove();}
+  function removeBanner(){var el=document.getElementById('jobhub-consent-banner');if(el)el.remove();var settingsButton=document.getElementById('jobhub-privacy-settings');if(settingsButton)settingsButton.hidden=false;}
   function decide(value){state=value;try{localStorage.setItem(KEY,value);}catch(e){}setClass();removeBanner();if(state==='accepted')runAnalytics();}
   function banner(){
     if(state)return;
     removeBanner();
     var t=copy(),el=document.createElement('section');
-    el.id='jobhub-consent-banner';el.setAttribute('role','dialog');el.setAttribute('aria-modal','false');el.setAttribute('aria-label',t.dialog);
+    el.id='jobhub-consent-banner';el.setAttribute('role','dialog');el.setAttribute('aria-modal','false');el.setAttribute('aria-label',t.dialog);var settingsButton=document.getElementById('jobhub-privacy-settings');if(settingsButton)settingsButton.hidden=true;
     el.innerHTML='<div><strong>'+t.title+'</strong><p>'+t.body+'</p><a href="/privacy-policy/">'+t.policy+'</a></div><div class="jobhub-consent-actions"><button type="button" data-choice="essential">'+t.essential+'</button><button type="button" class="jobhub-accept" data-choice="accepted">'+t.accept+'</button></div>';
     document.body.appendChild(el);
     el.querySelectorAll('button[data-choice]').forEach(function(b){b.addEventListener('click',function(){decide(b.dataset.choice);});});
@@ -48,7 +48,7 @@
       b.addEventListener('click',function(){try{localStorage.removeItem(KEY);}catch(e){}state=null;setClass();banner();var first=document.querySelector('#jobhub-consent-banner button');if(first)first.focus();});
       document.body.appendChild(b);
     }
-    b.textContent=t.settings;b.setAttribute('aria-label',t.settingsAria);
+    b.textContent=t.settings;b.setAttribute('aria-label',t.settingsAria);b.hidden=!state;
   }
   function refreshLanguage(){settings();if(!state)banner();}
   var style=document.createElement('style');
