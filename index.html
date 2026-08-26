@@ -33,7 +33,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="/assets/home-background-job-search.webp" as="image" type="image/webp" fetchpriority="high">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=optional" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=optional" rel="stylesheet"></noscript>
 <style>
   :root{ --bg:#0A0F14; --panel:#101820; --board:#0D131A; --amber:#FFB020; --teal:#2DD9C0; --purple:#A78BFA; --ink:#ECE8DE; --ink-dim:#8B93A3; --line:#222B36; }
   *{ box-sizing:border-box; }
@@ -263,7 +264,38 @@
   body[data-page="home"] .hint{grid-column:1 / -1;margin:1px 0 0;font-size:12.5px;line-height:1.45;}
   body[data-page="home"] .search-feedback{max-width:900px;margin:6px auto 12px;}
 
-  body[data-page="home"] .filter-panel,body[data-page="home"] .search-history,body[data-page="home"] .country-platform-guidance{max-width:1040px;border-radius:16px;}
+  body[data-page="home"] .filter-panel,body[data-page="home"] .search-history,body[data-page="home"] .country-platform-guidance,body[data-page="home"] .application-tracker{max-width:1040px;border-radius:16px;}
+  body[data-page="home"] .application-tracker{margin:18px auto 10px;padding:20px;border:1px solid rgba(76,115,123,.48);border-radius:16px;background:linear-gradient(145deg,rgba(16,30,38,.95),rgba(10,19,26,.97));}
+  body[data-page="home"] .application-tracker__top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;}
+  body[data-page="home"] .application-tracker h2{margin:3px 0 7px;color:var(--ink);font:800 20px/1.25 Manrope,Arial,sans-serif;}
+  body[data-page="home"] .application-tracker p{margin:0;max-width:690px;color:var(--ink-dim);font:500 13.5px/1.6 Inter,Arial,sans-serif;}
+  body[data-page="home"] .application-tracker__actions{display:flex;align-items:center;gap:10px;flex:0 0 auto;}
+  body[data-page="home"] .application-tracker__actions strong{color:var(--teal);font:700 12px/1.3 Inter,Arial,sans-serif;white-space:nowrap;}
+  body[data-page="home"] .application-toggle,body[data-page="home"] .application-save,body[data-page="home"] .application-cancel,body[data-page="home"] .application-clear,body[data-page="home"] .application-remove{border-radius:9px;font:700 12px/1.2 Inter,Arial,sans-serif;cursor:pointer;}
+  body[data-page="home"] .application-toggle{min-height:40px;padding:9px 12px;border:1px solid var(--teal);background:rgba(45,217,192,.1);color:var(--teal);}
+  body[data-page="home"] .application-toggle:hover{background:rgba(45,217,192,.17);}
+  body[data-page="home"] .application-form{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1.25fr) minmax(120px,.78fr) minmax(145px,.82fr) auto;gap:10px;align-items:end;margin-top:16px;padding-top:16px;border-top:1px solid rgba(83,97,113,.52);}
+  body[data-page="home"] .application-control{display:grid;gap:6px;color:var(--ink-dim);font:700 10px/1.1 'Barlow Condensed',sans-serif;letter-spacing:.11em;text-transform:uppercase;}
+  body[data-page="home"] .application-control input,body[data-page="home"] .application-control select{width:100%;min-height:42px;border:1px solid #31404e;border-radius:9px;background:#0d131a;color:var(--ink);padding:9px 10px;font:600 13px Inter,Arial,sans-serif;}
+  body[data-page="home"] .application-control input:focus,body[data-page="home"] .application-control select:focus{outline:2px solid var(--teal);outline-offset:1px;}
+  body[data-page="home"] .application-form__buttons{display:flex;gap:8px;}
+  body[data-page="home"] .application-save{min-height:42px;border:1px solid var(--teal);background:var(--teal);color:#062420;padding:9px 12px;white-space:nowrap;}
+  body[data-page="home"] .application-cancel,body[data-page="home"] .application-clear{min-height:42px;border:1px solid #405464;background:transparent;color:var(--ink-dim);padding:9px 11px;white-space:nowrap;}
+  body[data-page="home"] .application-empty{margin-top:14px!important;}
+  body[data-page="home"] .application-list{display:grid;gap:8px;margin-top:14px;}
+  body[data-page="home"] .application-item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:12px 13px;border:1px solid rgba(76,115,123,.46);border-radius:11px;background:rgba(6,14,20,.47);}
+  body[data-page="home"] .application-item__title{min-width:0;}
+  body[data-page="home"] .application-item__title strong{display:block;overflow:hidden;color:var(--ink);font:750 14px/1.35 Inter,Arial,sans-serif;text-overflow:ellipsis;white-space:nowrap;}
+  body[data-page="home"] .application-item__title span{display:block;overflow:hidden;margin-top:2px;color:var(--ink-dim);font:500 12px/1.35 Inter,Arial,sans-serif;text-overflow:ellipsis;white-space:nowrap;}
+  body[data-page="home"] .application-item__meta{display:flex;align-items:center;gap:8px;}
+  body[data-page="home"] .application-item__meta select{min-height:34px;border:1px solid #405464;border-radius:8px;background:#0d131a;color:var(--ink);padding:6px 8px;font:700 12px Inter,Arial,sans-serif;}
+  body[data-page="home"] .application-remove{min-height:34px;border:1px solid transparent;background:transparent;color:var(--ink-dim);padding:6px 8px;}
+  body[data-page="home"] .application-remove:hover,body[data-page="home"] .application-clear:hover{border-color:var(--amber);color:var(--amber);}
+  body[data-page="home"] .application-clear{display:block;margin-top:12px;}
+  html[dir="rtl"] body[data-page="home"] .application-tracker{text-align:right;}
+  @media (max-width:980px){body[data-page="home"] .application-form{grid-template-columns:repeat(2,minmax(0,1fr));}body[data-page="home"] .application-form__buttons{grid-column:1 / -1;}}
+  @media (max-width:700px){body[data-page="home"] .application-tracker{padding:16px;}body[data-page="home"] .application-tracker__top{display:grid;gap:13px;}body[data-page="home"] .application-tracker__actions{justify-content:space-between;}body[data-page="home"] .application-form{grid-template-columns:1fr;}body[data-page="home"] .application-form__buttons{grid-column:auto;}body[data-page="home"] .application-item{grid-template-columns:1fr;gap:9px;}body[data-page="home"] .application-item__meta{justify-content:space-between;}}
+  @media (max-width:430px){body[data-page="home"] .application-tracker__actions{align-items:stretch;flex-direction:column;}body[data-page="home"] .application-toggle{width:100%;}body[data-page="home"] .application-form__buttons{display:grid;grid-template-columns:1fr 1fr;}}
   body[data-page="home"] .filter-panel{margin:18px auto 10px;padding:20px;background:linear-gradient(145deg,rgba(16,30,38,.95),rgba(10,19,26,.97));border-color:rgba(76,115,123,.48);}
   body[data-page="home"] .filter-panel__top{align-items:center;margin-bottom:14px;}
   body[data-page="home"] .filter-panel h2{font-size:20px;}
@@ -422,6 +454,22 @@
     <div class="search-sync" id="historySync" hidden><div><strong>Keep searches across devices</strong><p id="syncMessage">Sign in with email to sync up to six recent searches. Sync is optional.</p></div><button class="history-clear" id="syncHistoryBtn" type="button">Sync searches</button></div>
     <form class="sync-email-form" id="syncEmailForm" hidden><label for="syncEmail">Email address</label><input id="syncEmail" type="email" autocomplete="email" inputmode="email" required placeholder="you@example.com"><button type="submit">Send sign-in link</button></form>
     <div class="history-list" id="historyList" aria-live="polite"></div>
+  </section>
+  <section class="application-tracker" id="applicationTracker" aria-labelledby="applicationTrackerHeading">
+    <div class="application-tracker__top">
+      <div><span class="filter-kicker" id="applicationTrackerKicker">Keep your momentum</span><h2 id="applicationTrackerHeading">Private application tracker</h2><p id="applicationTrackerIntro">Save your progress only in this browser. Nothing here is shared with employers, platforms, analytics, or your account.</p></div>
+      <div class="application-tracker__actions"><strong id="applicationTrackerCount" aria-live="polite">0 applications</strong><button id="applicationToggle" class="application-toggle" type="button" aria-expanded="false" aria-controls="applicationForm">Add application</button></div>
+    </div>
+    <form id="applicationForm" class="application-form" hidden>
+      <label class="application-control"><span id="applicationCompanyLabel">Company or employer</span><input id="applicationCompany" type="text" maxlength="80" autocomplete="organization" required></label>
+      <label class="application-control"><span id="applicationRoleLabel">Role or position</span><input id="applicationRole" type="text" maxlength="80" autocomplete="organization-title" required></label>
+      <label class="application-control"><span id="applicationStatusLabel">Progress</span><select id="applicationStatus"><option value="applied">Applied</option><option value="interview">Interview</option><option value="offer">Offer</option><option value="closed">Closed</option></select></label>
+      <label class="application-control"><span id="applicationDateLabel">Application date</span><input id="applicationDate" type="date" required></label>
+      <div class="application-form__buttons"><button id="applicationSave" class="application-save" type="submit">Save application</button><button id="applicationCancel" class="application-cancel" type="button">Cancel</button></div>
+    </form>
+    <p class="application-empty" id="applicationEmpty">No applications saved yet. Add one after you apply on an original platform or employer page.</p>
+    <div class="application-list" id="applicationList" aria-live="polite"></div>
+    <button id="applicationClear" class="application-clear" type="button" hidden>Clear saved applications</button>
   </section>
   <section class="filter-panel" aria-labelledby="filterHeading">
     <div class="filter-panel__top"><div><span class="filter-kicker">Refine directory</span><h2 id="filterHeading">Filter job platforms</h2></div><button id="clearFilters" class="clear-filters" type="button">Clear filters</button></div>
@@ -619,7 +667,7 @@ function applyLanguage(lang){
   if(footerCopy)footerCopy.textContent=t['footer.copyright'];
   const langSelect=document.getElementById('lang');
   if(langSelect)langSelect.value=lang;
-  populateCityOptions();renderPlatformGuidance();renderBoard();runSearch();renderCustomSelectors();
+  populateCityOptions();renderPlatformGuidance();renderApplicationTracker();renderBoard();runSearch();renderCustomSelectors();
 }
 const COUNTRY_INFO={uae:{name:'United Arab Emirates',slug:'uae',domain:'ae'},ksa:{name:'Saudi Arabia',slug:'saudi-arabia',domain:'sa'},egypt:{name:'Egypt',slug:'egypt',domain:'eg'},qatar:{name:'Qatar',slug:'qatar',domain:'qa'},kuwait:{name:'Kuwait',slug:'kuwait',domain:'kw'},oman:{name:'Oman',slug:'oman',domain:'om'},bahrain:{name:'Bahrain',slug:'bahrain',domain:'bh'},jordan:{name:'Jordan',slug:'jordan',domain:'jo'}};
 // Glassdoor requires a platform location identifier. Free-text locKeyword links can default to U.S. results, so use only verified Middle East country/city result pages.
@@ -894,6 +942,50 @@ function renderSearchHistory(){
     button.append(tag,label);list.appendChild(button);
   });
 }
+const APPLICATION_TRACKER_KEY='jobhub_application_tracker_v1';
+const APPLICATION_TRACKER_COPY={
+  en:{kicker:'Keep your momentum',title:'Private application tracker',intro:'Save your progress only in this browser. Nothing here is shared with employers, platforms, analytics, or your account.',add:'Add application',company:'Company or employer',role:'Role or position',progress:'Progress',date:'Application date',save:'Save application',cancel:'Cancel',empty:'No applications saved yet. Add one after you apply on an original platform or employer page.',clear:'Clear saved applications',remove:'Remove',count:'{count} applications',statuses:{applied:'Applied',interview:'Interview',offer:'Offer',closed:'Closed'}},
+  ar:{kicker:'حافظ على تقدمك',title:'متابعة طلباتك بشكل خاص',intro:'يتم حفظ تقدمك في هذا المتصفح فقط. لا تتم مشاركة أي شيء هنا مع جهات العمل أو المنصات أو التحليلات أو حسابك.',add:'أضف طلباً',company:'الشركة أو جهة العمل',role:'المسمى الوظيفي',progress:'المرحلة',date:'تاريخ التقديم',save:'احفظ الطلب',cancel:'إلغاء',empty:'لا توجد طلبات محفوظة بعد. أضف طلباً بعد التقديم من منصة أو صفحة جهة العمل الأصلية.',clear:'امسح الطلبات المحفوظة',remove:'إزالة',count:'{count} طلبات',statuses:{applied:'تم التقديم',interview:'مقابلة',offer:'عرض',closed:'مغلق'}},
+  hi:{kicker:'अपनी गति बनाए रखें',title:'निजी आवेदन ट्रैकर',intro:'आपकी प्रगति केवल इसी ब्राउज़र में सहेजी जाती है। यहाँ की कोई जानकारी नियोक्ताओं, प्लेटफ़ॉर्म, एनालिटिक्स या आपके खाते से साझा नहीं होती।',add:'आवेदन जोड़ें',company:'कंपनी या नियोक्ता',role:'भूमिका या पद',progress:'स्थिति',date:'आवेदन की तारीख',save:'आवेदन सहेजें',cancel:'रद्द करें',empty:'अभी कोई आवेदन सहेजा नहीं गया है। किसी मूल प्लेटफ़ॉर्म या नियोक्ता पेज पर आवेदन करने के बाद एक जोड़ें।',clear:'सहेजे गए आवेदन हटाएँ',remove:'हटाएँ',count:'{count} आवेदन',statuses:{applied:'आवेदन किया',interview:'साक्षात्कार',offer:'ऑफर',closed:'बंद'}},
+  ur:{kicker:'اپنی پیش رفت برقرار رکھیں',title:'نجی درخواست ٹریکر',intro:'آپ کی پیش رفت صرف اسی براؤزر میں محفوظ ہوتی ہے۔ یہاں کی کوئی معلومات آجر، پلیٹ فارم، تجزیات یا آپ کے اکاؤنٹ کے ساتھ شیئر نہیں کی جاتی۔',add:'درخواست شامل کریں',company:'کمپنی یا آجر',role:'عہدہ یا پوزیشن',progress:'مرحلہ',date:'درخواست کی تاریخ',save:'درخواست محفوظ کریں',cancel:'منسوخ کریں',empty:'ابھی کوئی درخواست محفوظ نہیں ہے۔ اصل پلیٹ فارم یا آجر کے صفحے پر درخواست دینے کے بعد شامل کریں۔',clear:'محفوظ درخواستیں صاف کریں',remove:'ہٹائیں',count:'{count} درخواستیں',statuses:{applied:'درخواست دی گئی',interview:'انٹرویو',offer:'آفر',closed:'بند'}}
+};
+function applicationText(key){return (APPLICATION_TRACKER_COPY[currentLang]||APPLICATION_TRACKER_COPY.en)[key]||APPLICATION_TRACKER_COPY.en[key];}
+function getApplications(){
+  try{
+    const entries=JSON.parse(localStorage.getItem(APPLICATION_TRACKER_KEY)||'[]');
+    const validStatuses=['applied','interview','offer','closed'];
+    return Array.isArray(entries)?entries.filter(entry=>entry&&typeof entry.id==='string'&&typeof entry.company==='string'&&typeof entry.role==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(entry.date||'')&&validStatuses.includes(entry.status)).slice(0,50):[];
+  }catch(e){return [];}
+}
+function saveApplications(entries){try{localStorage.setItem(APPLICATION_TRACKER_KEY,JSON.stringify(entries.slice(0,50)));}catch(e){}}
+function applicationDateLabel(date){
+  try{return new Intl.DateTimeFormat(currentLang==='ar'?'ar':currentLang==='ur'?'ur':currentLang==='hi'?'hi':'en',{year:'numeric',month:'short',day:'numeric'}).format(new Date(`${date}T12:00:00`));}catch(e){return date;}
+}
+function updateApplicationCopy(){
+  const tracker=document.getElementById('applicationTracker');if(!tracker)return;
+  const t=APPLICATION_TRACKER_COPY[currentLang]||APPLICATION_TRACKER_COPY.en;
+  const textMap={applicationTrackerKicker:t.kicker,applicationTrackerHeading:t.title,applicationTrackerIntro:t.intro,applicationCompanyLabel:t.company,applicationRoleLabel:t.role,applicationStatusLabel:t.progress,applicationDateLabel:t.date,applicationSave:t.save,applicationCancel:t.cancel,applicationEmpty:t.empty,applicationClear:t.clear};
+  Object.entries(textMap).forEach(([id,value])=>{const el=document.getElementById(id);if(el)el.textContent=value;});
+  const toggle=document.getElementById('applicationToggle');if(toggle)toggle.textContent=t.add;
+  const status=document.getElementById('applicationStatus');if(status){const current=status.value||'applied';status.innerHTML='';Object.entries(t.statuses).forEach(([value,label])=>status.appendChild(new Option(label,value)));status.value=t.statuses[current]?current:'applied';}
+}
+function renderApplicationTracker(){
+  const tracker=document.getElementById('applicationTracker');const list=document.getElementById('applicationList');const empty=document.getElementById('applicationEmpty');const count=document.getElementById('applicationTrackerCount');const clear=document.getElementById('applicationClear');const form=document.getElementById('applicationForm');if(!tracker||!list||!empty||!count||!clear||!form)return;
+  updateApplicationCopy();
+  const entries=getApplications().sort((a,b)=>`${b.date}-${b.createdAt||0}`.localeCompare(`${a.date}-${a.createdAt||0}`));
+  const t=APPLICATION_TRACKER_COPY[currentLang]||APPLICATION_TRACKER_COPY.en;
+  count.textContent=t.count.replace('{count}',String(entries.length));
+  list.innerHTML='';empty.hidden=entries.length>0;clear.hidden=!entries.length;
+  if(!document.getElementById('applicationDate').value)document.getElementById('applicationDate').value=new Date().toISOString().slice(0,10);
+  entries.forEach(entry=>{
+    const item=document.createElement('article');item.className='application-item';item.dataset.applicationId=entry.id;
+    const title=document.createElement('div');title.className='application-item__title';const company=document.createElement('strong');company.textContent=entry.company;const role=document.createElement('span');role.textContent=`${entry.role} · ${applicationDateLabel(entry.date)}`;title.append(company,role);
+    const meta=document.createElement('div');meta.className='application-item__meta';const status=document.createElement('select');status.setAttribute('aria-label',`${t.progress}: ${entry.company}`);status.dataset.applicationStatus=entry.id;Object.entries(t.statuses).forEach(([value,label])=>status.appendChild(new Option(label,value,value===entry.status,value===entry.status)));meta.appendChild(status);
+    const remove=document.createElement('button');remove.type='button';remove.className='application-remove';remove.dataset.applicationRemove=entry.id;remove.textContent=t.remove;remove.setAttribute('aria-label',`${t.remove}: ${entry.company}`);
+    item.append(title,meta,remove);list.appendChild(item);
+  });
+}
+function closeApplicationForm(){const form=document.getElementById('applicationForm');const toggle=document.getElementById('applicationToggle');if(form)form.hidden=true;if(toggle)toggle.setAttribute('aria-expanded','false');}
 function saveSearchHistory(role,country,city){
   if(!COUNTRY_INFO[country])return;
   const safeRole=(role||'').trim().slice(0,80);
@@ -1037,6 +1129,12 @@ document.getElementById('resetBtn').addEventListener('click',resetSearch);
 document.getElementById('shareSearchBtn').addEventListener('click',copySearchLink);
 document.getElementById('historyList').addEventListener('click',event=>{const button=event.target.closest('[data-history-index]');if(button)runHistoricSearch(Number(button.dataset.historyIndex));});
 document.getElementById('clearHistory').addEventListener('click',()=>{try{localStorage.removeItem(SEARCH_HISTORY_KEY);}catch(e){}if(window.JobHubSearchSync?.enabled)window.JobHubSearchSync.clearEverywhere().catch(()=>{});renderSearchHistory();});
+document.getElementById('applicationToggle').addEventListener('click',()=>{const form=document.getElementById('applicationForm');const open=form.hidden;form.hidden=!open;document.getElementById('applicationToggle').setAttribute('aria-expanded',String(open));if(open){document.getElementById('applicationCompany').focus();}});
+document.getElementById('applicationCancel').addEventListener('click',()=>{closeApplicationForm();document.getElementById('applicationForm').reset();renderApplicationTracker();});
+document.getElementById('applicationForm').addEventListener('submit',event=>{event.preventDefault();const company=document.getElementById('applicationCompany').value.trim().replace(/\s+/g,' ').slice(0,80);const role=document.getElementById('applicationRole').value.trim().replace(/\s+/g,' ').slice(0,80);const status=document.getElementById('applicationStatus').value;const date=document.getElementById('applicationDate').value;if(!company||!role||!/^\d{4}-\d{2}-\d{2}$/.test(date)||!['applied','interview','offer','closed'].includes(status))return;const id=window.crypto?.randomUUID?window.crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2,10)}`;const entries=getApplications();entries.unshift({id,company,role,status,date,createdAt:Date.now()});saveApplications(entries);event.currentTarget.reset();closeApplicationForm();renderApplicationTracker();});
+document.getElementById('applicationList').addEventListener('change',event=>{const select=event.target.closest('[data-application-status]');if(!select)return;const entries=getApplications();const entry=entries.find(item=>item.id===select.dataset.applicationStatus);if(!entry||!['applied','interview','offer','closed'].includes(select.value))return;entry.status=select.value;saveApplications(entries);renderApplicationTracker();});
+document.getElementById('applicationList').addEventListener('click',event=>{const button=event.target.closest('[data-application-remove]');if(!button)return;saveApplications(getApplications().filter(item=>item.id!==button.dataset.applicationRemove));renderApplicationTracker();});
+document.getElementById('applicationClear').addEventListener('click',()=>{try{localStorage.removeItem(APPLICATION_TRACKER_KEY);}catch(e){}closeApplicationForm();renderApplicationTracker();});
 document.getElementById('city').addEventListener('change',()=>{if(document.getElementById('role').value.trim())runSearch();});
 document.getElementById('country').addEventListener('change',()=>{applyLanguage(currentLang);});
 document.getElementById('lang').addEventListener('change',(e)=>{applyLanguage(e.target.value);});
@@ -1060,6 +1158,7 @@ if(initialCityParam){
   if(initialCitySelect){initialCitySelect.value=initialCityParam;renderCustomSelectors();runSearch();}
 }
 renderSearchHistory();
+renderApplicationTracker();
 function activateSearchSync(){
   const sync=window.JobHubSearchSync;const panel=document.getElementById('historySync');const form=document.getElementById('syncEmailForm');const message=document.getElementById('syncMessage');const button=document.getElementById('syncHistoryBtn');
   if(!sync?.enabled||!panel||!form||!message||!button)return;
