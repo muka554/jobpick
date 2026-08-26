@@ -126,14 +126,14 @@
       var stylesheet = document.createElement('link');
       stylesheet.id = 'jobhubExperienceStyles';
       stylesheet.rel = 'stylesheet';
-      stylesheet.href = '/assets/site-experience.css?v=20260826c';
+      stylesheet.href = '/assets/site-experience.css?v=20260826d';
       document.head.appendChild(stylesheet);
     }
     function addAuthExperience() {
       if (document.getElementById('jobhubExperienceScript')) return;
       var script = document.createElement('script');
       script.id = 'jobhubExperienceScript';
-      script.src = '/assets/auth-experience.js?v=20260826c';
+      script.src = '/assets/auth-experience.js?v=20260826d';
       script.defer = true;
       document.head.appendChild(script);
     }
