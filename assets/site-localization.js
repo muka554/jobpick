@@ -126,7 +126,7 @@
       var stylesheet = document.createElement('link');
       stylesheet.id = 'jobhubExperienceStyles';
       stylesheet.rel = 'stylesheet';
-      stylesheet.href = '/assets/site-experience.css?v=20260826k';
+      stylesheet.href = '/assets/site-experience.css?v=20260826o';
       document.head.appendChild(stylesheet);
     }
     function addAuthExperience() {
