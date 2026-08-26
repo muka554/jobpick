@@ -24,9 +24,9 @@
 .jobhub-auth-button{display:flex;align-items:center;justify-content:center;gap:11px;min-height:48px;border-radius:12px;padding:12px 16px;font:750 14px/1 Inter,Arial,sans-serif;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease}
 .jobhub-auth-button:focus-visible,.jobhub-auth-input:focus-visible,.jobhub-auth-close:focus-visible{outline:3px solid #ffb020;outline-offset:3px}
 .jobhub-auth-button:hover{transform:translateY(-2px)}
-.jobhub-auth-google{border:1px solid #cdd9df;background:#fff;color:#173042;box-shadow:0 6px 16px rgba(16,35,55,.08)}
-.jobhub-auth-google:hover{border-color:#8ea5b1;box-shadow:0 10px 22px rgba(16,35,55,.13)}
-.jobhub-google-mark{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:conic-gradient(from -45deg,#4285f4 0 25%,#34a853 0 48%,#fbbc05 0 72%,#ea4335 0 100%);color:#fff;font:800 13px/1 Arial}
+.jobhub-auth-google{border:1px solid #747775;border-radius:4px;background:#fff;color:#1f1f1f;box-shadow:none;font:500 14px/20px Arial,sans-serif}
+.jobhub-auth-google:hover{border-color:#5f6368;background:#f8f9fa;box-shadow:0 2px 5px rgba(60,64,67,.25)}
+.jobhub-google-mark{display:block;flex:0 0 18px;width:18px;height:18px}
 .jobhub-auth-divider{display:flex;align-items:center;gap:12px;color:#7e909c;font:700 11px/1 Inter,Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
 .jobhub-auth-divider:before,.jobhub-auth-divider:after{content:"";height:1px;flex:1;background:#d8e2e7}
 .jobhub-auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:4px;border:1px solid #d6e2e6;border-radius:11px;background:#edf3f4}.jobhub-auth-tab{min-height:35px;border:0;border-radius:8px;background:transparent;color:#526875;font:750 12px/1 Inter,Arial,sans-serif;cursor:pointer}.jobhub-auth-tab[aria-selected="true"]{background:#fff;color:#0c6f66;box-shadow:0 2px 8px rgba(16,35,55,.1)}.jobhub-auth-tab:focus-visible{outline:3px solid #ffb020;outline-offset:2px}

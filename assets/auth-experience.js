@@ -234,7 +234,7 @@
   function refreshCopy() {
     if (!ui.layer) return;
     ui.badge.textContent = text('badge'); ui.title.textContent = text('title'); ui.body.textContent = text('body');
-    ui.google.innerHTML = '<span class="jobhub-google-mark" aria-hidden="true">G</span><span>' + text('google') + '</span>';
+    ui.google.innerHTML = '<svg class="jobhub-google-mark" aria-hidden="true" viewBox="0 0 18 18" focusable="false"><path fill="#EA4335" d="M17.64 9.205c0-.639-.057-1.252-.164-1.841H9v3.482h4.844c-.209 1.125-.843 2.078-1.797 2.716v2.258h2.908c1.702-1.567 2.685-3.874 2.685-6.615Z"/><path fill="#4285F4" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.258c-.806.54-1.837.859-3.048.859-2.344 0-4.328-1.584-5.036-3.71H.956v2.332A9 9 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.594.102-1.171.282-1.71V4.958H.956A9 9 0 0 0 0 9c0 1.452.348 2.827.956 4.042l3.008-2.332Z"/><path fill="#34A853" d="M9 3.58c1.322 0 2.507.455 3.44 1.347l2.581-2.581C13.463.891 11.426 0 9 0A9 9 0 0 0 .956 4.958L3.964 7.29C4.672 5.164 6.656 3.58 9 3.58Z"/></svg><span>' + text('google') + '</span>';
     ui.divider.textContent = text('or'); ui.signinTab.textContent = text('signIn'); ui.signupTab.textContent = text('signUp');
     ui.emailLabel.textContent = text('email'); ui.email.placeholder = text('placeholder'); ui.passwordLabel.textContent = text('password'); ui.password.placeholder = text('passwordPlaceholder');
     ui.passwordHint.textContent = text('passwordHint'); ui.submit.textContent = mode === 'signup' ? text('signUpButton') : text('signInButton'); ui.magic.textContent = text('magic');
