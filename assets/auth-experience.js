@@ -138,6 +138,17 @@
     welcomeTimer = null;
     if (ui.welcome) ui.welcome.hidden = true;
   }
+  function setHeaderMenu(open) {
+    if (!ui.headerMenu || !ui.headerProfile) return;
+    ui.headerMenu.hidden = !open;
+    ui.headerProfile.setAttribute('aria-expanded', String(!!open));
+  }
+  function performSignOut() {
+    setBusy(true);
+    getClient().then(function (supabase) { return supabase.auth.signOut(); }).then(function () {
+      showAccess(); setStatus(''); hide(true);
+    }).catch(function () { setStatus(text('signInError'), 'error'); }).finally(function () { setBusy(false); });
+  }
   function completeReturn() {
     if (returnInProgress) return true;
     var target = returnTarget();
@@ -186,6 +197,9 @@
     ui.skip.hidden = true;
     if (ui.launcher) { ui.launcher.textContent = text('account'); ui.launcher.hidden = false; }
     if (ui.logoutLauncher) { ui.logoutLauncher.textContent = text('signout'); ui.logoutLauncher.hidden = false; }
+    if (ui.headerLogin) ui.headerLogin.hidden = true;
+    if (ui.headerProfile) { ui.headerProfile.hidden = false; ui.headerProfile.textContent = text('account'); }
+    if (ui.headerGreeting) ui.headerGreeting.textContent = welcomeFor(user);
     if (user && user.email) ui.signed.setAttribute('title', text('signed'));
   }
   function showAccess() {
@@ -197,6 +211,9 @@
     ui.skip.hidden = false;
     if (ui.launcher) { ui.launcher.textContent = text('account'); ui.launcher.hidden = false; }
     if (ui.logoutLauncher) ui.logoutLauncher.hidden = true;
+    if (ui.headerLogin) { ui.headerLogin.hidden = false; ui.headerLogin.textContent = text('signIn'); }
+    if (ui.headerProfile) ui.headerProfile.hidden = true;
+    setHeaderMenu(false);
   }
   function setMode(nextMode) {
     mode = nextMode === 'signup' ? 'signup' : 'signin';
@@ -221,6 +238,10 @@
     if (ui.welcome && !ui.welcome.hidden && ui.welcomeUser) ui.welcome.textContent = welcomeFor(ui.welcomeUser);
     if (ui.launcher) ui.launcher.textContent = text('account');
     if (ui.logoutLauncher) ui.logoutLauncher.textContent = text('signout');
+    if (ui.headerLogin) ui.headerLogin.textContent = text('signIn');
+    if (ui.headerProfile) ui.headerProfile.textContent = text('account');
+    if (ui.headerGreeting && ui.signedUser) ui.headerGreeting.textContent = welcomeFor(ui.signedUser);
+    if (ui.headerLogout) ui.headerLogout.textContent = text('signout');
   }
   function createUI() {
     if (document.getElementById('jobhubAuthLayer')) return;
@@ -238,6 +259,12 @@
     logoutLauncher.type = 'button'; logoutLauncher.className = 'jobhub-auth-logout-launcher'; logoutLauncher.hidden = true; logoutLauncher.setAttribute('data-no-localize', '');
     document.body.appendChild(logoutLauncher);
 
+    var headerControls = document.createElement('div');
+    headerControls.className = 'jobhub-header-account'; headerControls.setAttribute('data-no-localize', '');
+    headerControls.innerHTML = '<button type="button" class="jobhub-header-login"></button><button type="button" class="jobhub-header-profile" aria-expanded="false" aria-haspopup="true" hidden></button><div class="jobhub-header-menu" hidden><p class="jobhub-header-greeting"></p><button type="button" class="jobhub-header-logout"></button></div>';
+    var headerTarget = document.querySelector('.sitenav, .nav, nav[aria-label="Site"], header nav');
+    if (headerTarget) headerTarget.appendChild(headerControls); else document.body.appendChild(headerControls);
+
     var welcome = document.createElement('p');
     welcome.className = 'jobhub-welcome'; welcome.hidden = true; welcome.setAttribute('role', 'status'); welcome.setAttribute('aria-live', 'polite'); welcome.setAttribute('data-no-localize', '');
     document.body.appendChild(welcome);
@@ -249,7 +276,7 @@
     document.body.appendChild(layer);
 
     ui = {
-      layer: layer, launcher: launcher, logoutLauncher: logoutLauncher, welcome: welcome, close: layer.querySelector('.jobhub-auth-close'), badge: layer.querySelector('.jobhub-auth-badge'), title: layer.querySelector('.jobhub-auth-title'), body: layer.querySelector('.jobhub-auth-copy'),
+      layer: layer, launcher: launcher, logoutLauncher: logoutLauncher, headerLogin: headerControls.querySelector('.jobhub-header-login'), headerProfile: headerControls.querySelector('.jobhub-header-profile'), headerMenu: headerControls.querySelector('.jobhub-header-menu'), headerGreeting: headerControls.querySelector('.jobhub-header-greeting'), headerLogout: headerControls.querySelector('.jobhub-header-logout'), welcome: welcome, close: layer.querySelector('.jobhub-auth-close'), badge: layer.querySelector('.jobhub-auth-badge'), title: layer.querySelector('.jobhub-auth-title'), body: layer.querySelector('.jobhub-auth-copy'),
       access: layer.querySelector('.jobhub-auth-access'), google: layer.querySelector('.jobhub-auth-google'), divider: layer.querySelector('.jobhub-auth-divider'), signinTab: layer.querySelectorAll('.jobhub-auth-tab')[0], signupTab: layer.querySelectorAll('.jobhub-auth-tab')[1],
       form: layer.querySelector('.jobhub-auth-password-form'), emailLabel: layer.querySelector('label[for="jobhubAuthEmail"]'), email: layer.querySelector('#jobhubAuthEmail'), passwordLabel: layer.querySelector('label[for="jobhubAuthPassword"]'), password: layer.querySelector('#jobhubAuthPassword'), passwordHint: layer.querySelector('.jobhub-auth-password-hint'), submit: layer.querySelector('.jobhub-auth-password-form button[type="submit"]'), magic: layer.querySelector('.jobhub-auth-magic-link'),
       skip: layer.querySelector('.jobhub-auth-skip'), status: layer.querySelector('.jobhub-auth-status'), signed: layer.querySelector('.jobhub-auth-signedin'), signedLabel: layer.querySelector('.jobhub-auth-signedin span'), signout: layer.querySelector('.jobhub-auth-signout')
@@ -259,12 +286,11 @@
     ui.close.addEventListener('click', function () { hide(true); });
     ui.skip.addEventListener('click', function () { hide(true); });
     ui.launcher.addEventListener('click', function () { show(true); });
-    ui.logoutLauncher.addEventListener('click', function () {
-      setBusy(true);
-      getClient().then(function (supabase) { return supabase.auth.signOut(); }).then(function () {
-        showAccess(); setStatus(''); hide(true);
-      }).catch(function () { setStatus(text('signInError'), 'error'); }).finally(function () { setBusy(false); });
-    });
+    ui.logoutLauncher.addEventListener('click', performSignOut);
+    ui.headerLogin.addEventListener('click', function () { show(true); });
+    ui.headerProfile.addEventListener('click', function () { setHeaderMenu(ui.headerMenu.hidden); });
+    ui.headerLogout.addEventListener('click', performSignOut);
+    document.addEventListener('click', function (event) { if (!headerControls.contains(event.target)) setHeaderMenu(false); });
     layer.addEventListener('click', function (event) { if (event.target === layer) hide(true); });
     document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !layer.hidden) hide(true); });
     ui.signinTab.addEventListener('click', function () { setMode('signin'); });
@@ -318,9 +344,7 @@
       }).finally(function () { setBusy(false); });
     });
 
-    ui.signout.addEventListener('click', function () {
-      getClient().then(function (supabase) { return supabase.auth.signOut(); }).then(function () { showAccess(); setStatus(''); show(true); }).catch(function () { setStatus(text('signInError'), 'error'); });
-    });
+    ui.signout.addEventListener('click', performSignOut);
   }
   function initialiseAuth() {
     createUI();
