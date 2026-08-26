@@ -173,6 +173,17 @@
     }
     return clientPromise;
   }
+  function isInvalidPasswordFailure(error) {
+    return !!(error && typeof error.message === 'string' && /invalid login credentials/i.test(error.message));
+  }
+  function reportInvalidPasswordFailure(email) {
+    // The server receives the email only to derive a keyed, non-reversible counter. It does not receive a password.
+    getClient().then(function (supabase) {
+      return supabase.functions.invoke('auth-failure-alert', { body: { email: email } });
+    }).catch(function () {
+      // Monitoring never changes the user-facing authentication outcome.
+    });
+  }
   function show(force) {
     if (!ui.layer) return;
     if (!force) {
@@ -328,7 +339,10 @@
         }
         return supabase.auth.signInWithPassword({ email: email, password: password });
       }).then(function (result) {
-        if (result.error) throw result.error;
+        if (result.error) {
+          if (mode !== 'signup' && isInvalidPasswordFailure(result.error)) reportInvalidPasswordFailure(email);
+          throw result.error;
+        }
         ui.password.value = '';
         if (mode === 'signup' && !(result.data && result.data.session)) {
           setStatus(text('signupSent'), 'success');
