@@ -41,3 +41,13 @@ The owner must approve the final message configuration in AdSense **Privacy & me
 [3] [Google: Privacy & messaging JavaScript API](https://developers.google.com/funding-choices/fc-api-docs)
 
 [4] [Google: Add a consent revocation link to your site](https://support.google.com/adsense/answer/10959060?hl=en)
+
+## Account-side publication and immediate live check
+
+The AdSense **Privacy & messaging → European regulations** message named **JobPick — European privacy choices** now shows status **Published** for `jobpick20.com`. The dashboard confirms the selected site, Middle East Job Hub site name, published HTTPS Privacy Policy URL, uploaded publisher logo, and enabled Consent, Do not consent, and Manage options paths. The missing-logo warning that blocked the draft was cleared before publication.
+
+The production deployment for commit `04581ee` completed successfully. A direct public fetch of `/guides/uae-job-market-guide/` returned HTTP 200 and confirmed the required `strict-origin-when-cross-origin` referrer policy plus the account’s standard AdSense script. A fetch of the interactive homepage returned HTTP 200 and no AdSense-script match. The immediately forced public preview at `?fc=alwaysshow&fctype=gdpr` did not display a message in the connected account-holder browser at the first check. This is recorded as an inconclusive propagation/browser-context result, not a confirmation that delivery has failed; it will be rechecked after propagation time without selecting a consent choice.
+
+A second forced-message browser check after a short propagation interval likewise did not show the Google overlay in the connected account-holder browser. The account dashboard continues to show the message as **Published**. This check did not click any consent option and does not invalidate the published account status; it remains an inconclusive browser-context/propagation observation. Google’s own message reporting still showed zero messages and a 0% consent rate immediately after publication, as expected for a newly published message with no processed traffic.
+
+A final source validation after deployment reported 20 eligible pages with exactly one AdSense tag, CMP marker, and referrer policy each; no non-eligible page with an AdSense tag; correct scoped disclosures; and no missing Arabic, Hindi, or Urdu mappings for the revised site disclosures.
