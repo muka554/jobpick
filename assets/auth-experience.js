@@ -146,6 +146,7 @@
   function performSignOut() {
     setBusy(true);
     getClient().then(function (supabase) { return supabase.auth.signOut(); }).then(function () {
+      try { localStorage.removeItem('jobhub_account_seen'); } catch (error) {}
       showAccess(); setStatus(''); hide(true);
     }).catch(function () { setStatus(text('signInError'), 'error'); }).finally(function () { setBusy(false); });
   }
@@ -199,6 +200,7 @@
   }
   function showSignedIn(user) {
     if (!ui.signed) return;
+    try { localStorage.setItem('jobhub_account_seen', '1'); } catch (error) {}
     ui.signedUser = user || null;
     ui.signed.hidden = false;
     ui.signedLabel.textContent = welcomeFor(user);
@@ -248,6 +250,7 @@
   }
   function createUI() {
     if (document.getElementById('jobhubAuthLayer')) return;
+    document.querySelectorAll('[data-jobhub-account-launcher]').forEach(function (launcher) { launcher.remove(); });
     var ambient = document.createElement('div');
     ambient.className = 'jobhub-ambient';
     ambient.setAttribute('aria-hidden', 'true');
