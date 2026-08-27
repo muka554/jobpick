@@ -1,5 +1,6 @@
 /* Shared JobPick sign-in experience and low-motion visual accents. */
 :root{--jobhub-ink:#0c1a27;--jobhub-navy:#102337;--jobhub-teal:#00a896;--jobhub-gold:#ffb020;--jobhub-paper:#f7f4ed;--jobhub-mist:#dbe8ef}
+.sitenav .brand,.nav .brand{display:inline-flex;align-items:center;gap:8px}.jobhub-brand-logo{display:block;flex:0 0 auto;width:28px;height:28px;object-fit:contain;border-radius:6px;background:#fff}.site-rtl .sitenav .brand,.site-rtl .nav .brand{flex-direction:row-reverse}@media(max-width:430px){body[data-page="home"] .sitenav .brand{min-width:0;gap:5px;font-size:12px;letter-spacing:-.045em;white-space:nowrap}body[data-page="home"] .jobhub-brand-logo{width:24px;height:24px}}@media(max-width:360px){body[data-page="home"] .sitenav .brand{gap:4px;font-size:10px;letter-spacing:-.05em}body[data-page="home"] .jobhub-brand-logo{width:20px;height:20px}}
 .jobhub-ambient{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;contain:layout paint;opacity:.86}
 .jobhub-orb{position:absolute;border-radius:999px;filter:blur(1px);will-change:transform;animation:jobhub-float 14s ease-in-out infinite alternate}
 .jobhub-orb--one{width:16rem;height:16rem;top:12%;left:-7rem;background:radial-gradient(circle at 30% 30%,rgba(0,168,150,.28),rgba(0,168,150,0) 70%)}

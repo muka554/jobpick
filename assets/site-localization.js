@@ -121,12 +121,26 @@
     holder.innerHTML = pickerMarkup();
     if (nav) nav.appendChild(holder); else document.body.insertBefore(holder, document.body.firstChild);
   }
+  function addBrandLogo() {
+    document.querySelectorAll('.sitenav .brand, .nav .brand, nav[aria-label="Site"] .brand').forEach(function (brand) {
+      if (brand.querySelector('.jobhub-brand-logo')) return;
+      var logo = document.createElement('img');
+      logo.className = 'jobhub-brand-logo';
+      logo.src = '/assets/middle-east-job-hub-logo.png';
+      logo.width = 28;
+      logo.height = 28;
+      logo.alt = '';
+      logo.decoding = 'async';
+      logo.setAttribute('data-no-localize', '');
+      brand.insertBefore(logo, brand.firstChild);
+    });
+  }
   function addExperienceAssets() {
     if (!document.getElementById('jobhubExperienceStyles')) {
       var stylesheet = document.createElement('link');
       stylesheet.id = 'jobhubExperienceStyles';
       stylesheet.rel = 'stylesheet';
-      stylesheet.href = '/assets/site-experience.css?v=20260826o';
+      stylesheet.href = '/assets/site-experience.css?v=20260827p';
       document.head.appendChild(stylesheet);
     }
     function addAuthExperience() {
@@ -160,6 +174,7 @@
   function init() {
     addStyles();
     addExperienceAssets();
+    addBrandLogo();
     addPicker();
     capturePage();
     document.addEventListener('change', function (event) {
