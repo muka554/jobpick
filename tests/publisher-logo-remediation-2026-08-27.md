@@ -39,3 +39,7 @@ After this website deployment is live, the owner can return to the exact AdSense
 ## Reference
 
 [1] [Google Search Central — Organization structured data](https://developers.google.com/search/docs/appearance/structured-data/organization)
+
+## Production confirmation
+
+The GitHub Pages workflow for commit `a1d063d` completed successfully. A cache-bypassed production fetch then confirmed HTTP 200 responses for the homepage, About page, and the public PNG logo asset; the asset was served as `image/png` and retained its 1920 × 1920 dimensions. A live browser check also confirmed the homepage visibly renders the logo before the publisher name without navigation overlap.
