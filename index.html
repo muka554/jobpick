@@ -144,12 +144,8 @@
     z-index:-1;
   }
   .searchpanel:hover::before{ opacity:1; }
-  .groupwrap{
-    opacity:0;
-    transform:translateY(14px);
-    transition:opacity .5s ease, transform .5s ease;
-  }
-  .groupwrap.is-visible{ opacity:1; transform:translateY(0); }
+  .groupwrap{ opacity:1; transform:none; }
+  .groupwrap.is-visible{ opacity:1; transform:none; }
   .groupbar span.count{ display:inline-block; min-width:1.4em; text-align:right; font-variant-numeric:tabular-nums; }
   .rescard{ position:relative; overflow:hidden; }
   .rescard::after{
