@@ -1,0 +1,30 @@
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+*.secret
+*.secrets
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Local databases and exports
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.sql.gz
+
+# Logs, caches, and temporary files
+*.log
+coverage/
+.cache/
+.tmp/
+tmp/
+.DS_Store
+Thumbs.db
+
+# Local audit outputs and sandbox artifacts
+/tmp/
+reports/local/
