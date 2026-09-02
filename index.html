@@ -851,7 +851,7 @@ function getGroups(country){
   const cfg=COUNTRY_INFO[country]||COUNTRY_INFO.uae;
   const countryPath=cfg.slug;
   const global=[
-    {code:'BYT',name:'Bayt.com',gate:'MENA · country search · city may not apply',type:'direct',build:(q)=>`https://www.bayt.com/en/${countryPath}/jobs/?keyword=${q}`},
+    {code:'BYT',name:'Bayt.com',gate:'MENA · country and city search',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.bayt.com/en/${countryPath}/jobs/?keyword=${q}`+(cityName?`&location=${encodeURIComponent(cityName)}`:'')},
     {code:'LKD',name:'LinkedIn Jobs',gate:'General · Global',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.linkedin.com/jobs/search/?keywords=${q}&location=${encodeURIComponent((cityName?cityName+', ':'')+cfg.name)}`},
     {code:'IND',name:'Indeed',gate:'General · Global',type:'direct',build:(q,slug,cityKey,cityName)=>`https://${cfg.domain}.indeed.com/jobs?q=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'')},
     {code:'GGL',name:'Google for Jobs',gate:'Aggregator',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.google.com/search?q=${q}+jobs+in+${encodeURIComponent(cityName||cfg.name)}&ibp=htl;jobs`},
@@ -860,7 +860,7 @@ function getGroups(country){
     {code:'TLC',name:'Talent.com',gate:'Aggregator',type:'direct',build:(q,slug,cityKey,cityName)=>`https://${cfg.domain}.talent.com/jobs?k=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'')},
   ];
   const specialist=[
-    {code:'GLF',name:'GulfTalent',gate:'Gulf specialist',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.gulftalent.com/${countryPath}/jobs/title/${slug}${cityName?'?location='+encodeURIComponent(cityName):''}`},
+    {code:'GLF',name:'GulfTalent',gate:'Gulf specialist',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.gulftalent.com/mobile/${countryPath}/jobs/title/${slug}${cityName?'?location='+encodeURIComponent(cityName):''}`},
     {code:'NKG',name:'Naukrigulf',gate:'Gulf specialist · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.naukrigulf.com/search-jobs?keyword=${q}&location=${encodeURIComponent(cityName||cfg.name)}`} ,
     {code:'TNB',name:'Tanqeeb',gate:'Regional aggregator · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.tanqeeb.com/jobs?search=${q}&location=${encodeURIComponent(cityName||cfg.name)}`} ,
     country==='egypt'?{code:'WZF',name:'WUZZUF',gate:'Egypt specialist · Direct',type:'direct',build:(q)=>`https://wuzzuf.net/search/jobs/?a=h&q=${q}`} :country==='qatar'?{code:'QTL',name:'Qatar Living Jobs',gate:'Qatar specialist',type:'portal',url:'https://www.qatarliving.com/jobs'}:country==='oman'?{code:'OMJ',name:'Oman Jobs',gate:'Oman specialist · Direct',type:'direct',build:(q)=>`https://omanjobs.om/?s=${q}`} :country==='bahrain'?{code:'BHT',name:'Bahrain Talent Portal',gate:'Bahrain employment service',type:'portal',url:'https://www.talentportal.bh/'} :country==='jordan'?{code:'AKB',name:'Akhtaboot',gate:'Jordan specialist · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.akhtaboot.com/en/jordan/jobs?query=${q}&location=${encodeURIComponent(cityName||cfg.name)}`} :{code:'AKB',name:'Akhtaboot',gate:'Regional specialist · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.akhtaboot.com/en/jobs?query=${q}&location=${encodeURIComponent(cityName||cfg.name)}`} ,

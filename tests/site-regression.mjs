@@ -58,7 +58,8 @@ assert.match(index, /name:'Robert Half',[\s\S]*?type:'portal'/, 'Robert Half mus
 assert.match(index, /name:'Charterhouse ME',[\s\S]*?type:'portal'/, 'Charterhouse must be a portal visit');
 assert.match(index, /else if\(country==='oman'\) local=null/, 'Oman duplicate local entry must be removed');
 assert.match(index, /else local=null/, 'Qatar duplicate local entry must be removed');
-assert.match(index, /country search · city may not apply/, 'Bayt city limitation must be disclosed');
+assert.match(index, /name:'Bayt\.com',[\s\S]*?location=\$\{encodeURIComponent\(cityName\)\}/, 'Bayt search must preserve city');
+assert.match(index, /name:'GulfTalent',[\s\S]*?https:\/\/www\.gulftalent\.com\/mobile\//, 'GulfTalent search must use the working mobile route');
 assert.match(index, /\.filter\(group=>group&&group\.items&&group\.items\.length\)/, 'empty catalogue groups must be filtered');
 
 const tools = read('tools/index.html');
