@@ -44,3 +44,11 @@ It returned HTTP 302, but the `Location` was still the Manus account chooser rat
 ## Completion criterion
 
 The flow is complete only when the browser reaches the tools page signed in, the session handoff is consumed, an authenticated CV upload/process/download succeeds, and an isolated second account is denied access to the first account’s document. The current live state is blocked at backend provider deployment: `provider=google` is currently ignored and still returns the Manus chooser.
+
+## Provisioning completed on 2026-09-02
+
+The Google Cloud project **JobPick CV Service** was created under project ID `jobpick-cv-service`. Google Auth Platform branding was configured with the JobPick name, external audience, `https://jobpick20.com/` homepage, the live privacy and terms URLs, and `jobpick20.com` plus `manus.space` as authorized domains. The account `wiz.mkawe@gmail.com` was added as a test user.
+
+A web OAuth client named **JobPick CV Web** was created with client ID `655715100959-1mu86jk030h5lpns5ka87fmt386r2c10.apps.googleusercontent.com`, JavaScript origin `https://jobpick20.com`, and redirect URI `https://jobpickcv-5ouvegg7.manus.space/api/oauth/google/callback`. The client secret is intentionally not recorded in this repository.
+
+The live endpoint still redirects to the Manus account chooser because the hosted CV backend is not owned by the current account and has not been updated to consume this client. The next deployment must set `GOOGLE_CLIENT_ID` to the client above and securely provision a newly generated `GOOGLE_CLIENT_SECRET`, then apply the Supabase migration before retesting.
