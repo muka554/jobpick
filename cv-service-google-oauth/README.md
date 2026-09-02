@@ -79,3 +79,7 @@ node tests/cv-live-integration.mjs
 ```
 
 The repository tests intentionally verify the public UI, CORS, and unauthenticated authorization gates without storing or automating a user's credentials. An authenticated test must be run manually with an account the owner controls.
+
+## Database migration
+
+Apply [`supabase/migrations/20260902220000_create_google_account_identities.sql`](../supabase/migrations/20260902220000_create_google_account_identities.sql) before enabling the callback. It creates a backend-managed `public.user_identities` table with unique `(provider, provider_subject)` and `(user_id, provider)` constraints, denies browser-role access, and exposes only a `service_role` security-definer upsert function. The CV service should call that function after verifying the Google ID token and after ensuring the local `auth.users` row exists.
