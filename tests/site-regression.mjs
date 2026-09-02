@@ -31,6 +31,24 @@ for (const file of htmlFiles) {
   }
 }
 
+const internalReferencePattern = /(?:src|href)=["'](\/[^"'#?]+)(?:["'#?])/gi;
+for (const file of htmlFiles) {
+  const rel = path.relative(root, file);
+  const html = fs.readFileSync(file, 'utf8');
+  for (const match of html.matchAll(internalReferencePattern)) {
+    const target = match[1];
+    if (target === '/' || target.startsWith('/#')) continue;
+    const candidates = [target, target.endsWith('/') ? `${target}index.html` : target];
+    assert.ok(candidates.some((candidate) => fs.existsSync(path.join(root, candidate))), `${rel} references missing internal path ${target}`);
+  }
+}
+
+for (const url of sitemapUrls) {
+  const pathname = new URL(url).pathname;
+  const file = pathname === '/' ? 'index.html' : `${pathname.replace(/^\//, '').replace(/\/$/, '')}/index.html`;
+  assert.ok(fs.existsSync(path.join(root, file)), `sitemap URL ${url} must map to ${file}`);
+}
+
 const home = read('home/index.html');
 assert.match(home, /meta http-equiv="refresh" content="0; url=https:\/\/jobpick20\.com\//i, 'legacy home must be redirect-only');
 assert.match(home, /window\.location\.replace\(destination\)/, 'legacy home must preserve query/hash in redirect');
