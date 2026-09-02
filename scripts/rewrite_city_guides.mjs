@@ -24,7 +24,7 @@ for (const [slug, article] of Object.entries(articles)) {
   const file = `${root}/${slug}/index.html`;
   let html = await readFile(file, 'utf8');
   html = html.replace(/<main id="main-content" tabindex="-1">[\s\S]*?<\/main>/, `<main id="main-content" tabindex="-1">${article}</main>`);
-  html = html.replace(/dateModified"\s*:\s*"2026-08-25"/g, 'dateModified":"2026-08-26"');
+  html = html.replace(/dateModified"\s*:\s*"2026-08-25"/g, 'dateModified":"2026-08-26T00:00:00+04:00"');
   html = html.replace(/"author": \{ "@type": "Person", "name": "Ahmed Abayzeed" \}/g, '"author":{"@type":"Organization","name":"Middle East Job Hub Editorial Team"}');
   while (html.includes(sourceCss + sourceCss)) html = html.replaceAll(sourceCss + sourceCss, sourceCss);
   if (!html.includes(sourceCss)) html = html.replace('</style>', sourceCss + '</style>');
