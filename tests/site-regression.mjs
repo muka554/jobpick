@@ -77,7 +77,8 @@ assert.match(tools, /id="secureEmployer"/, 'CV tools must collect an optional em
 assert.match(tools, /employerName:employerName\|\|undefined/, 'CV processing must receive the employer name');
 assert.match(tools, /function cvSections\(text\)/, 'CV PDF export must organize generated content into sections');
 assert.match(tools, /kind:'heading'/, 'CV PDF export must render professional section headings');
-assert.match(tools, /Rewrite the entire CV from scratch/, 'CV processing must request a complete rewrite rather than additive notes');
+assert.match(tools, /Rewrite the CV from scratch/, 'CV processing must request a complete rewrite rather than additive notes');
+assert.match(tools, /function assessCvReadiness\(text\)/, 'CV output must be checked for application readiness');
 assert.match(tools, /function cleanGeneratedCv\(text\)/, 'CV output must be normalized before preview and PDF export');
 assert.match(tools, /EDITOR NOTES/, 'CV output sanitizer must recognize editor notes');
 
