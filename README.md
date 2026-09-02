@@ -80,3 +80,7 @@ Account features (sign-in, saved searches, private CV tool processing) are backe
 ## Local development
 
 This is a static site (no build step required for HTML/CSS/JS). Serve the root directory with any static file server for local testing, and run the scripts in `scripts/` with Node when batch-updating guide or city content. Run `node tests/site-regression.mjs` to validate sitemap/page parity, canonical and social metadata, headers, redirects, and catalogue invariants.
+
+## Continuous integration
+
+GitHub Actions runs `.github/workflows/site-regression.yml` on pushes to `main` and on pull requests targeting `main`. The workflow runs the deterministic site regression suite, checks JavaScript syntax, validates JSON assets, and rejects whitespace errors. Dependabot is configured for the GitHub Actions used by the repository; there is no npm dependency manifest in this static site.
