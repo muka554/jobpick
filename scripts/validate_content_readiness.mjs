@@ -10,6 +10,7 @@ const cityRoot = path.join(root, 'cities');
 const guideRoot = path.join(root, 'guides');
 const reportPath = path.join(root, 'tests/content-readiness-link-validation.md');
 const today = '2026-08-26';
+const isoModified = '2026-08-26T00:00:00+04:00';
 const cityDirs = (await readdir(cityRoot)).sort();
 const guideDirs = (await readdir(guideRoot)).sort();
 const cityFiles = cityDirs.map((dir) => path.join(cityRoot, dir, 'index.html'));
@@ -58,7 +59,7 @@ for (const file of guideFiles) {
     ['visible linked byline', /By\s*<a href="\/authors\/jobpick-editorial-team\/">Middle East Job Hub Editorial Team<\/a>/i.test(html)],
     ['last-reviewed note', html.includes('Last reviewed: August 26, 2026')],
     ['structured author', html.includes('"name":"Middle East Job Hub Editorial Team"')],
-    ['structured modified date', html.includes('"dateModified":"2026-08-26"')]
+    ['structured modified date', html.includes(`"dateModified":"${isoModified}"`)]
   ];
   for (const [label, pass] of required) if (!pass) internalFailures.push({ from: `guides/${slug}/index.html`, href: `[metadata] ${label}`, expected: 'required framework item' });
   for (const href of links.filter((value) => !isExternal(value) && !value.startsWith('#') && !/^(mailto:|tel:|javascript:|data:)/i.test(value))) {
@@ -73,8 +74,8 @@ const crawlSignals = [
   ['Robots allows crawling', /^User-agent:\s*\*\s*\nAllow:\s*\//mi.test(robots)],
   ['Robots advertises sitemap', /Sitemap:\s*https:\/\/jobpick20\.com\/sitemap\.xml/i.test(robots)],
   ['Author profile in sitemap', sitemap.includes('https://jobpick20.com/authors/jobpick-editorial-team/')],
-  ['All revised city URLs carry 2026-08-26 lastmod', cityDirs.every((slug) => new RegExp(`<loc>https://jobpick20\\.com/cities/${slug}/<\\/loc>\\s*<lastmod>2026-08-26<\\/lastmod>`).test(sitemap))],
-  ['All guide URLs carry 2026-08-26 lastmod', guideDirs.every((slug) => new RegExp(`<loc>https://jobpick20\\.com/guides/${slug}/<\\/loc>\\s*<lastmod>2026-08-26<\\/lastmod>`).test(sitemap))]
+  ['All revised city URLs carry 2026-08-26 lastmod', cityDirs.every((slug) => new RegExp(`<loc>https://jobpick20\\.com/cities/${slug}/<\/loc>\\s*<lastmod>2026-08-26<\/lastmod>`).test(sitemap))],
+  ['All guide URLs carry 2026-08-26 lastmod', guideDirs.every((slug) => new RegExp(`<loc>https://jobpick20\\.com/guides/${slug}/<\/loc>\\s*<lastmod>2026-08-26<\/lastmod>`).test(sitemap))]
 ];
 
 const checkUrl = async (url) => {
