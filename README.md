@@ -8,7 +8,7 @@ The site does not host or scrape job listings itself. Instead, it builds direct 
 
 ## What the site does
 
-- **Search routing** — `assets/platforms.js` defines the platform catalogue and builds outbound search URLs per role, city, and country.
+- **Search routing** — the homepage catalogue in `index.html` defines the platform entries and builds outbound search URLs per role, city, and country.
 - **Editorial guides** — `guides/` contains independently written, source-cited articles (e.g. UAE job-search guide, UAE CV guide, recruitment scam warning signs, Gulf job platforms explained).
 - **City and country pages** — `cities/` covers city-specific job guidance (Dubai, Abu Dhabi, Riyadh, and others).
 - **Trust and compliance pages** — About, Privacy Policy, Terms of Use, Advertising Disclosure, Editorial Standards, Corrections log, and Contact, all linked from the global footer.
@@ -38,7 +38,7 @@ The site does not host or scrape job listings itself. Instead, it builds direct 
 ├── terms-of-use/               # Terms of use
 ├── contact/                    # Contact page
 ├── how-we-review-job-platforms/# Platform review methodology
-├── assets/                     # CSS, JS (platforms.js, site-localization.js, privacy-controls.js, etc.)
+├── assets/                     # CSS, JS (site-localization.js, privacy-controls.js, Supabase helpers, etc.)
 ├── supabase/                   # Supabase project config/migrations for account features
 ├── scripts/                    # Node content-maintenance scripts (see below)
 ├── tests/                      # Automated content/structure checks
@@ -79,4 +79,4 @@ Account features (sign-in, saved searches, private CV tool processing) are backe
 
 ## Local development
 
-This is a static site (no build step required for HTML/CSS/JS). Serve the root directory with any static file server for local testing, and run the scripts in `scripts/` with Node when batch-updating guide or city content.
+This is a static site (no build step required for HTML/CSS/JS). Serve the root directory with any static file server for local testing, and run the scripts in `scripts/` with Node when batch-updating guide or city content. Run `node tests/site-regression.mjs` to validate sitemap/page parity, canonical and social metadata, headers, redirects, and catalogue invariants.

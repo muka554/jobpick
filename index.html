@@ -851,7 +851,7 @@ function getGroups(country){
   const cfg=COUNTRY_INFO[country]||COUNTRY_INFO.uae;
   const countryPath=cfg.slug;
   const global=[
-    {code:'BYT',name:'Bayt.com',gate:'MENA · official country search',type:'direct',build:(q)=>`https://www.bayt.com/en/${countryPath}/jobs/?keyword=${q}`},
+    {code:'BYT',name:'Bayt.com',gate:'MENA · country search · city may not apply',type:'direct',build:(q)=>`https://www.bayt.com/en/${countryPath}/jobs/?keyword=${q}`},
     {code:'LKD',name:'LinkedIn Jobs',gate:'General · Global',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.linkedin.com/jobs/search/?keywords=${q}&location=${encodeURIComponent((cityName?cityName+', ':'')+cfg.name)}`},
     {code:'IND',name:'Indeed',gate:'General · Global',type:'direct',build:(q,slug,cityKey,cityName)=>`https://${cfg.domain}.indeed.com/jobs?q=${q}`+(cityName?`&l=${encodeURIComponent(cityName)}`:'')},
     {code:'GGL',name:'Google for Jobs',gate:'Aggregator',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.google.com/search?q=${q}+jobs+in+${encodeURIComponent(cityName||cfg.name)}&ibp=htl;jobs`},
@@ -869,19 +869,19 @@ function getGroups(country){
   ];
   const agencies=[
     {code:'MPG',name:'Michael Page',gate:'Professional · Exec · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.michaelpage.com/job-search?keyword=${q}&location=${encodeURIComponent(cityName||cfg.name)}`} ,
-    {code:'RHF',name:'Robert Half',gate:'Professional · Finance · Direct',type:'direct',build:()=>`https://www.roberthalf.com/us/en/jobs`} ,
+    {code:'RHF',name:'Robert Half',gate:'Professional · Finance · Portal',type:'portal',url:'https://www.roberthalf.com/us/en/jobs'} ,
     {code:'HYS',name:'Hays',gate:'Professional · Multi · Direct',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.hays.com/jobs?search=${q}&location=${encodeURIComponent(cityName||cfg.name)}`} ,
-    {code:'CHH',name:'Charterhouse ME',gate:'Professional · Multi · Direct',type:'direct',build:()=>`https://www.charterhouseme.ae/jobs`} ,
+    {code:'CHH',name:'Charterhouse ME',gate:'Professional · Multi · Portal',type:'portal',url:'https://www.charterhouseme.ae/jobs'} ,
   ];
   let local;
   if(country==='ksa') local={title:'Classifieds',key:'classifieds',items:[{code:'HRJ',name:'Haraj (حراج)',gate:'Classifieds',type:'direct',build:(q,slug,cityKey,cityName)=>`https://haraj.com.sa/en/search/${q}%20${encodeURIComponent('وظائف')}/${cityName?'?city='+encodeURIComponent(cityName):''}`}]};
   else if(country==='uae') local={title:'Classifieds',key:'classifieds',items:[{code:'DBZ',name:'Dubizzle Jobs',gate:'Classifieds',type:'direct',build:(q,slug,cityKey,cityName)=>`https://dubai.dubizzle.com/jobs/search/?keywords=${q}${cityName?'&locations='+encodeURIComponent(cityName):''}`}]};
   else if(country==='egypt') local={title:'Classifieds',key:'classifieds',items:[{code:'DBZ',name:'Dubizzle Egypt Jobs',gate:'Egypt classifieds',type:'direct',build:(q,slug,cityKey,cityName)=>`https://www.dubizzle.com.eg/en/jobs/${cityName?'?locations='+encodeURIComponent(cityName)+'&':''}keywords=${q}`}]};
   else if(country==='kuwait') local={title:'Classifieds',key:'classifieds',items:[{code:'1KW',name:'1 Kuwait Jobs',gate:'Kuwait job board',type:'portal',url:'https://1kuwaitjobs.com/'}]};
-  else if(country==='oman') local={title:'Classifieds',key:'classifieds',items:[{code:'OMJ-C',name:'Oman Jobs',gate:'Oman job board · Direct',type:'direct',build:(q)=>`https://omanjobs.om/?s=${q}`} ]};
+  else if(country==='oman') local=null;
   else if(country==='bahrain') local={title:'Public job-seeker services',key:'govNational',items:[{code:'BHR',name:'Bahrain Government Jobseeker Registration',gate:'Government service · eligibility applies',type:'portal',url:'https://services.bahrain.bh/wps/portal/en/BSP/GSX-UI-EServiceDetails?esID=2274'}]};
   else if(country==='jordan') local={title:'Classifieds',key:'classifieds',items:[{code:'JTN',name:'Jordan Tanqeeb',gate:'Jordan job board',type:'portal',url:'https://jordan.tanqeeb.com/'}]};
-  else local={title:'Classifieds',key:'classifieds',items:[{code:'QTL-C',name:'Qatar Living Jobs',gate:'Qatar classifieds',type:'portal',url:'https://www.qatarliving.com/jobs'}]};
+  else local=null;
   let national;
   if(country==='ksa') national={title:'Saudi National Platforms',key:'govNational',items:[{code:'TQT',name:'Taqat',gate:'Saudi Nationals · login req.',type:'portal',url:'https://www.taqat.sa/en/web/guest/individual'},{code:'JDR',name:'Jadarat',gate:'Saudi Nationals · login req.',type:'portal',url:'https://jadarat.sa/'}]};
   else if(country==='uae') national={title:'Government & Emiratisation',key:'govNational',items:[{code:'NFS',name:'Nafis',gate:'UAE Nationals · login req.',type:'portal',url:'https://nafis.gov.ae/en/'},{code:'UAE',name:'U.AE — Job Portals Guide',gate:'Government guidance',type:'portal',url:'https://u.ae/en/information-and-services/jobs'}]};
@@ -891,7 +891,7 @@ function getGroups(country){
   else if(country==='bahrain') national={title:'Bahrain Public Platforms',key:'govNational',items:[{code:'BHR',name:'Bahrain Government Portal',gate:'Government portal',type:'portal',url:'https://www.bahrain.bh/'},{code:'LMRA',name:'Bahrain Labour Market Regulatory Authority',gate:'Employment services',type:'portal',url:'https://www.lmra.gov.bh/'}]};
   else if(country==='jordan') national={title:'Jordan Public Platforms',key:'govNational',items:[{code:'JGP',name:'Jordan Government Portal',gate:'Government portal',type:'portal',url:'https://portal.jordan.gov.jo/'},{code:'MOL-JO',name:'Jordan Ministry of Labour',gate:'Government employment services',type:'portal',url:'https://mol.gov.jo/'}]};
   else national={title:'Qatar Public Platforms',key:'govNational',items:[{code:'QAR',name:'Qatar Airways Careers',gate:'Qatar employer careers',type:'portal',url:'https://careers.qatarairways.com/'},{code:'QGP',name:'Qatar Government Portal',gate:'Government employment guidance',type:'portal',url:'https://www.gov.qa/wps/portal/topics/employment'}]};
-  return [{title:'General & Global Boards',key:'generalGlobal',items:global},{title:'Gulf Specialist Boards',key:'gulfSpecialist',items:specialist},{title:'Recruitment Agencies',key:'recruitment',items:agencies},local,national];
+  return [{title:'General & Global Boards',key:'generalGlobal',items:global},{title:'Gulf Specialist Boards',key:'gulfSpecialist',items:specialist},{title:'Recruitment Agencies',key:'recruitment',items:agencies},local,national].filter(group=>group&&group.items&&group.items.length);
 }
 
 function renderBoard(){
