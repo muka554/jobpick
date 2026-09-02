@@ -43,9 +43,18 @@ assert.match(index, /else local=null/, 'Qatar duplicate local entry must be remo
 assert.match(index, /country search · city may not apply/, 'Bayt city limitation must be disclosed');
 assert.match(index, /\.filter\(group=>group&&group\.items&&group\.items\.length\)/, 'empty catalogue groups must be filtered');
 
+const privacy = read('assets/privacy-controls.js');
+assert.ok(!privacy.includes("el.innerHTML="), 'consent banner must not assemble unescaped HTML');
+assert.match(privacy, /textContent=t\.title/, 'consent title must use textContent');
+assert.match(privacy, /textContent=t\.body/, 'consent body must use textContent');
+for (const file of ['index.html', 'guides/uae-job-search-guide/index.html', 'assets/site-translations.json', 'assets/site-translations-source.json']) {
+  assert.ok(!read(file).includes('20+'), `${file} must not claim more than the verified 20 platforms`);
+}
+
 const headers = read('_headers');
 for (const marker of ['Content-Security-Policy:', 'X-Content-Type-Options:', 'Referrer-Policy:', 'Permissions-Policy:', 'X-Frame-Options:']) {
   assert.ok(headers.includes(marker), `_headers is missing ${marker}`);
 }
+assert.match(headers, /static\.cloudflareinsights\.com/, 'CSP fallback must allow Cloudflare Insights');
 
 console.log(`PASS: ${htmlFiles.length} HTML entry points, ${sitemapUrls.length} unique sitemap URLs, metadata/header/catalogue checks`);

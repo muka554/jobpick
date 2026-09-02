@@ -54,10 +54,18 @@
     removeBanner();
     var t=copy(),el=document.createElement('section');
     el.id='jobhub-consent-banner';el.setAttribute('role','dialog');el.setAttribute('aria-modal','false');el.setAttribute('aria-label',t.dialog);
-    var settingsButton=document.getElementById('jobhub-privacy-settings');    if(settingsButton)settingsButton.hidden=true;
-    el.innerHTML='<div><strong>'+t.title+'</strong><p>'+t.body+'</p><a href="/privacy-policy/#advertising-consent">'+t.policy+'</a></div><div class="jobhub-consent-actions"><button type="button" data-choice="essential">'+t.essential+'</button><button type="button" class="jobhub-accept" data-choice="accepted">'+t.accept+'</button></div>';
-    document.body.appendChild(el);
-    el.querySelectorAll('button[data-choice]').forEach(function(b){b.addEventListener('click',function(){decide(b.dataset.choice);});});
+    var settingsButton=document.getElementById('jobhub-privacy-settings');if(settingsButton)settingsButton.hidden=true;
+    var content=document.createElement('div');
+    var title=document.createElement('strong');title.textContent=t.title;
+    var body=document.createElement('p');body.textContent=t.body;
+    var policy=document.createElement('a');policy.href='/privacy-policy/#advertising-consent';policy.textContent=t.policy;
+    content.append(title,body,policy);
+    var actions=document.createElement('div');actions.className='jobhub-consent-actions';
+    [['essential',t.essential,''],['accepted',t.accept,'jobhub-accept']].forEach(function(choice){
+      var button=document.createElement('button');button.type='button';button.dataset.choice=choice[0];button.className=choice[2];button.textContent=choice[1];
+      button.addEventListener('click',function(){decide(button.dataset.choice);});actions.appendChild(button);
+    });
+    el.append(content,actions);document.body.appendChild(el);
   }
   function openCmpSettings(){
     window.googlefc=window.googlefc||{};
