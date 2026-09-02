@@ -64,8 +64,12 @@ assert.match(index, /\.filter\(group=>group&&group\.items&&group\.items\.length\
 const tools = read('tools/index.html');
 assert.match(tools, /rel="canonical" href="https:\/\/jobpick20\.com\/tools\/">/, 'CV tools canonical tag must be valid HTML');
 assert.ok(!tools.includes('twitter:image" content="https://jobpick20.com/assets/middle-east-job-hub-logo.png">>'), 'CV tools metadata must not contain an extra closing bracket');
-assert.match(tools, /function createCvPdf\(text\)/, 'CV tools must provide a PDF generator');
+assert.match(tools, /function createCvPdf\(text,role,employer\)/, 'CV tools must provide a PDF generator');
 assert.match(tools, /download='jobpick-generated-cv\.pdf'/, 'CV tools must download generated CVs as PDF');
+assert.match(tools, /id="secureEmployer"/, 'CV tools must collect an optional employer name');
+assert.match(tools, /employerName:employerName\|\|undefined/, 'CV processing must receive the employer name');
+assert.match(tools, /function cvSections\(text\)/, 'CV PDF export must organize generated content into sections');
+assert.match(tools, /kind:'heading'/, 'CV PDF export must render professional section headings');
 
 const privacy = read('assets/privacy-controls.js');
 assert.ok(!privacy.includes("el.innerHTML="), 'consent banner must not assemble unescaped HTML');
