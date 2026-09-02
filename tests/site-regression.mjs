@@ -79,6 +79,8 @@ assert.match(tools, /function cvSections\(text\)/, 'CV PDF export must organize 
 assert.match(tools, /kind:'heading'/, 'CV PDF export must render professional section headings');
 assert.match(tools, /Rewrite the CV from scratch/, 'CV processing must request a complete rewrite rather than additive notes');
 assert.match(tools, /function assessCvReadiness\(text\)/, 'CV output must be checked for application readiness');
+assert.match(tools, /id="loginCv"[^>]+provider=google/, 'CV tools must use the Google OAuth provider');
+assert.match(tools, /Continue with Google/, 'CV tools must expose the Google login label');
 assert.match(tools, /function cleanGeneratedCv\(text\)/, 'CV output must be normalized before preview and PDF export');
 assert.match(tools, /EDITOR NOTES/, 'CV output sanitizer must recognize editor notes');
 
