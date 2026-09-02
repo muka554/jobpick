@@ -61,6 +61,12 @@ assert.match(index, /else local=null/, 'Qatar duplicate local entry must be remo
 assert.match(index, /country search · city may not apply/, 'Bayt city limitation must be disclosed');
 assert.match(index, /\.filter\(group=>group&&group\.items&&group\.items\.length\)/, 'empty catalogue groups must be filtered');
 
+const tools = read('tools/index.html');
+assert.match(tools, /rel="canonical" href="https:\/\/jobpick20\.com\/tools\/">/, 'CV tools canonical tag must be valid HTML');
+assert.ok(!tools.includes('twitter:image" content="https://jobpick20.com/assets/middle-east-job-hub-logo.png">>'), 'CV tools metadata must not contain an extra closing bracket');
+assert.match(tools, /function createCvPdf\(text\)/, 'CV tools must provide a PDF generator');
+assert.match(tools, /download='jobpick-generated-cv\.pdf'/, 'CV tools must download generated CVs as PDF');
+
 const privacy = read('assets/privacy-controls.js');
 assert.ok(!privacy.includes("el.innerHTML="), 'consent banner must not assemble unescaped HTML');
 assert.match(privacy, /textContent=t\.title/, 'consent title must use textContent');
