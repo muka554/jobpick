@@ -1,0 +1,66 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+3 0 obj
+<< /Length 2206 >>
+stream
+0.10 0.12 0.15 rg BT /F2 22 Tf 54 750 Td (Alex Morgan) Tj ET
+0.10 0.12 0.15 rg BT /F1 13 Tf 54 731 Td (Senior Software Engineer) Tj ET
+0.10 0.12 0.15 rg BT /F1 10 Tf 54 715 Td (Tailored for Acme Digital) Tj ET
+0.10 0.12 0.15 rg BT /F1 10 Tf 54 699 Td (Dubai, UAE | alex.morgan@example.com | +971 50 123 4567) Tj ET
+0.10 0.12 0.15 rg BT /F1 10 Tf 54 683 Td (linkedin.com/in/alexmorgan) Tj ET
+0.10 0.42 0.44 rg BT /F2 11 Tf 54 667 Td (PROFESSIONAL SUMMARY) Tj ET
+0.10 0.42 0.44 RG 54 656 m 558 656 l S
+0.10 0.12 0.15 rg BT /F1 10 Tf 54 643 Td (Product-focused software engineer with 6 years of experience building reliable web) Tj ET
+0.10 0.12 0.15 rg BT /F1 10 Tf 54 629 Td (platforms and customer-facing tools.) Tj ET
+0.10 0.12 0.15 rg BT /F1 10 Tf 54 613 Td () Tj ET
+0.10 0.42 0.44 rg BT /F2 11 Tf 54 597 Td (EXPERIENCE) Tj ET
+0.10 0.42 0.44 RG 54 586 m 558 586 l S
+0.10 0.12 0.15 rg BT /F1 10 Tf 54 573 Td (Senior Software Engineer  Gulf Systems  2022Present) Tj ET
+0.10 0.42 0.44 rg 56 557 5 5 re f
+0.10 0.12 0.15 rg BT /F1 10 Tf 70 557 Td (Led delivery of a multi-tenant React and Node.js platform used by 40,000 monthly) Tj ET
+0.10 0.42 0.44 rg 56 543 5 5 re f
+0.10 0.12 0.15 rg BT /F1 10 Tf 70 543 Td (users.) Tj ET
+0.10 0.42 0.44 rg 56 527 5 5 re f
+0.10 0.12 0.15 rg BT /F1 10 Tf 70 527 Td (Reduced API latency by 35% through query profiling, indexing, and caching.) Tj ET
+0.10 0.12 0.15 rg BT /F1 10 Tf 54 511 Td (Software Engineer  Northstar Labs  20192022) Tj ET
+0.10 0.42 0.44 rg 56 495 5 5 re f
+0.10 0.12 0.15 rg BT /F1 10 Tf 70 495 Td (Built accessible workflows and automated test coverage for core product journeys.) Tj ET
+0.10 0.12 0.15 rg BT /F1 10 Tf 54 479 Td () Tj ET
+0.10 0.42 0.44 rg BT /F2 11 Tf 54 463 Td (SKILLS) Tj ET
+0.10 0.42 0.44 RG 54 452 m 558 452 l S
+0.10 0.12 0.15 rg BT /F1 10 Tf 54 439 Td (JavaScript, TypeScript, React, Node.js, PostgreSQL, AWS, CI/CD) Tj ET
+0.10 0.12 0.15 rg BT /F1 10 Tf 54 423 Td () Tj ET
+0.10 0.42 0.44 rg BT /F2 11 Tf 54 407 Td (EDUCATION) Tj ET
+0.10 0.42 0.44 RG 54 396 m 558 396 l S
+0.10 0.12 0.15 rg BT /F1 10 Tf 54 383 Td (BSc Computer Science  University of Manchester) Tj ET
+0.45 0.50 0.55 rg BT /F1 8 Tf 54 28 Td (JobPick tailored CV) Tj ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 5 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Type /Pages /Kids [4 0 R] /Count 1 >>
+endobj
+6 0 obj
+<< /Type /Catalog /Pages 5 0 R >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000079 00000 n 
+0000000154 00000 n 
+0000002411 00000 n 
+0000002547 00000 n 
+0000002604 00000 n 
+trailer
+<< /Size 7 /Root 6 0 R >>
+startxref
+2653
+%%EOF
