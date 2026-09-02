@@ -1,0 +1,19 @@
+Alex Morgan
+Dubai, UAE | alex.morgan@example.com | +971 50 123 4567
+linkedin.com/in/alexmorgan
+
+Professional Summary
+Product-focused software engineer with 6 years of experience building reliable web platforms and customer-facing tools.
+
+Experience
+Senior Software Engineer — Gulf Systems — 2022–Present
+- Led delivery of a multi-tenant React and Node.js platform used by 40,000 monthly users.
+- Reduced API latency by 35% through query profiling, indexing, and caching.
+Software Engineer — Northstar Labs — 2019–2022
+- Built accessible workflows and automated test coverage for core product journeys.
+
+Skills
+JavaScript, TypeScript, React, Node.js, PostgreSQL, AWS, CI/CD
+
+Education
+BSc Computer Science — University of Manchester

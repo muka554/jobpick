@@ -30,6 +30,9 @@ jobs:
       - name: Run deterministic site regression checks
         run: node tests/site-regression.mjs
 
+      - name: Verify CV PDF templates
+        run: node tests/cv-pdf-export.mjs
+
       - name: Check JavaScript syntax
         shell: bash
         run: |

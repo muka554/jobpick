@@ -64,8 +64,14 @@ assert.match(index, /\.filter\(group=>group&&group\.items&&group\.items\.length\
 
 const tools = read('tools/index.html');
 assert.match(tools, /rel="canonical" href="https:\/\/jobpick20\.com\/tools\/">/, 'CV tools canonical tag must be valid HTML');
+assert.match(tools, /id="cvTemplate"[\s\S]*?modern[\s\S]*?classic[\s\S]*?executive/, 'CV tools must expose all PDF templates');
+assert.match(tools, /function createCvPdf\(text,role,employer,template='modern'\)/, 'PDF export must accept the selected template');
+assert.equal((tools.match(/function trackCv\(/g) || []).length, 1, 'CV analytics helper must be defined once');
+for (const eventName of ['cv_generation_started', 'cv_generation_success', 'cv_generation_failure', 'cv_download_started', 'cv_download_success', 'cv_download_failure']) {
+  assert.match(tools, new RegExp(eventName), `CV analytics must track ${eventName}`);
+}
 assert.ok(!tools.includes('twitter:image" content="https://jobpick20.com/assets/middle-east-job-hub-logo.png">>'), 'CV tools metadata must not contain an extra closing bracket');
-assert.match(tools, /function createCvPdf\(text,role,employer\)/, 'CV tools must provide a PDF generator');
+assert.match(tools, /function createCvPdf\(text,role,employer,template='modern'\)/, 'CV tools must provide a PDF generator');
 assert.match(tools, /download='jobpick-generated-cv\.pdf'/, 'CV tools must download generated CVs as PDF');
 assert.match(tools, /id="secureEmployer"/, 'CV tools must collect an optional employer name');
 assert.match(tools, /employerName:employerName\|\|undefined/, 'CV processing must receive the employer name');
@@ -88,5 +94,6 @@ for (const marker of ['Content-Security-Policy:', 'X-Content-Type-Options:', 'Re
   assert.ok(headers.includes(marker), `_headers is missing ${marker}`);
 }
 assert.match(headers, /static\.cloudflareinsights\.com/, 'CSP fallback must allow Cloudflare Insights');
+assert.match(headers, /connect-src[^\n]*https:\/\/jobpickcv-5ouvegg7\.manus\.space/, 'CSP must allow the configured CV backend');
 
 console.log(`PASS: ${htmlFiles.length} HTML entry points, ${sitemapUrls.length} unique sitemap URLs, metadata/header/catalogue checks`);
