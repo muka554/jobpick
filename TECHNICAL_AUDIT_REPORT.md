@@ -338,3 +338,12 @@ A fresh Lighthouse run against the live CV tools page returned Performance **93*
 
 The changes are committed and pushed in `4e9f3f5` (`feat: harden cv export and analytics checks`). Local validation passed for site regression, PDF export, live unauthenticated/CORS integration, JavaScript syntax, JSON parsing, and whitespace. Authenticated upload/process/download/RLS success remains the only uncompleted integration path and requires the live CSP deployment fix first.
 
+
+## CV Regeneration Prompt Update — 2026-09-02
+
+The attached CV regeneration standard has been incorporated into the secure processing instruction. The generator now internally analyzes the vacancy and source CV, distinguishes highly relevant and transferable evidence, maps requirements to truthful source content, prioritizes supported ATS terminology, preserves legitimate metrics and dates, uses an evidence-based 3–5 line summary, organizes skills by value, omits unsupported certifications and qualifications, selects an appropriate one- or two-page length, and produces only the final CV rather than analysis, ATS scoring, recruiter commentary, or application-gap notes inside the downloadable document. It explicitly forbids invented employers, titles, dates, responsibilities, achievements, KPIs, technologies, certifications, education, languages, and qualifications.
+
+A client-side readiness gate now checks generated output for contact information, summary/profile, experience or education, and skills. If all core signals are present, the UI reports an application-ready CV; otherwise it reports the missing sections and keeps the output available for review rather than falsely claiming readiness. The readiness state is included in the consent-gated `cv_generation_success` analytics event without transmitting CV text or personal contact data.
+
+Validation after this update passed the site regression suite, all three PDF template exports, the live UI/CORS/unauthenticated integration suite, JavaScript syntax checks, and whitespace checks. The implementation is committed and pushed in `33fc429` (`feat: improve truthful cv job targeting`).
+
