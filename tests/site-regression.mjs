@@ -77,7 +77,7 @@ assert.match(tools, /id="secureEmployer"/, 'CV tools must collect an optional em
 assert.match(tools, /employerName:employerName\|\|undefined/, 'CV processing must receive the employer name');
 assert.match(tools, /Rewrite the CV from scratch/, 'CV processing must request a complete rewrite rather than additive notes');
 assert.match(tools, /function assessCvReadiness\(text\)/, 'CV output must be checked for application readiness');
-assert.match(tools, /id="loginCv"[^>]+provider=google/, 'CV tools must use the Google OAuth provider');
+assert.match(tools, /id="loginCv"[^>]+\/api\/auth\/google\/login/, 'CV tools must use the direct Google OAuth route');
 assert.match(tools, /Log in with Google/, 'CV tools must expose the Google login label');
 assert.match(tools, /function cleanGeneratedCv\(text\)/, 'CV output must be normalized before preview and secure download');
 assert.match(tools, /EDITOR NOTES/, 'CV output sanitizer must recognize editor notes');
