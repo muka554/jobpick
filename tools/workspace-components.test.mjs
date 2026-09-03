@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   escapeHtml,
   splitCvSections,
+  renderTemplateCards,
   renderTemplatePreview,
   renderComparisonView,
 } from './workspace-components.mjs';
@@ -15,6 +16,14 @@ test('splitCvSections preserves profile content and recognizes headings', () => 
   const sections = splitCvSections('Alex Morgan\n\nPROFESSIONAL SUMMARY\nProject coordinator\n\nSKILLS\nReporting');
   assert.deepEqual(sections.map((section) => section.heading), ['PROFILE', 'PROFESSIONAL SUMMARY', 'SKILLS']);
   assert.match(sections[0].lines.join('\n'), /Alex Morgan/);
+});
+
+test('production template cards render all comparison options and active state', () => {
+  const html = renderTemplateCards({ template: 'classic', role: 'Operations coordinator' });
+  assert.match(html, /Use Modern CV template/);
+  assert.match(html, /Use Classic CV template/);
+  assert.match(html, /Use Executive CV template/);
+  assert.match(html, /class="preview-card classic" aria-pressed="true"/);
 });
 
 test('ATS template preview renders headings and uses the ATS class', () => {
