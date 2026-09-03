@@ -65,23 +65,21 @@ assert.match(index, /\.filter\(group=>group&&group\.items&&group\.items\.length\
 const tools = read('tools/index.html');
 assert.match(tools, /rel="canonical" href="https:\/\/jobpick20\.com\/tools\/">/, 'CV tools canonical tag must be valid HTML');
 assert.match(tools, /id="cvTemplate"[\s\S]*?modern[\s\S]*?classic[\s\S]*?executive/, 'CV tools must expose all PDF templates');
-assert.match(tools, /function createCvPdf\(text,role,employer,template='modern'\)/, 'PDF export must accept the selected template');
 assert.equal((tools.match(/function trackCv\(/g) || []).length, 1, 'CV analytics helper must be defined once');
 for (const eventName of ['cv_generation_started', 'cv_generation_success', 'cv_generation_failure', 'cv_download_started', 'cv_download_success', 'cv_download_failure']) {
   assert.match(tools, new RegExp(eventName), `CV analytics must track ${eventName}`);
 }
 assert.ok(!tools.includes('twitter:image" content="https://jobpick20.com/assets/middle-east-job-hub-logo.png">>'), 'CV tools metadata must not contain an extra closing bracket');
-assert.match(tools, /function createCvPdf\(text,role,employer,template='modern'\)/, 'CV tools must provide a PDF generator');
-assert.match(tools, /download='jobpick-generated-cv\.pdf'/, 'CV tools must download generated CVs as PDF');
+assert.match(tools, /Download generated PDF/, 'CV tools must expose PDF-only download wording');
+assert.match(tools, /renderTemplateCards as renderProductionTemplateCards/, 'CV tools must import the tested production template renderer');
+assert.match(tools, /callCv\('download'/, 'CV tools must use the authenticated server download procedure');
 assert.match(tools, /id="secureEmployer"/, 'CV tools must collect an optional employer name');
 assert.match(tools, /employerName:employerName\|\|undefined/, 'CV processing must receive the employer name');
-assert.match(tools, /function cvSections\(text\)/, 'CV PDF export must organize generated content into sections');
-assert.match(tools, /kind:'heading'/, 'CV PDF export must render professional section headings');
 assert.match(tools, /Rewrite the CV from scratch/, 'CV processing must request a complete rewrite rather than additive notes');
 assert.match(tools, /function assessCvReadiness\(text\)/, 'CV output must be checked for application readiness');
 assert.match(tools, /id="loginCv"[^>]+provider=google/, 'CV tools must use the Google OAuth provider');
-assert.match(tools, /Continue with Google/, 'CV tools must expose the Google login label');
-assert.match(tools, /function cleanGeneratedCv\(text\)/, 'CV output must be normalized before preview and PDF export');
+assert.match(tools, /Log in with Google/, 'CV tools must expose the Google login label');
+assert.match(tools, /function cleanGeneratedCv\(text\)/, 'CV output must be normalized before preview and secure download');
 assert.match(tools, /EDITOR NOTES/, 'CV output sanitizer must recognize editor notes');
 
 const privacy = read('assets/privacy-controls.js');
@@ -97,6 +95,6 @@ for (const marker of ['Content-Security-Policy:', 'X-Content-Type-Options:', 'Re
   assert.ok(headers.includes(marker), `_headers is missing ${marker}`);
 }
 assert.match(headers, /static\.cloudflareinsights\.com/, 'CSP fallback must allow Cloudflare Insights');
-assert.match(headers, /connect-src[^\n]*https:\/\/jobpickcv-rej9ajct\.manus\.space/, 'CSP must allow the configured CV backend');
+assert.match(headers, /connect-src[^\n]*https:\/\/jobpickcv-5ouvegg7\.manus\.space/, 'CSP must allow the configured CV backend');
 
 console.log(`PASS: ${htmlFiles.length} HTML entry points, ${sitemapUrls.length} unique sitemap URLs, metadata/header/catalogue checks`);
