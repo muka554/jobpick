@@ -18,7 +18,7 @@ This package is a backend reference implementation for replacing the current Man
 6. Add this authorized JavaScript origin:
    - `https://jobpick20.com`
 7. Add this exact authorized redirect URI:
-   - `https://jobpickcv-5ouvegg7.manus.space/api/oauth/google/callback`
+   - `https://jobpickcv-rej9ajct.manus.space/api/oauth/google/callback`
 8. Copy the client ID into `GOOGLE_CLIENT_ID` and store the client secret only in the CV service's secret manager as `GOOGLE_CLIENT_SECRET`. Never commit either secret to this static repository; the client ID is not a secret but is still best supplied through environment configuration.
 9. If Google shows a publishing/verification warning, resolve the branding, privacy-policy, and scope requirements before production. The implementation uses basic identity scopes only.
 
@@ -56,7 +56,7 @@ The callback validates the OAuth state cookie and server-side state record, vali
 The static CV tools page now points to:
 
 ```text
-https://jobpickcv-5ouvegg7.manus.space/api/oauth/login?provider=google&returnTo=https%3A%2F%2Fjobpick20.com%2Ftools%2F
+https://jobpickcv-rej9ajct.manus.space/api/oauth/login?provider=google&returnTo=https%3A%2F%2Fjobpick20.com%2Ftools%2F
 ```
 
 The backend must accept `provider=google` and redirect to Google. The frontend label is **Continue with Google**. Once the callback returns, the existing page code consumes the session handoff and sends the session header to CV upload/process/list/download/remove endpoints.
@@ -64,7 +64,7 @@ The backend must accept `provider=google` and redirect to Google. The frontend l
 ## Deployment and security checklist
 
 - Configure `GOOGLE_CLIENT_SECRET`, `SESSION_SECRET`, and state/session stores in the CV backend secret manager.
-- Add `https://jobpickcv-5ouvegg7.manus.space` to the live site's `connect-src` CSP. The repository `_headers` file contains the intended value, but GitHub Pages does not apply that file; update the CDN/reverse proxy separately or proxy the API same-origin.
+- Add `https://jobpickcv-rej9ajct.manus.space` to the live site's `connect-src` CSP. The repository `_headers` file contains the intended value, but GitHub Pages does not apply that file; update the CDN/reverse proxy separately or proxy the API same-origin.
 - Configure CORS for `https://jobpick20.com`, credentials, `Content-Type`, and `X-JobPick-Session` only.
 - Use HTTPS in production and secure, `HttpOnly`, `SameSite=Lax` cookies.
 - Do not use wildcard CORS, arbitrary `returnTo` URLs, implicit OAuth tokens, client-side secrets, or Google access tokens for CV operations.

@@ -97,6 +97,6 @@ for (const marker of ['Content-Security-Policy:', 'X-Content-Type-Options:', 'Re
   assert.ok(headers.includes(marker), `_headers is missing ${marker}`);
 }
 assert.match(headers, /static\.cloudflareinsights\.com/, 'CSP fallback must allow Cloudflare Insights');
-assert.match(headers, /connect-src[^\n]*https:\/\/jobpickcv-5ouvegg7\.manus\.space/, 'CSP must allow the configured CV backend');
+assert.match(headers, /connect-src[^\n]*https:\/\/jobpickcv-rej9ajct\.manus\.space/, 'CSP must allow the configured CV backend');
 
 console.log(`PASS: ${htmlFiles.length} HTML entry points, ${sitemapUrls.length} unique sitemap URLs, metadata/header/catalogue checks`);
