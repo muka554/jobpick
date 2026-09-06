@@ -6,13 +6,12 @@
 <title>Private CV Tools — Middle East Job Hub</title>
 <meta name="description" content="Use a private CV readiness checker, upload a CV for secure AI-assisted drafting, and download generated results.">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<meta name="jobpick-api-base" content="https://jobpickcv-5ouvegg7.manus.space">
 <link rel="canonical" href="https://jobpick20.com/tools/">
-  <meta property="og:image" content="https://jobpick20.com/assets/middle-east-job-hub-logo.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Private CV Tools — Middle East Job Hub">
-  <meta name="twitter:description" content="Use a private CV readiness checker, upload a CV for secure AI-assisted drafting, and download generated results.">
-  <meta name="twitter:image" content="https://jobpick20.com/assets/middle-east-job-hub-logo.png">
+<meta property="og:image" content="https://jobpick20.com/assets/middle-east-job-hub-logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Private CV Tools — Middle East Job Hub">
+<meta name="twitter:description" content="Use a private CV readiness checker, upload a CV for secure AI-assisted drafting, and download generated results.">
+<meta name="twitter:image" content="https://jobpick20.com/assets/middle-east-job-hub-logo.png">
 <meta property="og:title" content="Private CV Tools — Middle East Job Hub">
 <meta property="og:description" content="Check, privately process, and download CV results securely.">
 <meta property="og:url" content="https://jobpick20.com/tools/">
@@ -20,93 +19,763 @@
 <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/assets/site-experience.css">
 <script src="/assets/privacy-controls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#090e13;--panel:#101820;--ink:#f0ede5;--muted:#a6b0bc;--teal:#2dd9c0;--amber:#ffb020;--line:#263442}*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg)}body{font-family:Inter,system-ui,sans-serif;color:var(--ink);min-height:100vh;padding:20px 16px 56px;background:radial-gradient(circle at 10% 5%,rgba(45,217,192,.13),transparent 35%),radial-gradient(circle at 90% 80%,rgba(255,176,32,.1),transparent 34%),var(--bg)}a{color:var(--amber)}a:focus-visible,button:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--amber);outline-offset:3px}.wrap{max-width:1040px;margin:auto}.nav{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:8px 0 16px}.brand{display:inline-flex;align-items:center;gap:9px;color:var(--teal);text-decoration:none;font-weight:800;letter-spacing:.02em}.brand img{width:30px;height:30px;object-fit:contain}.links{display:flex;gap:14px;flex-wrap:wrap}.links a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.links a:hover,.links a[aria-current=page]{color:var(--amber)}.hero{padding:58px 0 32px;max-width:850px}.eyebrow{color:var(--amber);font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.hero h1{font-size:clamp(38px,7vw,72px);line-height:1.02;letter-spacing:-.05em;margin:12px 0 18px}.hero p,.intro{color:var(--muted);line-height:1.7;font-size:17px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.panel{border:1px solid var(--line);background:linear-gradient(145deg,rgba(16,24,32,.97),rgba(10,15,20,.98));border-radius:14px;padding:26px}.panel h2{margin:0 0 10px;font-size:23px}.panel p{color:var(--muted);line-height:1.65}.label{display:block;color:var(--teal);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin:18px 0 8px}textarea,select{width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit;line-height:1.5}textarea{min-height:180px;resize:vertical}.button{display:inline-flex;align-items:center;gap:9px;border:0;border-radius:8px;background:var(--amber);color:#1b1403;font-weight:800;padding:12px 16px;cursor:pointer;margin-top:12px}.button[disabled]{opacity:.62;cursor:wait}.button.is-loading::before{content:"";width:14px;height:14px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:cvspin .7s linear infinite}@keyframes cvspin{to{transform:rotate(360deg)}}.button.secondary{background:transparent;color:var(--ink);border:1px solid #536171}.result{margin-top:16px;padding:16px;border-left:3px solid var(--teal);background:#0b1519;color:var(--muted);line-height:1.65;min-height:48px}.result strong{color:var(--ink)}.channels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.channel{border-top:2px solid var(--teal);padding-top:12px}.channel h3{margin:0 0 6px;color:var(--ink)}.channel p{font-size:13px;margin:0 0 10px}.channel a{font-weight:800;font-size:13px}.note{font-size:12px!important;color:#8795a3!important}.wide{grid-column:1/-1}.footer{border-top:1px solid var(--line);margin-top:34px;padding-top:18px;color:#8995a2;font-size:12px;line-height:1.65}.footer-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}@media(max-width:760px){.grid{grid-template-columns:1fr}.channels{grid-template-columns:1fr}.wide{grid-column:auto}}
-
-.template-preview{margin-top:16px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#0b1117}.template-preview h3{margin:0 0 10px;font-size:15px;color:var(--ink)}.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.preview-card{border:1px solid #40515f;border-radius:8px;background:#111b23;color:var(--ink);padding:10px;text-align:left;cursor:pointer;min-height:150px;transition:border-color .18s,transform .18s}.preview-card:hover,.preview-card:focus-visible{border-color:var(--teal);transform:translateY(-1px)}.preview-card[aria-pressed=true]{border:2px solid var(--amber);padding:9px}.preview-card.modern .mini-head{color:var(--teal)}.preview-card.classic{font-family:Georgia,serif}.preview-card.classic .mini-head{color:#8ca8d0;border-bottom:1px solid #8ca8d0}.preview-card.executive{background:#161513}.preview-card.executive .mini-head{color:var(--amber);letter-spacing:.08em}.template-preview.compare .preview-card{min-height:230px;padding:16px}.template-preview.compare .preview-card[aria-pressed=true]{padding:15px}.template-preview.compare .mini-line{height:7px;margin:8px 0}.mini-head{font-weight:800;font-size:13px;margin-bottom:8px}.mini-role{font-size:10px;color:var(--muted);margin-bottom:10px}.mini-line{height:5px;background:#50606c;border-radius:3px;margin:5px 0;width:92%}.mini-line.short{width:62%}.match-summary{margin-top:16px}.match-summary h3{margin:0 0 8px}.match-counts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.match-pill{padding:5px 8px;border-radius:999px;font-size:12px;font-weight:800;background:#183b38;color:#b9fff1}.match-pill.transferable{background:#3b2e12;color:#ffd98a}.match-pill.unmatched{background:#30242a;color:#ffc0c9}.match-row{padding:9px 0;border-top:1px solid var(--line);font-size:13px}.match-row strong{color:var(--ink)}.match-row small{display:block;color:var(--muted);margin-top:3px}.match-status{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800}.match-status.direct{color:var(--teal)}.match-status.transferable{color:var(--amber)}.match-status.unmatched{color:#ff9eaa}@media(max-width:760px){.preview-grid{grid-template-columns:1fr}}
-.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}.cv-workspace-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(280px,.92fr);gap:24px;align-items:start}.cv-input-stack,.cv-workspace-side{min-width:0}.cv-workspace-side{position:sticky;top:18px}.cv-workspace-side .result{margin-top:0}.cv-action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.cv-action-row .button{margin-top:0}.new-experience{background:rgba(255,255,255,.018)}@media(max-width:760px){.cv-workspace-grid{grid-template-columns:1fr}.cv-workspace-side{position:static}}
+:root{--bg:#090e13;--panel:#101820;--ink:#f0ede5;--muted:#a6b0bc;--teal:#2dd9c0;--amber:#ffb020;--line:#263442}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg)}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);min-height:100vh;padding:20px 16px 56px;background:radial-gradient(circle at 10% 5%,rgba(45,217,192,.13),transparent 35%),radial-gradient(circle at 90% 80%,rgba(255,176,32,.1),transparent 34%),var(--bg)}
+a{color:var(--amber)}
+a:focus-visible,button:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.wrap{max-width:1040px;margin:auto}
+.nav{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:8px 0 16px}
+.brand{display:inline-flex;align-items:center;gap:9px;color:var(--teal);text-decoration:none;font-weight:800;letter-spacing:.02em}
+.brand img{width:30px;height:30px;object-fit:contain}
+.links{display:flex;gap:14px;flex-wrap:wrap}
+.links a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.links a:hover,.links a[aria-current="page"]{color:var(--amber)}
+.hero{padding:58px 0 32px;max-width:850px}
+.eyebrow{color:var(--amber);font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.hero h1{font-size:clamp(38px,7vw,72px);line-height:1.02;letter-spacing:-.05em;margin:12px 0 18px}
+.hero p,.intro{color:var(--muted);line-height:1.7;font-size:17px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel{border:1px solid var(--line);background:linear-gradient(145deg,rgba(16,24,32,.97),rgba(10,15,20,.98));border-radius:14px;padding:26px}
+.panel h2{margin:0 0 10px;font-size:23px}
+.panel p{color:var(--muted);line-height:1.65}
+.label{display:block;color:var(--teal);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin:18px 0 8px}
+textarea,select,input[type="text"],input[type="file"],input[type="month"]{width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit;line-height:1.5}
+textarea{min-height:180px;resize:vertical}
+.button{display:inline-flex;align-items:center;gap:9px;border:0;border-radius:8px;background:var(--amber);color:#1b1403;font-weight:800;padding:12px 16px;cursor:pointer;margin-top:12px}
+.button:disabled{opacity:.62;cursor:wait}
+.button.is-loading::before{content:"";width:14px;height:14px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:cvspin .7s linear infinite}
+@keyframes cvspin{to{transform:rotate(360deg)}}
+.button.secondary{background:transparent;color:var(--ink);border:1px solid #536171}
+.result{margin-top:16px;padding:16px;border-left:3px solid var(--teal);background:#0b1519;color:var(--muted);line-height:1.65;min-height:48px}
+.result strong{color:var(--ink)}
+.channels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.channel{border-top:2px solid var(--teal);padding-top:12px}
+.channel h3{margin:0 0 6px;color:var(--ink)}
+.channel p{font-size:13px;margin:0 0 10px}
+.channel a{font-weight:800;font-size:13px}
+.note{font-size:12px!important;color:#8795a3!important}
+.wide{grid-column:1/-1}
+.footer{border-top:1px solid var(--line);margin-top:34px;padding-top:18px;color:#8995a2;font-size:12px;line-height:1.65}
+.footer-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.channels{grid-template-columns:1fr}.wide{grid-column:auto}}
+.template-preview{margin-top:16px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#0b1117}
+.template-preview h3{margin:0 0 10px;font-size:15px;color:var(--ink)}
+.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.preview-card{border:1px solid #40515f;border-radius:8px;background:#111b23;color:var(--ink);padding:10px;text-align:left;cursor:pointer;min-height:150px;transition:border-color .18s,transform .18s}
+.preview-card:hover,.preview-card:focus-visible{border-color:var(--teal);transform:translateY(-1px)}
+.preview-card[aria-pressed="true"]{border:2px solid var(--amber);padding:9px}
+.preview-card.modern .mini-head{color:var(--teal)}
+.preview-card.classic{font-family:Georgia,serif}
+.preview-card.classic .mini-head{color:#8ca8d0;border-bottom:1px solid #8ca8d0}
+.preview-card.executive{background:#161513}
+.preview-card.executive .mini-head{color:var(--amber);letter-spacing:.08em}
+.template-preview.compare .preview-card{min-height:230px;padding:16px}
+.template-preview.compare .preview-card[aria-pressed="true"]{padding:15px}
+.template-preview.compare .mini-line{height:7px;margin:8px 0}
+.mini-head{font-weight:800;font-size:13px;margin-bottom:8px}
+.mini-role{font-size:10px;color:var(--muted);margin-bottom:10px}
+.mini-line{height:5px;background:#50606c;border-radius:3px;margin:5px 0;width:92%}
+.mini-line.short{width:62%}
+.match-summary{margin-top:16px}
+.match-summary h3{margin:0 0 8px}
+.match-counts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.match-pill{padding:5px 8px;border-radius:999px;font-size:12px;font-weight:800;background:#183b38;color:#b9fff1}
+.match-pill.transferable{background:#3b2e12;color:#ffd98a}
+.match-pill.unmatched{background:#30242a;color:#ffc0c9}
+.match-row{padding:9px 0;border-top:1px solid var(--line);font-size:13px}
+.match-row strong{color:var(--ink)}
+.match-row small{display:block;color:var(--muted);margin-top:3px}
+.match-status{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+.match-status.direct{color:var(--teal)}
+.match-status.transferable{color:var(--amber)}
+.match-status.unmatched{color:#ff9eaa}
+@media(max-width:760px){.preview-grid{grid-template-columns:1fr}}
+.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.cv-workspace-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(280px,.92fr);gap:24px;align-items:start}
+.cv-input-stack,.cv-workspace-side{min-width:0}
+.cv-workspace-side{position:sticky;top:18px}
+.cv-workspace-side .result{margin-top:0}
+.cv-action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.cv-action-row .button{margin-top:0}
+.new-experience{background:rgba(255,255,255,.018)}
+@media(max-width:760px){.cv-workspace-grid{grid-template-columns:1fr}.cv-workspace-side{position:static}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Private CV Tools","url":"https://jobpick20.com/tools/","description":"Private CV readiness checking, AI prompt generation, and secure generated-document downloads for Middle East job seekers.","isPartOf":{"@type":"WebSite","name":"Middle East Job Hub","url":"https://jobpick20.com/"},"publisher":{"@type":"Organization","name":"Middle East Job Hub","url":"https://jobpick20.com/"}}</script>
 </head>
-<body><main class="wrap"><nav class="nav" aria-label="Site"><a class="brand" href="/"><img class="jobhub-brand-logo" src="/assets/middle-east-job-hub-logo-64.webp" width="30" height="30" alt="">MIDDLE EAST JOB HUB</a><div class="links"><a href="/">Home</a><a href="/jobs/">Jobs</a><a href="/employers/">For employers</a><a href="/tools/" aria-current="page">Tools</a><a href="/partners/">Partnerships</a><a href="/resources/">Resources</a><a href="/about/">About</a></div></nav>
-<header class="hero"><div class="eyebrow">Private career tools</div><h1>Prepare better. Hear about roles sooner.</h1><p>Check your CV locally, or sign in to upload it for private server-side processing. JobPick stores document metadata separately from file bytes, restricts records to your account, and provides a controlled download for generated results.</p></header>
-<section class="panel wide" aria-labelledby="secureCvTitle"><h2 id="secureCvTitle">Secure CV workspace</h2><p>Upload a PDF, DOCX, or TXT file up to 8 MB. AI editing preserves source facts and will not invent employers, dates, qualifications, metrics, or achievements. A signed-in account is required; the local checker below remains available even when you choose not to upload.</p><div class="cv-workspace-grid"><div class="cv-input-stack"><label class="label" for="cvFile">CV file</label><input id="cvFile" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" style="width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:11px;font:inherit"><label class="visually-hidden" for="secureRole">Target role</label><input id="secureRole" type="text" placeholder="Target role, e.g. Project coordinator" style="width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit"><label class="visually-hidden" for="secureEmployer">Employer name (optional)</label><input id="secureEmployer" type="text" placeholder="Employer name (optional), e.g. Acme Group" style="width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit"><label class="label" for="secureJobDescription">Job description (optional)</label><textarea id="secureJobDescription" placeholder="Paste the vacancy description to tailor the CV more precisely" style="width:100%;min-height:110px;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit"></textarea><fieldset class="new-experience" style="margin:18px 0 0;border:1px solid var(--line);border-radius:10px;padding:12px"><legend class="label" style="margin:0;padding:0 6px">Add new experience</legend><p class="note">Optional. Add only a real role you want included in the CV.</p><label class="label" for="newExpEmployer">New employer</label><input id="newExpEmployer" type="text" maxlength="255" placeholder="e.g. Acme Group" style="width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit"><label class="label" for="newExpRole">New role</label><input id="newExpRole" type="text" maxlength="255" placeholder="e.g. Operations Coordinator" style="width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label class="label" for="newExpStart">Start date</label><input id="newExpStart" type="month" required style="width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit"></div><div><label class="label" for="newExpEnd">End date</label><input id="newExpEnd" type="month" style="width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit"><select id="newExpEndStatus" aria-label="New experience end date status" style="width:100%;margin-top:6px;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:9px;font:inherit"><option value="date">Ended on selected date</option><option value="present">Current role</option></select></div></div><label class="label" for="newExpDetails">Responsibilities and achievements</label><textarea id="newExpDetails" maxlength="8000" placeholder="Describe what you actually did, tools used, and verified outcomes" style="width:100%;min-height:100px;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit"></textarea></fieldset><label class="label" for="cvTemplate">PDF template</label><select id="cvTemplate" style="width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit"><option value="modern">Modern — teal accents</option><option value="classic">Classic — traditional navy</option><option value="executive">Executive — charcoal and gold</option></select><label class="label" for="cvBulletLength">Experience bullet length</label><select id="cvBulletLength" aria-describedby="cvPreferencesHelp" style="width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit"><option value="concise">Concise — quick recruiter scan</option><option value="standard" selected>Standard — balanced detail</option><option value="detailed">Detailed — fuller context</option></select><label class="label" for="cvPageCount">Preferred CV length</label><select id="cvPageCount" aria-describedby="cvPreferencesHelp" style="width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit"><option value="1">1 page</option><option value="2" selected>2 pages</option></select><p id="cvPreferencesHelp" class="note">These guide layout only. Truthful evidence is never removed or invented to meet a preference.</p><div class="template-preview" id="cvTemplatePreview" role="region" aria-live="polite" aria-label="Live CV template preview"><h3>Live template preview</h3><div class="preview-grid"></div><button class="button secondary" id="compareTemplates" type="button" aria-expanded="false">Compare all templates side by side</button></div><div class="cv-action-row"><button class="button" id="uploadCv" type="button" aria-controls="secureCvResult">Upload privately</button><button class="button secondary" id="processCv" type="button" aria-controls="secureCvResult">Process selected CV</button><button class="button secondary" id="regenerateChanges" type="button" aria-controls="cvMatchSummary" style="display:none">Regenerate for unmatched requirements</button><button class="button secondary" id="previewCv" type="button" aria-controls="cvPreview">Preview selected CV</button><a class="button secondary" id="loginCv" href="https://jobpickcv-5ouvegg7.manus.space/api/auth/google/login?returnTo=https%3A%2F%2Fjobpick20.com%2Ftools%2F">Log in with Google</a></div></div><div class="cv-workspace-side"><div class="result" id="secureCvResult" role="status" aria-live="polite" aria-atomic="true">No private CV uploaded in this session.</div><button class="button secondary" id="refreshCvWorkspace" type="button">Refresh my CV workspace</button><div id="cvWorkspaceList" class="result" role="status" aria-live="polite" aria-atomic="true" style="margin-top:12px">Sign in to view saved CV documents.</div><div id="secureCvActions" style="display:flex;margin-top:12px;gap:10px;flex-wrap:wrap"><button class="button" id="downloadCv" type="button" disabled aria-describedby="secureCvResult">Download generated PDF</button><button class="button secondary" id="deleteCv" type="button" disabled aria-describedby="secureCvResult">Delete document</button></div><div id="cvPreview" class="result" role="region" aria-label="CV preview" style="display:none;margin-top:12px;max-height:420px;overflow:auto"></div><div id="cvMatchSummary" class="result match-summary" role="region" aria-live="polite" aria-atomic="false" aria-label="Requirement to experience match summary" style="display:none"></div></div></div><p class="note">Private processing uses the account-owned JobPick CV service over an authenticated connection. Do not upload passports, bank details, passwords, or unrelated sensitive documents.</p></section>
-<section class="grid" aria-label="Job seeker tools"><article class="panel"><h2>CV readiness checker</h2><p>Paste a text version of your CV to check for useful structure signals. This is a local checklist, not a hiring prediction or an automated employment decision.</p><label class="label" for="cvText">CV text</label><textarea id="cvText" placeholder="Paste your CV text here..."></textarea><button class="button" id="checkCv" type="button">Check my CV</button><div class="result" id="cvResult" aria-live="polite">Your result will appear here.</div></article>
-<article class="panel"><h2>AI editing prompt builder</h2><p>Generate a copy-ready prompt for the AI tool you already trust. JobPick does not send your CV to an AI provider from this page.</p><label class="label" for="targetRole">Target role</label><input id="targetRole" type="text" placeholder="e.g. Sales manager" style="width:100%;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:12px;font:inherit"><label class="label" for="targetCity">Target city</label><select id="targetCity"><option>Dubai</option><option>Riyadh</option><option>Abu Dhabi</option><option>Jeddah</option><option>Cairo</option><option>Doha</option><option>Kuwait City</option><option>Muscat</option><option>Manama</option><option>Amman</option></select><button class="button" id="buildPrompt" type="button">Build AI prompt</button><div class="result" id="promptResult" aria-live="polite">Your copy-ready prompt will appear here.</div></article>
+<body>
+<main class="wrap">
+<nav class="nav" aria-label="Site">
+<a class="brand" href="/"><img class="jobhub-brand-logo" src="/assets/middle-east-job-hub-logo-64.webp" width="30" height="30" alt="">MIDDLE EAST JOB HUB</a>
+<div class="links"><a href="/">Home</a><a href="/jobs/">Jobs</a><a href="/employers/">For employers</a><a href="/tools/" aria-current="page">Tools</a><a href="/partners/">Partnerships</a><a href="/resources/">Resources</a><a href="/about/">About</a></div>
+</nav>
+<header class="hero">
+<div class="eyebrow">Private career tools</div>
+<h1>Prepare better. Hear about roles sooner.</h1>
+<p>Check your CV locally, or sign in with Google to upload it for private, account-owned processing. JobPick stores document metadata separately, restricts records to your account with row-level security, and provides a controlled download for generated results.</p>
+</header>
+
+<section class="panel wide" aria-labelledby="secureCvTitle">
+<h2 id="secureCvTitle">Secure CV workspace</h2>
+<p>Upload a PDF, DOCX, or TXT file up to 8 MB. AI editing preserves source facts and will not invent employers, dates, qualifications, metrics, or achievements. A signed-in account is required; the local checker below remains available even when you choose not to upload.</p>
+
+<div class="cv-workspace-grid">
+<div class="cv-input-stack">
+<label class="label" for="cvFile">CV file</label>
+<input id="cvFile" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain">
+
+<label class="visually-hidden" for="secureRole">Target role</label>
+<input id="secureRole" type="text" placeholder="Target role, e.g. Project coordinator">
+
+<label class="visually-hidden" for="secureEmployer">Employer name (optional)</label>
+<input id="secureEmployer" type="text" placeholder="Employer name (optional), e.g. Acme Group">
+
+<label class="label" for="secureJobDescription">Job description (optional)</label>
+<textarea id="secureJobDescription" placeholder="Paste the vacancy description to tailor the CV more precisely"></textarea>
+
+<fieldset class="new-experience" style="margin:18px 0 0;border:1px solid var(--line);border-radius:10px;padding:12px">
+<legend class="label" style="margin:0;padding:0 6px">Add new experience</legend>
+<p class="note">Optional. Add only a real role you want included in the CV.</p>
+<label class="label" for="newExpEmployer">New employer</label>
+<input id="newExpEmployer" type="text" maxlength="255" placeholder="e.g. Acme Group">
+<label class="label" for="newExpRole">New role</label>
+<input id="newExpRole" type="text" maxlength="255" placeholder="e.g. Operations Coordinator">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div><label class="label" for="newExpStart">Start date</label><input id="newExpStart" type="month" required></div>
+<div><label class="label" for="newExpEnd">End date</label><input id="newExpEnd" type="month">
+<select id="newExpEndStatus" aria-label="New experience end date status" style="width:100%;margin-top:6px;border:1px solid #40515f;border-radius:8px;background:#0b1117;color:var(--ink);padding:9px;font:inherit">
+<option value="dated">Ended on selected date</option>
+<option value="present">Current role</option>
+</select></div>
+</div>
+<label class="label" for="newExpDetails">Responsibilities and achievements</label>
+<textarea id="newExpDetails" maxlength="8000" placeholder="Describe what you actually did, tools used, and verified outcomes"></textarea>
+</fieldset>
+
+<label class="label" for="cvTemplate">PDF template</label>
+<select id="cvTemplate">
+<option value="modern">Modern (teal accents)</option>
+<option value="classic">Classic (traditional navy)</option>
+<option value="executive">Executive (charcoal and gold)</option>
+</select>
+
+<label class="label" for="cvBulletLength">Experience bullet length</label>
+<select id="cvBulletLength" aria-describedby="cvPreferencesHelp">
+<option value="concise">Concise (quick recruiter scan)</option>
+<option value="standard" selected>Standard (balanced detail)</option>
+<option value="detailed">Detailed (fuller context)</option>
+</select>
+
+<label class="label" for="cvPageCount">Preferred CV length</label>
+<select id="cvPageCount" aria-describedby="cvPreferencesHelp">
+<option value="1">1 page</option>
+<option value="2" selected>2 pages</option>
+</select>
+<p id="cvPreferencesHelp" class="note">These guide layout only. Truthful evidence is never removed or invented to meet a preference.</p>
+
+<div class="template-preview" id="cvTemplatePreview" role="region" aria-live="polite" aria-label="Live CV template preview">
+<h3>Live template preview</h3>
+<div class="preview-grid"></div>
+</div>
+<button class="button secondary" id="compareTemplates" type="button" aria-expanded="false">Compare all templates side by side</button>
+
+<div class="cv-action-row">
+<button class="button" id="uploadCv" type="button" aria-controls="secureCvResult">Upload privately</button>
+<button class="button secondary" id="processCv" type="button" aria-controls="secureCvResult">Process selected CV</button>
+<button class="button secondary" id="regenerateChanges" type="button" aria-controls="cvMatchSummary" style="display:none">Regenerate for unmatched requirements</button>
+<button class="button secondary" id="previewCv" type="button" aria-controls="cvPreview">Preview selected CV</button>
+<button class="button secondary" id="loginCv" type="button">Sign in with Google</button>
+<button class="button secondary" id="logoutCv" type="button" style="display:none">Sign out</button>
+</div>
+</div>
+
+<div class="cv-workspace-side">
+<div class="result" id="secureCvResult" role="status" aria-live="polite" aria-atomic="true">No private CV uploaded in this session.</div>
+<button class="button secondary" id="refreshCvWorkspace" type="button">Refresh my CV workspace</button>
+<div id="cvWorkspaceList" class="result" role="status" aria-live="polite" aria-atomic="true" style="margin-top:12px">Sign in to view saved CV documents.</div>
+<div id="secureCvActions" style="display:flex;margin-top:12px;gap:10px;flex-wrap:wrap">
+<button class="button" id="downloadCv" type="button" disabled aria-describedby="secureCvResult">Download generated PDF</button>
+<button class="button secondary" id="deleteCv" type="button" disabled aria-describedby="secureCvResult">Delete document</button>
+</div>
+<div id="cvPreview" class="result" role="region" aria-label="CV preview" style="display:none;margin-top:12px;max-height:420px;overflow:auto"></div>
+<div id="cvMatchSummary" class="result match-summary" role="region" aria-live="polite" aria-atomic="false" aria-label="Requirement to experience match summary" style="display:none"></div>
+</div>
+</div>
+
+<p class="note">Private processing uses your own account-owned JobPick storage over an authenticated connection. Do not upload passports, bank details, passwords, or unrelated sensitive documents.</p>
 </section>
-<footer class="footer"><p>Middle East Job Hub provides practical CV tools and links to public job sources. A checklist score cannot predict hiring outcomes or hiring decisions.</p><div class="footer-links"><a href="/jobs/">Live jobs</a><a href="/employers/">For employers</a><a href="/advertising-disclosure/">Advertising disclosure</a><a href="/privacy-policy/">Privacy</a><a href="/contact/">Contact</a></div></footer></main>
+
+<section class="grid" aria-label="Job seeker tools">
+<article class="panel">
+<h2>CV readiness checker</h2>
+<p>Paste a text version of your CV to check for useful structure signals. This is a local checklist, not a hiring prediction or an automated employment decision.</p>
+<label class="label" for="cvText">CV text</label>
+<textarea id="cvText" placeholder="Paste your CV text here..."></textarea>
+<button class="button" id="checkCv" type="button">Check my CV</button>
+<div class="result" id="cvResult" aria-live="polite">Your result will appear here.</div>
+</article>
+<article class="panel">
+<h2>AI editing prompt builder</h2>
+<p>Generate a copy-ready prompt for the AI tool you already trust. JobPick does not send your CV to an AI provider from this page.</p>
+<label class="label" for="targetRole">Target role</label>
+<input id="targetRole" type="text" placeholder="e.g. Sales manager">
+<label class="label" for="targetCity">Target city</label>
+<select id="targetCity">
+<option>Dubai</option><option>Riyadh</option><option>Abu Dhabi</option><option>Jeddah</option><option>Cairo</option><option>Doha</option><option>Kuwait City</option><option>Muscat</option><option>Manama</option><option>Amman</option>
+</select>
+<button class="button" id="buildPrompt" type="button">Build AI prompt</button>
+<div class="result" id="promptResult" aria-live="polite">Your copy-ready prompt will appear here.</div>
+</article>
+</section>
+
+<footer class="footer">
+<p>Middle East Job Hub provides practical CV tools and links to public job sources. A checklist score cannot predict hiring outcomes or hiring decisions.</p>
+<div class="footer-links"><a href="/jobs/">Live jobs</a><a href="/employers/">For employers</a><a href="/advertising-disclosure/">Advertising disclosure</a><a href="/privacy-policy/">Privacy</a><a href="/contact/">Contact</a></div>
+</footer>
+</main>
+
 <script type="module">
-import { renderTemplateCards as renderProductionTemplateCards } from '/tools/workspace-components.mjs';
-const API_BASE = document.querySelector('meta[name="jobpick-api-base"]')?.content || 'https://jobpickcv-5ouvegg7.manus.space';
-const SESSION_KEY='jobpick-cv-session';
-try{const params=new URLSearchParams(window.location.hash.replace(/^#/,'').replace(/^\\?/ ,''));const handoff=params.get('manus_session');if(handoff){sessionStorage.setItem(SESSION_KEY,handoff);history.replaceState(null,document.title,window.location.pathname+window.location.search);}}catch{}
-function getSessionToken(){try{return sessionStorage.getItem(SESSION_KEY)||''}catch{return ''}}
-function canonicalCvMime(name){const lower=String(name||'').toLowerCase();return lower.endsWith('.pdf')?'application/pdf':lower.endsWith('.docx')?'application/vnd.openxmlformats-officedocument.wordprocessingml.document':lower.endsWith('.txt')?'text/plain':'application/octet-stream';}
+import { renderTemplateCards as renderProductionTemplateCards } from "/tools/workspace-components.mjs";
+
+const SUPABASE_URL = "https://rvitqbkgtgjharxqaxmv.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2aXRxYmtndGdqaGFyeHFheG12Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MzI3NDksImV4cCI6MjEwMzAwODc0OX0.ZFymY7cookYUUMUAMfVsKHgzgH8l4FYecyn_AgW8FJc";
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const BUCKET = "cv-uploads";
+
+let currentUser = null;
 let secureDocumentId = null;
-let generatedCvText = '';
+let secureStoragePath = null;
+let generatedCvText = "";
+let lastMatches = [];
+let regenerationChangeRequest = null;
+
+function canonicalCvMime(name){
+  const lower = String(name).toLowerCase();
+  if (lower.endsWith(".pdf")) return "application/pdf";
+  if (lower.endsWith(".docx")) return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+  if (lower.endsWith(".txt")) return "text/plain";
+  return "application/octet-stream";
+}
+
 function cvSections(text){
-  const sections=[];let current={title:'PROFILE',lines:[]};
-  const heading=/^(professional summary|summary|profile|objective|experience|work experience|employment history|education|academic background|skills|technical skills|core skills|certifications?|languages?|projects?|achievements?|volunteer experience|references?)\s*:?[\s]*$/i;
-  String(text||'').split(/\r?\n/).forEach(raw=>{const line=raw.trim();if(!line){if(current.lines.length)current.lines.push('');return}const m=line.match(heading);if(m){if(current.lines.length||current.title!=='PROFILE')sections.push(current);current={title:m[1].toUpperCase(),lines:[]};}else current.lines.push(line);});if(current.lines.length||!sections.length)sections.push(current);return sections;
+  const sections = [];
+  let current = { title: "PROFILE", lines: [] };
+  const heading = /^(professional summary|summary|profile|objective|experience|work experience|employment history|education|academic background|skills|technical skills|core skills|certifications?|languages?|projects?|achievements?|volunteer experience|references?)\s*:?\s*$/i;
+  String(text).split("\n").forEach(raw => {
+    const line = raw.trim();
+    if (!line){ if (current.lines.length) current.lines.push(""); return; }
+    const m = line.match(heading);
+    if (m){
+      if (current.lines.length || current.title !== "PROFILE") sections.push(current);
+      current = { title: m[1].toUpperCase(), lines: [] };
+    } else {
+      current.lines.push(line);
+    }
+  });
+  if (current.lines.length || !sections.length) sections.push(current);
+  return sections;
 }
- function createCvPdf(text,role,employer,template='modern'){
-  const styles={modern:{accent:'0.10 0.42 0.44',dark:'0.10 0.12 0.15',muted:'0.45 0.50 0.55'},classic:{accent:'0.08 0.20 0.38',dark:'0.08 0.10 0.14',muted:'0.35 0.39 0.45'},executive:{accent:'0.55 0.35 0.08',dark:'0.10 0.10 0.10',muted:'0.40 0.40 0.38'}};const style=styles[template]||styles.modern;const sections=cvSections(text);const pages=[];let page=[];let used=0;const push=(line,height=14)=>{if(used+height>690&&page.length){pages.push(page);page=[];used=0}page.push(line);used+=height};
-  const contactLines=[];const first=sections[0]?.lines||[];first.slice(0,3).forEach(x=>contactLines.push(x));
-  push({kind:'name',text:contactLines.shift()||'Tailored Curriculum Vitae'},30);push({kind:'subtitle',text:role||'Professional Profile'},20);if(employer)push({kind:'meta',text:'Tailored for '+employer},20);contactLines.forEach(x=>push({kind:'contact',text:x},14));
-  sections.forEach((section,i)=>{if(i===0&&section.title==='PROFILE')return;push({kind:'heading',text:section.title},24);section.lines.forEach(line=>{const bullet=/^[-•*]\s+/.test(line);push({kind:bullet?'bullet':'body',text:line.replace(/^[-•*]\s+/,'')},bullet?16:15);});});if(page.length)pages.push(page);
-  const esc=x=>String(x).normalize('NFKD').replace(/[^\x20-\x7E]/g,'').replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)');const wrap=(text,max)=>{const out=[];let line='';String(text).split(/\s+/).forEach(word=>{const next=line?line+' '+word:word;if(line&&next.length>max){out.push(line);line=word}else line=next});if(line)out.push(line);return out.length?out:['']};
-  const objects=[];const add=v=>{objects.push(v);return objects.length};const font=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>');const bold=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>');const pageIds=[],contentIds=[];
-  pages.forEach(items=>{let stream='';let y=750;items.forEach(item=>{const max=item.kind==='name'?48:86;const lines=wrap(item.text,max);lines.forEach((line,j)=>{let fontId=item.kind==='name'||item.kind==='heading'?bold:font;let size=item.kind==='name'?22:item.kind==='heading'?11:item.kind==='subtitle'?13:item.kind==='meta'?10:10;let color=item.kind==='heading'?style.accent:style.dark;let x=item.kind==='bullet'?70:54;if(item.kind==='bullet')stream+=`${style.accent} rg ${x-14} ${y} 5 5 re f\n`;stream+=`${color} rg BT /F${fontId===bold?'2':'1'} ${size} Tf ${x} ${y} Td (${esc(line)}) Tj ET\n`;y-=item.kind==='heading'?18:14;});if(item.kind==='heading'){stream+=`${style.accent} RG 54 ${y+7} m 558 ${y+7} l S\n`;y-=6}else y-=item.kind==='name'?5:2;});stream+=`${style.muted} rg BT /F1 8 Tf 54 28 Td (JobPick tailored CV) Tj ET\n`;const content=add(`<< /Length ${stream.length} >>\nstream\n${stream}endstream`);contentIds.push(content);pageIds.push(add(''))});const pagesId=add('');pageIds.forEach((id,i)=>objects[id-1]=`<< /Type /Page /Parent ${pagesId} 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 ${font} 0 R /F2 ${bold} 0 R >> >> /Contents ${contentIds[i]} 0 R >>`);objects[pagesId-1]=`<< /Type /Pages /Kids [${pageIds.map(x=>x+' 0 R').join(' ')}] /Count ${pageIds.length} >>`;const catalog=add(`<< /Type /Catalog /Pages ${pagesId} 0 R >>`);let pdf='%PDF-1.4\n';const offsets=[0];objects.forEach((o,i)=>{offsets.push(pdf.length);pdf+=`${i+1} 0 obj\n${o}\nendobj\n`});const xref=pdf.length;pdf+=`xref\n0 ${objects.length+1}\n0000000000 65535 f \n`;for(let i=1;i<offsets.length;i++)pdf+=String(offsets[i]).padStart(10,'0')+' 00000 n \n';pdf+=`trailer\n<< /Size ${objects.length+1} /Root ${catalog} 0 R >>\nstartxref\n${xref}\n%%EOF`;return new Blob([pdf],{type:'application/pdf'});
+
+function createCvPdf(text, role, employer, template = "modern"){
+  const styles = {
+    modern:    { accent: "0.10 0.42 0.44", dark: "0.10 0.12 0.15", muted: "0.45 0.50 0.55" },
+    classic:   { accent: "0.08 0.20 0.38", dark: "0.08 0.10 0.14", muted: "0.35 0.39 0.45" },
+    executive: { accent: "0.55 0.35 0.08", dark: "0.10 0.10 0.10", muted: "0.40 0.40 0.38" },
+  };
+  const style = styles[template] || styles.modern;
+  const sections = cvSections(text);
+  const pages = [];
+  let page = [];
+  let used = 0;
+  const push = (line, height = 14) => {
+    if (used + height > 690 && page.length){ pages.push(page); page = []; used = 0; }
+    page.push(line); used += height;
+  };
+  const contactLines = [];
+  const first = sections[0]?.lines;
+  if (first) first.slice(0, 3).forEach(x => contactLines.push(x));
+  if (contactLines.length && sections[0]) sections[0].lines.shift();
+  push({ kind: "name", text: "Tailored Curriculum Vitae" }, 30);
+  push({ kind: "subtitle", text: role || "Professional Profile" }, 20);
+  if (employer) push({ kind: "meta", text: `Tailored for ${employer}` }, 20);
+  contactLines.forEach(x => push({ kind: "contact", text: x }, 14));
+  sections.forEach((section, i) => {
+    if (i === 0 && section.title === "PROFILE" && !section.lines.length) return;
+    push({ kind: "heading", text: section.title }, 24);
+    section.lines.forEach(line => {
+      const bullet = /^[-•]\s*/.test(line);
+      push({ kind: bullet ? "bullet" : "body", text: line.replace(/^[-•]\s*/, "") }, bullet ? 16 : 15);
+    });
+  });
+  if (page.length) pages.push(page);
+
+  const esc = x => String(x).normalize("NFKD").replace(/[^\x20-\x7E]/g, "").replace(/\\/g, "").replace(/\(/g, "").replace(/\)/g, "");
+  const wrap = (text, max) => {
+    const out = [];
+    let line = "";
+    String(text).split(" ").forEach(word => {
+      const next = line ? `${line} ${word}` : word;
+      if (line && next.length > max){ out.push(line); line = word; } else { line = next; }
+    });
+    if (line) out.push(line);
+    return out.length ? out : [""];
+  };
+
+  const objects = [];
+  const add = v => { objects.push(v); return objects.length; };
+  const font = add(`<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>`);
+  const bold = add(`<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>`);
+  const pageIds = [], contentIds = [];
+
+  pages.forEach(items => {
+    let stream = "";
+    let y = 750;
+    items.forEach(item => {
+      const max = item.kind === "name" ? 48 : 86;
+      const lines = wrap(item.text, max);
+      lines.forEach(line => {
+        const fontId = (item.kind === "name" || item.kind === "heading") ? bold : font;
+        const size = item.kind === "name" ? 22 : item.kind === "heading" ? 11 : item.kind === "subtitle" ? 13 : item.kind === "meta" ? 10 : 10;
+        const color = item.kind === "heading" ? style.accent : style.dark;
+        let x = item.kind === "bullet" ? 70 : 54;
+        if (item.kind === "bullet"){ stream += `${style.accent} rg ${x-14} ${y-5} 5 5 re f\n`; }
+        stream += `${color} rg BT /F${fontId===bold?2:1} ${size} Tf ${x} ${y} Td (${esc(line)}) Tj ET\n`;
+        y -= item.kind === "heading" ? 18 : 14;
+      });
+      if (item.kind === "heading"){
+        stream += `${style.accent} RG 54 ${y+7} m 558 ${y+7} l S\n`;
+        y -= 6;
+      } else {
+        y -= item.kind === "name" ? 5 : 2;
+      }
+    });
+    stream += `${style.muted} rg BT /F1 8 Tf 54 28 Td (JobPick tailored CV) Tj ET`;
+    const content = add(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`);
+    contentIds.push(content);
+    pageIds.push(add(""));
+  });
+
+  const pagesId = add("");
+  pageIds.forEach((id, i) => {
+    objects[id - 1] = `<< /Type /Page /Parent ${pagesId} 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 ${font} 0 R /F2 ${bold} 0 R >> >> /Contents ${contentIds[i]} 0 R >>`;
+  });
+  objects[pagesId - 1] = `<< /Type /Pages /Kids [${pageIds.map(x => `${x} 0 R`).join(" ")}] /Count ${pageIds.length} >>`;
+  const catalog = add(`<< /Type /Catalog /Pages ${pagesId} 0 R >>`);
+
+  let pdf = "%PDF-1.4\n";
+  const offsets = [0];
+  objects.forEach((o, i) => { offsets.push(pdf.length); pdf += `${i+1} 0 obj\n${o}\nendobj\n`; });
+  const xref = pdf.length;
+  pdf += `xref\n0 ${objects.length+1}\n0000000000 65535 f \n`;
+  for (let i = 1; i < offsets.length; i++) pdf += `${String(offsets[i]).padStart(10,"0")} 00000 n \n`;
+  pdf += `trailer\n<< /Size ${objects.length+1} /Root ${catalog} 0 R >>\nstartxref\n${xref}\n%%EOF`;
+  return new Blob([pdf], { type: "application/pdf" });
 }
- function trackCv(eventName,params){try{if(typeof window.JobHubTrack==='function')window.JobHubTrack(eventName,params||{});}catch(e){}}
+
+function trackCv(eventName, params){
+  try { if (typeof window.JobHubTrack === "function") window.JobHubTrack(eventName, params); } catch {}
+}
+
 function cleanGeneratedCv(text){
-  let value=String(text||'').replace(/```(?:text|markdown)?/gi,'').replace(/```/g,'').trim();
-  const notes=value.search(/^###\s*EDITOR NOTES\b/im);
-  if(notes>=0)value=value.slice(0,notes).trim();
+  let value = String(text || "").replace(/```(text|markdown)?/gi, "").replace(/```/g, "").trim();
+  const notes = value.search(/EDITOR NOTES/im);
+  if (notes >= 0) value = value.slice(0, notes).trim();
   return value;
 }
+
 function assessCvReadiness(text){
-  const value=String(text||'');
-  const hasContact=/(?:@|\+?\d[\d ()-]{6,}|linkedin\.com|https?:\/\/)/i.test(value);
-  const hasSummary=/(?:professional summary|summary|profile|objective)/i.test(value);
-  const hasExperience=/(?:professional experience|work experience|experience|employment history)/i.test(value);
-  const hasSkills=/(?:core skills|technical skills|skills|tools|systems)/i.test(value);
-  const hasEducation=/(?:education|academic background|degree|bachelor|master)/i.test(value);
-  const missing=[];
-  if(!hasContact)missing.push('contact information');
-  if(!hasSummary)missing.push('professional summary');
-  if(!hasExperience&&!hasEducation)missing.push('experience or education');
-  if(!hasSkills)missing.push('skills');
-  return {ready:missing.length===0,missing};
+  const value = String(text || "");
+  const hasContact = /(@|\+?\d[\d\s-]{6,}|linkedin\.com|https?:\/\/)/i.test(value);
+  const hasSummary = /(professional summary|summary|profile|objective)/i.test(value);
+  const hasExperience = /(professional experience|work experience|experience|employment history)/i.test(value);
+  const hasSkills = /(core skills|technical skills|skills|tools|systems)/i.test(value);
+  const hasEducation = /(education|academic background|degree|bachelor|master)/i.test(value);
+  const missing = [];
+  if (!hasContact) missing.push("contact information");
+  if (!hasSummary) missing.push("professional summary");
+  if (!hasExperience && !hasEducation) missing.push("experience or education");
+  if (!hasSkills) missing.push("skills");
+  return { ready: missing.length === 0, missing };
 }
-const secureCvResult=document.getElementById('secureCvResult');
-const cvWorkspaceList=document.getElementById('cvWorkspaceList');
-function handleSessionExpired(){try{sessionStorage.removeItem(SESSION_KEY)}catch{}loginButton.style.display='inline-flex';setSecureMessage('<strong>Sign-in required.</strong><br>Your session expired or is unavailable. Sign in again; your selected file remains on this page and your template choice is preserved.');cvWorkspaceList.textContent='Sign in to view saved CV documents.';}
-async function callCv(path,input,method=path==='list'?'GET':'POST'){const token=getSessionToken();const headers={'content-type':'application/json'};if(token)headers['X-JobPick-Session']=token;const endpoint=`${API_BASE}/api/trpc/cv.${path}`;const url=method==='GET'?`${endpoint}?input=${encodeURIComponent(JSON.stringify({json:input}))}`:endpoint;const response=await fetch(url,{method,mode:'cors',credentials:'include',headers,body:method==='GET'?undefined:JSON.stringify({json:input})});let payload={};try{payload=await response.json()}catch{}const message=payload?.error?.json?.message||payload?.error?.message||'';if(!response.ok||payload?.error){const authFailure=response.status===401||/please login|unauthorized|session/i.test(message);if(authFailure)handleSessionExpired();const error=new Error(message||'The secure CV service is unavailable.');if(authFailure)error.authFailure=true;throw error;}return payload?.result?.data?.json ?? payload?.result?.data;}
-function setSecureMessage(text){secureCvResult.innerHTML=text;}
-function setBusy(button,busy,label){button.disabled=busy;button.classList.toggle('is-loading',busy);button.setAttribute('aria-busy',String(busy));if(busy){button.dataset.idleLabel=button.textContent;button.textContent=label;}else if(button.dataset.idleLabel){button.textContent=button.dataset.idleLabel;}}
-function showError(prefix,error){if(error?.authFailure)return;const message=String(error?.message||'Please try again.').replace(/</g,'&lt;');setSecureMessage('<strong>'+prefix+'</strong><br>'+message);}
-const uploadButton=document.getElementById('uploadCv'),processButton=document.getElementById('processCv'),previewButton=document.getElementById('previewCv'),loginButton=document.getElementById('loginCv'),refreshButton=document.getElementById('refreshCvWorkspace'),downloadButton=document.getElementById('downloadCv'),deleteButton=document.getElementById('deleteCv'),cvPreview=document.getElementById('cvPreview'),matchSummary=document.getElementById('cvMatchSummary'),templateSelect=document.getElementById('cvTemplate'),bulletLengthSelect=document.getElementById('cvBulletLength'),pageCountSelect=document.getElementById('cvPageCount'),templatePreview=document.getElementById('cvTemplatePreview');
-let lastMatches=[];let regenerationChangeRequest='';const compareButton=document.getElementById('compareTemplates'),regenerateChangesButton=document.getElementById('regenerateChanges');
-function buildNewExperience(){const employer=document.getElementById('newExpEmployer').value.trim(),role=document.getElementById('newExpRole').value.trim(),rawStartDate=document.getElementById('newExpStart').value,rawEndDate=document.getElementById('newExpEnd').value,details=document.getElementById('newExpDetails').value.trim(),endStatus=document.getElementById('newExpEndStatus').value;const normalizeMonth=value=>{const match=String(value||'').match(/^(\d{4})-(\d{1,2})$/);return match?`${match[1]}-${match[2].padStart(2,'0')}`:String(value||'')};const startDate=normalizeMonth(rawStartDate),endDate=normalizeMonth(rawEndDate);if(!employer&&!role&&!startDate&&!endDate&&!details)return undefined;if(!employer||!role||!startDate||!details||(endStatus==='date'&&!endDate)){throw new Error('Complete the new experience employer, role, dates, and details before regenerating.')}return {employer,role,startDate,endDate:endStatus==='present'?'present':endDate,details}}
 
-function escapeHtml(value){return String(value||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
-function renderTemplatePreview(template, text=''){const previewGrid=templatePreview.querySelector('.preview-grid');previewGrid.innerHTML=renderProductionTemplateCards({template,text,role:document.getElementById('secureRole').value.trim()||'Target role'});templatePreview.querySelectorAll('.preview-card').forEach(card=>card.addEventListener('click',()=>{templateSelect.value=card.classList[1];try{sessionStorage.setItem('jobpick-cv-template',templateSelect.value)}catch{}renderTemplatePreview(templateSelect.value,generatedCvText)}));}
-function renderMatchSummary(matches=[]){lastMatches=Array.isArray(matches)?matches:[];if(!lastMatches.length){regenerateChangesButton.style.display='none';matchSummary.style.display='block';matchSummary.innerHTML='<h3>Requirement-to-experience match</h3><p class=\"note\">No structured vacancy requirements were returned. Add a job description and regenerate to see direct and transferable evidence matches.</p>';return}const safe=matches.filter(m=>m&&typeof m.requirement==='string');const counts={direct:safe.filter(m=>m.status==='direct').length,transferable:safe.filter(m=>m.status==='transferable').length,unmatched:safe.filter(m=>m.status==='unmatched').length};matchSummary.style.display='block';matchSummary.innerHTML='<h3>Requirement-to-experience match</h3><p class="note">Review these matches before downloading. “Not evidenced” means the uploaded CV did not support that requirement.</p><div class="match-counts"><span class="match-pill">'+counts.direct+' direct</span><span class="match-pill transferable">'+counts.transferable+' transferable</span><span class="match-pill unmatched">'+counts.unmatched+' not evidenced</span></div>'+safe.map(m=>'<div class="match-row"><span class="match-status '+escapeHtml(m.status)+'">'+escapeHtml(m.status==='unmatched'?'Not evidenced':m.status+' match')+'</span><br><strong>'+escapeHtml(m.requirement)+'</strong>'+(m.evidence?'<small>Evidence: '+escapeHtml(m.evidence)+'</small>':'<small>No supporting evidence was found in the uploaded CV.</small>')+'</div>').join('')+(counts.unmatched?'<button class=\"button\" id=\"matchRegenerateInline\" type=\"button\">Regenerate for unmatched requirements</button>':'');regenerateChangesButton.style.display=counts.unmatched?'inline-flex':'none';const inlineButton=document.getElementById('matchRegenerateInline');if(inlineButton)inlineButton.addEventListener('click',()=>regenerateChangesButton.click())}
-renderTemplatePreview(templateSelect.value);
-templateSelect.addEventListener('change',()=>{try{sessionStorage.setItem('jobpick-cv-template',templateSelect.value)}catch{}renderTemplatePreview(templateSelect.value,generatedCvText)});
-compareButton.addEventListener('click',()=>{const expanded=templatePreview.classList.toggle('compare');compareButton.setAttribute('aria-expanded',String(expanded));compareButton.textContent=expanded?'Close side-by-side comparison':'Compare all templates side by side'});
+const secureCvResult = document.getElementById("secureCvResult");
+const cvWorkspaceList = document.getElementById("cvWorkspaceList");
+const loginButton = document.getElementById("loginCv");
+const logoutButton = document.getElementById("logoutCv");
 
-try{const savedTemplate=sessionStorage.getItem('jobpick-cv-template');if(savedTemplate&&['modern','classic','executive'].includes(savedTemplate))templateSelect.value=savedTemplate}catch{}loginButton.href=`${API_BASE}/api/auth/google/login?returnTo=${encodeURIComponent(window.location.origin+window.location.pathname)}`;async function verifySession(){if(!getSessionToken()){loginButton.style.display='inline-flex';return false}try{const rows=await callCv('list',{});loginButton.style.display='none';setSecureMessage('<strong>Signed in.</strong><br>Your private CV workspace is ready.');if(Array.isArray(rows)&&rows.length)cvWorkspaceList.innerHTML=rows.map(row=>'<div><strong>'+String(row.originalName).replace(/</g,'&lt;')+'</strong> · '+row.status+(row.generatedName?' · generated':'')+'</div>').join('');else cvWorkspaceList.textContent='No saved CV documents found.';return true}catch(error){try{sessionStorage.removeItem(SESSION_KEY)}catch{}loginButton.style.display='inline-flex';cvWorkspaceList.textContent='Sign in to view saved CV documents.';setSecureMessage('<strong>Sign-in required.</strong><br>Your session has expired or is unavailable. Sign in again to use private CV tools.');return false}}verifySession();
-previewButton.addEventListener('click',async()=>{const file=document.getElementById('cvFile').files[0];if(!file){setSecureMessage('<strong>Select a CV to preview.</strong><br>Choose a PDF, DOCX, or TXT file first.');return}setBusy(previewButton,true,'Opening preview…');try{const fileName=String(file.name||'').toLowerCase();cvPreview.style.display='block';if(file.type==='application/pdf'||fileName.endsWith('.pdf')){const url=URL.createObjectURL(file);cvPreview.innerHTML='<strong>Local PDF preview</strong><br><iframe title="Uploaded CV PDF preview" src="'+url+'" style="width:100%;height:360px;border:1px solid #40515f;margin-top:10px;background:#fff"></iframe>';setSecureMessage('<strong>Preview open.</strong><br>This PDF is previewed locally and has not been uploaded.');}else if(file.type==='text/plain'||fileName.endsWith('.txt')){const text=await file.text();cvPreview.innerHTML='<strong>Local text preview</strong><pre style="white-space:pre-wrap;font:inherit;margin:10px 0 0">'+text.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre>';setSecureMessage('<strong>Preview open.</strong><br>This text CV is previewed locally and has not been uploaded.');}else{cvPreview.innerHTML='<strong>DOCX selected</strong><br>'+String(file.name).replace(/</g,'&lt;')+' · '+Math.ceil(file.size/1024)+' KB<br><span class="note">DOCX content will be extracted securely after upload and shown in the generated preview.</span>';setSecureMessage('<strong>Preview ready.</strong><br>DOCX metadata is shown locally; content extraction occurs securely after upload.');}}catch(error){showError('Preview not available.',error)}finally{setBusy(previewButton,false,'Preview selected CV')}});
-uploadButton.addEventListener('click',async()=>{const file=document.getElementById('cvFile').files[0];if(!file){setSecureMessage('<strong>Select a PDF, DOCX, or TXT CV first.</strong><br>Choose a file before starting the secure upload.');return}if(file.size>8*1024*1024){setSecureMessage('<strong>This file exceeds the 8 MB limit.</strong><br>Choose a smaller document and try again.');return}setBusy(uploadButton,true,'Uploading…');try{setSecureMessage('<strong>Step 1 of 2: uploading privately…</strong><br>Your file is being sent over the authenticated connection.');const bytes=new Uint8Array(await file.arrayBuffer());let binary='';for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));const result=await callCv('upload',{fileName:file.name,mimeType:canonicalCvMime(file.name),contentBase64:btoa(binary)});secureDocumentId=result.id;document.getElementById('secureCvActions').style.display='flex';downloadButton.disabled=true;deleteButton.disabled=true;setSecureMessage('<strong>Upload complete.</strong><br>Your CV is stored privately as document '+secureDocumentId+'. Add the target role and employer, then process it for a tailored CV.');}catch(error){showError('Upload not completed.',error)}finally{setBusy(uploadButton,false,'Upload privately')}});
-processButton.addEventListener('click',async()=>{if(!secureDocumentId){setSecureMessage('<strong>Upload a CV first.</strong><br>The processing action becomes available after a private upload.');return}setBusy(processButton,true,'Regenerating CV…');trackCv('cv_generation_started',{template:document.getElementById('cvTemplate').value});try{setSecureMessage('<strong>Regenerating your complete CV…</strong><br>Rewriting the summary, skills, experience, and other sections for the selected role.');const targetRole=document.getElementById('secureRole').value.trim();const employerName=document.getElementById('secureEmployer').value.trim();const jobDescription=document.getElementById('secureJobDescription').value.trim();const roleContext=targetRole+(employerName?' at '+employerName:'');const newExperience=buildNewExperience();const instructions=regenerationChangeRequest||'You are an expert CV writer, ATS optimization specialist, recruiter, and hiring manager. Regenerate the complete CV for the target role using the source CV and vacancy description. First analyze the vacancy internally: identify the job title, core responsibilities, required and preferred skills, ATS keywords, qualifications, and recruiter priorities. Then analyze the source CV internally and classify evidence as highly relevant, transferable, or low relevance. Match each important requirement only to truthful evidence from the source CV. Rewrite the CV from scratch as a polished, ATS-friendly, application-ready document. Keep real employers, job titles, dates, education, certifications, languages, tools, responsibilities, and measurable achievements; preserve legitimate numbers. Rephrase and reorganize for relevance, use strong action verbs and concise achievement-focused bullets, and naturally include supported terminology without keyword stuffing. Never invent experience, employers, titles, dates, responsibilities, achievements, KPIs, certifications, technologies, education, languages, or qualifications. If a required item is missing or unclear, omit it rather than guessing. Use a targeted 3–5 line summary, a prioritized skills section with truthful categories, professional experience, education, certifications, and languages only when useful. Choose one page for early-career candidates and up to two pages for experienced candidates; do not remove important evidence just to force one page. Check spelling, grammar, dates, consistency, ATS readability, and recruiter scanability. The final output must contain only the finished CV, with no analysis, ATS score, recruiter review, application-gap commentary, markdown fences, placeholders, or section named EDITOR NOTES. Any missing requirements must be silently omitted from the CV and must not be fabricated. '+(jobDescription?'Vacancy description: '+jobDescription+'. ':'')+'Target role: '+(roleContext||'the target role')+'.';const result=await callCv('process',{documentId:secureDocumentId,targetRole:roleContext||undefined,employerName:employerName||undefined,jobDescription:jobDescription||undefined,instructions,bulletLength:bulletLengthSelect.value,pageCount:Number(pageCountSelect.value),newExperience});generatedCvText=cleanGeneratedCv(result.generatedText||'');renderMatchSummary(result.matches||[]);regenerationChangeRequest='';renderTemplatePreview(templateSelect.value,generatedCvText);if(!generatedCvText)throw new Error('The tailoring service returned an empty final CV.');cvPreview.style.display='block';const readiness=assessCvReadiness(generatedCvText);cvPreview.innerHTML='<strong>Final tailored CV preview</strong><pre style="white-space:pre-wrap;font:inherit;margin:10px 0 0">'+generatedCvText.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</pre>';trackCv('cv_generation_success',{template:document.getElementById('cvTemplate').value,ready_to_apply:readiness.ready?'yes':'review'});setSecureMessage(readiness.ready?'<strong>Complete application-ready CV ready.</strong><br>Review the final version before downloading the PDF.':'<strong>CV generated, but needs review before applying.</strong><br>Missing or unclear sections: '+readiness.missing.join(', ')+'.');document.getElementById('secureCvActions').style.display='flex';downloadButton.disabled=false;deleteButton.disabled=false;}catch(error){trackCv('cv_generation_failure',{template:document.getElementById('cvTemplate').value,error_type:'processing'});showError('CV regeneration not completed.',error)}finally{setBusy(processButton,false,'Regenerate complete CV')}});
-regenerateChangesButton.addEventListener('click',()=>{const unmatched=lastMatches.filter(m=>m&&m.status==='unmatched').map(m=>m.requirement).filter(Boolean);if(!unmatched.length){setSecureMessage('<strong>No unmatched requirements found.</strong>');return}regenerationChangeRequest='Revise the CV to address these unmatched vacancy requirements only when the uploaded CV or the supplied new experience provides truthful evidence: '+unmatched.join('; ')+'. Re-check every experience bullet and return the complete CV with the match summary updated.';processButton.click()});
-downloadButton.addEventListener('click',async()=>{if(!secureDocumentId){setSecureMessage('<strong>Select a generated CV first.</strong>');return}setBusy(downloadButton,true,'Preparing PDF…');trackCv('cv_download_started',{template:document.getElementById('cvTemplate').value});try{if(generatedCvText){const url=URL.createObjectURL(createCvPdf(generatedCvText,document.getElementById('secureRole').value.trim(),document.getElementById('secureEmployer').value.trim(),document.getElementById('cvTemplate').value));const link=document.createElement('a');link.href=url;link.download='jobpick-generated-cv.pdf';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);trackCv('cv_download_success',{template:document.getElementById('cvTemplate').value});setSecureMessage('<strong>PDF download ready.</strong><br>Your generated CV was downloaded as a PDF.')}else{setSecureMessage('<strong>Preparing your secure PDF download…</strong><br>Checking document ownership and readiness.');const result=await callCv('download',{documentId:secureDocumentId,format:'pdf'});trackCv('cv_download_success',{template:document.getElementById('cvTemplate').value});setSecureMessage('<strong>PDF download ready.</strong><br>Your generated CV download is starting now.');window.location.href=result.url}}catch(error){trackCv('cv_download_failure',{template:document.getElementById('cvTemplate').value,error_type:'download'});showError('PDF download not completed.',error)}finally{setBusy(downloadButton,false,'Download generated PDF')}});
-refreshButton.addEventListener('click',async()=>{setBusy(refreshButton,true,'Refreshing…');try{setSecureMessage('<strong>Refreshing your private workspace…</strong>');const rows=await callCv('list',{});cvWorkspaceList.innerHTML=rows.length?rows.map(row=>'<div><strong>'+String(row.originalName).replace(/</g,'&lt;')+'</strong> · '+row.status+(row.generatedName?' · generated':'')+'</div>').join(''):'No saved CV documents found.';setSecureMessage('<strong>Workspace refreshed.</strong><br>'+rows.length+' document'+(rows.length===1?'':'s')+' found.')}catch(error){cvWorkspaceList.innerHTML='<strong>Workspace unavailable.</strong><br>'+String(error?.message||'Please try again.').replace(/</g,'&lt;');showError('Workspace refresh failed.',error)}finally{setBusy(refreshButton,false,'Refresh my CV workspace')}});
-deleteButton.addEventListener('click',async()=>{if(!secureDocumentId){setSecureMessage('<strong>Select a CV document first.</strong>');return}setBusy(deleteButton,true,'Deleting…');try{setSecureMessage('<strong>Deleting securely…</strong><br>Removing this document from your private workspace.');await callCv('remove',{documentId:secureDocumentId});secureDocumentId=null;document.getElementById('secureCvActions').style.display='flex';downloadButton.disabled=true;deleteButton.disabled=true;cvPreview.style.display='none';cvPreview.innerHTML='';setSecureMessage('<strong>Deleted.</strong><br>The document was removed from your private workspace.');}catch(error){showError('Delete not completed.',error)}finally{setBusy(deleteButton,false,'Delete document')}});
-const cvText=document.getElementById('cvText'),cvResult=document.getElementById('cvResult');
-document.getElementById('checkCv').addEventListener('click',()=>{const t=cvText.value.trim(), lower=t.toLowerCase(), checks=[['Contact details',/(email|phone|linkedin|location)/.test(lower)],['Professional summary',/(summary|profile|objective)/.test(lower)],['Work experience',/(experience|employment|career)/.test(lower)],['Skills',/skills?/.test(lower)],['Education',/(education|degree|university|college)/.test(lower)],['Measurable evidence',/\b(\d+%|\$\s?\d+|increased|reduced|managed|delivered|achieved)\b/.test(lower)]];if(!t){cvResult.innerHTML='<strong>Paste your CV text first.</strong>';return}const hit=checks.filter(x=>x[1]).length, score=Math.round(hit/checks.length*100), missing=checks.filter(x=>!x[1]).map(x=>x[0]);cvResult.innerHTML='<strong>Checklist coverage: '+score+'%</strong><br>'+ (missing.length?'Consider adding: '+missing.join(', ')+'.':'The main structure signals were detected. Tailor the evidence to the vacancy and verify every claim.')+'<br><span class="note">This is a private, deterministic checklist—not an AI verdict or hiring score.</span>'});
-document.getElementById('buildPrompt').addEventListener('click',()=>{const role=document.getElementById('targetRole').value.trim()||'the target role',city=document.getElementById('targetCity').value;const prompt='Act as a careful CV editor. Tailor the CV below for '+role+' roles in '+city+'. Preserve factual accuracy, do not invent employers, dates, qualifications, metrics, visas, or achievements. Return: (1) a concise gap analysis, (2) suggested keyword themes from the vacancy, (3) rewritten summary, and (4) three evidence-based bullet improvements. Ask me to confirm any uncertain detail.\\n\\nCV:\\n[PASTE CV HERE]\\n\\nVacancy:\\n[PASTE VACANCY HERE]';document.getElementById('promptResult').innerHTML='<strong>Copy-ready prompt</strong><br><textarea readonly style="margin-top:10px;min-height:170px">'+prompt.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</textarea>'});
+function setSecureMessage(text){ secureCvResult.innerHTML = text; }
+
+function setBusy(button, busy, label){
+  button.disabled = busy;
+  button.classList.toggle("is-loading", busy);
+  button.setAttribute("aria-busy", String(busy));
+  if (busy){
+    if (!button.dataset.idleLabel) button.dataset.idleLabel = button.textContent;
+    button.textContent = label;
+  } else if (button.dataset.idleLabel){
+    button.textContent = button.dataset.idleLabel;
+  }
+}
+
+function showError(prefix, error){
+  const message = String(error?.message || "Please try again.").replace(/</g, "&lt;");
+  setSecureMessage(`<strong>${prefix}</strong><br>${message}`);
+}
+
+async function refreshAuthUi(){
+  const { data } = await sb.auth.getSession();
+  currentUser = data.session?.user || null;
+  if (currentUser){
+    loginButton.style.display = "none";
+    logoutButton.style.display = "inline-flex";
+  } else {
+    loginButton.style.display = "inline-flex";
+    logoutButton.style.display = "none";
+    cvWorkspaceList.textContent = "Sign in to view saved CV documents.";
+  }
+  return currentUser;
+}
+
+loginButton.addEventListener("click", async () => {
+  await sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin + window.location.pathname } });
+});
+
+logoutButton.addEventListener("click", async () => {
+  await sb.auth.signOut();
+  currentUser = null;
+  secureDocumentId = null;
+  secureStoragePath = null;
+  setSecureMessage("<strong>Signed out.</strong><br>Sign in again to use private CV tools.");
+  cvWorkspaceList.textContent = "Sign in to view saved CV documents.";
+  refreshAuthUi();
+});
+
+sb.auth.onAuthStateChange((_event, session) => {
+  currentUser = session?.user || null;
+  refreshAuthUi();
+  if (currentUser) refreshWorkspaceList();
+});
+
+const uploadButton = document.getElementById("uploadCv"),
+      processButton = document.getElementById("processCv"),
+      previewButton = document.getElementById("previewCv"),
+      refreshButton = document.getElementById("refreshCvWorkspace"),
+      downloadButton = document.getElementById("downloadCv"),
+      deleteButton = document.getElementById("deleteCv"),
+      cvPreview = document.getElementById("cvPreview"),
+      matchSummary = document.getElementById("cvMatchSummary"),
+      templateSelect = document.getElementById("cvTemplate"),
+      bulletLengthSelect = document.getElementById("cvBulletLength"),
+      pageCountSelect = document.getElementById("cvPageCount"),
+      templatePreview = document.getElementById("cvTemplatePreview"),
+      compareButton = document.getElementById("compareTemplates"),
+      regenerateChangesButton = document.getElementById("regenerateChanges");
+
+let lastMatchesArr = [];
+
+function buildNewExperience(){
+  const employer = document.getElementById("newExpEmployer").value.trim();
+  const role = document.getElementById("newExpRole").value.trim();
+  const rawStartDate = document.getElementById("newExpStart").value;
+  const rawEndDate = document.getElementById("newExpEnd").value;
+  const details = document.getElementById("newExpDetails").value.trim();
+  const endStatus = document.getElementById("newExpEndStatus").value;
+  const normalizeMonth = value => {
+    const match = String(value).match(/^(\d{4})-(\d{1,2})$/);
+    return match ? `${match[1]}-${match[2].padStart(2,"0")}` : String(value || "");
+  };
+  const startDate = normalizeMonth(rawStartDate), endDate = normalizeMonth(rawEndDate);
+  if (!employer && !role && !startDate && !endDate && !details) return undefined;
+  if (!employer || !role || !startDate || (!details && endStatus !== "present" && !endDate)){
+    throw new Error("Complete the new experience employer, role, dates, and details before regenerating.");
+  }
+  return { employer, role, startDate, endDate: endStatus === "present" ? "present" : endDate, details };
+}
+
+function escapeHtml(value){
+  return String(value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
+function renderTemplatePreview(template, text){
+  const previewGrid = templatePreview.querySelector(".preview-grid");
+  previewGrid.innerHTML = renderProductionTemplateCards(template, text, document.getElementById("secureRole").value.trim() || "Target role");
+  templatePreview.querySelectorAll(".preview-card").forEach(card => {
+    card.addEventListener("click", () => {
+      templateSelect.value = card.dataset.template || templateSelect.value;
+      try { sessionStorage.setItem("jobpick-cv-template", templateSelect.value); } catch {}
+      renderTemplatePreview(templateSelect.value, generatedCvText);
+    });
+  });
+}
+
+function renderMatchSummary(matches){
+  lastMatchesArr = Array.isArray(matches) ? matches : [];
+  if (!lastMatchesArr.length){
+    regenerateChangesButton.style.display = "none";
+    matchSummary.style.display = "block";
+    matchSummary.innerHTML = `<h3>Requirement-to-experience match</h3><p class="note">No structured vacancy requirements were returned. Add a job description and regenerate to see direct and transferable evidence matches.</p>`;
+    return;
+  }
+  const safe = lastMatchesArr.filter(m => m && typeof m.requirement === "string");
+  const counts = {
+    direct: safe.filter(m => m.status === "direct").length,
+    transferable: safe.filter(m => m.status === "transferable").length,
+    unmatched: safe.filter(m => m.status === "unmatched").length,
+  };
+  matchSummary.style.display = "block";
+  matchSummary.innerHTML = `<h3>Requirement-to-experience match</h3>
+<p class="note">Review these matches before downloading. "Not evidenced" means the uploaded CV did not support that requirement.</p>
+<div class="match-counts">
+<span class="match-pill">${counts.direct} direct</span>
+<span class="match-pill transferable">${counts.transferable} transferable</span>
+<span class="match-pill unmatched">${counts.unmatched} not evidenced</span>
+</div>
+${safe.map(m => `<div class="match-row"><span class="match-status ${escapeHtml(m.status)}">${escapeHtml(m.status === "unmatched" ? "Not evidenced" : m.status + " match")}</span><br><strong>${escapeHtml(m.requirement)}</strong>${m.evidence ? `<small>Evidence: ${escapeHtml(m.evidence)}</small>` : `<small>No supporting evidence was found in the uploaded CV.</small>`}</div>`).join("")}
+${counts.unmatched ? `<button class="button" id="matchRegenerateInline" type="button">Regenerate for unmatched requirements</button>` : ""}`;
+  regenerateChangesButton.style.display = counts.unmatched ? "inline-flex" : "none";
+  const inlineButton = document.getElementById("matchRegenerateInline");
+  if (inlineButton) inlineButton.addEventListener("click", () => regenerateChangesButton.click());
+}
+
+renderTemplatePreview(templateSelect.value, generatedCvText);
+
+templateSelect.addEventListener("change", () => {
+  try { sessionStorage.setItem("jobpick-cv-template", templateSelect.value); } catch {}
+  renderTemplatePreview(templateSelect.value, generatedCvText);
+});
+
+compareButton.addEventListener("click", () => {
+  const expanded = templatePreview.classList.toggle("compare");
+  compareButton.setAttribute("aria-expanded", String(expanded));
+  compareButton.textContent = expanded ? "Close side-by-side comparison" : "Compare all templates side by side";
+});
+
+try {
+  const savedTemplate = sessionStorage.getItem("jobpick-cv-template");
+  if (savedTemplate && ["modern","classic","executive"].includes(savedTemplate)) templateSelect.value = savedTemplate;
+} catch {}
+
+async function refreshWorkspaceList(){
+  if (!currentUser){ cvWorkspaceList.textContent = "Sign in to view saved CV documents."; return; }
+  const { data: rows, error } = await sb.from("cv_uploads")
+    .select("id, original_filename, storage_path, status, generated_text")
+    .eq("user_id", currentUser.id)
+    .order("created_at", { ascending: false });
+  if (error){
+    cvWorkspaceList.innerHTML = `<strong>Workspace unavailable.</strong><br>${escapeHtml(error.message || "Please try again.")}`;
+    return;
+  }
+  if (Array.isArray(rows) && rows.length){
+    cvWorkspaceList.innerHTML = rows.map(row => `<div><strong>${escapeHtml(row.original_filename).replace(/</g,"&lt;")}</strong> — ${row.status}${row.generated_text ? " (generated)" : ""}</div>`).join("");
+  } else {
+    cvWorkspaceList.textContent = "No saved CV documents found.";
+  }
+}
+
+previewButton.addEventListener("click", async () => {
+  const file = document.getElementById("cvFile").files[0];
+  if (!file){ setSecureMessage("<strong>Select a CV to preview.</strong><br>Choose a PDF, DOCX, or TXT file first."); return; }
+  setBusy(previewButton, true, "Opening preview");
+  try {
+    const fileName = String(file.name).toLowerCase();
+    cvPreview.style.display = "block";
+    if (file.type === "application/pdf" || fileName.endsWith(".pdf")){
+      const url = URL.createObjectURL(file);
+      cvPreview.innerHTML = `<strong>Local PDF preview</strong><br><iframe title="Uploaded CV PDF preview" src="${url}" style="width:100%;height:360px;border:1px solid #40515f;margin-top:10px;background:#fff"></iframe>`;
+      setSecureMessage("<strong>Preview open.</strong><br>This PDF is previewed locally and has not been uploaded.");
+    } else if (file.type === "text/plain" || fileName.endsWith(".txt")){
+      const text = await file.text();
+      cvPreview.innerHTML = `<strong>Local text preview</strong><br><pre style="white-space:pre-wrap;font:inherit;margin:10px 0 0">${escapeHtml(text)}</pre>`;
+      setSecureMessage("<strong>Preview open.</strong><br>This text CV is previewed locally and has not been uploaded.");
+    } else {
+      cvPreview.innerHTML = `<strong>DOCX selected</strong><br>${escapeHtml(file.name)} (${Math.ceil(file.size/1024)} KB)<br><span class="note">DOCX content is extracted securely after upload and shown in the generated preview.</span>`;
+      setSecureMessage("<strong>Preview ready.</strong><br>DOCX metadata is shown locally; content extraction occurs securely after upload.");
+    }
+  } catch (error){
+    showError("Preview not available.", error);
+  } finally {
+    setBusy(previewButton, false, "Preview selected CV");
+  }
+});
+
+uploadButton.addEventListener("click", async () => {
+  const file = document.getElementById("cvFile").files[0];
+  if (!file){ setSecureMessage("<strong>Select a PDF, DOCX, or TXT CV first.</strong><br>Choose a file before starting the secure upload."); return; }
+  if (file.size > 8*1024*1024){ setSecureMessage("<strong>This file exceeds the 8 MB limit.</strong><br>Choose a smaller document and try again."); return; }
+  const user = await refreshAuthUi();
+  if (!user){ setSecureMessage("<strong>Sign-in required.</strong><br>Sign in with Google, then upload your CV. Your selected file remains on this page."); return; }
+  setBusy(uploadButton, true, "Uploading");
+  try {
+    setSecureMessage("<strong>Step 1 of 2: uploading privately</strong><br>Your file is being sent over the authenticated connection.");
+    const safeName = file.name.replace(/[^a-zA-Z0-9_.-]/g, "_").slice(-120);
+    const path = `${user.id}/${Date.now()}_${safeName}`;
+    const { error: uploadError } = await sb.storage.from(BUCKET).upload(path, file, { contentType: canonicalCvMime(file.name) || file.type });
+    if (uploadError) throw new Error(uploadError.message || "Upload failed.");
+    const { data: row, error: insertError } = await sb.from("cv_uploads").insert({
+      user_id: user.id, storage_path: path, original_filename: file.name,
+      mime_type: canonicalCvMime(file.name) || file.type, size_bytes: file.size, status: "uploaded",
+    }).select().single();
+    if (insertError) throw new Error(insertError.message || "Could not save document metadata.");
+    secureDocumentId = row.id;
+    secureStoragePath = path;
+    document.getElementById("secureCvActions").style.display = "flex";
+    downloadButton.disabled = true;
+    deleteButton.disabled = false;
+    setSecureMessage(`<strong>Upload complete.</strong><br>Your CV is stored privately as document ${secureDocumentId}. Add the target role and employer, then process it for a tailored CV.`);
+    refreshWorkspaceList();
+  } catch (error){
+    showError("Upload not completed.", error);
+  } finally {
+    setBusy(uploadButton, false, "Upload privately");
+  }
+});
+
+processButton.addEventListener("click", async () => {
+  if (!secureDocumentId){ setSecureMessage("<strong>Upload a CV first.</strong><br>The processing action becomes available after a private upload."); return; }
+  setBusy(processButton, true, "Regenerating CV");
+  trackCv("cv_generation_started", { template: templateSelect.value });
+  try {
+    setSecureMessage("<strong>Regenerating your complete CV</strong><br>Rewriting the summary, skills, experience, and other sections for the selected role.");
+    const targetRole = document.getElementById("secureRole").value.trim();
+    const employerName = document.getElementById("secureEmployer").value.trim();
+    const jobDescription = document.getElementById("secureJobDescription").value.trim();
+    const roleContext = targetRole + (employerName ? ` at ${employerName}` : "");
+    const newExperience = buildNewExperience();
+    const instructions = regenerationChangeRequest || `You are an expert CV writer, ATS optimization specialist, recruiter, and hiring manager. Regenerate the complete CV for the target role using the source CV and vacancy description. Keep real employers, job titles, dates, education, certifications, languages, tools, responsibilities, and measurable achievements; preserve legitimate numbers. Never invent experience, employers, titles, dates, responsibilities, achievements, KPIs, certifications, technologies, education, languages, or qualifications. If a required item is missing or unclear, omit it rather than guessing. Target role: ${roleContext || "the target role"}.`;
+
+    const { data, error } = await sb.functions.invoke("cv-process", {
+      body: {
+        uploadId: secureDocumentId, targetRole: roleContext || targetRole, employerName, jobDescription,
+        instructions, bulletLength: bulletLengthSelect.value, pageCount: Number(pageCountSelect.value), newExperience,
+      },
+    });
+    if (error) throw new Error(error.message || "The tailoring service is unavailable.");
+    if (data?.error) throw new Error(data.error);
+
+    generatedCvText = cleanGeneratedCv(data.generatedText);
+    renderMatchSummary(data.matches);
+    regenerationChangeRequest = null;
+    renderTemplatePreview(templateSelect.value, generatedCvText);
+    if (!generatedCvText) throw new Error("The tailoring service returned an empty final CV.");
+
+    cvPreview.style.display = "block";
+    const readiness = assessCvReadiness(generatedCvText);
+    cvPreview.innerHTML = `<strong>Final tailored CV preview</strong><br><pre style="white-space:pre-wrap;font:inherit;margin:10px 0 0">${escapeHtml(generatedCvText)}</pre>`;
+    trackCv("cv_generation_success", { template: templateSelect.value, ready_to_apply: readiness.ready ? "yes" : "review" });
+    setSecureMessage(readiness.ready
+      ? "<strong>Complete application-ready CV ready.</strong><br>Review the final version before downloading the PDF."
+      : `<strong>CV generated, but needs review before applying.</strong><br>Missing or unclear sections: ${readiness.missing.join(", ")}.`);
+    document.getElementById("secureCvActions").style.display = "flex";
+    downloadButton.disabled = false;
+    deleteButton.disabled = false;
+  } catch (error){
+    trackCv("cv_generation_failure", { template: templateSelect.value, error_type: "processing" });
+    showError("CV regeneration not completed.", error);
+  } finally {
+    setBusy(processButton, false, "Regenerate complete CV");
+  }
+});
+
+regenerateChangesButton.addEventListener("click", () => {
+  const unmatched = lastMatchesArr.filter(m => m.status === "unmatched").map(m => m.requirement).filter(Boolean);
+  if (!unmatched.length){ setSecureMessage("<strong>No unmatched requirements found.</strong>"); return; }
+  regenerationChangeRequest = `Revise the CV to address these unmatched vacancy requirements only when the uploaded CV or the supplied new experience provides truthful evidence: ${unmatched.join(", ")}. Re-check every experience bullet and return the complete CV with the match summary updated.`;
+  processButton.click();
+});
+
+downloadButton.addEventListener("click", async () => {
+  if (!secureDocumentId){ setSecureMessage("<strong>Select a generated CV first.</strong>"); return; }
+  setBusy(downloadButton, true, "Preparing PDF");
+  trackCv("cv_download_started", { template: templateSelect.value });
+  try {
+    let text = generatedCvText;
+    if (!text){
+      const { data: row, error } = await sb.from("cv_uploads").select("generated_text").eq("id", secureDocumentId).single();
+      if (error || !row?.generated_text) throw new Error("No generated CV text is saved for this document yet.");
+      text = row.generated_text;
+    }
+    const blob = createCvPdf(text, document.getElementById("secureRole").value.trim(), document.getElementById("secureEmployer").value.trim(), templateSelect.value);
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url; link.download = "jobpick-generated-cv.pdf";
+    document.body.appendChild(link); link.click(); link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    trackCv("cv_download_success", { template: templateSelect.value });
+    setSecureMessage("<strong>PDF download ready.</strong><br>Your generated CV was downloaded as a PDF.");
+  } catch (error){
+    trackCv("cv_download_failure", { template: templateSelect.value, error_type: "download" });
+    showError("PDF download not completed.", error);
+  } finally {
+    setBusy(downloadButton, false, "Download generated PDF");
+  }
+});
+
+refreshButton.addEventListener("click", async () => {
+  setBusy(refreshButton, true, "Refreshing");
+  try {
+    setSecureMessage("<strong>Refreshing your private workspace</strong>");
+    await refreshWorkspaceList();
+    setSecureMessage("<strong>Workspace refreshed.</strong>");
+  } catch (error){
+    showError("Workspace refresh failed.", error);
+  } finally {
+    setBusy(refreshButton, false, "Refresh my CV workspace");
+  }
+});
+
+deleteButton.addEventListener("click", async () => {
+  if (!secureDocumentId){ setSecureMessage("<strong>Select a CV document first.</strong>"); return; }
+  setBusy(deleteButton, true, "Deleting");
+  try {
+    setSecureMessage("<strong>Deleting securely</strong><br>Removing this document from your private workspace.");
+    if (secureStoragePath) await sb.storage.from(BUCKET).remove([secureStoragePath]);
+    await sb.from("cv_uploads").delete().eq("id", secureDocumentId);
+    secureDocumentId = null; secureStoragePath = null;
+    document.getElementById("secureCvActions").style.display = "flex";
+    downloadButton.disabled = true; deleteButton.disabled = true;
+    cvPreview.style.display = "none"; cvPreview.innerHTML = "";
+    setSecureMessage("<strong>Deleted.</strong><br>The document was removed from your private workspace.");
+    refreshWorkspaceList();
+  } catch (error){
+    showError("Delete not completed.", error);
+  } finally {
+    setBusy(deleteButton, false, "Delete document");
+  }
+});
+
+(async () => {
+  await refreshAuthUi();
+  if (currentUser) refreshWorkspaceList();
+})();
+
+const cvText = document.getElementById("cvText"), cvResult = document.getElementById("cvResult");
+document.getElementById("checkCv").addEventListener("click", () => {
+  const t = cvText.value.trim();
+  const lower = t.toLowerCase();
+  const checks = [
+    ["Contact details", /(@|phone|linkedin|location)/.test(lower)],
+    ["Professional summary", /(summary|profile|objective)/.test(lower)],
+    ["Work experience", /(experience|employment|career)/.test(lower)],
+    ["Skills", /skills?/.test(lower)],
+    ["Education", /(education|degree|university|college)/.test(lower)],
+    ["Measurable evidence", /(%|increased|reduced|managed|delivered|achieved)/.test(lower)],
+  ];
+  if (!t){ cvResult.innerHTML = "<strong>Paste your CV text first.</strong>"; return; }
+  const hit = checks.filter(x => x[1]).length;
+  const score = Math.round((hit/checks.length)*100);
+  const missing = checks.filter(x => !x[1]).map(x => x[0]);
+  cvResult.innerHTML = `<strong>Checklist coverage score: ${score}%</strong><br>${missing.length ? `Consider adding: ${missing.join(", ")}.` : "The main structure signals were detected. Tailor the evidence to the vacancy and verify every claim."}<br><span class="note">This is a private, deterministic checklist—not an AI verdict or hiring score.</span>`;
+});
+
+document.getElementById("buildPrompt").addEventListener("click", () => {
+  const role = document.getElementById("targetRole").value.trim() || "the target role";
+  const city = document.getElementById("targetCity").value;
+  const prompt = `Act as a careful CV editor. Tailor the CV below for ${role} roles in ${city}. Preserve factual accuracy; do not invent employers, dates, qualifications, metrics, visas, or achievements. Return: 1) a concise gap analysis, 2) suggested keyword themes from the vacancy, 3) a rewritten summary, and 4) three evidence-based bullet improvements. Ask me to confirm any uncertain detail.\n\n--- PASTE CV HERE ---\n\n--- PASTE VACANCY HERE ---`;
+  document.getElementById("promptResult").innerHTML = `<strong>Copy-ready prompt</strong><br><textarea readonly style="margin-top:10px;min-height:170px">${escapeHtml(prompt)}</textarea>`;
+});
 </script>
-</body></html>
+</body>
+</html>
