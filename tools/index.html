@@ -301,11 +301,13 @@ function createCvPdf(text, role, employer, template = "modern"){
     for (let i = 0; i < takeCount; i++) contactLines.push(first[i]);
     sections[0].lines.splice(0, takeCount);
   }
-  const inferredRole = contactLines[1] || contactLines[0] || "";
-  push({ kind: "name", text: "Tailored Curriculum Vitae" }, 30);
-  push({ kind: "subtitle", text: role || inferredRole || "Professional Profile" }, 20);
+  const candidateName = contactLines[0] || "Curriculum Vitae";
+  const titleLine = contactLines[1] || "";
+  const remainingContact = contactLines.slice(2);
+  push({ kind: "name", text: candidateName }, 30);
+  push({ kind: "subtitle", text: role || titleLine || "Professional Profile" }, 20);
   if (employer) push({ kind: "meta", text: `Tailored for ${employer}` }, 20);
-  contactLines.forEach(x => push({ kind: "contact", text: x }, 14));
+  remainingContact.forEach(x => push({ kind: "contact", text: x }, 14));
   sections.forEach((section, i) => {
     if (i === 0 && section.title === "PROFILE" && !section.lines.length) return;
     push({ kind: "heading", text: section.title }, 24);
