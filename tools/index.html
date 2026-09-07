@@ -652,7 +652,16 @@ processButton.addEventListener("click", async () => {
         instructions, bulletLength: bulletLengthSelect.value, pageCount: Number(pageCountSelect.value), newExperience,
       },
     });
-    if (error) throw new Error(error.message || "The tailoring service is unavailable.");
+    if (error) {
+      let detail = error.message || "The tailoring service is unavailable.";
+      try {
+        if (error.context && typeof error.context.json === "function") {
+          const body = await error.context.json();
+          if (body?.error) detail = body.error;
+        }
+      } catch {}
+      throw new Error(detail);
+    }
     if (data?.error) throw new Error(data.error);
 
     generatedCvText = cleanGeneratedCv(data.generatedText);
