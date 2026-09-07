@@ -119,6 +119,18 @@ textarea{min-height:180px;resize:vertical}
 .ats-block h4{margin:0 0 6px;font-size:13px;color:var(--teal);text-transform:uppercase;letter-spacing:.08em}
 .ats-block p{margin:0;font-size:13px;line-height:1.6;color:var(--muted)}
 .ats-gaps{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--muted);line-height:1.6}
+.step-fieldset{border:1px solid var(--line);border-radius:12px;padding:16px;margin:0 0 20px}
+.step-fieldset:first-of-type{margin-top:0}
+.step-legend{display:flex;align-items:center;gap:10px;padding:0 6px;margin:0}
+.step-number{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--amber);color:#1b1403;font-weight:800;font-size:13px;flex-shrink:0}
+.step-title{font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.step-optional{font-size:11px;color:var(--muted);font-weight:600;text-transform:none;letter-spacing:0}
+.workflow-status{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.workflow-step{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:#1a2530;color:var(--muted);border:1px solid var(--line)}
+.workflow-step.active{background:var(--amber);color:#1b1403;border-color:var(--amber)}
+.workflow-step.done{background:#183b38;color:#b9fff1;border-color:#183b38}
+.dirty-warning{display:none;margin-top:10px;padding:10px 12px;border-radius:8px;background:#3b2e12;color:#ffd98a;font-size:12px;font-weight:700;line-height:1.5}
+.dirty-warning.show{display:block}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Private CV Tools","url":"https://jobpick20.com/tools/","description":"Private CV readiness checking, AI prompt generation, and secure generated-document downloads for Middle East job seekers.","isPartOf":{"@type":"WebSite","name":"Middle East Job Hub","url":"https://jobpick20.com/"},"publisher":{"@type":"Organization","name":"Middle East Job Hub","url":"https://jobpick20.com/"}}</script>
 </head>
@@ -136,25 +148,37 @@ textarea{min-height:180px;resize:vertical}
 
 <section class="panel wide" aria-labelledby="secureCvTitle">
 <h2 id="secureCvTitle">Secure CV workspace</h2>
-<p>Upload a PDF, DOCX, or TXT file up to 8 MB. AI editing preserves source facts and will not invent employers, dates, qualifications, metrics, or achievements. A signed-in account is required; the local checker below remains available even when you choose not to upload.</p>
+<p>Follow the three steps below: upload your CV, tell us the role you want it tailored for, then generate and download the PDF. A signed-in account is required; the local checker further down remains available even when you choose not to upload.</p>
 
 <div class="cv-workspace-grid">
 <div class="cv-input-stack">
-<label class="label" for="cvFile">CV file</label>
-<input id="cvFile" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain">
 
-<label class="visually-hidden" for="secureRole">Target role</label>
+<fieldset class="step-fieldset">
+<legend class="step-legend"><span class="step-number">1</span><span class="step-title">Upload your CV</span></legend>
+<label class="label" for="cvFile">CV file (PDF, DOCX, or TXT, up to 8 MB)</label>
+<input id="cvFile" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain">
+<div class="cv-action-row">
+<button class="button" id="uploadCv" type="button" aria-controls="secureCvResult">Upload privately</button>
+<button class="button secondary" id="previewCv" type="button" aria-controls="cvPreview">Preview selected file</button>
+<button class="button secondary" id="loginCv" type="button">Sign in with Google</button>
+<button class="button secondary" id="logoutCv" type="button" style="display:none">Sign out</button>
+</div>
+</fieldset>
+
+<fieldset class="step-fieldset">
+<legend class="step-legend"><span class="step-number">2</span><span class="step-title">Tell us the target role</span></legend>
+<label class="label" for="secureRole">Target role (recommended)</label>
 <input id="secureRole" type="text" placeholder="Target role, e.g. Project coordinator">
 
-<label class="visually-hidden" for="secureEmployer">Employer name (optional)</label>
+<label class="label" for="secureEmployer">Employer name <span class="step-optional">(optional)</span></label>
 <input id="secureEmployer" type="text" placeholder="Employer name (optional), e.g. Acme Group">
 
-<label class="label" for="secureJobDescription">Job description (optional)</label>
+<label class="label" for="secureJobDescription">Job description <span class="step-optional">(optional, improves keyword matching)</span></label>
 <textarea id="secureJobDescription" placeholder="Paste the vacancy description to tailor the CV more precisely"></textarea>
 
 <fieldset class="new-experience" style="margin:18px 0 0;border:1px solid var(--line);border-radius:10px;padding:12px">
-<legend class="label" style="margin:0;padding:0 6px">Add new experience</legend>
-<p class="note">Optional. Add only a real role you want included in the CV.</p>
+<legend class="label" style="margin:0;padding:0 6px">Add new experience <span class="step-optional">(optional)</span></legend>
+<p class="note">Only add a real role you want included in the CV. Fill in every field below or leave the whole section empty.</p>
 <label class="label" for="newExpEmployer">New employer</label>
 <input id="newExpEmployer" type="text" maxlength="255" placeholder="e.g. Acme Group">
 <label class="label" for="newExpRole">New role</label>
@@ -170,7 +194,10 @@ textarea{min-height:180px;resize:vertical}
 <label class="label" for="newExpDetails">Responsibilities and achievements</label>
 <textarea id="newExpDetails" maxlength="8000" placeholder="Describe what you actually did, tools used, and verified outcomes"></textarea>
 </fieldset>
+</fieldset>
 
+<fieldset class="step-fieldset">
+<legend class="step-legend"><span class="step-number">3</span><span class="step-title">Choose a design</span></legend>
 <label class="label" for="cvTemplate">PDF template</label>
 <select id="cvTemplate">
 <option value="modern">Modern (teal accents)</option>
@@ -200,25 +227,33 @@ textarea{min-height:180px;resize:vertical}
 <div class="preview-grid"></div>
 </div>
 <button class="button secondary" id="compareTemplates" type="button" aria-expanded="false">Compare all templates side by side</button>
+</fieldset>
 
+<fieldset class="step-fieldset" style="margin-bottom:0">
+<legend class="step-legend"><span class="step-number">4</span><span class="step-title">Generate your tailored CV</span></legend>
+<p class="note">This step rewrites your summary, skills, and experience for the role above. You must re-run this step any time you change the role, job description, template, or new experience before downloading.</p>
 <div class="cv-action-row">
-<button class="button" id="uploadCv" type="button" aria-controls="secureCvResult">Upload privately</button>
-<button class="button secondary" id="processCv" type="button" aria-controls="secureCvResult">Process selected CV</button>
+<button class="button secondary" id="processCv" type="button" aria-controls="secureCvResult">Generate tailored CV</button>
 <button class="button secondary" id="regenerateChanges" type="button" aria-controls="cvMatchSummary" style="display:none">Regenerate for unmatched requirements</button>
-<button class="button secondary" id="previewCv" type="button" aria-controls="cvPreview">Preview selected CV</button>
-<button class="button secondary" id="loginCv" type="button">Sign in with Google</button>
-<button class="button secondary" id="logoutCv" type="button" style="display:none">Sign out</button>
 </div>
+</fieldset>
+
 </div>
 
 <div class="cv-workspace-side">
+<div class="workflow-status" id="cvWorkflowStatus" role="status" aria-live="polite">
+<span class="workflow-step" data-step="upload">1. Upload</span>
+<span class="workflow-step" data-step="generate">2. Generate</span>
+<span class="workflow-step" data-step="download">3. Download</span>
+</div>
 <div class="result" id="secureCvResult" role="status" aria-live="polite" aria-atomic="true">No private CV uploaded in this session.</div>
 <button class="button secondary" id="refreshCvWorkspace" type="button">Refresh my CV workspace</button>
 <div id="cvWorkspaceList" class="result" role="status" aria-live="polite" aria-atomic="true" style="margin-top:12px">Sign in to view saved CV documents.</div>
 <div id="secureCvActions" style="display:flex;margin-top:12px;gap:10px;flex-wrap:wrap">
-<button class="button" id="downloadCv" type="button" disabled aria-describedby="secureCvResult">Download generated PDF</button>
+<button class="button" id="downloadCv" type="button" disabled aria-describedby="secureCvResult">Download PDF</button>
 <button class="button secondary" id="deleteCv" type="button" disabled aria-describedby="secureCvResult">Delete document</button>
 </div>
+<div id="cvDirtyWarning" class="dirty-warning" role="alert">Your target role, job description, template, or new experience changed since the last generation. Click "Generate tailored CV" again before downloading, or the PDF will still reflect the older details.</div>
 <div id="cvAtsInsights" class="result ats-insights" role="region" aria-live="polite" aria-label="ATS score and recruiter review" style="display:none"></div>
 <div id="cvPreview" class="result" role="region" aria-label="CV preview" style="display:none;margin-top:12px;max-height:420px;overflow:auto"></div>
 <div id="cvMatchSummary" class="result match-summary" role="region" aria-live="polite" aria-atomic="false" aria-label="Requirement to experience match summary" style="display:none"></div>
@@ -271,6 +306,7 @@ let secureStoragePath = null;
 let generatedCvText = "";
 let lastMatches = [];
 let regenerationChangeRequest = null;
+let lastGenerationSignature = null;
 
 function canonicalCvMime(name){
   const lower = String(name).toLowerCase();
@@ -469,6 +505,8 @@ const secureCvResult = document.getElementById("secureCvResult");
 const cvWorkspaceList = document.getElementById("cvWorkspaceList");
 const loginButton = document.getElementById("loginCv");
 const logoutButton = document.getElementById("logoutCv");
+const cvDirtyWarning = document.getElementById("cvDirtyWarning");
+const cvWorkflowStatus = document.getElementById("cvWorkflowStatus");
 
 function setSecureMessage(text){ secureCvResult.innerHTML = text; }
 
@@ -487,6 +525,43 @@ function setBusy(button, busy, label){
 function showError(prefix, error){
   const message = String(error?.message || "Please try again.").replace(/</g, "&lt;");
   setSecureMessage(`<strong>${prefix}</strong><br>${message}`);
+}
+
+function updateWorkflowStatus(stage){
+  cvWorkflowStatus.querySelectorAll(".workflow-step").forEach(el => {
+    el.classList.remove("active", "done");
+    const step = el.dataset.step;
+    if (stage === "upload" && step === "upload") el.classList.add("active");
+    if (stage === "generate"){
+      if (step === "upload") el.classList.add("done");
+      if (step === "generate") el.classList.add("active");
+    }
+    if (stage === "download"){
+      if (step === "upload" || step === "generate") el.classList.add("done");
+      if (step === "download") el.classList.add("active");
+    }
+  });
+}
+updateWorkflowStatus("upload");
+
+function currentInputSignature(){
+  let newExp;
+  try { newExp = buildNewExperience(); } catch { newExp = undefined; }
+  return JSON.stringify({
+    role: document.getElementById("secureRole").value.trim(),
+    employer: document.getElementById("secureEmployer").value.trim(),
+    jobDescription: document.getElementById("secureJobDescription").value.trim(),
+    template: templateSelect.value,
+    bulletLength: bulletLengthSelect.value,
+    pageCount: pageCountSelect.value,
+    newExp,
+  });
+}
+
+function checkDirtyState(){
+  if (!lastGenerationSignature){ cvDirtyWarning.classList.remove("show"); return; }
+  const nowSig = currentInputSignature();
+  cvDirtyWarning.classList.toggle("show", nowSig !== lastGenerationSignature);
 }
 
 async function refreshAuthUi(){
@@ -572,6 +647,7 @@ function renderTemplatePreview(template, text){
       templateSelect.value = card.dataset.template || templateSelect.value;
       try { sessionStorage.setItem("jobpick-cv-template", templateSelect.value); } catch {}
       renderTemplatePreview(templateSelect.value, generatedCvText);
+      checkDirtyState();
     });
   });
 }
@@ -625,9 +701,18 @@ ${counts.unmatched ? `<button class="button" id="matchRegenerateInline" type="bu
 
 renderTemplatePreview(templateSelect.value, generatedCvText);
 
+["secureRole", "secureEmployer", "secureJobDescription", "newExpEmployer", "newExpRole", "newExpStart", "newExpEnd", "newExpDetails"].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener("input", checkDirtyState);
+});
+document.getElementById("newExpEndStatus").addEventListener("change", checkDirtyState);
+bulletLengthSelect.addEventListener("change", checkDirtyState);
+pageCountSelect.addEventListener("change", checkDirtyState);
+
 templateSelect.addEventListener("change", () => {
   try { sessionStorage.setItem("jobpick-cv-template", templateSelect.value); } catch {}
   renderTemplatePreview(templateSelect.value, generatedCvText);
+  checkDirtyState();
 });
 
 compareButton.addEventListener("click", () => {
@@ -680,7 +765,7 @@ previewButton.addEventListener("click", async () => {
   } catch (error){
     showError("Preview not available.", error);
   } finally {
-    setBusy(previewButton, false, "Preview selected CV");
+    setBusy(previewButton, false, "Preview selected file");
   }
 });
 
@@ -692,7 +777,7 @@ uploadButton.addEventListener("click", async () => {
   if (!user){ setSecureMessage("<strong>Sign-in required.</strong><br>Sign in with Google, then upload your CV. Your selected file remains on this page."); return; }
   setBusy(uploadButton, true, "Uploading");
   try {
-    setSecureMessage("<strong>Step 1 of 2: uploading privately</strong><br>Your file is being sent over the authenticated connection.");
+    setSecureMessage("<strong>Step 1 of 3: uploading privately</strong><br>Your file is being sent over the authenticated connection.");
     const safeName = file.name.replace(/[^a-zA-Z0-9_.-]/g, "_").slice(-120);
     const path = `${user.id}/${Date.now()}_${safeName}`;
     const { error: uploadError } = await sb.storage.from(BUCKET).upload(path, file, { contentType: canonicalCvMime(file.name) || file.type });
@@ -704,10 +789,13 @@ uploadButton.addEventListener("click", async () => {
     if (insertError) throw new Error(insertError.message || "Could not save document metadata.");
     secureDocumentId = row.id;
     secureStoragePath = path;
+    lastGenerationSignature = null;
+    cvDirtyWarning.classList.remove("show");
     document.getElementById("secureCvActions").style.display = "flex";
     downloadButton.disabled = true;
     deleteButton.disabled = false;
-    setSecureMessage(`<strong>Upload complete.</strong><br>Your CV is stored privately as document ${secureDocumentId}. Add the target role and employer, then process it for a tailored CV.`);
+    updateWorkflowStatus("generate");
+    setSecureMessage(`<strong>Step 1 complete: uploaded.</strong><br>Now fill in Step 2 (target role) and click "Generate tailored CV" in Step 4 below.`);
     refreshWorkspaceList();
   } catch (error){
     showError("Upload not completed.", error);
@@ -717,11 +805,11 @@ uploadButton.addEventListener("click", async () => {
 });
 
 processButton.addEventListener("click", async () => {
-  if (!secureDocumentId){ setSecureMessage("<strong>Upload a CV first.</strong><br>The processing action becomes available after a private upload."); return; }
-  setBusy(processButton, true, "Regenerating CV");
+  if (!secureDocumentId){ setSecureMessage("<strong>Upload a CV first.</strong><br>Complete Step 1 before generating a tailored CV."); return; }
+  setBusy(processButton, true, "Generating");
   trackCv("cv_generation_started", { template: templateSelect.value });
   try {
-    setSecureMessage("<strong>Regenerating your complete CV</strong><br>Rewriting the summary, skills, experience, and other sections for the selected role.");
+    setSecureMessage("<strong>Step 2 of 3: generating your complete CV</strong><br>Rewriting the summary, skills, experience, and other sections for the selected role.");
     const targetRole = document.getElementById("secureRole").value.trim();
     const employerName = document.getElementById("secureEmployer").value.trim();
     const jobDescription = document.getElementById("secureJobDescription").value.trim();
@@ -754,21 +842,25 @@ processButton.addEventListener("click", async () => {
     renderTemplatePreview(templateSelect.value, generatedCvText);
     if (!generatedCvText) throw new Error("The tailoring service returned an empty final CV.");
 
+    lastGenerationSignature = currentInputSignature();
+    cvDirtyWarning.classList.remove("show");
+    updateWorkflowStatus("download");
+
     cvPreview.style.display = "block";
     const readiness = assessCvReadiness(generatedCvText);
     cvPreview.innerHTML = `<strong>Final tailored CV preview</strong><br><pre style="white-space:pre-wrap;font:inherit;margin:10px 0 0">${escapeHtml(generatedCvText)}</pre>`;
     trackCv("cv_generation_success", { template: templateSelect.value, ready_to_apply: readiness.ready ? "yes" : "review" });
     setSecureMessage(readiness.ready
-      ? "<strong>Complete application-ready CV ready.</strong><br>Review the final version before downloading the PDF."
+      ? "<strong>Step 2 complete: your CV is ready.</strong><br>Review it below, then click \"Download PDF\" in Step 3."
       : `<strong>CV generated, but needs review before applying.</strong><br>Missing or unclear sections: ${readiness.missing.join(", ")}.`);
     document.getElementById("secureCvActions").style.display = "flex";
     downloadButton.disabled = false;
     deleteButton.disabled = false;
   } catch (error){
     trackCv("cv_generation_failure", { template: templateSelect.value, error_type: "processing" });
-    showError("CV regeneration not completed.", error);
+    showError("CV generation not completed.", error);
   } finally {
-    setBusy(processButton, false, "Regenerate complete CV");
+    setBusy(processButton, false, "Regenerate tailored CV");
   }
 });
 
@@ -787,7 +879,7 @@ downloadButton.addEventListener("click", async () => {
     let text = generatedCvText;
     if (!text){
       const { data: row, error } = await sb.from("cv_uploads").select("generated_text").eq("id", secureDocumentId).single();
-      if (error || !row?.generated_text) throw new Error("No generated CV text is saved for this document yet.");
+      if (error || !row?.generated_text) throw new Error("No generated CV text is saved for this document yet. Complete Step 2 first.");
       text = row.generated_text;
     }
     const blob = createCvPdf(text, document.getElementById("secureRole").value.trim(), document.getElementById("secureEmployer").value.trim(), templateSelect.value);
@@ -797,12 +889,12 @@ downloadButton.addEventListener("click", async () => {
     document.body.appendChild(link); link.click(); link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     trackCv("cv_download_success", { template: templateSelect.value });
-    setSecureMessage("<strong>PDF download ready.</strong><br>Your generated CV was downloaded as a PDF.");
+    setSecureMessage("<strong>Step 3 complete: PDF downloaded.</strong><br>Your generated CV was downloaded as a PDF.");
   } catch (error){
     trackCv("cv_download_failure", { template: templateSelect.value, error_type: "download" });
     showError("PDF download not completed.", error);
   } finally {
-    setBusy(downloadButton, false, "Download generated PDF");
+    setBusy(downloadButton, false, "Download PDF");
   }
 });
 
@@ -827,6 +919,9 @@ deleteButton.addEventListener("click", async () => {
     if (secureStoragePath) await sb.storage.from(BUCKET).remove([secureStoragePath]);
     await sb.from("cv_uploads").delete().eq("id", secureDocumentId);
     secureDocumentId = null; secureStoragePath = null;
+    lastGenerationSignature = null;
+    cvDirtyWarning.classList.remove("show");
+    updateWorkflowStatus("upload");
     document.getElementById("secureCvActions").style.display = "flex";
     downloadButton.disabled = true; deleteButton.disabled = true;
     cvPreview.style.display = "none"; cvPreview.innerHTML = "";
