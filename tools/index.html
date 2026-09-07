@@ -296,10 +296,14 @@ function createCvPdf(text, role, employer, template = "modern"){
   };
   const contactLines = [];
   const first = sections[0]?.lines;
-  if (first) first.slice(0, 3).forEach(x => contactLines.push(x));
-  if (contactLines.length && sections[0]) sections[0].lines.shift();
+  const takeCount = first ? Math.min(3, first.length) : 0;
+  if (first && takeCount) {
+    for (let i = 0; i < takeCount; i++) contactLines.push(first[i]);
+    sections[0].lines.splice(0, takeCount);
+  }
+  const inferredRole = contactLines[1] || contactLines[0] || "";
   push({ kind: "name", text: "Tailored Curriculum Vitae" }, 30);
-  push({ kind: "subtitle", text: role || "Professional Profile" }, 20);
+  push({ kind: "subtitle", text: role || inferredRole || "Professional Profile" }, 20);
   if (employer) push({ kind: "meta", text: `Tailored for ${employer}` }, 20);
   contactLines.forEach(x => push({ kind: "contact", text: x }, 14));
   sections.forEach((section, i) => {
