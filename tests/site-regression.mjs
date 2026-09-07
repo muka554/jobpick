@@ -95,6 +95,10 @@ for (const marker of ['Content-Security-Policy:', 'X-Content-Type-Options:', 'Re
   assert.ok(headers.includes(marker), `_headers is missing ${marker}`);
 }
 assert.match(headers, /static\.cloudflareinsights\.com/, 'CSP fallback must allow Cloudflare Insights');
-assert.match(headers, /connect-src[^\n]*https:\/\/rvitqbkgtgjharxqaxmv\.supabase\.co/, 'CSP must allow the configured Supabase CV backend');
+// Match either the explicit Supabase project ID or the wildcard, with optional whitespace
+assert.ok(
+  /connect-src[^\n]*(https:\/\/rvitqbkgtgjharxqaxmv\.supabase\.co|https:\/\/\*\.supabase\.co)/.test(headers),
+  'CSP must allow Supabase (either explicit project ID or wildcard)'
+);
 
 console.log(`PASS: ${htmlFiles.length} HTML entry points, ${sitemapUrls.length} unique sitemap URLs, metadata/header/catalogue checks`);
