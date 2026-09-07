@@ -73,6 +73,11 @@ textarea{min-height:180px;resize:vertical}
 .preview-card.classic .mini-head{color:#8ca8d0;border-bottom:1px solid #8ca8d0}
 .preview-card.executive{background:#161513}
 .preview-card.executive .mini-head{color:var(--amber);letter-spacing:.08em}
+.preview-card.minimal{background:#15181c}
+.preview-card.minimal .mini-head{color:#c7ccd1;letter-spacing:.04em}
+.preview-card.bold .mini-head{color:#ff5d6c;font-weight:900}
+.preview-card.elegant{font-family:Georgia,serif;background:#171420}
+.preview-card.elegant .mini-head{color:#c99bf0;letter-spacing:.05em}
 .template-preview.compare .preview-card{min-height:230px;padding:16px}
 .template-preview.compare .preview-card[aria-pressed="true"]{padding:15px}
 .template-preview.compare .mini-line{height:7px;margin:8px 0}
@@ -171,6 +176,9 @@ textarea{min-height:180px;resize:vertical}
 <option value="modern">Modern (teal accents)</option>
 <option value="classic">Classic (traditional navy)</option>
 <option value="executive">Executive (charcoal and gold)</option>
+<option value="minimal">Minimal (monochrome grey)</option>
+<option value="bold">Bold (crimson accent)</option>
+<option value="elegant">Elegant (deep plum accent)</option>
 </select>
 
 <label class="label" for="cvBulletLength">Experience bullet length</label>
@@ -296,6 +304,9 @@ function createCvPdf(text, role, employer, template = "modern"){
     modern:    { accent: "0.10 0.42 0.44", dark: "0.10 0.12 0.15", muted: "0.45 0.50 0.55" },
     classic:   { accent: "0.08 0.20 0.38", dark: "0.08 0.10 0.14", muted: "0.35 0.39 0.45" },
     executive: { accent: "0.55 0.35 0.08", dark: "0.10 0.10 0.10", muted: "0.40 0.40 0.38" },
+    minimal:   { accent: "0.32 0.32 0.34", dark: "0.14 0.14 0.16", muted: "0.52 0.52 0.54" },
+    bold:      { accent: "0.62 0.10 0.14", dark: "0.10 0.10 0.10", muted: "0.42 0.40 0.40" },
+    elegant:   { accent: "0.35 0.14 0.42", dark: "0.16 0.12 0.18", muted: "0.46 0.42 0.48" },
   };
   const style = styles[template] || styles.modern;
   const PAGE_LIMIT = 660;
@@ -532,7 +543,7 @@ function escapeHtml(value){
 
 function renderTemplatePreview(template, text){
   const previewGrid = templatePreview.querySelector(".preview-grid");
-  previewGrid.innerHTML = renderProductionTemplateCards(template, text, document.getElementById("secureRole").value.trim() || "Target role");
+  previewGrid.innerHTML = renderProductionTemplateCards({ template, text, role: document.getElementById("secureRole").value.trim() || "Target role" });
   templatePreview.querySelectorAll(".preview-card").forEach(card => {
     card.addEventListener("click", () => {
       templateSelect.value = card.dataset.template || templateSelect.value;
@@ -604,7 +615,7 @@ compareButton.addEventListener("click", () => {
 
 try {
   const savedTemplate = sessionStorage.getItem("jobpick-cv-template");
-  if (savedTemplate && ["modern","classic","executive"].includes(savedTemplate)) templateSelect.value = savedTemplate;
+  if (savedTemplate && ["modern","classic","executive","minimal","bold","elegant"].includes(savedTemplate)) templateSelect.value = savedTemplate;
 } catch {}
 
 async function refreshWorkspaceList(){
