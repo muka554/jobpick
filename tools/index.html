@@ -103,6 +103,17 @@ textarea{min-height:180px;resize:vertical}
 .cv-action-row .button{margin-top:0}
 .new-experience{background:rgba(255,255,255,.018)}
 @media(max-width:760px){.cv-workspace-grid{grid-template-columns:1fr}.cv-workspace-side{position:static}}
+.ats-insights{margin-top:16px}
+.ats-insights h3{margin:0 0 8px}
+.ats-score-ring{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.ats-score-value{font-size:32px;font-weight:800;color:var(--teal)}
+.ats-score-value.mid{color:var(--amber)}
+.ats-score-value.low{color:#ff9eaa}
+.ats-score-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+.ats-block{margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+.ats-block h4{margin:0 0 6px;font-size:13px;color:var(--teal);text-transform:uppercase;letter-spacing:.08em}
+.ats-block p{margin:0;font-size:13px;line-height:1.6;color:var(--muted)}
+.ats-gaps{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--muted);line-height:1.6}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Private CV Tools","url":"https://jobpick20.com/tools/","description":"Private CV readiness checking, AI prompt generation, and secure generated-document downloads for Middle East job seekers.","isPartOf":{"@type":"WebSite","name":"Middle East Job Hub","url":"https://jobpick20.com/"},"publisher":{"@type":"Organization","name":"Middle East Job Hub","url":"https://jobpick20.com/"}}</script>
 </head>
@@ -200,6 +211,7 @@ textarea{min-height:180px;resize:vertical}
 <button class="button" id="downloadCv" type="button" disabled aria-describedby="secureCvResult">Download generated PDF</button>
 <button class="button secondary" id="deleteCv" type="button" disabled aria-describedby="secureCvResult">Delete document</button>
 </div>
+<div id="cvAtsInsights" class="result ats-insights" role="region" aria-live="polite" aria-label="ATS score and recruiter review" style="display:none"></div>
 <div id="cvPreview" class="result" role="region" aria-label="CV preview" style="display:none;margin-top:12px;max-height:420px;overflow:auto"></div>
 <div id="cvMatchSummary" class="result match-summary" role="region" aria-live="polite" aria-atomic="false" aria-label="Requirement to experience match summary" style="display:none"></div>
 </div>
@@ -308,7 +320,7 @@ function createCvPdf(text, role, employer, template = "modern"){
     const renderLines = wrap(itemText, maxCharsFor(kind));
     const perLine = lineHeightFor(kind);
     let height = renderLines.length * perLine;
-    if (kind === "heading") height += 6;
+    if (kind === "heading") height += 16;
     else if (kind === "name") height += 5;
     else height += kind === "body" || kind === "bullet" ? 2 : 0;
     if (used + height > PAGE_LIMIT && page.length){ pages.push(page); page = []; used = 0; }
@@ -346,11 +358,13 @@ function createCvPdf(text, role, employer, template = "modern"){
   const font = add(`<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>`);
   const bold = add(`<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>`);
   const pageIds = [], contentIds = [];
+  const totalPages = pages.length;
 
-  pages.forEach(items => {
+  pages.forEach((items, pageIndex) => {
     let stream = "";
     let y = 750;
     items.forEach(item => {
+      if (item.kind === "heading") y -= 8;
       item.renderLines.forEach(line => {
         const fontId = (item.kind === "name" || item.kind === "heading") ? bold : font;
         const size = item.kind === "name" ? 22 : item.kind === "heading" ? 11 : item.kind === "subtitle" ? 13 : item.kind === "meta" ? 10 : 10;
@@ -367,7 +381,8 @@ function createCvPdf(text, role, employer, template = "modern"){
         y -= item.kind === "name" ? 5 : 2;
       }
     });
-    stream += `${style.muted} rg BT /F1 8 Tf 54 28 Td (JobPick tailored CV) Tj ET`;
+    stream += `${style.muted} rg BT /F1 8 Tf 54 28 Td (JobPick tailored CV) Tj ET\n`;
+    stream += `${style.muted} rg BT /F1 8 Tf 505 28 Td (Page ${pageIndex + 1} of ${totalPages}) Tj ET`;
     const content = add(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`);
     contentIds.push(content);
     pageIds.push(add(""));
@@ -482,6 +497,7 @@ const uploadButton = document.getElementById("uploadCv"),
       deleteButton = document.getElementById("deleteCv"),
       cvPreview = document.getElementById("cvPreview"),
       matchSummary = document.getElementById("cvMatchSummary"),
+      atsInsights = document.getElementById("cvAtsInsights"),
       templateSelect = document.getElementById("cvTemplate"),
       bulletLengthSelect = document.getElementById("cvBulletLength"),
       pageCountSelect = document.getElementById("cvPageCount"),
@@ -524,6 +540,24 @@ function renderTemplatePreview(template, text){
       renderTemplatePreview(templateSelect.value, generatedCvText);
     });
   });
+}
+
+function renderAtsInsights(data){
+  const score = typeof data?.atsScore === "number" ? Math.max(0, Math.min(100, Math.round(data.atsScore))) : null;
+  const summary = String(data?.atsSummary || "").trim();
+  const review = String(data?.recruiterReview || "").trim();
+  const gaps = Array.isArray(data?.applicationGaps) ? data.applicationGaps.filter(Boolean) : [];
+  if (score === null && !summary && !review && !gaps.length){
+    atsInsights.style.display = "none";
+    return;
+  }
+  const scoreClass = score === null ? "" : score >= 75 ? "" : score >= 50 ? "mid" : "low";
+  atsInsights.style.display = "block";
+  atsInsights.innerHTML = `<h3>ATS score and recruiter review</h3>
+${score !== null ? `<div class="ats-score-ring"><span class="ats-score-value ${scoreClass}">${score}</span><span class="ats-score-label">ATS match<br>out of 100</span></div>` : ""}
+${summary ? `<div class="ats-block"><h4>Why this score</h4><p>${escapeHtml(summary)}</p></div>` : ""}
+${review ? `<div class="ats-block"><h4>Recruiter review</h4><p>${escapeHtml(review)}</p></div>` : ""}
+${gaps.length ? `<div class="ats-block"><h4>Before you apply</h4><ul class="ats-gaps">${gaps.map(g => `<li>${escapeHtml(g)}</li>`).join("")}</ul></div>` : ""}`;
 }
 
 function renderMatchSummary(matches){
@@ -681,6 +715,7 @@ processButton.addEventListener("click", async () => {
 
     generatedCvText = cleanGeneratedCv(data.generatedText);
     renderMatchSummary(data.matches);
+    renderAtsInsights(data);
     regenerationChangeRequest = null;
     renderTemplatePreview(templateSelect.value, generatedCvText);
     if (!generatedCvText) throw new Error("The tailoring service returned an empty final CV.");
@@ -761,6 +796,7 @@ deleteButton.addEventListener("click", async () => {
     document.getElementById("secureCvActions").style.display = "flex";
     downloadButton.disabled = true; deleteButton.disabled = true;
     cvPreview.style.display = "none"; cvPreview.innerHTML = "";
+    atsInsights.style.display = "none"; atsInsights.innerHTML = "";
     setSecureMessage("<strong>Deleted.</strong><br>The document was removed from your private workspace.");
     refreshWorkspaceList();
   } catch (error){
