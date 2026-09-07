@@ -392,8 +392,6 @@ function createCvPdf(text, role, employer, template = "modern"){
         y -= item.kind === "name" ? 5 : 2;
       }
     });
-    stream += `${style.muted} rg BT /F1 8 Tf 54 28 Td (JobPick tailored CV) Tj ET\n`;
-    stream += `${style.muted} rg BT /F1 8 Tf 505 28 Td (Page ${pageIndex + 1} of ${totalPages}) Tj ET`;
     const content = add(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`);
     contentIds.push(content);
     pageIds.push(add(""));
