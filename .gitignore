@@ -28,3 +28,4 @@ Thumbs.db
 # Local audit outputs and sandbox artifacts
 /tmp/
 reports/local/
+.seo-indexing/

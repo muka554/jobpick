@@ -55,9 +55,26 @@ Located in `scripts/`, run with Node (`.mjs`):
 | `add_guide_review_framework.mjs` | Injects the visible "last reviewed" note and editorial-team byline into guide pages. |
 | `update_sitemap_for_content_revision.mjs` | Rebuilds `sitemap.xml` after content revisions. |
 | `validate_content_readiness.mjs` | Checks guide pages for required metadata, byline, and structured-data fields before publishing. |
+| `check-google-indexing.mjs` | Checks sitemap URLs, public HTTP/canonical/robots signals, and optionally Google Search Console indexing status. |
 | `prepare_auth_failure_alert_deploy.mjs` | Prepares deployment step for auth-failure alerting. |
 
 **Note:** these scripts write `dateModified`/`datePublished` as date-only strings (`YYYY-MM-DD`). Google Search Console's Rich Results validator expects a full ISO-8601 timestamp with timezone (e.g. `2026-08-26T00:00:00+04:00`) for `dateModified`. When editing these scripts, keep the timestamp format ISO-8601-compliant to avoid "Invalid datetime value" warnings.
+
+### Google indexing monitor
+
+Run a public sitemap and crawlability check with:
+
+```bash
+node scripts/check-google-indexing.mjs
+```
+
+The monitor writes `latest.json`, `latest.md`, and a rolling `history.json` under `.seo-indexing/`, which is intentionally ignored by Git. Public checks confirm that sitemap URLs resolve, expose a canonical URL, contain an H1, and are not marked `noindex`; they do not prove Google indexing. For exact indexed/not-indexed status, provide a Search Console OAuth access token with `webmasters.readonly` access to the root URL-prefix property:
+
+```bash
+GOOGLE_ACCESS_TOKEN="$TOKEN" node scripts/check-google-indexing.mjs --limit 18
+```
+
+The script uses the Search Console URL Inspection API and stores per-URL crawl/index history for trend comparisons. It does not request indexing or modify Search Console settings.
 
 ## Search and indexing
 
