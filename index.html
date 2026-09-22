@@ -112,6 +112,14 @@
   .row.filtered-out{ display:none; }
   .resources{ margin:44px 2px 8px; }
   .resources h2{ font-family:'Manrope',sans-serif; font-weight:800; font-size:24px; margin:0 0 16px; }
+  .publisher-guide{ margin:44px 2px 10px; padding:24px; background:linear-gradient(135deg,rgba(45,217,192,.08),rgba(167,139,250,.07)); border:1px solid var(--line); border-radius:12px; }
+  .publisher-guide h2{ font-family:'Manrope',sans-serif; font-weight:800; font-size:24px; margin:0 0 12px; }
+  .publisher-guide h3{ font-family:'Manrope',sans-serif; font-size:16px; margin:22px 0 7px; color:var(--amber); }
+  .publisher-guide p{ color:var(--ink-dim); line-height:1.7; margin:0 0 12px; }
+  .publisher-guide .guide-meta{ color:var(--teal); font-size:12px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; }
+  .publisher-guide a{ color:var(--teal); font-weight:700; }
+  .publisher-guide ul{ color:var(--ink-dim); line-height:1.7; margin:8px 0 0; padding-left:22px; }
+  .publisher-guide .guide-columns{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 24px; }
   .resources-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px; }
   .rescard{ display:block; background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:18px 20px; color:var(--ink); font-weight:600; font-size:14.5px; line-height:1.4; text-decoration:none; }
   .rescard:hover{ border-color:var(--teal); }
@@ -128,6 +136,8 @@
     .search-actions{ display:grid; grid-template-columns:1fr 1fr; }
     .share-search{ grid-column:1 / -1; }
     .row{ grid-template-columns:1fr; gap:8px; position:relative; padding:16px 14px 16px 34px; }
+    .publisher-guide{ padding:20px 17px; }
+    .publisher-guide .guide-columns{ grid-template-columns:1fr; }
     .star-btn{ position:absolute; top:14px; left:10px; }
     .opensearch{ text-align:left; }
   }
@@ -538,6 +548,27 @@
   <section class="publisher-context" aria-labelledby="searchContextHeading">
     <h2 id="searchContextHeading">Search with context</h2>
     <p>Middle East Job Hub combines a practical platform directory with independently maintained job-search guides. We do not scrape vacancies, collect applications, or promise hiring outcomes. Before applying, verify the employer and role on the original source, read <a href="/how-we-review-job-platforms/">how we review platforms</a>, and use our <a href="/resources/">editorial resource library</a> for country checklists, application planning, and job-search safety guidance.</p>
+  </section>
+  <section class="publisher-guide" aria-labelledby="publisherGuideHeading">
+    <p class="guide-meta">Editorial note · Reviewed 22 September 2026 · Middle East Job Hub Editorial Team</p>
+    <h2 id="publisherGuideHeading">How to turn a platform search into a safer application</h2>
+    <p>A search result is a starting point, not proof that a vacancy is genuine, current, or suitable. JobPick is designed to help you choose a useful search route and then make the next decision with better evidence. Start with a role, country, and city, compare more than one relevant platform, and open the original employer or public-portal page before sharing personal information.</p>
+    <div class="guide-columns">
+      <div>
+        <h3>Our four-step method</h3>
+        <ul>
+          <li><strong>Define the route:</strong> choose a role family, location, and work arrangement rather than relying on a broad keyword alone.</li>
+          <li><strong>Compare sources:</strong> use the platform label to distinguish direct job-board searches, public portals, recruitment agencies, and Google fallback searches.</li>
+          <li><strong>Verify the vacancy:</strong> check the employer name, duties, location, application domain, and closing information on the original source.</li>
+          <li><strong>Keep evidence:</strong> save the vacancy URL and the version of your CV you used, and pause if an unexpected payment or sensitive-data request appears.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What JobPick does—and does not do</h3>
+        <p>We organize public search routes and publish independent guidance. We do not represent employers, guarantee interviews, process applications, or verify every third-party vacancy. Government and national-employment portals may have their own eligibility rules and account requirements.</p>
+        <p>Our <a href="/editorial-standards/">editorial standards</a> explain how pages are maintained, while the <a href="/guides/recruitment-scam-warning-signs/">application safety checklist</a> explains what to compare before responding to a recruiter or offer.</p>
+      </div>
+    </div>
   </section>
   <section class="resources" aria-labelledby="resourcesHeading">
     <h2>UAE job searches by city and role</h2>
