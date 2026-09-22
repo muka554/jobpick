@@ -21,7 +21,6 @@ The site does not host or scrape job listings itself. Instead, it builds direct 
 ```
 .
 ├── index.html                  # Canonical homepage (root)
-├── home/                       # Legacy homepage path — redirects to /
 ├── about/                      # About page
 ├── authors/                    # Publisher + editorial team profiles
 ├── cities/                     # City-level job guides (Dubai, Abu Dhabi, Riyadh, ...)
@@ -43,7 +42,7 @@ The site does not host or scrape job listings itself. Instead, it builds direct 
 ├── scripts/                    # Node content-maintenance scripts (see below)
 ├── tests/                      # Automated content/structure checks
 ├── sitemap.xml, robots.txt, ads.txt, CNAME
-└── google212a37498484aaf9.html # Google Search Console verification file
+└── index.html                  # Root homepage and Search Console HTML-tag verification
 ```
 
 ## Content maintenance scripts
@@ -62,7 +61,7 @@ Located in `scripts/`, run with Node (`.mjs`):
 
 ## Search and indexing
 
-- `sitemap.xml` lists all canonical URLs (root `/`, not `/home/`).
+- `sitemap.xml` lists all canonical URLs under `https://jobpick20.com/`; the root `/` is the only homepage property.
 - `robots.txt` allows crawling of the full public site.
 - `ads.txt` authorizes Google AdSense (`pub-6874304698042148`) for programmatic ad serving.
 - Structured data (`ProfilePage`, `Organization`, `Article`) is present on author and guide pages for richer search presentation.

@@ -20,10 +20,10 @@ const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1
 assert.equal(new Set(sitemapUrls).size, sitemapUrls.length, 'sitemap URLs must be unique');
 assert.equal(sitemapUrls.filter((u) => u === 'https://jobpick20.com/').length, 1, 'root must appear once');
 assert.ok(!sitemapUrls.some((u) => u.includes('/home/')), 'legacy /home/ must not be in sitemap');
+assert.ok(!fs.existsSync(path.join(root, 'home')), 'legacy /home/ route must not exist');
 
 for (const file of htmlFiles) {
   const rel = path.relative(root, file);
-  if (rel === 'home/index.html') continue;
   if (rel === '404.html' || rel === 'google212a37498484aaf9.html') continue;
   const html = fs.readFileSync(file, 'utf8');
   for (const marker of ['<title>', 'name="description"', 'rel="canonical"', 'property="og:title"', 'property="og:description"', 'property="og:url"', 'name="twitter:card"']) {
@@ -48,10 +48,6 @@ for (const url of sitemapUrls) {
   const file = pathname === '/' ? 'index.html' : `${pathname.replace(/^\//, '').replace(/\/$/, '')}/index.html`;
   assert.ok(fs.existsSync(path.join(root, file)), `sitemap URL ${url} must map to ${file}`);
 }
-
-const home = read('home/index.html');
-assert.match(home, /meta http-equiv="refresh" content="0; url=https:\/\/jobpick20\.com\//i, 'legacy home must be redirect-only');
-assert.match(home, /window\.location\.replace\(destination\)/, 'legacy home must preserve query/hash in redirect');
 
 const index = read('index.html');
 assert.match(index, /name:'Robert Half',[\s\S]*?type:'portal'/, 'Robert Half must be a portal visit');

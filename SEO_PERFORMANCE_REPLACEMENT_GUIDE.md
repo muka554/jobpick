@@ -26,8 +26,7 @@ The following files were changed or added:
 
 | Repository path | Action | Purpose |
 |---|---|---|
-| `index.html` | Replace | Keeps the root redirect lightweight and adds viewport/robots metadata. |
-| `home/index.html` | Replace | Adds social metadata, WebPage/WebSite structured data, font preconnect, mobile background optimization, content-visibility, and shareable search URLs. |
+| `index.html` | Replace | Canonical root homepage with viewport/robots metadata, structured data, and shareable search URLs. |
 | `about/index.html` | Replace | Adds consistent SEO/social metadata, structured data, font preconnect, and rendering hints. |
 | `advertising-disclosure/index.html` | Replace | Same shared SEO/performance improvements. |
 | `cities/abu-dhabi-jobs/index.html` | Replace | Same shared SEO/performance improvements. |
@@ -45,7 +44,7 @@ The following files were changed or added:
 | `assets/platforms.js` | Delete | Removes the stale duplicate platform catalog; the homepage is the single source of truth. |
 | `README.md` | Replace | Aligns documentation with the 20-platform public product. |
 
-The Google site-verification file is intentionally unchanged.
+Search Console should use the root URL-prefix property `https://jobpick20.com/`; no `/home/` verification file or property is used.
 
 ## SEO improvements included
 
@@ -62,7 +61,7 @@ The pages preconnect to both Google Fonts origins. The homepage disables fixed b
 Submit the normalized sitemap in Google Search Console and Bing Webmaster Tools. Inspect the homepage and one guide, city, and legal page with Lighthouse on mobile. Confirm that the structured-data validator reports valid `WebPage` and homepage `WebSite` markup. Test the shareable URL format with a query such as:
 
 ```text
-https://jobpick20.com/home/?role=software+engineer&country=ksa&city=riyadh
+https://jobpick20.com/?role=software+engineer&country=ksa&city=riyadh
 ```
 
 Finally, verify that `/account/` no longer appears as a navigation destination and that missing URLs show the new branded 404 page.

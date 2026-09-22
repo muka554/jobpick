@@ -152,16 +152,16 @@ build:(q,slug,cityKey,cityName)=>`https://www.gulftalent.com/${countryPath}/jobs
 **Severity:** **LOW**  
 **Area:** Repository / SEO tooling
 
-**Evidence.** Static inspection found `google212a37498484aaf9.html` without a title, H1, or `lang` attribute. It is a Google Search Console verification token file, not a user-facing document. The repository regression suite passes it as an expected special case.
+**Evidence.** The former standalone Search Console verification file was removed when the site was normalized to the root URL-prefix property. Verification is now handled by the root homepage HTML tag.
 
-**Recommendation.** Keep it excluded from generic HTML-page audits and do not add content markup that could invalidate verification. No fix is required.
+**Recommendation.** Keep the root verification tag in the homepage `<head>` and do not create a `/home/` verification route.
 
 ## Live Route and Broken-Link Audit
 
 | Route | Observed result | Assessment |
 |---|---|---|
 | `/` | HTTP 200 | Pass |
-| `/home/` | HTTP 200, redirects to `/` in browser | Intended redirect entry point; no defect confirmed |
+| `/home/` | Removed from the repository | Root-only canonical policy; use `/` |
 | `/jobs/` | HTTP 200 | Pass |
 | `/about/` | HTTP 200 | Pass |
 | `/privacy-policy/` | HTTP 200 | Pass |
@@ -242,7 +242,7 @@ The repository’s static scan found no broken internal links or missing local s
 
 ### Limitations and recommendations
 
-No Search Console or analytics exports were available, so organic traffic, index coverage, query performance, backlink quality, Core Web Vitals field data, and canonical duplication in Google’s index cannot be assessed. Search-state query parameters are intentionally functional state, while the canonical remains the homepage; monitor Search Console to ensure parameter variants do not become unwanted indexed duplicates. The `/home/` redirect page is correctly `noindex,follow` in source and is not in the sitemap.
+No Search Console or analytics exports were available, so organic traffic, index coverage, query performance, backlink quality, Core Web Vitals field data, and canonical duplication in Google’s index cannot be assessed. Search-state query parameters are intentionally functional state, while the canonical remains the root homepage; monitor the root Search Console property to ensure parameter variants do not become unwanted indexed duplicates.
 
 ## Accessibility Audit
 
@@ -346,4 +346,3 @@ The attached CV regeneration standard has been incorporated into the secure proc
 A client-side readiness gate now checks generated output for contact information, summary/profile, experience or education, and skills. If all core signals are present, the UI reports an application-ready CV; otherwise it reports the missing sections and keeps the output available for review rather than falsely claiming readiness. The readiness state is included in the consent-gated `cv_generation_success` analytics event without transmitting CV text or personal contact data.
 
 Validation after this update passed the site regression suite, all three PDF template exports, the live UI/CORS/unauthenticated integration suite, JavaScript syntax checks, and whitespace checks. The implementation is committed and pushed in `33fc429` (`feat: improve truthful cv job targeting`).
-
