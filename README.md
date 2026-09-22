@@ -56,6 +56,7 @@ Located in `scripts/`, run with Node (`.mjs`):
 | `update_sitemap_for_content_revision.mjs` | Rebuilds `sitemap.xml` after content revisions. |
 | `validate_content_readiness.mjs` | Checks guide pages for required metadata, byline, and structured-data fields before publishing. |
 | `check-google-indexing.mjs` | Checks sitemap URLs, public HTTP/canonical/robots signals, and optionally Google Search Console indexing status. |
+| `validate-seo-landing-pages.mjs` | Validates title, description, canonical, Open Graph, Twitter, H1, and JSON-LD signals across all public `index.html` pages. |
 | `prepare_auth_failure_alert_deploy.mjs` | Prepares deployment step for auth-failure alerting. |
 
 **Note:** these scripts write `dateModified`/`datePublished` as date-only strings (`YYYY-MM-DD`). Google Search Console's Rich Results validator expects a full ISO-8601 timestamp with timezone (e.g. `2026-08-26T00:00:00+04:00`) for `dateModified`. When editing these scripts, keep the timestamp format ISO-8601-compliant to avoid "Invalid datetime value" warnings.
@@ -75,6 +76,14 @@ GOOGLE_ACCESS_TOKEN="$TOKEN" node scripts/check-google-indexing.mjs --limit 18
 ```
 
 The script uses the Search Console URL Inspection API and stores per-URL crawl/index history for trend comparisons. It does not request indexing or modify Search Console settings.
+
+Run the repository-wide metadata and structured-data validator with:
+
+```bash
+node scripts/validate-seo-landing-pages.mjs
+```
+
+Use `--json /tmp/seo-validation.json` when you need a machine-readable report for CI artifacts. The validator treats long titles or descriptions as non-blocking warnings, but fails missing or mismatched metadata, duplicate canonicals, missing H1s, malformed JSON-LD, and legacy `/home/` canonical URLs.
 
 ## Search and indexing
 
