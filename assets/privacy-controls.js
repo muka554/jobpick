@@ -1,10 +1,10 @@
 (function(){
   'use strict';
-  var KEY='jobhub_privacy_choice_v1', GA='G-HP8NJBF7K8';
+  var KEY='jobhub_privacy_choice_v2', CONSENT_VERSION='20260922', GA='G-HP8NJBF7K8';
   var state;
   var cmpMessageApplies=null;
   var COPY={
-    en:{dialog:'Privacy choices',title:'Your privacy choices',body:'This page does not load advertising code. We load optional analytics only if you choose to allow it. You can continue with essential site functions only and change this choice at any time.',policy:'Read the Privacy Policy',essential:'Essential only',accept:'Accept optional analytics',settings:'Privacy choices',settingsAria:'Change privacy choices'},
+    en:{dialog:'Privacy choices',title:'Your privacy choices',body:'JobPick uses essential storage for site functions and privacy choices. Optional analytics loads only if you allow it. Advertising pages use the applicable Google-certified consent message for advertising choices.',policy:'Read the Privacy Policy',essential:'Essential only',accept:'Accept optional analytics',settings:'Privacy choices',settingsAria:'Change privacy choices'},
     ar:{dialog:'خيارات الخصوصية',title:'خيارات الخصوصية الخاصة بك',body:'لا تحمّل هذه الصفحة رمزاً إعلانياً. لا نحمّل التحليلات الاختيارية إلا إذا اخترت السماح بها. يمكنك متابعة استخدام وظائف الموقع الأساسية فقط وتغيير هذا الاختيار في أي وقت.',policy:'اقرأ سياسة الخصوصية',essential:'الأساسية فقط',accept:'قبول التحليلات الاختيارية',settings:'خيارات الخصوصية',settingsAria:'تغيير خيارات الخصوصية'},
     hi:{dialog:'गोपनीयता विकल्प',title:'आपके गोपनीयता विकल्प',body:'यह पेज विज्ञापन कोड लोड नहीं करता। हम वैकल्पिक एनालिटिक्स केवल आपकी अनुमति पर लोड करते हैं। आप केवल आवश्यक साइट सुविधाओं के साथ जारी रख सकते हैं और इस विकल्प को कभी भी बदल सकते हैं।',policy:'गोपनीयता नीति पढ़ें',essential:'केवल आवश्यक',accept:'वैकल्पिक एनालिटिक्स स्वीकार करें',settings:'गोपनीयता विकल्प',settingsAria:'गोपनीयता विकल्प बदलें'},
     ur:{dialog:'رازداری کے اختیارات',title:'آپ کے رازداری کے اختیارات',body:'یہ صفحہ اشتہاری کوڈ لوڈ نہیں کرتا۔ ہم اختیاری تجزیات صرف آپ کی اجازت پر لوڈ کرتے ہیں۔ آپ صرف ضروری سائٹ خصوصیات کے ساتھ جاری رہ سکتے ہیں اور یہ انتخاب کسی بھی وقت تبدیل کر سکتے ہیں۔',policy:'رازداری کی پالیسی پڑھیں',essential:'صرف ضروری',accept:'اختیاری تجزیات قبول کریں',settings:'رازداری کے اختیارات',settingsAria:'رازداری کے اختیارات تبدیل کریں'}
@@ -53,11 +53,11 @@
     if(usesGoogleCmpControls()||state)return;
     removeBanner();
     var t=copy(),el=document.createElement('section');
-    el.id='jobhub-consent-banner';el.setAttribute('role','dialog');el.setAttribute('aria-modal','false');el.setAttribute('aria-label',t.dialog);
+    el.id='jobhub-consent-banner';el.dataset.consentVersion=CONSENT_VERSION;el.setAttribute('role','dialog');el.setAttribute('aria-modal','false');el.setAttribute('aria-label',t.dialog);
     var settingsButton=document.getElementById('jobhub-privacy-settings');if(settingsButton)settingsButton.hidden=true;
     var content=document.createElement('div');
     var title=document.createElement('strong');title.textContent=t.title;
-    var body=document.createElement('p');body.textContent=t.body;
+    var body=document.createElement('p');body.id='jobhub-consent-copy';body.textContent=t.body;el.setAttribute('aria-describedby',body.id);
     var policy=document.createElement('a');policy.href='/privacy-policy/#advertising-consent';policy.textContent=t.policy;
     content.append(title,body,policy);
     var actions=document.createElement('div');actions.className='jobhub-consent-actions';
