@@ -112,9 +112,20 @@ for (const file of files) {
   results.push({ file: rel, expected, title, descriptionLength: description?.length || 0, canonical, ogUrl, h1Count, jsonLdBlocks: jsonLdBlocks.length, jsonLdTypes, warnings: pageWarnings });
 }
 
-const report = { checkedAt: new Date().toISOString(), root, siteOrigin, pageCount: results.length, failureCount: failures.length, warningCount: warnings.length, failures, warnings, pages: results };
+const sitemapXml = await readFile(join(root, 'sitemap.xml'), 'utf8');
+const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+const expectedUrls = new Set(results.map((page) => page.expected));
+if (new Set(sitemapUrls).size !== sitemapUrls.length) failures.push({ file: 'sitemap.xml', message: 'sitemap URLs must be unique' });
+for (const expectedUrl of expectedUrls) {
+  if (!sitemapUrls.includes(expectedUrl)) failures.push({ file: 'sitemap.xml', message: `missing canonical page ${expectedUrl}` });
+}
+for (const sitemapUrl of sitemapUrls) {
+  if (!expectedUrls.has(sitemapUrl)) failures.push({ file: 'sitemap.xml', message: `URL is not an indexable canonical page: ${sitemapUrl}` });
+}
+
+const report = { checkedAt: new Date().toISOString(), root, siteOrigin, pageCount: results.length, sitemapCount: sitemapUrls.length, failureCount: failures.length, warningCount: warnings.length, failures, warnings, pages: results };
 if (jsonPath) await writeFile(resolve(jsonPath), `${JSON.stringify(report, null, 2)}\n`);
-console.log(`Checked ${results.length} landing pages.`);
+console.log(`Checked ${results.length} landing pages and ${sitemapUrls.length} sitemap URLs.`);
 if (failures.length) {
   console.error(`FAIL: ${failures.length} issue(s)`);
   for (const failure of failures) console.error(`- ${failure.file}: ${failure.message}`);

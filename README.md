@@ -56,6 +56,7 @@ Located in `scripts/`, run with Node (`.mjs`):
 | `update_sitemap_for_content_revision.mjs` | Rebuilds `sitemap.xml` after content revisions. |
 | `validate_content_readiness.mjs` | Checks guide pages for required metadata, byline, and structured-data fields before publishing. |
 | `check-google-indexing.mjs` | Checks sitemap URLs, public HTTP/canonical/robots signals, and optionally Google Search Console indexing status. |
+| `generate_sitemap.mjs` | Generates `sitemap.xml` from the complete indexable canonical HTML inventory while preserving only known lastmod values. |
 | `validate-seo-landing-pages.mjs` | Validates title, description, canonical, Open Graph, Twitter, H1, and JSON-LD signals across all public `index.html` pages. |
 | `prepare_auth_failure_alert_deploy.mjs` | Prepares deployment step for auth-failure alerting. |
 
@@ -83,7 +84,7 @@ Run the repository-wide metadata and structured-data validator with:
 node scripts/validate-seo-landing-pages.mjs
 ```
 
-Use `--json /tmp/seo-validation.json` when you need a machine-readable report for CI artifacts. The validator treats long titles or descriptions as non-blocking warnings, but fails missing or mismatched metadata, duplicate canonicals, missing H1s, malformed JSON-LD, and legacy `/home/` canonical URLs.
+Use `--json /tmp/seo-validation.json` when you need a machine-readable report for CI artifacts. The validator treats long titles or descriptions as non-blocking warnings, but fails missing or mismatched metadata, duplicate canonicals, missing H1s, malformed JSON-LD, sitemap-to-canonical-page drift, and legacy `/home/` canonical URLs.
 
 ## Search and indexing
 

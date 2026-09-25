@@ -3,115 +3,152 @@
   <url>
     <loc>https://jobpick20.com/</loc>
     <lastmod>2026-09-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
   </url>
   <url>
     <loc>https://jobpick20.com/about/</loc>
     <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://jobpick20.com/privacy-policy/</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://jobpick20.com/terms-of-use/</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://jobpick20.com/advertising-disclosure/</loc>
     <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://jobpick20.com/contact/</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <loc>https://jobpick20.com/authors/ahmed-abayzeed/</loc>
   </url>
   <url>
-    <loc>https://jobpick20.com/guides/uae-job-search-guide/</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://jobpick20.com/guides/uae-job-search-playbook/</loc>
-    <lastmod>2026-09-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://jobpick20.com/guides/uae-cv-guide/</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://jobpick20.com/guides/recruitment-scam-warning-signs/</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://jobpick20.com/guides/gulf-job-platforms-explained/</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://jobpick20.com/cities/dubai-jobs/</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://jobpick20.com/authors/jobpick-editorial-team/</loc>
   </url>
   <url>
     <loc>https://jobpick20.com/cities/abu-dhabi-jobs/</loc>
     <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/cities/amman-jobs/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/cities/cairo-jobs/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/cities/doha-jobs/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/cities/dubai-jobs/</loc>
+    <lastmod>2026-08-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/cities/kuwait-city-jobs/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/cities/manama-jobs/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/cities/muscat-jobs/</loc>
   </url>
   <url>
     <loc>https://jobpick20.com/cities/riyadh-jobs/</loc>
     <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://jobpick20.com/jobs-in-uae/</loc>
-    <lastmod>2026-09-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://jobpick20.com/contact/</loc>
+    <lastmod>2026-08-22</lastmod>
   </url>
   <url>
-    <loc>https://jobpick20.com/it-jobs-uae/</loc>
-    <lastmod>2026-09-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://jobpick20.com/corrections/</loc>
   </url>
   <url>
     <loc>https://jobpick20.com/customer-service-jobs-dubai/</loc>
     <lastmod>2026-09-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jobpick20.com/technical-support-jobs-uae/</loc>
+    <loc>https://jobpick20.com/editorial-standards/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/employers/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/bahrain-job-search-guide/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/egypt-job-search-guide/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/gulf-job-platforms-explained/</loc>
+    <lastmod>2026-08-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/jeddah-job-search-guide/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/jordan-job-search-guide/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/kuwait-job-search-guide/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/oman-job-search-guide/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/qatar-job-search-guide/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/recruitment-scam-warning-signs/</loc>
+    <lastmod>2026-08-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/saudi-job-search-guide/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/uae-cv-guide/</loc>
+    <lastmod>2026-08-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/uae-job-market-guide/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/uae-job-search-guide/</loc>
+    <lastmod>2026-08-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/guides/uae-job-search-playbook/</loc>
     <lastmod>2026-09-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/how-we-review-job-platforms/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/it-jobs-uae/</loc>
+    <lastmod>2026-09-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/jobs-in-uae/</loc>
+    <lastmod>2026-09-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/jobs/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/partners/</loc>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/privacy-policy/</loc>
+    <lastmod>2026-08-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/resources/</loc>
   </url>
   <url>
     <loc>https://jobpick20.com/sales-jobs-uae/</loc>
     <lastmod>2026-09-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/technical-support-jobs-uae/</loc>
+    <lastmod>2026-09-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/terms-of-use/</loc>
+    <lastmod>2026-08-22</lastmod>
+  </url>
+  <url>
+    <loc>https://jobpick20.com/tools/</loc>
   </url>
 </urlset>

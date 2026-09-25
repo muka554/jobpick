@@ -33,6 +33,11 @@ jobs:
       - name: Validate landing-page SEO signals
         run: node scripts/validate-seo-landing-pages.mjs
 
+      - name: Verify generated sitemap is committed
+        run: |
+          node scripts/generate_sitemap.mjs
+          git diff --exit-code -- sitemap.xml
+
       - name: Verify CV PDF templates
         run: node tests/cv-pdf-export.mjs
 
