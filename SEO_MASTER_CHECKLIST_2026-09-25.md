@@ -28,6 +28,7 @@
 4. **The deployment currently publishes repository-root artifacts.** Operational paths such as `/scripts/`, `/tests/`, `/supabase/`, and `/cv-service-google-oauth/` should be removed from the public build or protected at the hosting layer. `robots.txt` alone is not an index-removal mechanism.
 5. **`/index.html` should permanently redirect to `/`.** The root has the correct self-canonical, but an edge redirect is a stronger consolidation signal.
 6. **Localization is client-side only.** The current language switch changes text on one URL. Do not add hreflang to the same URL. If Arabic, Hindi, or Urdu organic search is a goal, create server-rendered or static, separately addressable localized URLs first.
+7. **Metadata warning cleanup is complete.** The 19 long title/description warnings were rewritten with page-specific intent, concise display copy, and synchronized Open Graph, Twitter, and JSON-LD text where applicable. The validator now reports zero warnings.
 
 ## 2. Indexation and URL architecture
 
@@ -242,7 +243,7 @@ Treat length as a display heuristic, not a ranking guarantee. The repository val
 - Add the production redirect for `/index.html`.
 - Move to an allow-listed public build or protect operational source directories.
 - Inspect the new Playbook, UAE hubs, and policy pages in Search Console.
-- Refine the 19 title/description warnings in priority order.
+- Keep titles and descriptions concise as new pages are added; the current 44-page inventory reports zero metadata warnings.
 
 ### Days 31–60
 
