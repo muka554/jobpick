@@ -139,3 +139,9 @@ for (const name of ["guides/saudi-job-search-guide/index.html", "guides/recruitm
  const details = html.match(/<details class="guide-section-links">([\s\S]*?)<\/details>/)?.[1] || '';
  for (const match of details.matchAll(/href="#([^"]+)"/g)) assert.ok(html.includes('id="' + match[1] + '"'), name + ' has a broken section target');
                     }
+
+const homePriorities = read('index.html');
+assert.ok(homePriorities.indexOf('class="live-jobs-spotlight"') < homePriorities.indexOf('class="filter-panel"'), 'Live jobs shortcut must precede directory filters');
+assert.ok(homePriorities.indexOf('class="home-next-steps"') < homePriorities.indexOf('class="filter-panel"'), 'Priority guides must precede directory filters');
+assert.match(homePriorities, /<details class="home-tracker-panel"><summary/, 'Secondary tracker begins collapsed but stays accessible');
+assert.equal((homePriorities.match(/id="applicationTracker"/g) || []).length, 1, 'Tracker must not be duplicated');
