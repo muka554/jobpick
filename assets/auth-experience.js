@@ -14,6 +14,7 @@
   var initialised = false;
   var returnInProgress = false;
   var welcomeTimer = null;
+  var callbackFailure = callbackFailureFromUrl();
 
   var copy = {
     en: {
@@ -25,7 +26,7 @@
       skip: 'Skip for now', checking: 'Checking your account…', signed: 'You are signed in', welcome: 'Welcome back, {name}.', signout: 'Sign out', account: 'Account', close: 'Close',
       magicSent: 'Check your email for a secure Magic Link.', signupSent: 'Check your email to confirm your new account, then return here to sign in.',
       signInError: 'We could not sign you in. Check your email and password, then try again.', signUpError: 'We could not create the account. Check the password requirements and try again.',
-      unavailable: 'Account access is not available right now.', returnNotice: 'Signed in successfully. Returning you to your page…', signedNotice: 'Signed in successfully.'
+      callbackCancelled: 'Sign-in was not completed. Try again or continue without an account.', callbackError: 'We could not complete sign-in. Please try signing in again.', unavailable: 'Account access is not available right now.', returnNotice: 'Signed in successfully. Returning you to your page…', signedNotice: 'Signed in successfully.'
     },
     ar: {
       badge: 'حساب JobPick', title: 'أكمل من حيث توقفت',
@@ -36,7 +37,7 @@
       skip: 'تخطَّ الآن', checking: 'جارٍ التحقق من حسابك…', signed: 'تم تسجيل دخولك', welcome: 'أهلاً بعودتك، {name}.', signout: 'تسجيل الخروج', account: 'الحساب', close: 'إغلاق',
       magicSent: 'تحقق من بريدك الإلكتروني للحصول على رابط دخول آمن.', signupSent: 'تحقق من بريدك الإلكتروني لتأكيد حسابك الجديد، ثم عُد هنا لتسجيل الدخول.',
       signInError: 'تعذّر تسجيل دخولك. تحقق من البريد الإلكتروني وكلمة المرور ثم حاول مجددًا.', signUpError: 'تعذّر إنشاء الحساب. تحقق من متطلبات كلمة المرور ثم حاول مجددًا.',
-      unavailable: 'الوصول إلى الحساب غير متاح الآن.', returnNotice: 'تم تسجيل الدخول بنجاح. نعيدك إلى صفحتك…', signedNotice: 'تم تسجيل الدخول بنجاح.'
+      callbackCancelled: 'لم يكتمل تسجيل الدخول. حاول مجددًا أو تابع من دون حساب.', callbackError: 'تعذّر إكمال تسجيل الدخول. حاول تسجيل الدخول مجددًا.', unavailable: 'الوصول إلى الحساب غير متاح الآن.', returnNotice: 'تم تسجيل الدخول بنجاح. نعيدك إلى صفحتك…', signedNotice: 'تم تسجيل الدخول بنجاح.'
     },
     hi: {
       badge: 'JobPick खाता', title: 'जहाँ छोड़ा था वहीं से आगे बढ़ें',
@@ -47,7 +48,7 @@
       skip: 'अभी छोड़ें', checking: 'आपका खाता जाँचा जा रहा है…', signed: 'आप साइन इन हैं', welcome: 'वापसी पर स्वागत है, {name}।', signout: 'साइन आउट', account: 'खाता', close: 'बंद करें',
       magicSent: 'सुरक्षित Magic Link के लिए अपना ईमेल देखें।', signupSent: 'अपने नए खाते की पुष्टि के लिए ईमेल देखें, फिर साइन इन करने के लिए यहाँ लौटें।',
       signInError: 'साइन इन नहीं हो सका। अपना ईमेल और पासवर्ड जाँचकर फिर कोशिश करें।', signUpError: 'खाता नहीं बन सका। पासवर्ड नियम जाँचकर फिर कोशिश करें।',
-      unavailable: 'खाता एक्सेस अभी उपलब्ध नहीं है।', returnNotice: 'साइन इन सफल रहा। आपको आपके पेज पर वापस भेजा जा रहा है…', signedNotice: 'साइन इन सफल रहा।'
+      callbackCancelled: 'साइन इन पूरा नहीं हुआ। फिर कोशिश करें या बिना खाते के जारी रखें।', callbackError: 'साइन इन पूरा नहीं हो सका। कृपया फिर से साइन इन करें।', unavailable: 'खाता एक्सेस अभी उपलब्ध नहीं है।', returnNotice: 'साइन इन सफल रहा। आपको आपके पेज पर वापस भेजा जा रहा है…', signedNotice: 'साइन इन सफल रहा।'
     },
     ur: {
       badge: 'JobPick اکاؤنٹ', title: 'جہاں سے چھوڑا تھا وہیں سے آگے بڑھیں',
@@ -58,10 +59,41 @@
       skip: 'ابھی چھوڑ دیں', checking: 'آپ کا اکاؤنٹ چیک کیا جا رہا ہے…', signed: 'آپ سائن اِن ہیں', welcome: 'واپسی پر خوش آمدید، {name}۔', signout: 'سائن آؤٹ', account: 'اکاؤنٹ', close: 'بند کریں',
       magicSent: 'محفوظ Magic Link کے لیے اپنا ای میل دیکھیں۔', signupSent: 'نئے اکاؤنٹ کی تصدیق کے لیے ای میل دیکھیں، پھر سائن اِن کرنے کے لیے یہاں واپس آئیں۔',
       signInError: 'سائن اِن نہیں ہو سکا۔ اپنا ای میل اور پاس ورڈ چیک کرکے دوبارہ کوشش کریں۔', signUpError: 'اکاؤنٹ نہیں بن سکا۔ پاس ورڈ کی شرائط چیک کرکے دوبارہ کوشش کریں۔',
-      unavailable: 'اکاؤنٹ تک رسائی اس وقت دستیاب نہیں ہے۔', returnNotice: 'سائن اِن کامیاب رہا۔ آپ کو آپ کے صفحے پر واپس بھیجا جا رہا ہے…', signedNotice: 'سائن اِن کامیاب رہا۔'
+      callbackCancelled: 'سائن اِن مکمل نہیں ہوا۔ دوبارہ کوشش کریں یا اکاؤنٹ کے بغیر جاری رکھیں۔', callbackError: 'سائن اِن مکمل نہیں ہو سکا۔ براہ کرم دوبارہ سائن اِن کریں۔', unavailable: 'اکاؤنٹ تک رسائی اس وقت دستیاب نہیں ہے۔', returnNotice: 'سائن اِن کامیاب رہا۔ آپ کو آپ کے صفحے پر واپس بھیجا جا رہا ہے…', signedNotice: 'سائن اِن کامیاب رہا۔'
     }
   };
 
+  // Capture the outcome before the SDK consumes callback query/hash values.
+  // Never display provider-controlled descriptions or persist callback tokens.
+  function callbackFailureFromUrl() {
+    try {
+      var url = new URL(window.location.href);
+      var hash = new URLSearchParams(url.hash.slice(1));
+      var keys = ['error', 'error_code', 'error_description'];
+      if (!keys.some(function (key) { return url.searchParams.has(key) || hash.has(key); })) return '';
+      var error = url.searchParams.get('error') || hash.get('error');
+      var code = url.searchParams.get('error_code') || hash.get('error_code');
+      return error === 'access_denied' && (!code || code === 'access_denied') ? 'callbackCancelled' : 'callbackError';
+    } catch (error) { return ''; }
+  }
+  function showCallbackFailure() {
+    if (!callbackFailure) return false;
+    clearStoredReturn();
+    try {
+      var url = new URL(window.location.href);
+      var hash = new URLSearchParams(url.hash.slice(1));
+      var hashChanged = false;
+      ['error', 'error_code', 'error_description'].forEach(function (key) {
+        url.searchParams.delete(key);
+        if (hash.has(key)) { hash.delete(key); hashChanged = true; }
+      });
+      if (hashChanged) url.hash = hash.toString();
+      window.history.replaceState(window.history.state, '', url.pathname + url.search + url.hash);
+    } catch (error) {}
+    setStatus(text(callbackFailure), 'error');
+    show(true);
+    return true;
+  }
   function text(key) { return (copy[language] || copy.en)[key] || copy.en[key] || ''; }
   function usableConfig() { return !!(config && config.url && config.publishableKey && !/YOUR_|YOUR_PROJECT/.test(config.url + config.publishableKey)); }
   function safePath(value) {
@@ -293,6 +325,7 @@
     ui.signupTab.addEventListener('click', function () { setMode('signup'); });
 
     ui.google.addEventListener('click', function () {
+      callbackFailure = '';
       var target = rememberReturn(); setBusy(true); setStatus(text('checking'));
       getClient().then(function (supabase) {
         return supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: callbackRedirect(target), queryParams: { prompt: 'select_account' } } });
@@ -302,6 +335,7 @@
     ui.magic.addEventListener('click', function () {
       var email = ui.email.value.trim();
       if (!email) { ui.email.focus(); return; }
+      callbackFailure = '';
       var target = rememberReturn(); setBusy(true); setStatus(text('checking'));
       getClient().then(function (supabase) {
         return supabase.auth.signInWithOtp({ email: email, options: { shouldCreateUser: false, emailRedirectTo: callbackRedirect(target) } });
@@ -317,6 +351,7 @@
       var password = ui.password.value;
       if (!email) { ui.email.focus(); return; }
       if (!password) { ui.password.focus(); return; }
+      callbackFailure = '';
       var target = rememberReturn(); setBusy(true); setStatus(text('checking'));
       getClient().then(function (supabase) {
         if (mode === 'signup') {
@@ -353,7 +388,7 @@
       supabase.auth.onAuthStateChange(function (eventName, session) {
         if (session && session.user) {
           showSignedIn(session.user);
-          if (eventName === 'SIGNED_IN') {
+          if (eventName === 'SIGNED_IN' && !callbackFailure) {
             if (completeReturn()) setWelcomePending();
             else showWelcome(session.user);
           }
@@ -363,17 +398,19 @@
         var current = result.data && result.data.user;
         if (current) {
           showSignedIn(current);
+          if (showCallbackFailure()) return;
           if (!completeReturn()) {
             if (consumeWelcomePending()) showWelcome(current);
             hide(false);
           }
         } else {
           showAccess();
+          if (showCallbackFailure()) return;
           show();
         }
         setStatus('');
       });
-    }).catch(function () { showAccess(); setStatus(text('unavailable'), 'error'); show(); });
+    }).catch(function () { showAccess(); if (!showCallbackFailure()) { setStatus(text('unavailable'), 'error'); show(); } });
   }
   function init() {
     if (initialised) return;
