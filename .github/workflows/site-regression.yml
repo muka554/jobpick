@@ -44,6 +44,9 @@ jobs:
       - name: Check local cover letter review rules
         run: node tests/cover-letter-checker.mjs
 
+      - name: Check local interview practice plans
+        run: node tests/interview-prep.mjs
+
       - name: Check JavaScript syntax
         shell: bash
         run: |
