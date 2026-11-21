@@ -154,3 +154,9 @@ for (const full of htmlFiles) {
  for (const href of ['/privacy-policy/', '/terms-of-use/', '/advertising-disclosure/']) assert.ok(!primary.includes('href="' + href + '"'), full + ' legal links belong in footer');
  assert.ok(html.includes('class="jobpick-footer-links"'), full + ' needs shared footer links');
 }
+
+const standardsPhone = read('editorial-standards/index.html');
+assert.match(standardsPhone, /class="standards-table-wrap" role="region"/, 'Standards table needs a named keyboard-scrollable region');
+assert.match(standardsPhone, /standards-table-wrap\{max-width:100%;overflow-x:auto/, 'Standards table overflow must stay inside its wrapper');
+const employerPhone = read('guides/verify-uae-employer/index.html');
+assert.match(employerPhone, /a\.button\{max-width:100%;white-space:normal;box-sizing:border-box/, 'Employer CTA must wrap within narrow screens');
