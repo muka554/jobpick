@@ -15,7 +15,7 @@
 <meta property="og:type" content="website">
 <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/assets/site-experience.css">
-<script src="/assets/privacy-controls.js"></script>
+<script src="/assets/privacy-controls.js?v=20261121placement1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#090e13;--panel:#101820;--ink:#f0ede5;--muted:#a6b0bc;--teal:#2dd9c0;--amber:#ffb020;--line:#263442}
@@ -196,4 +196,4 @@ const cvText=document.getElementById('cvText'),cvResult=document.getElementById(
 document.getElementById('buildPrompt').addEventListener('click',()=>{const role=document.getElementById('targetRole').value.trim()||'the target role',city=document.getElementById('targetCity').value;const prompt=`Act as a careful CV editor. Tailor the CV below for ${role} roles in ${city}. Preserve factual accuracy: do not invent employers, dates, qualifications, metrics, visas, or achievements. Return: 1) a concise gap analysis, 2) suggested keyword themes from the vacancy, 3) a rewritten summary, and 4) three evidence-based bullet improvements. Ask me to confirm any uncertain detail.\n\n--- PASTE CV HERE ---\n\n--- PASTE VACANCY HERE ---`;document.getElementById('promptResult').innerHTML=`<strong>Copy-ready prompt</strong><br><textarea readonly style="margin-top:10px;min-height:170px">${escapeHtml(prompt)}</textarea>`});
 </script>
 </body>
-</html>
+  </html>
