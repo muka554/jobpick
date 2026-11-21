@@ -70,6 +70,19 @@ for (const suffix of ['?role=IT&error=access_denied&error_description=untrusted#
   assert.deepEqual(f.context.window.history.state,{keep:true});
   assert.equal(f.store.jobhub_auth_return_to,undefined,'failed callbacks must clear stale stored return paths');
 }
-assert.match(read('index.html'),/site-localization\.js\?v=20261121callback1/);
-assert.match(loader,/auth-experience\.js\?v=20261121callback1/);
+assert.match(read('index.html'),/site-localization\.js\?v=20261121flash1/);
+assert.match(loader,/auth-experience\.js\?v=20261121flash1/);
 console.log('PASS: lazy auth, first-return hash/code/error initialization, existing sessions, safe visible callback errors and URL cleanup');
+
+// An explicit open from the lazy loader must not expose UI before session lookup.
+{
+  const f=fixture('https://jobpick20.com/');
+  f.context.window.setTimeout=()=>{};
+  const t=expose(injected,['show','setTestUi'],f.context);
+  const ui={layer:{hidden:true},google:{focus(){}}};t.setTestUi(ui);
+  t.show(true);assert.equal(ui.layer.hidden,true,'pending session must keep modal hidden');
+}
+assert.match(auth,/jobhub-header-login" hidden/,'replacement header login starts hidden');
+assert.match(auth,/else if \(authCheckComplete\) showAccess\(\)/,'null early events must not show signed-out state');
+assert.match(loader,/button.hidden = needsAccountResume\(\)/,'resume launcher must not claim signed-out state');
+console.log('PASS: unresolved session keeps modal and signed-out header hidden');
