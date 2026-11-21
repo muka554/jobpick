@@ -41,6 +41,9 @@ jobs:
       - name: Verify CV PDF templates
         run: node tests/cv-pdf-export.mjs
 
+      - name: Check local cover letter review rules
+        run: node tests/cover-letter-checker.mjs
+
       - name: Check JavaScript syntax
         shell: bash
         run: |
