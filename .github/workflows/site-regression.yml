@@ -50,6 +50,9 @@ jobs:
       - name: Check local role explorer tally
         run: node tests/role-explorer.mjs
 
+      - name: Check local helper answers and catalogue
+        run: node tests/site-helper.mjs
+
       - name: Check JavaScript syntax
         shell: bash
         run: |
