@@ -166,9 +166,11 @@
       brand.insertBefore(logo, brand.firstChild);
     });
   }
-  function loadAccountExperience() {
+  var accountOpenRequested = false;
+  function loadAccountExperience(openRequested) {
+    if (openRequested !== false) accountOpenRequested = true;
     if (window.JobHubAuthExperience && typeof window.JobHubAuthExperience.open === 'function') {
-      window.JobHubAuthExperience.open();
+      if (accountOpenRequested) { accountOpenRequested = false; window.JobHubAuthExperience.open(); }
       return;
     }
     if (accountLoading) return;
@@ -185,11 +187,11 @@
       if (document.getElementById('jobhubExperienceScript')) return;
       var script = document.createElement('script');
       script.id = 'jobhubExperienceScript';
-      script.src = '/assets/auth-experience.js?v=20261121callback1';
+      script.src = '/assets/auth-experience.js?v=20261121flash1';
       script.defer = true;
       script.onload = function () {
         accountLoading = false;
-        if (window.JobHubAuthExperience && typeof window.JobHubAuthExperience.open === 'function') window.JobHubAuthExperience.open();
+        if (accountOpenRequested && window.JobHubAuthExperience && typeof window.JobHubAuthExperience.open === 'function') { accountOpenRequested = false; window.JobHubAuthExperience.open(); }
       };
       script.onerror = function () { accountLoading = false; };
       document.head.appendChild(script);
@@ -211,7 +213,7 @@
       }
     }
   }
-  function resumeAccountIfNeeded() {
+  function needsAccountResume() {
     var shouldResume = false;
     try { shouldResume = localStorage.getItem('jobhub_account_seen') === '1'; } catch (e) {}
     try { shouldResume = shouldResume || Object.keys(localStorage).some(function (key) { return /^sb-[a-z0-9-]+-auth-token$/i.test(key); }); } catch (e) {}
@@ -223,9 +225,12 @@
         return callbackUrl.searchParams.has(key) || callbackHash.has(key);
       });
     } catch (e) {}
-    if (!shouldResume) return;
-    if ('requestIdleCallback' in window) window.requestIdleCallback(loadAccountExperience, { timeout: 1000 });
-    else window.setTimeout(loadAccountExperience, 120);
+    return shouldResume;
+  }
+  function resumeAccountIfNeeded() {
+    if (!needsAccountResume()) return;
+    if ('requestIdleCallback' in window) window.requestIdleCallback(function () { loadAccountExperience(false); }, { timeout: 1000 });
+    else window.setTimeout(function () { loadAccountExperience(false); }, 120);
   }
   function addAccountLauncher() {
     if (document.querySelector('[data-jobhub-account-launcher]')) return;
@@ -237,6 +242,7 @@
     button.setAttribute('data-jobhub-account-launcher', '');
     button.setAttribute('data-no-localize', '');
     button.textContent = ACCOUNT_LABELS[preferredLanguage()] || ACCOUNT_LABELS.en;
+    button.hidden = needsAccountResume();
     button.addEventListener('click', loadAccountExperience);
     nav.appendChild(button);
   }
