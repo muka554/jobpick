@@ -185,7 +185,7 @@
       if (document.getElementById('jobhubExperienceScript')) return;
       var script = document.createElement('script');
       script.id = 'jobhubExperienceScript';
-      script.src = '/assets/auth-experience.js?v=20260826k';
+      script.src = '/assets/auth-experience.js?v=20261121callback1';
       script.defer = true;
       script.onload = function () {
         accountLoading = false;
@@ -215,7 +215,14 @@
     var shouldResume = false;
     try { shouldResume = localStorage.getItem('jobhub_account_seen') === '1'; } catch (e) {}
     try { shouldResume = shouldResume || Object.keys(localStorage).some(function (key) { return /^sb-[a-z0-9-]+-auth-token$/i.test(key); }); } catch (e) {}
-    try { shouldResume = shouldResume || new URL(window.location.href).searchParams.has('code'); } catch (e) {}
+    try {
+      var callbackUrl = new URL(window.location.href);
+      var callbackHash = new URLSearchParams(callbackUrl.hash.slice(1));
+      var callbackKeys = ['code', 'access_token', 'error', 'error_code', 'error_description'];
+      shouldResume = shouldResume || callbackKeys.some(function (key) {
+        return callbackUrl.searchParams.has(key) || callbackHash.has(key);
+      });
+    } catch (e) {}
     if (!shouldResume) return;
     if ('requestIdleCallback' in window) window.requestIdleCallback(loadAccountExperience, { timeout: 1000 });
     else window.setTimeout(loadAccountExperience, 120);
