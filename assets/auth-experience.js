@@ -15,6 +15,8 @@
   var returnInProgress = false;
   var welcomeTimer = null;
   var callbackFailure = callbackFailureFromUrl();
+  var authCheckComplete = false;
+  var pendingOpen = false;
 
   var copy = {
     en: {
@@ -78,6 +80,7 @@
   }
   function showCallbackFailure() {
     if (!callbackFailure) return false;
+    authCheckComplete = true;
     clearStoredReturn();
     try {
       var url = new URL(window.location.href);
@@ -218,6 +221,7 @@
     });
   }
   function show(force) {
+    if (!authCheckComplete) { if (force) pendingOpen = true; return; }
     if (!ui.layer) return;
     if (!force) {
       try { if (localStorage.getItem(SKIP_KEY) === '1') return; } catch (error) {}
@@ -291,7 +295,7 @@
 
     var headerControls = document.createElement('div');
     headerControls.className = 'jobhub-header-account'; headerControls.setAttribute('data-no-localize', '');
-    headerControls.innerHTML = '<button type="button" class="jobhub-header-login"></button><button type="button" class="jobhub-header-profile" aria-expanded="false" aria-haspopup="true" hidden></button><div class="jobhub-header-menu" hidden><p class="jobhub-header-greeting"></p><button type="button" class="jobhub-header-logout"></button></div>';
+    headerControls.innerHTML = '<button type="button" class="jobhub-header-login" hidden></button><button type="button" class="jobhub-header-profile" aria-expanded="false" aria-haspopup="true" hidden></button><div class="jobhub-header-menu" hidden><p class="jobhub-header-greeting"></p><button type="button" class="jobhub-header-logout"></button></div>';
     var headerTarget = document.querySelector('.sitenav, .nav, nav[aria-label="Site"], header nav');
     if (headerTarget) headerTarget.appendChild(headerControls); else document.body.appendChild(headerControls);
 
@@ -382,7 +386,7 @@
   }
   function initialiseAuth() {
     createUI();
-    if (!usableConfig()) { showAccess(); setStatus(text('unavailable'), 'error'); show(); return; }
+    if (!usableConfig()) { authCheckComplete = true; showAccess(); setStatus(text('unavailable'), 'error'); show(); return; }
     setStatus(text('checking'));
     getClient().then(function (supabase) {
       supabase.auth.onAuthStateChange(function (eventName, session) {
@@ -392,9 +396,10 @@
             if (completeReturn()) setWelcomePending();
             else showWelcome(session.user);
           }
-        } else showAccess();
+        } else if (authCheckComplete) showAccess();
       });
       return supabase.auth.getUser().then(function (result) {
+        authCheckComplete = true;
         var current = result.data && result.data.user;
         if (current) {
           showSignedIn(current);
@@ -406,11 +411,11 @@
         } else {
           showAccess();
           if (showCallbackFailure()) return;
-          show();
+          show(pendingOpen);
         }
         setStatus('');
       });
-    }).catch(function () { showAccess(); if (!showCallbackFailure()) { setStatus(text('unavailable'), 'error'); show(); } });
+    }).catch(function () { authCheckComplete = true; showAccess(); if (!showCallbackFailure()) { setStatus(text('unavailable'), 'error'); show(pendingOpen); } });
   }
   function init() {
     if (initialised) return;
