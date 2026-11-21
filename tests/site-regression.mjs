@@ -32,15 +32,27 @@ for (const file of htmlFiles) {
   }
 }
 
-const internalReferencePattern = /(?:src|href)=["'](\/[^"'#?]+)(?:["'#?])/gi;
+// Resolve both root-relative and page-relative assets. The old absolute-only
+// check missed a broken tools/assets/privacy-controls.js request on /tools/.
+const internalReferencePattern = /(?:src|href)=["']([^"']+)["']/gi;
 for (const file of htmlFiles) {
   const rel = path.relative(root, file);
   const html = fs.readFileSync(file, 'utf8');
+  const pageUrl = new URL(rel.replaceAll(path.sep, '/'), 'https://jobpick20.com/');
   for (const match of html.matchAll(internalReferencePattern)) {
-    const target = match[1];
-    if (target === '/' || target.startsWith('/#')) continue;
-    const candidates = [target, target.endsWith('/') ? `${target}index.html` : target];
-    assert.ok(candidates.some((candidate) => fs.existsSync(path.join(root, candidate))), `${rel} references missing internal path ${target}`);
+    const reference = match[1];
+    if (reference.includes('${') || reference.startsWith('#')) continue;
+    const targetUrl = new URL(reference.replaceAll('&amp;', '&'), pageUrl);
+    if (targetUrl.origin !== 'https://jobpick20.com') continue;
+    const target = decodeURIComponent(targetUrl.pathname);
+    const resolved = path.join(root, target);
+    const candidates = [resolved, path.join(resolved, 'index.html')];
+    assert.ok(candidates.some((candidate) => fs.existsSync(candidate) && fs.statSync(candidate).isFile()), `${rel} references missing internal path ${target}`);
+    if (targetUrl.hash && target.endsWith('/')) {
+      const targetHtml = fs.readFileSync(path.join(resolved, 'index.html'), 'utf8');
+      const anchor = decodeURIComponent(targetUrl.hash.slice(1));
+      assert.ok(targetHtml.includes(`id="${anchor}"`) || targetHtml.includes(`id='${anchor}'`), `${rel} references missing anchor ${reference}`);
+    }
   }
 }
 
