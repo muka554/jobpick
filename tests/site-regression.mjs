@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 const root = path.resolve(new URL('..', import.meta.url).pathname);
 const read = (p) => fs.readFileSync(path.join(root, p), 'utf8');
@@ -77,6 +78,13 @@ assert.match(tools, /id="loginCv"[^>]+\/api\/auth\/google\/login/, 'CV tools mus
 assert.match(tools, /Log in with Google/, 'CV tools must expose the Google login label');
 assert.match(tools, /function cleanGeneratedCv\(text\)/, 'CV output must be normalized before preview and secure download');
 assert.match(tools, /EDITOR NOTES/, 'CV output sanitizer must recognize editor notes');
+
+// Parse browser modules as modules: checking a .js file can miss import-related failures.
+for (const [index, match] of [...tools.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)].entries()) {
+  if (!/type=["']module["']/i.test(match[1])) continue;
+  const checked = spawnSync(process.execPath, ['--check', '--input-type=module'], { input: match[2], encoding: 'utf8' });
+  assert.equal(checked.status, 0, `CV tools inline module ${index} must parse: ${checked.stderr}`);
+}
 
 const privacy = read('assets/privacy-controls.js');
 assert.ok(!privacy.includes("el.innerHTML="), 'consent banner must not assemble unescaped HTML');
