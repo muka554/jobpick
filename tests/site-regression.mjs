@@ -127,3 +127,15 @@ const toolsHtml = fs.readFileSync(path.join(root, 'tools/index.html'), 'utf8');
 assert.ok(toolsHtml.indexOf("const cvText=document.getElementById('cvText')") < toolsHtml.indexOf('<script type="module">'), 'local checker must bind independently before workspace imports');
 assert.match(toolsHtml, /id="checkCv" type="button" disabled/, 'checker starts disabled before initialization');
 assert.match(toolsHtml, /getElementById\('checkCv'\)\.disabled=false/, 'checker enables after local handlers bind');
+
+const helperLayoutHtml = fs.readFileSync(path.join(root, 'tools/site-helper/index.html'), 'utf8');
+assert(helperLayoutHtml.indexOf('id="sh-query"') < helperLayoutHtml.indexOf('id="helper-limits"'), 'Helper input must come before full limits');
+assert(helperLayoutHtml.includes('href="#helper-limits"'), 'Helper short safety notice must link to full limits');
+
+// Reading-layout additions preserve native no-JavaScript section links.
+for (const name of ["guides/saudi-job-search-guide/index.html", "guides/recruitment-scam-warning-signs/index.html", "guides/egypt-job-search-guide/index.html", "guides/uae-job-market-guide/index.html", "guides/qatar-job-search-guide/index.html", "guides/kuwait-job-search-guide/index.html", "guides/jeddah-job-search-guide/index.html", "guides/oman-job-search-guide/index.html", "guides/jordan-job-search-guide/index.html", "guides/uae-job-search-guide/index.html", "guides/bahrain-job-search-guide/index.html", "cities/doha-jobs/index.html", "cities/riyadh-jobs/index.html", "cities/kuwait-city-jobs/index.html", "cities/dubai-jobs/index.html", "cities/cairo-jobs/index.html", "cities/abu-dhabi-jobs/index.html", "cities/muscat-jobs/index.html", "cities/amman-jobs/index.html", "cities/manama-jobs/index.html", "jobs-in-uae/index.html", "it-jobs-uae/index.html", "sales-jobs-uae/index.html", "customer-service-jobs-dubai/index.html", "technical-support-jobs-uae/index.html"]) {
+ const html = read(name);
+ assert.match(html, /<details class="guide-section-links">/, name + ' needs a compact section index');
+ const details = html.match(/<details class="guide-section-links">([\s\S]*?)<\/details>/)?.[1] || '';
+ for (const match of details.matchAll(/href="#([^"]+)"/g)) assert.ok(html.includes('id="' + match[1] + '"'), name + ' has a broken section target');
+                    }
