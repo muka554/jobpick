@@ -50,6 +50,7 @@
   html,body{ margin:0; padding:0; background:var(--bg); }
   body{ font-family:'Inter',sans-serif; color:var(--ink); min-height:100vh; display:flex; justify-content:center; padding:28px 14px 60px; }
   .wrap{ width:100%; max-width:940px; }
+  a{color:var(--amber);text-underline-offset:3px;}
   .sitenav{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--line); }
   :focus-visible{ outline:3px solid var(--amber); outline-offset:3px; }
   .sitenav .brand{ font-family:'Manrope',sans-serif; font-weight:800; font-size:19px; color:var(--teal); text-decoration:none; }
@@ -328,7 +329,11 @@
   }
   @media (max-width:700px){
     body[data-page="home"]{padding:14px 12px 62px;background-attachment:scroll;}
-    body[data-page="home"] .sitenav{grid-template-columns:minmax(0,1fr) auto auto;gap:10px;margin-bottom:20px;padding-bottom:13px;}
+    body[data-page="home"] .sitenav{grid-template-columns:minmax(0,1fr) auto;gap:12px 10px;margin-bottom:20px;padding-bottom:13px;}
+    body[data-page="home"] .sitenav .brand{grid-column:1 / -1;grid-row:1;justify-self:start;}
+    body[data-page="home"] .sitenav .links{grid-column:1 / -1;grid-row:3;}
+    body[data-page="home"] .site-language-control{grid-column:1;grid-row:2;justify-self:start;margin-left:0;}
+    body[data-page="home"] .jobhub-account-launcher,body[data-page="home"] .jobhub-header-account{grid-column:2;grid-row:2;justify-self:end;margin:0;}
     body[data-page="home"] .sitenav .brand{font-size:16px;}
     body[data-page="home"] .sitenav .links{gap:10px 13px;font-size:11px;}
     body[data-page="home"] header.top{margin-bottom:24px;}
@@ -336,6 +341,7 @@
     body[data-page="home"] h1{font-size:clamp(34px,10.5vw,46px);}
     body[data-page="home"] .sub{font-size:14px;line-height:1.58;}
     body[data-page="home"] .searchpanel{grid-template-columns:1fr;padding:14px;border-radius:15px;gap:10px;}
+    body[data-page="home"] .searchpanel::before{inset:-10px;}
     body[data-page="home"] .field--role{grid-column:auto;}
     body[data-page="home"] .searchpanel .field,body[data-page="home"] .searchpanel .field--country,body[data-page="home"] .searchpanel .field--city{min-height:70px;padding:10px 12px;}
     body[data-page="home"] .search-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
@@ -1095,7 +1101,7 @@ function renderSearchHistory(){
 }
 const APPLICATION_TRACKER_KEY='jobhub_application_tracker_v1';
 const APPLICATION_TRACKER_COPY={
-  en:{kicker:'Keep your momentum',title:'Private application tracker',intro:'Save your progress only in this browser. Nothing here is shared with employers, platforms, analytics, or your account.',add:'Add application',company:'Company or employer',role:'Role or position',progress:'Progress',date:'Application date',save:'Save application',cancel:'Cancel',empty:'No applications saved yet. Add one after you apply on an original platform or employer page.',clear:'Clear saved applications',remove:'Remove',count:'{count} applications',statuses:{applied:'Applied',interview:'Interview',offer:'Offer',closed:'Closed'}},
+  en:{kicker:'Keep your momentum',title:'Private application tracker',intro:'Save your progress only in this browser. Nothing here is shared with employers, platforms, analytics, or your account.',add:'Add application',company:'Company or employer',role:'Role or position',progress:'Progress',date:'Application date',save:'Save application',cancel:'Cancel',empty:'No applications saved yet. Add one after you apply on an original platform or employer page.',clear:'Clear saved applications',remove:'Remove',count:'{count} applications',countOne:'1 application',statuses:{applied:'Applied',interview:'Interview',offer:'Offer',closed:'Closed'}},
   ar:{kicker:'حافظ على تقدمك',title:'متابعة طلباتك بشكل خاص',intro:'يتم حفظ تقدمك في هذا المتصفح فقط. لا تتم مشاركة أي شيء هنا مع جهات العمل أو المنصات أو التحليلات أو حسابك.',add:'أضف طلباً',company:'الشركة أو جهة العمل',role:'المسمى الوظيفي',progress:'المرحلة',date:'تاريخ التقديم',save:'احفظ الطلب',cancel:'إلغاء',empty:'لا توجد طلبات محفوظة بعد. أضف طلباً بعد التقديم من منصة أو صفحة جهة العمل الأصلية.',clear:'امسح الطلبات المحفوظة',remove:'إزالة',count:'{count} طلبات',statuses:{applied:'تم التقديم',interview:'مقابلة',offer:'عرض',closed:'مغلق'}},
   hi:{kicker:'अपनी गति बनाए रखें',title:'निजी आवेदन ट्रैकर',intro:'आपकी प्रगति केवल इसी ब्राउज़र में सहेजी जाती है। यहाँ की कोई जानकारी नियोक्ताओं, प्लेटफ़ॉर्म, एनालिटिक्स या आपके खाते से साझा नहीं होती।',add:'आवेदन जोड़ें',company:'कंपनी या नियोक्ता',role:'भूमिका या पद',progress:'स्थिति',date:'आवेदन की तारीख',save:'आवेदन सहेजें',cancel:'रद्द करें',empty:'अभी कोई आवेदन सहेजा नहीं गया है। किसी मूल प्लेटफ़ॉर्म या नियोक्ता पेज पर आवेदन करने के बाद एक जोड़ें।',clear:'सहेजे गए आवेदन हटाएँ',remove:'हटाएँ',count:'{count} आवेदन',statuses:{applied:'आवेदन किया',interview:'साक्षात्कार',offer:'ऑफर',closed:'बंद'}},
   ur:{kicker:'اپنی پیش رفت برقرار رکھیں',title:'نجی درخواست ٹریکر',intro:'آپ کی پیش رفت صرف اسی براؤزر میں محفوظ ہوتی ہے۔ یہاں کی کوئی معلومات آجر، پلیٹ فارم، تجزیات یا آپ کے اکاؤنٹ کے ساتھ شیئر نہیں کی جاتی۔',add:'درخواست شامل کریں',company:'کمپنی یا آجر',role:'عہدہ یا پوزیشن',progress:'مرحلہ',date:'درخواست کی تاریخ',save:'درخواست محفوظ کریں',cancel:'منسوخ کریں',empty:'ابھی کوئی درخواست محفوظ نہیں ہے۔ اصل پلیٹ فارم یا آجر کے صفحے پر درخواست دینے کے بعد شامل کریں۔',clear:'محفوظ درخواستیں صاف کریں',remove:'ہٹائیں',count:'{count} درخواستیں',statuses:{applied:'درخواست دی گئی',interview:'انٹرویو',offer:'آفر',closed:'بند'}}
@@ -1125,7 +1131,7 @@ function renderApplicationTracker(){
   updateApplicationCopy();
   const entries=getApplications().sort((a,b)=>`${b.date}-${b.createdAt||0}`.localeCompare(`${a.date}-${a.createdAt||0}`));
   const t=APPLICATION_TRACKER_COPY[currentLang]||APPLICATION_TRACKER_COPY.en;
-  count.textContent=t.count.replace('{count}',String(entries.length));
+  count.textContent=entries.length===1&&t.countOne?t.countOne:t.count.replace('{count}',String(entries.length));
   list.innerHTML='';empty.hidden=entries.length>0;clear.hidden=!entries.length;
   if(!document.getElementById('applicationDate').value)document.getElementById('applicationDate').value=new Date().toISOString().slice(0,10);
   entries.forEach(entry=>{
@@ -1355,4 +1361,4 @@ if(paramsTriggerSearch){
 }
 </script>
 </body>
-    </html>
+  </html>
