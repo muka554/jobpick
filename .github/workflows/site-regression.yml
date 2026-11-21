@@ -47,6 +47,9 @@ jobs:
       - name: Check local interview practice plans
         run: node tests/interview-prep.mjs
 
+      - name: Check local role explorer tally
+        run: node tests/role-explorer.mjs
+
       - name: Check JavaScript syntax
         shell: bash
         run: |
