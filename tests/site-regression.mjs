@@ -118,3 +118,7 @@ assert.ok(
 );
 
 console.log(`PASS: ${htmlFiles.length} HTML entry points, ${sitemapUrls.length} unique sitemap URLs, metadata/header/catalogue checks`);
+
+const callbackTest = spawnSync(process.execPath, ['tests/auth-callback.mjs'], { cwd: root, encoding: 'utf8' });
+assert.equal(callbackTest.status, 0, callbackTest.stdout + callbackTest.stderr);
+console.log(callbackTest.stdout.trim());
