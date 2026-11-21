@@ -145,3 +145,12 @@ assert.ok(homePriorities.indexOf('class="live-jobs-spotlight"') < homePriorities
 assert.ok(homePriorities.indexOf('class="home-next-steps"') < homePriorities.indexOf('class="filter-panel"'), 'Priority guides must precede directory filters');
 assert.match(homePriorities, /<details class="home-tracker-panel"><summary/, 'Secondary tracker begins collapsed but stays accessible');
 assert.equal((homePriorities.match(/id="applicationTracker"/g) || []).length, 1, 'Tracker must not be duplicated');
+
+for (const full of htmlFiles) {
+ const html = fs.readFileSync(full, 'utf8');
+ const primary = html.match(/<nav class="sitenav jobpick-primary-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+ assert.ok(primary, full + ' needs shared navigation');
+ for (const href of ['/', '/jobs/', '/resources/', '/tools/', '/about/']) assert.ok(primary.includes('href="' + href + '"'), full + ' missing primary ' + href);
+ for (const href of ['/privacy-policy/', '/terms-of-use/', '/advertising-disclosure/']) assert.ok(!primary.includes('href="' + href + '"'), full + ' legal links belong in footer');
+ assert.ok(html.includes('class="jobpick-footer-links"'), full + ' needs shared footer links');
+}
