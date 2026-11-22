@@ -494,7 +494,7 @@
       <button class="selector-toggle" id="cityToggle" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="cityMenu"><span id="cityValue">Choose a city</span></button>
       <div class="selector-menu" id="cityMenu" role="listbox" aria-labelledby="cityLabel" hidden></div>
     </div>
-    <div class="search-actions" aria-label="Search actions">
+    <div class="search-actions">
       <button class="go" id="goBtn" type="submit" aria-controls="boardhost" data-i18n="button.search">Search all boards</button>
       <button class="reset-search" id="resetBtn" type="button" aria-controls="boardhost" data-i18n="button.reset">Reset search</button>
       <button class="share-search" id="shareSearchBtn" type="button" aria-describedby="searchStatus" data-i18n="button.share" disabled>Copy search link</button>
@@ -621,7 +621,7 @@
 <p id="footerPublisher">Middle East Job Hub publishes independently maintained job-search guides, platform methodology, and safety resources for the region. Editorial pages identify their update dates and should be used alongside the original employer or public authority source.</p>
 <p id="footerCopyright" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink-dim);">© 2026 Middle East Job Hub. All rights reserved. This page's design and code may not be copied or redistributed without permission.</p>
 
-<div aria-label="Site information" class="jobpick-footer-links"><a href="/privacy-policy/">Privacy policy</a><a href="/terms-of-use/">Terms of Use</a><a href="/advertising-disclosure/">Advertising Disclosure</a><a href="/editorial-standards/">Editorial standards</a><a href="/how-we-review-job-platforms/">Methodology</a><a href="/corrections/">Corrections</a><a href="/contact/">Contact</a><a href="/employers/">For employers</a><a href="/partners/">Partnerships</a></div></footer>
+<nav aria-label="Site information" class="jobpick-footer-links"><a href="/privacy-policy/">Privacy policy</a><a href="/terms-of-use/">Terms of Use</a><a href="/advertising-disclosure/">Advertising Disclosure</a><a href="/editorial-standards/">Editorial standards</a><a href="/how-we-review-job-platforms/">Methodology</a><a href="/corrections/">Corrections</a><a href="/contact/">Contact</a><a href="/employers/">For employers</a><a href="/partners/">Partnerships</a></nav></footer>
 </div>
 <script>
 const I18N = {
@@ -985,9 +985,9 @@ function renderBoard(){
       const pillClass=item.type==='direct'?'pill-direct':item.type==='google'?'pill-google':'pill-portal';
       let opensearchHtml;
       if(item.type==='portal'){
-        opensearchHtml=`<a href="${item.url}" target="_blank" rel="noopener" aria-label="Visit ${item.name} (${methodWord}, opens in new tab)">${t['btn.visit']} <span aria-hidden="true">↗</span></a>`;
+        opensearchHtml=`<a href="${item.url}" target="_blank" rel="noopener" aria-label="${t['btn.visit']} ${item.name} (${methodWord}, opens in new tab)">${t['btn.visit']} <span aria-hidden="true">↗</span></a>`;
       }else{
-        opensearchHtml=`<a href="#" target="_blank" rel="noopener" id="link-${i}" aria-label="Search ${item.name} (${methodWord}, opens in new tab)">${t['btn.open']} <span aria-hidden="true">↗</span></a>`;
+        opensearchHtml=`<a href="#" target="_blank" rel="noopener" id="link-${i}" aria-label="${t['btn.open']} ${item.name} (${methodWord}, opens in new tab)">${t['btn.open']} <span aria-hidden="true">↗</span></a>`;
       }
       row.innerHTML=`<button type="button" class="star-btn${isFav?' active':''}" data-code="${item.code}" aria-pressed="${isFav}" aria-label="${isFav?t['fav.remove']:t['fav.add']} ${item.name}">${isFav?'★':'☆'}</button><div class="pname">${item.name}</div><div class="coverage">${coverageLabel(item.gate)}</div><div><span class="pill ${pillClass}">${pillLabel}</span></div><div class="opensearch">${opensearchHtml}</div>`;
       boardEl.appendChild(row);
@@ -1074,10 +1074,10 @@ function renderSearchHistory(){
   entries.forEach((entry,index)=>{
     const button=document.createElement('button');
     button.type='button';button.className='history-item';button.dataset.historyIndex=String(index);
-    button.setAttribute('aria-label',historyText('run').replace('{search}',historyLabel(entry)));
+    button.setAttribute('aria-label',dynamicText('search')+' '+historyLabel(entry));
     const tag=document.createElement('span');tag.className='history-item__tag';tag.textContent=dynamicText('search');
     const label=document.createElement('span');label.className='history-item__label';label.textContent=historyLabel(entry);
-    button.append(tag,label);list.appendChild(button);
+    button.append(tag,document.createTextNode(' '),label);list.appendChild(button);
   });
 }
 const APPLICATION_TRACKER_KEY='jobhub_application_tracker_v1';
@@ -1197,7 +1197,7 @@ function runSearch(){
     const methodWord=item.type==='direct'?'direct search':'Google search';
     if(link){
       link.href=url;
-      link.setAttribute('aria-label',`Search ${item.name} for ${roleRaw}${cityName?' in '+cityName:' in '+countryName} (${methodWord}, opens in new tab)`);
+      link.setAttribute('aria-label',`${localText('btn.open','Open →')} ${item.name} for ${roleRaw}${cityName?' in '+cityName:' in '+countryName} (${methodWord}, opens in new tab)`);
     }
   });
   const statusEl=document.getElementById('searchStatus');
