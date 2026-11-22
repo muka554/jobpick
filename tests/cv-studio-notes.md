@@ -32,3 +32,13 @@ DOCX is a local uncompressed ZIP/OpenXML package with three XML parts. It has no
 Browser checks use a local static server and test data, not a candidate upload service. Check all core and optional sections with axe, at 320/390/768/1280/1440 widths. Exercise the three-step path; entry add/remove/reorder; exact evidence copying; six template switches; JSON export/import and cancellation; storage opt-in/cancel/restore/delete/failure; multi-tab changes; hostile HTML in fields and drafts; Word/text download; browser print with multi-page output; Arabic mixed with English; and literal long words. Inspect PDF pages and copy/extract their text in reading order. Open DOCX in an office application to confirm the package and layout, rather than trusting the file extension.
 
 Pre-merge and deployed checks are separate. Screenshots of local fixtures do not establish production state. A release still needs independent review, CI, an authorized merge and a post-deploy check.
+
+Optional browser suite (separate QA install, no production dependencies):
+
+```sh
+npm install --prefix /tmp/jobpick-cv-qa playwright@1.65.1 @axe-core/playwright@4.14.0
+/tmp/jobpick-cv-qa/node_modules/.bin/playwright install chromium
+CV_STUDIO_QA_PACKAGES=/tmp/jobpick-cv-qa/package.json node tests/cv-studio-browser.mjs
+```
+
+The browser suite writes synthetic samples under the system temporary directory by default. Set `CV_STUDIO_QA_OUTPUT` to another output directory if needed. It does not run in the existing fast CI workflow.
