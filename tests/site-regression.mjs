@@ -166,3 +166,11 @@ assert.ok(!qatarMobility.includes('generally still requires either a No-Objectio
 assert.match(qatarMobility, /without a No-Objection Certificate/, 'Qatar guide must explain NOC removal');
 assert.match(qatarMobility, /mol.gov.qa\/admin\/EServices/, 'Qatar employer-change guidance must link to Ministry procedure');
 assert.match(read('corrections/index.html'), /correction-20261122-qatar/, 'Material Qatar correction needs a public record');
+
+for (const country of ['oman','kuwait','jordan','bahrain','egypt','uae']) {
+ const html = read('guides/' + country + '-job-search-guide/index.html');
+ assert.match(html, /What changed on 22 November 2026/, country + ' needs an honest claim-correction note');
+ assert.ok(!html.includes('affect hiring pace, not eligibility'), country + ' must not reduce eligibility restrictions to hiring speed');
+}
+assert.match(read('guides/oman-job-search-guide/index.html'), /https:\/\/www.mol.gov.om\/Laborlaw/, 'Oman restrictions must link to Ministry law');
+assert.match(read('corrections/index.html'), /correction-20261122-country/, 'Country claim corrections need a public record');
