@@ -29,3 +29,6 @@ Thumbs.db
 /tmp/
 reports/local/
 .seo-indexing/
+
+# Installed Node dependencies
+node_modules/
