@@ -281,3 +281,14 @@ assert.ok(!routeGuide.includes('_gl='),'No session-tracking URL published');
 assert.ok(!/increase my visibility by 80%|guaranteed placement|all DHL applications are broken/.test(routeGuide),'No unverified promotion or platform-wide failure claim');
 assert.ok(routeGuide.includes('family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap'),'Keep exact platform-guide font request with literal separators');
 assert.match(routeGuide,/"dateModified": "2026-11-22T/,'Material review date');
+
+// Contextual navigation supplements, rather than duplicates, existing discovery links.
+const categoryPaths=['/jobs-in-uae/','/it-jobs-uae/','/technical-support-jobs-uae/','/customer-service-jobs-dubai/','/sales-jobs-uae/','/tools/'];
+for (const href of categoryPaths) {
+ assert.ok(read('index.html').includes('href="'+href+'"'),'Keep existing static homepage category link '+href);
+ assert.ok(read('resources/index.html').includes('href="'+href+'"'),'Keep resource directory link '+href);
+ assert.ok(sitemapUrls.includes('https://jobpick20.com'+href),'Keep category in sitemap '+href);
+}
+for(const href of ['/it-jobs-uae/','/technical-support-jobs-uae/','/customer-service-jobs-dubai/','/sales-jobs-uae/']) assert.match(read('guides/uae-job-search-playbook/index.html'),new RegExp('<p class="route-context">[\\s\\S]*?href="'+href+'"'),'Role guidance has ordinary contextual links '+href);
+assert.match(read('guides/uae-cv-guide/index.html'),/<p class="route-context">[\s\S]*?href="\/tools\/"/,'CV guide links tools directory in its tools section');
+assert.match(read('guides/dubai-vs-abu-dhabi-job-search/index.html'),/<p class="route-context">[\s\S]*?href="\/jobs-in-uae\/"/,'City comparison links UAE city-and-role directory');
