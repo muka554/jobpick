@@ -197,3 +197,5 @@ for (const [old,anchor] of [['uae-job-search-guide','target'],['uae-job-market-g
  assert.ok(moved.includes('content="0; url=https://jobpick20.com/guides/uae-job-search-playbook/#'+anchor+'"'),'instant redirect target');
  assert.ok(!sitemapUrls.includes('https://jobpick20.com/guides/'+old+'/'),'moved article must leave sitemap');
               }
+
+assert.match(read('guides/uae-job-search-playbook/index.html'), /\.cta \.button\{max-width:100%;white-space:normal;overflow-wrap:anywhere\}/, 'playbook CTA must wrap with the live font on narrow phones');
