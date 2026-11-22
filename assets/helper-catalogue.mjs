@@ -127,21 +127,9 @@ export const CATALOGUE = [
     "lang": "en"
   },
   {
-    "path": "/cities/kuwait-city-jobs/",
-    "title": "Kuwait City Jobs: Websites & Search Guide | Middle East Job Hub",
-    "description": "Find jobs in Kuwait City with focused Kuwait job websites, employer checks, application organization, and relevant profile guidance.",
-    "lang": "en"
-  },
-  {
     "path": "/cities/manama-jobs/",
     "title": "Manama Jobs: Websites & Search Guide | Middle East Job Hub",
     "description": "Find jobs in Manama with useful Bahrain job websites, structured applications, recruiter communication, and listing verification.",
-    "lang": "en"
-  },
-  {
-    "path": "/cities/muscat-jobs/",
-    "title": "Muscat Jobs: Websites & Search Guide | Middle East Job Hub",
-    "description": "Find jobs in Muscat with practical Oman job websites, focused platform use, sector research, and candidate safety guidance.",
     "lang": "en"
   },
   {
@@ -237,7 +225,7 @@ export const CATALOGUE = [
   {
     "path": "/guides/kuwait-job-search-guide/",
     "title": "Kuwait Jobs: Registration & Employer Routes | JobPick",
-    "description": "Kuwait job-search guide covering public registration, employer applications, and route evidence.",
+    "description": "Compare Kuwait citizen registration, employer applications and registered-worker services, with Kuwait City worksite questions and source limits.",
     "lang": "en"
   },
   {
@@ -249,7 +237,7 @@ export const CATALOGUE = [
   {
     "path": "/guides/oman-job-search-guide/",
     "title": "Oman Jobs: Job-Seeker Registration Guide | JobPick",
-    "description": "Oman job-search guide covering Ministry of Labour registration, evidence preparation, and employer applications.",
+    "description": "Compare Oman registration, private-sector applications and employer routes, with Arabic/English source limits and a Muscat worksite checklist.",
     "lang": "en"
   },
   {
