@@ -2,7 +2,12 @@
 export const VERSION = 1;
 export const LIMITS = { text: 6000, short: 180, entries: 20, draftBytes: 2000000 };
 const clean = (v, max = LIMITS.text) => typeof v === 'string' ? v.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').slice(0, max).trim() : '';
-const stripListMarker = value => value.replace(/^\s*(?:•\s*|-\s+(?=[^\s\p{N}]))/u, '').trim();
+const stripListMarker = value => {
+  const text = value.trim();
+  // Prefer retaining an extra dash over changing a signed quantity or amount.
+  if (/^-\s*(?:[\p{N}\p{Sc}.]|[A-Z]{3}\s*[-+]?[\p{N}\p{Sc}.]|\p{L}{1,4}\p{Sc})/iu.test(text)) return text;
+  return text.replace(/^(?:•\s*|-\s+(?=\p{L}))/u, '').trim();
+};
 export const lines = v => clean(v).split('\n').map(stripListMarker).filter(Boolean);
 export function blankDraft() {
   return { version: VERSION, sample: false, template: 'professional', direction: 'ltr', educationFirst: false, tailorToJob: false,
@@ -163,4 +168,4 @@ export function reviewDraft(d) {
     if (!d.target.evidence) add('For your cover letter, choose or write the evidence you want to use.', 4);
   }
   return issues;
-                                                                                                              }
+  }
