@@ -248,8 +248,8 @@ export const CATALOGUE = [
   },
   {
     "path": "/guides/uae-cv-guide/",
-    "title": "UAE CV Toolkit: Build a Truthful, Readable Application | JobPick",
-    "description": "Match a vacancy to real evidence, improve CV bullets without invented metrics and check your application file before sending.",
+    "title": "UAE CV Toolkit: A Complete Application Workshop | JobPick",
+    "description": "Build a truthful CV and application with a complete fictional example, an evidence map and a blank three-page printable workbook.",
     "lang": "en"
   },
   {
