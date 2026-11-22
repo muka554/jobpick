@@ -1,0 +1,38 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {readAmount,calculateOffer,compareOffers} from '../assets/offer-comparison.mjs';
+for (const blank of ['', '  ']) assert.equal(readAmount(blank).cents,null);
+for (const [input,expected] of [['0',0],['0.01',1],['10,000.50',1000050],['100.1',10010],['0007.09',709],['100000000',10000000000]]) assert.equal(readAmount(input).cents,expected,input);
+for (const input of ['-1','1.001','NaN','Infinity','1e3','10,00','1,00,000','1 000','100000001','100000000.01','<img>',null,12,'9'.repeat(21)]) assert.ok(readAmount(input).error,String(input));
+const a={mode:'total',total:'10000',housing:'9000',conditional:'8000',costs:'5500'};
+const b={mode:'parts',total:'999999',basic:'7000',housing:'2000',transport:'1000',other:'0',conditional:'2000',costs:'6000'};
+const result=compareOffers(a,b);
+assert.equal(result.offers[0].fixedCents,1000000);
+assert.equal(result.offers[0].conditionalCents,800000);
+assert.equal(result.offers[0].balanceCents,450000);
+assert.equal(result.offers[1].fixedCents,1000000);
+assert.equal(result.offers[1].balanceCents,400000);
+assert.equal(result.fixedDifferenceCents,0);
+assert.equal(calculateOffer({mode:'parts',basic:'7000',housing:'',transport:'0',other:'0'}).fixedCents,null);
+assert.deepEqual(calculateOffer({mode:'parts',basic:'7000',housing:'',transport:'0',other:'0'}).pending,['separate housing allowance']);
+assert.equal(calculateOffer({mode:'total',total:'0',costs:'0'}).balanceCents,0);
+assert.equal(calculateOffer({mode:'total',total:'1',costs:'2'}).balanceCents,-100);
+assert.equal(calculateOffer({mode:'total',total:'1'}).balanceCents,null);
+assert.equal(calculateOffer({mode:'total',total:''}).fixedCents,null);
+assert.ok(calculateOffer({mode:'total',total:'100',conditional:'-1'}).errors.length);
+assert.ok(calculateOffer(null).errors.length);
+assert.ok(calculateOffer({mode:'anything'}).errors.length);
+assert.equal(compareOffers(a,{mode:'total',total:''}).fixedDifferenceCents,null);
+assert.equal(compareOffers(a,{mode:'total',total:'11000'}).fixedDifferenceCents,-100000);
+assert.equal(compareOffers(a,{mode:'total',total:'9000'}).fixedDifferenceCents,100000);
+for (let n=1;n<=50;n++) {
+ const value=(n*137.01).toFixed(2),cost=(n*27.03).toFixed(2);
+ assert.equal(calculateOffer({mode:'total',total:value,costs:cost}).balanceCents,readAmount(value).cents-readAmount(cost).cents);
+}
+const script=fs.readFileSync('assets/offer-comparison.mjs','utf8');
+for (const sink of ['innerHTML','fetch(','XMLHttpRequest','sendBeacon','localStorage','sessionStorage','document.cookie','indexedDB','WebSocket','location.search','history.pushState']) assert.equal(script.includes(sink),false,sink);
+assert.match(script,/textContent = text/);
+const page=fs.readFileSync('guides/uae-salary-guide/index.html','utf8');
+assert.match(page,/id="offer-worksheet"/);assert.match(page,/connect-src 'none'/);assert.match(page,/form-action 'none'/);assert.ok(!/<form\b/i.test(page));assert.match(page,/src="\/assets\/offer-comparison.mjs"/);
+assert.match(page,/"dateModified": "2026-11-22"/);assert.match(page,/source snapshots elsewhere on this page remain dated 21 November 2026/);
+console.log('PASS: cents arithmetic, active-package-only totals, unknown versus zero, conditional exclusion, scenarios, input bounds, safe output and no network/storage APIs');
