@@ -17,7 +17,7 @@ assert.equal(doc.querySelectorAll('.tools-start a[href="/tools/site-helper/"],.t
 assert.ok(doc.getElementById('cvText').getAttribute('aria-describedby'));
 const classic=[...doc.scripts].filter(s=>!s.src&&!s.type);assert.equal(classic.length,1);
 dom.window.eval(classic[0].textContent);
-doc.getElementById('checkCv').click();assert.match(doc.getElementById('cvResult').textContent,/Paste your CV text first/);
+doc.getElementById('checkCv').click();assert.match(doc.getElementById('cvResult').textContent,/Choose a PDF or paste your CV text first/);
 doc.getElementById('cvText').value='Phone and location\nProfessional summary\nWork experience\nManaged and delivered updates\nSkills\nEducation';doc.getElementById('checkCv').click();assert.match(doc.getElementById('cvResult').textContent,/main structure signals/);
 assert.equal(disclosure.open,false);
 const callbackKeys=['code','access_token','error','error_code','error_description'];
@@ -30,8 +30,8 @@ for(const key of callbackKeys)for(const suffix of ['?'+key+'=fixture','#'+key+'=
 for(const suffix of ['?other=fixture','#checker','#token_type=bearer','?note=error_code%3Dfixture','#note=access_token%3Dfixture']){
  const normal=create(suffix);normal.window.eval([...normal.window.document.scripts].find(s=>!s.src&&!s.type).textContent);assert.equal(normal.window.document.getElementById('signed-in-cv-workspace').open,false,'unrelated URLs stay folded: '+suffix);normal.window.close();
 }
-assert.equal(doc.querySelector('script[src="/assets/cv-pdf-checker.mjs"]'),null);
-assert.equal(doc.getElementById('cvCheckPdf'),null,'PDF work stays in a separate branch');
+assert.equal(doc.querySelector('script[src="/assets/cv-pdf-checker.mjs"]').type,'module');
+assert.equal(doc.getElementById('cvCheckPdf').type,'file');assert.equal(doc.getElementById('cvCheckPdf').accept,'.pdf,application/pdf');assert.equal(doc.getElementById('cvCheckPdf').disabled,true,'the PDF chooser is enabled only after its module loads');assert.equal(doc.getElementById('cvPasteText').tagName,'DETAILS');
 assert.equal(doc.getElementById('openCvWorkspace').getAttribute('href'),'#secureCvTitle');
 assert.ok(doc.getElementById('openCvWorkspace').compareDocumentPosition(doc.getElementById('checker'))&dom.window.Node.DOCUMENT_POSITION_FOLLOWING);
 assert.equal(doc.querySelector('a[href="/tools/cv-studio.html"]'),null);
