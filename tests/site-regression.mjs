@@ -223,6 +223,11 @@ assert.match(read('guides/bahrain-job-search-guide/index.html'),/Tamkeen.*Nation
 
 // Employer checks are evidence exercises, not authenticity certification.
 const employerGuide=read('guides/verify-uae-employer/index.html');
+// Preserve every pre-workshop fragment, including the two heading targets.
+for (const id of ["main-content", "contents-title", "why", "identity", "domain", "recruiter", "vacancy", "offer", "fees", "report", "checklist", "sources-title"]) assert.equal((employerGuide.match(new RegExp('id="' + id + '"', 'g')) || []).length, 1, 'Employer guide must preserve unique legacy fragment: ' + id);
+assert.match(employerGuide, /<h2 id="contents-title">/, 'Contents fragment must remain on its heading');
+assert.match(employerGuide, /<h2 id="sources-title">/, 'Sources legacy fragment must remain on its heading');
+assert.match(employerGuide, /<section class="source-box" id="sources">/, 'New sources section fragment must remain');
 for(const id of ['why','identity','domain','recruiter','vacancy','offer','fees','report','checklist','case-employer','case-agency','case-payment']) assert.ok(employerGuide.includes('id="'+id+'"'),'retain employer guide decision anchors');
 assert.equal((employerGuide.match(/class="case-study"/g)||[]).length,3,'three worked cases');
 for(const text of ['Fictional exercise','No details were entered','Enquiry for Job Offer','responsible authority','JobPick does not collect','22 November 2026']) assert.ok(employerGuide.includes(text),'preserve evidence limits: '+text);
