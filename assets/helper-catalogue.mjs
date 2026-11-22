@@ -182,8 +182,8 @@ export const CATALOGUE = [
   },
   {
     "path": "/guides/gulf-job-platforms-explained/",
-    "title": "UAE Employment Routes: A Six-Route Comparison | JobPick",
-    "description": "Compare six employment-route examples, their audiences, account limits and application paths, with a practical vacancy-verification workflow.",
+    "title": "UAE Employment Routes: Six Dated Walkthroughs | JobPick",
+    "description": "Compare six UAE job-search journeys, public searches, account and privacy boundaries, and observed application stop points before registering.",
     "lang": "en"
   },
   {
