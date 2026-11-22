@@ -59,7 +59,7 @@ They support factual tailoring and ATS-oriented resources respectively, but the 
 - No real attachment, recipient, submission, interview or result exists in the exercise. The completed record says drafted, not submitted.
 - National Careers Service and university guidance provide writing principles, not UAE immigration or data-collection rules.
 - The English workshop and PDFs do not pretend to be a simultaneous Arabic translation. The Arabic link is described as the core checklist.
-- All pre-release HTML IDs, original font-link markup and non-JSON-LD script tags are preserved. Printable PDFs are new assets, not advertising or tracking changes.
+- All pre-release HTML IDs and non-JSON-LD script tags are preserved. The intended font families, weights and order remain unchanged. Live verification after PR73 found that the pre-existing escaped font-query separators caused the host rewrite to define only Manrope. A small follow-up changes only those separators to literal ampersands, matching the successful earlier font repair, and adjusts the guard. No hosting, CSP, advertising or tracking setting changes. Printable PDFs remain the same assets.
 
 ## Verification record
 
