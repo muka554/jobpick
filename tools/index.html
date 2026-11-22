@@ -185,8 +185,9 @@ fieldset{min-width:0;max-width:100%}.panel{min-width:0}.step-legend{flex-wrap:wr
 (function(){
 const cvText=document.getElementById('cvText'),cvResult=document.getElementById('cvResult');document.getElementById('checkCv').addEventListener('click',()=>{const t=cvText.value.trim(),lower=t.toLowerCase();const checks=[['Contact details',/(phone|linkedin|location)/.test(lower)],['Professional summary',/(summary|profile|objective)/.test(lower)],['Work experience',/(experience|employment|career)/.test(lower)],['Skills',/skills?/.test(lower)],['Education',/(education|degree|university|college)/.test(lower)],['Action-word signal',/(increased|reduced|managed|delivered|achieved)/.test(lower)]];if(!t){cvResult.innerHTML='<strong>Paste your CV text first.</strong>';return}const hit=checks.filter(x=>x[1]).length,score=Math.round(hit/checks.length*100),missing=checks.filter(x=>!x[1]).map(x=>x[0]);cvResult.innerHTML=`<strong>Checklist coverage score: ${score}%</strong><br>${missing.length?'Consider adding: '+missing.join(', ')+'.':'The main structure signals were detected. Tailor the evidence to the vacancy and verify every claim.'}<br><span class="note">This checks a few text signals only. Headings and action words do not verify quality, accuracy or measurable results. It is not an ATS score, AI verdict or hiring prediction.</span>`});
 document.getElementById('checkCv').disabled=false;
-const returnParams=new URLSearchParams(window.location.search);
-if(returnParams.has('code')||returnParams.has('error')||/^#(?:access_token|error|error_description)=/.test(window.location.hash))document.getElementById('signed-in-cv-workspace').open=true;
+const returnUrl=new URL(window.location.href),returnHash=new URLSearchParams(returnUrl.hash.slice(1));
+const callbackKeys=['code','access_token','error','error_code','error_description'];
+if(callbackKeys.some(key=>returnUrl.searchParams.has(key)||returnHash.has(key)))document.getElementById('signed-in-cv-workspace').open=true;
 })();
 </script>
 <script type="module">
