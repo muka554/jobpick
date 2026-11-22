@@ -115,7 +115,9 @@ export function reviewDraft(d) {
   for (const [i, e] of d.education.entries()) if (Object.values(e).some(Boolean) && (!e.qualification || !e.institution || !e.dates)) add(`Complete the qualification, institution and dates for education ${i + 1}.`, 2);
   if (d.sample) add('This is a fictional sample. Start a blank CV before making your application.', 0);
   if (cvBlocks(d).some(b => /\[[^\]]+\]|lorem ipsum|your name|insert here/i.test(b.text))) add('Look for unfinished placeholders in your CV.', 5);
-  if (!d.target.role || !d.target.company) add('For a cover letter, add the target role and employer.', 4);
-  if (!d.target.evidence) add('For a cover letter, choose or write the evidence you want to use.', 4);
+  if (Object.values(d.target).some(Boolean)) {
+    if (!d.target.role || !d.target.company) add('For your cover letter, add the target role and employer.', 4);
+    if (!d.target.evidence) add('For your cover letter, choose or write the evidence you want to use.', 4);
+  }
   return issues;
 }
