@@ -62,6 +62,9 @@ jobs:
       - name: Check local helper answers and catalogue
         run: node tests/site-helper.mjs
 
+      - name: Check exact ad-page CSP scope
+        run: node tests/adsense-csp.mjs
+
       - name: Check JavaScript syntax
         shell: bash
         run: |
