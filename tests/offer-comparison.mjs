@@ -33,6 +33,6 @@ const script=fs.readFileSync('assets/offer-comparison.mjs','utf8');
 for (const sink of ['innerHTML','fetch(','XMLHttpRequest','sendBeacon','localStorage','sessionStorage','document.cookie','indexedDB','WebSocket','location.search','history.pushState']) assert.equal(script.includes(sink),false,sink);
 assert.match(script,/textContent = text/);
 const page=fs.readFileSync('guides/uae-salary-guide/index.html','utf8');
-assert.match(page,/id="offer-worksheet"/);assert.match(page,/connect-src 'none'/);assert.match(page,/form-action 'none'/);assert.ok(!/<form\b/i.test(page));assert.match(page,/src="\/assets\/offer-comparison.mjs"/);
+assert.match(page,/id="offer-worksheet"/);assert.match(page,/connect-src 'none'/);assert.match(page,/form-action 'none'/);assert.ok(!/<form\b/i.test(page));assert.match(page,/src="\/assets\/offer-comparison\.mjs\?release=cda7af9"/);
 assert.match(page,/"dateModified": "2026-11-22"/);assert.match(page,/source snapshots elsewhere on this page remain dated 21 November 2026/);
 console.log('PASS: cents arithmetic, active-package-only totals, unknown versus zero, conditional exclusion, scenarios, input bounds, safe output and no network/storage APIs');
