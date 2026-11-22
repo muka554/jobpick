@@ -267,7 +267,7 @@ export const CATALOGUE = [
   {
     "path": "/guides/verify-uae-employer/",
     "title": "How to Verify a UAE Employer or Recruiter | JobPick",
-    "description": "A practical checklist for checking a UAE employer, recruitment agency or job offer before you apply: licence and identity checks, domain checks, fee warning signs and official reporting routes.",
+    "description": "Check UAE employers, recruiters and offers with official routes, an evidence record and three worked examples. Know what a check does not prove.",
     "lang": "en"
   },
   {
