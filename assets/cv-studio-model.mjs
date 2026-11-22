@@ -2,7 +2,8 @@
 export const VERSION = 1;
 export const LIMITS = { text: 6000, short: 180, entries: 20, draftBytes: 2000000 };
 const clean = (v, max = LIMITS.text) => typeof v === 'string' ? v.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').slice(0, max).trim() : '';
-export const lines = v => clean(v).split('\n').map(s => s.replace(/^\s*[-•]\s*/, '').trim()).filter(Boolean);
+const stripListMarker = value => value.replace(/^\s*(?:•\s*|-\s+(?=[^\s\p{N}]))/u, '').trim();
+export const lines = v => clean(v).split('\n').map(stripListMarker).filter(Boolean);
 export function blankDraft() {
   return { version: VERSION, sample: false, template: 'professional', direction: 'ltr', educationFirst: false, tailorToJob: false,
     profile: { name: '', title: '', email: '', phone: '', city: '', link: '', summary: '', availability: '', workStatus: '' },
@@ -28,6 +29,28 @@ export function normalizeDraft(raw) {
   for (const key of ['skills', 'languages', 'certifications', 'projects']) d[key] = clean(raw[key]);
   return d;
 }
+export function importDraft(raw) {
+  // Imports are all-or-nothing. Never truncate a user's facts to make a file fit.
+  const schema = blankDraft();
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw) || raw.version !== VERSION) return normalizeDraft(raw);
+  const text = (value, max, label) => {
+    if (value === undefined) return;
+    if (typeof value !== 'string') throw new Error(`${label} must be text.`);
+    if (value.length > max) throw new Error(`${label} exceeds the ${max}-character limit. No data was imported.`);
+  };
+  for (const key of Object.keys(schema.profile)) text(raw.profile?.[key], key === 'summary' ? 3000 : LIMITS.short, `Profile ${key}`);
+  for (const key of Object.keys(schema.target)) text(raw.target?.[key], ['jobDescription','requirements','evidence','motivation','closing'].includes(key) ? LIMITS.text : LIMITS.short, `Job ${key}`);
+  for (const kind of ['experience','education']) {
+    if (raw[kind] !== undefined && !Array.isArray(raw[kind])) throw new Error(`${kind} must be a list.`);
+    if ((raw[kind]?.length || 0) > LIMITS.entries) throw new Error(`${kind} has more than ${LIMITS.entries} entries. No data was imported.`);
+    for (const [i, entry] of (raw[kind] || []).entries()) {
+      if (!entry || typeof entry !== 'object' || Array.isArray(entry)) throw new Error(`${kind} entry ${i + 1} is not valid.`);
+      for (const key of Object.keys(schema[kind][0])) text(entry[key], ['bullets','detail'].includes(key) ? LIMITS.text : LIMITS.short, `${kind} ${i + 1} ${key}`);
+    }
+  }
+  for (const key of ['skills','languages','certifications','projects']) text(raw[key], LIMITS.text, key);
+  return normalizeDraft(raw);
+}
 export function sampleDraft() {
   const d = blankDraft();
   d.sample = true;
@@ -43,7 +66,7 @@ export function sampleDraft() {
 }
 const jobStopWords = new Set('the and for with from that this will your have has are our you work role must should able experience skills required requirements responsibilities candidates candidate company job team position about their they into through using support'.split(' '));
 export function jobRequirementLines(description) {
-  return clean(description).split(/\n|(?<=[.!?])\s+/u).map(v => v.replace(/^\s*(?:[-•*]|\d+[.)])\s*/, '').trim()).filter(v => v.length > 2 && !/^(?:requirements|responsibilities|qualifications|about us|job description)[:\s]*$/i.test(v)).slice(0, 40);
+  return clean(description).split(/\n|(?<=[.!?])\s+/u).map(v => stripListMarker(v).replace(/^\d+[.)]\s+/, '').trim()).filter(v => v.length > 2 && !/^(?:requirements|responsibilities|qualifications|about us|job description)[:\s]*$/i.test(v)).slice(0, 40);
 }
 function jobScore(text, description) {
   const terms = [...new Set((clean(description).toLocaleLowerCase().match(/[\p{L}\p{N}+#.]+/gu) || []).filter(v => v.length > 2 && !jobStopWords.has(v)))].slice(0, 300);
@@ -112,7 +135,7 @@ export function letterBlocks(d) {
 export function plainText(blocks) { return blocks.map(b => `${b.type === 'bullet' ? '• ' : ''}${b.text}`).join('\n\n'); }
 export function requirementMatches(d) {
   const evidence = cvBlocks(d).filter(b => !['heading', 'role'].includes(b.type)).map(b => b.text).join('\n').toLocaleLowerCase();
-  return lines(d.target.requirements).slice(0, 40).map(term => ({ term, found: evidence.includes(term.toLocaleLowerCase()) }));
+  return lines(d.target.requirements).slice(0, 40).map(term => ({ term, found: new RegExp('(?<![\\p{L}\\p{N}_])' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![\\p{L}\\p{N}_])', 'iu').test(evidence) }));
 }
 export function reviewDraft(d) {
   const issues = [];
@@ -140,4 +163,4 @@ export function reviewDraft(d) {
     if (!d.target.evidence) add('For your cover letter, choose or write the evidence you want to use.', 4);
   }
   return issues;
-    }
+                                                                                                              }
