@@ -220,3 +220,14 @@ for (const name of ['guides/oman-job-search-guide/index.html','guides/kuwait-job
 assert.match(read('guides/jordan-job-search-guide/index.html'),/https:\/\/www.sajjil.gov.jo\/nep/,'programme criteria need their own source');
 assert.match(read('guides/jordan-job-search-guide/index.html'),/https:\/\/mol.gov.jo\/EN\/Pages\/NonJordanian_workers/,'use publisher guide index, not an old fixed PDF as current rules');
 assert.match(read('guides/bahrain-job-search-guide/index.html'),/Tamkeen.*National Employment Program/,'enterprise support must stay separate from job applications');
+
+// Employer checks are evidence exercises, not authenticity certification.
+const employerGuide=read('guides/verify-uae-employer/index.html');
+for(const id of ['why','identity','domain','recruiter','vacancy','offer','fees','report','checklist','case-employer','case-agency','case-payment']) assert.ok(employerGuide.includes('id="'+id+'"'),'retain employer guide decision anchors');
+assert.equal((employerGuide.match(/class="case-study"/g)||[]).length,3,'three worked cases');
+for(const text of ['Fictional exercise','No details were entered','Enquiry for Job Offer','responsible authority','JobPick does not collect','22 November 2026']) assert.ok(employerGuide.includes(text),'preserve evidence limits: '+text);
+assert.ok(!/catch most of these patterns|Every company operating in the UAE holds|Browse verified employer feeds/i.test(employerGuide),'do not restore unsupported assurances');
+assert.ok(!employerGuide.includes('receipts.mohre.gov.ae/OfferInquiry'),'use the observed labelled job-offer inquiry route');
+assert.ok(employerGuide.includes('https://inquiry.mohre.gov.ae/'),'official inquiry entry point');
+
+assert.ok(employerGuide.includes("<link href=\"https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">"),'preserve the employer guide original font markup');
