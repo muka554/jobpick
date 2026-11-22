@@ -140,8 +140,8 @@ export const CATALOGUE = [
   },
   {
     "path": "/customer-service-jobs-dubai/",
-    "title": "Customer Service Jobs in Dubai | JobPick",
-    "description": "Find customer service jobs in Dubai with search terms for contact centres, retail, hospitality, aviation, and operations.",
+    "title": "Dubai Customer Service: Complaint Reply Workshop | JobPick",
+    "description": "Practise a delayed-order complaint, a bounded customer reply, an internal record and interview follow-ups with a clearly fictional case.",
     "lang": "en"
   },
   {
@@ -320,8 +320,8 @@ export const CATALOGUE = [
   },
   {
     "path": "/technical-support-jobs-uae/",
-    "title": "Technical Support Jobs in UAE | JobPick",
-    "description": "Find technical support jobs in the UAE across service desk, field support, application support and customer-facing technology roles.",
+    "title": "UAE Technical Support: Ticket and Interview Workshop | JobPick",
+    "description": "Practise a fictional support ticket, safe triage, an escalation handover and interview follow-ups without inventing production experience.",
     "lang": "en"
   },
   {

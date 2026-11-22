@@ -1,4 +1,4 @@
-import { CATALOGUE } from './helper-catalogue.mjs?release=20261122-cv-workshop';
+import { CATALOGUE } from './helper-catalogue.mjs?release=20261122-support-service';
 export { CATALOGUE };
 export const ANSWERS = [
   {
