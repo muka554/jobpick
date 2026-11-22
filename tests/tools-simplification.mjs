@@ -20,8 +20,15 @@ dom.window.eval(classic[0].textContent);
 doc.getElementById('checkCv').click();assert.match(doc.getElementById('cvResult').textContent,/Paste your CV text first/);
 doc.getElementById('cvText').value='Phone and location\nProfessional summary\nWork experience\nManaged and delivered updates\nSkills\nEducation';doc.getElementById('checkCv').click();assert.match(doc.getElementById('cvResult').textContent,/main structure signals/);
 assert.equal(disclosure.open,false);
-for(const suffix of ['?code=fixture','?error=fixture','#access_token=fixture','#error=fixture','#error_description=fixture']){
- const returned=create(suffix);const script=[...returned.window.document.scripts].find(s=>!s.src&&!s.type);returned.window.eval(script.textContent);assert.equal(returned.window.document.getElementById('signed-in-cv-workspace').open,true,'return UI is visible for '+suffix);returned.window.close();
+const callbackKeys=['code','access_token','error','error_code','error_description'];
+const localization=fs.readFileSync(new URL('../assets/site-localization.js',import.meta.url),'utf8');
+const sharedKeys=JSON.parse(localization.match(/var callbackKeys = (\[[^\]]+\]);/)[1].replaceAll("'",'"'));
+assert.deepEqual(callbackKeys,sharedKeys,'match the full shared auth callback key set');
+for(const key of callbackKeys)for(const suffix of ['?'+key+'=fixture','#'+key+'=fixture','?other=fixture&'+key+'=fixture','#token_type=bearer&'+key+'=fixture','?'+key+'=','#'+key+'=']){
+ const returned=create(suffix);const before=returned.window.location.href;const script=[...returned.window.document.scripts].find(s=>!s.src&&!s.type);returned.window.eval(script.textContent);assert.equal(returned.window.document.getElementById('signed-in-cv-workspace').open,true,'return UI is visible for '+suffix);assert.equal(returned.window.location.href,before,'presentation does not consume or rewrite callback parameters');returned.window.close();
+}
+for(const suffix of ['?other=fixture','#checker','#token_type=bearer','?note=error_code%3Dfixture','#note=access_token%3Dfixture']){
+ const normal=create(suffix);normal.window.eval([...normal.window.document.scripts].find(s=>!s.src&&!s.type).textContent);assert.equal(normal.window.document.getElementById('signed-in-cv-workspace').open,false,'unrelated URLs stay folded: '+suffix);normal.window.close();
 }
 assert.equal(doc.querySelector('script[src="/assets/cv-pdf-checker.mjs"]'),null);
 assert.equal(doc.getElementById('cvCheckPdf'),null,'PDF work stays in a separate branch');
