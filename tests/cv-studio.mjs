@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { JSDOM } from 'jsdom';
-import { blankDraft, normalizeDraft, sampleDraft, cvBlocks, letterBlocks, plainText, reviewDraft, requirementMatches } from '../assets/cv-studio-model.mjs';
+import { blankDraft, normalizeDraft, sampleDraft, cvBlocks, letterBlocks, plainText, reviewDraft, requirementMatches, jobRequirementLines, prioritizeFacts } from '../assets/cv-studio-model.mjs';
 import { docxFile, safeFilename } from '../assets/cv-studio-export.mjs';
 
 const blank = blankDraft();
@@ -77,3 +77,19 @@ assert.match(controller, /if \(!savingEnabled\) return/);
 assert.match(controller, /window\.addEventListener\('storage'/);
 assert.match(controller, /window\.addEventListener\('beforeunload'/);
 console.log('PASS: CV Studio factual boundaries, phrase matching, draft validation, chronological review, inert OpenXML exports, RTL, noindex and local-only privacy contracts');
+
+const jobDraft = sampleDraft();
+jobDraft.target.jobDescription = 'Requirements:\nMicrosoft Excel\nAviation licence\nSQL administration';
+jobDraft.target.requirements = jobRequirementLines(jobDraft.target.jobDescription).join('\n');
+const originalPoints = jobDraft.experience.map(e => e.bullets);
+jobDraft.tailorToJob = true;
+assert.deepEqual(prioritizeFacts(['Welcomed visitors.', 'Prepared a Microsoft Excel report.'],jobDraft), ['Prepared a Microsoft Excel report.','Welcomed visitors.']);
+assert.deepEqual(jobDraft.experience.map(e => e.bullets),originalPoints);
+assert.ok(!plainText(cvBlocks(jobDraft)).includes('Aviation licence'));
+assert.deepEqual(requirementMatches(jobDraft).map(m => m.found),[true,false,false]);
+for (const template of ['professional','editorial','compact','executive','minimal','contemporary']) {
+ const doc = cvBlocks({...jobDraft,template});
+ for (const point of originalPoints.flatMap(v => v.split('\n'))) assert.ok(doc.some(b => b.text === point));
+ const headings = doc.filter(b => b.type === 'heading').map(b => b.text);
+ if (template === 'minimal') assert.ok(headings.indexOf('Skills') < headings.indexOf('Work Experience'));
+  }
