@@ -1,4 +1,4 @@
-import { blankDraft, sampleDraft, normalizeDraft, cvBlocks, letterBlocks, plainText, requirementMatches, reviewDraft, jobRequirementLines, matchingJobFacts, LIMITS } from './cv-studio-model.mjs';
+import { blankDraft, sampleDraft, normalizeDraft, importDraft, lines, cvBlocks, letterBlocks, plainText, requirementMatches, reviewDraft, jobRequirementLines, matchingJobFacts, LIMITS } from './cv-studio-model.mjs';
 import { docxFile, downloadFile, safeFilename } from './cv-studio-export.mjs';
 
 const $ = id => document.getElementById(id);
@@ -83,7 +83,7 @@ function rebuildFields() {
     const letterStart = nodes.length;
     nodes.push(el('h3', 'Your matching cover letter'), field('Recipient name or team', 'target.recipient', { optional: true, placeholder: 'Leave blank for Hiring Team' }), field('Letter date', 'target.date', { optional: true, placeholder: 'e.g. 22 November 2026' }), field('Why this role and employer?', 'target.motivation', { area: true, optional: true, hint: 'Write your real reason. No employer claims are filled in for you.' }));
     const picker = el('details', null, { class: 'writing-tip' }); picker.append(el('summary', 'Choose evidence from your experience'));
-    const evidence = draft.experience.flatMap(e => e.bullets.split('\n').map(s => s.replace(/^\s*[-•]\s*/, '').trim()).filter(Boolean));
+    const evidence = draft.experience.flatMap(e => lines(e.bullets));
     if (!evidence.length) picker.append(el('p', 'Add experience first, or write your own evidence below.'));
     for (const text of evidence) picker.append(button(`+ ${text}`, () => { const existing = draft.target.evidence; const value = [existing, text].filter(Boolean).join('\n'); if (value.length > LIMITS.text) { announce('The letter evidence has reached the text limit.'); return; } draft.target.evidence = value; changed(); rebuildFields(); announce('Copied your exact experience into the letter. Review it in context.'); }, 'text-button'));
     nodes.push(picker, field('Relevant evidence for this letter', 'target.evidence', { area: true, hint: 'One point per line. These are your assertions. Check each against your real experience.' }), field('Closing paragraph', 'target.closing', { area: true, optional: true, hint: 'Leave blank for a short, neutral thank-you. No availability or qualifications are assumed.' }));
@@ -219,8 +219,8 @@ $('openDraft').addEventListener('click', () => $('importDraft').click());
 $('importDraft').addEventListener('change', async event => {
   const file = event.target.files?.[0]; event.target.value = ''; if (!file) return;
   if (file.size > LIMITS.draftBytes) { announce('Draft file is too large. The limit is 2 MB.'); return; }
-  try { const next = normalizeDraft(JSON.parse(await file.text())); if (await replaceDraft(next)) announce('Draft opened locally. No upload was made.'); }
-  catch { announce('Could not open this file. Choose a valid CV Studio version 1 JSON draft. Your current work is unchanged.'); }
+  try { const next = importDraft(JSON.parse(await file.text())); if (await replaceDraft(next)) announce('Draft opened locally. No upload was made.'); }
+  catch (error) { announce(`Could not open this file. ${error instanceof SyntaxError ? 'Choose a valid CV Studio version 1 JSON draft.' : error.message} Your current work is unchanged.`); }
 });
 function exportCheck() {
   if (!cvBlocks(normalizeDraft(draft)).length) { announce('Add your details before exporting.'); return false; }
@@ -235,6 +235,6 @@ window.addEventListener('beforeunload', event => { if (dirty && hasDraftContent(
 window.addEventListener('pagehide', () => { if (savingEnabled) persistDraft(); });
 window.addEventListener('storage', event => { if (event.key === STORE) { clearTimeout(saveTimer); savingEnabled = false; $('rememberDraft').checked = false; dirty = true; $('saveState').textContent = 'Browser draft changed elsewhere'; announce('Another tab changed the saved draft. This tab has stopped saving to avoid overwriting it. Export this tab\'s draft file if you want to keep it.'); } });
 new ResizeObserver(resizePaper).observe($('paperViewport'));
-try { const saved = localStorage.getItem(STORE); if (saved) { draft = normalizeDraft(JSON.parse(saved)); savingEnabled = true; $('rememberDraft').checked = true; $('saveState').textContent = 'Restored from this device'; announce('Restored the CV previously saved on this device. Turn off browser saving to delete the stored copy.'); } }
+try { const saved = localStorage.getItem(STORE); if (saved) { draft = importDraft(JSON.parse(saved)); savingEnabled = true; $('rememberDraft').checked = true; $('saveState').textContent = 'Restored from this device'; announce('Restored the CV previously saved on this device. Turn off browser saving to delete the stored copy.'); } }
 catch { announce('A saved draft could not be restored. Start fresh or open a draft file.'); }
 rebuildFields(); renderPreview();
