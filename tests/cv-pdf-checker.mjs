@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { extractPdfText, PdfCheckError, PDF_LIMITS } from '../assets/cv-pdf-checker.mjs';
+const fixture=(name='cv.pdf',body='%PDF-1.7\nfictional',size)=>({name,size:size??Buffer.byteLength(body),arrayBuffer:async()=>new TextEncoder().encode(body).buffer});
+let destroyed=0,cleaned=0,options;
+const engine=(pages=['Phone and location Professional summary Work experience Managed updates Skills Education'])=>async()=>({GlobalWorkerOptions:{},getDocument:settings=>{options=settings;return {promise:Promise.resolve({numPages:pages.length,getPage:async n=>({getTextContent:async()=>({items:[{str:pages[n-1],hasEOL:true}]}),cleanup:()=>cleaned++})}),destroy:async()=>{destroyed++;}};}});
+const read=await extractPdfText(fixture(),{loadEngine:engine()});assert.match(read,/Work experience/);assert.equal(destroyed,1);assert.equal(cleaned,1);
+for(const key of ['isEvalSupported','useWorkerFetch','enableXfa'])assert.equal(options[key],false);
+for(const key of ['disableAutoFetch','disableStream','stopAtErrors'])assert.equal(options[key],true);
+for(const [file,code] of [[fixture('cv.pdf',''), 'empty'],[fixture('cv.pdf','%PDF-1.7',PDF_LIMITS.bytes+1),'size'],[fixture('cv.txt'),'type'],[fixture('cv.pdf','not a PDF'),'invalid']])await assert.rejects(()=>extractPdfText(file,{loadEngine:engine()}),e=>e instanceof PdfCheckError&&e.code===code);
+await assert.rejects(()=>extractPdfText(fixture(),{loadEngine:engine([''])}),e=>e.code==='scanned');
+await assert.rejects(()=>extractPdfText(fixture(),{loadEngine:engine(['x'.repeat(41),'x'.repeat(41)]),limits:{...PDF_LIMITS,pages:1}}),e=>e.code==='pages');
+await assert.rejects(()=>extractPdfText(fixture(),{loadEngine:engine(['x'.repeat(60)]),limits:{...PDF_LIMITS,characters:45}}),e=>e.code==='length');
+await assert.rejects(()=>extractPdfText(fixture(),{loadEngine:async()=>({GlobalWorkerOptions:{},getDocument:()=>({promise:Promise.reject(Object.assign(new Error('locked'),{name:'PasswordException'})),destroy:async()=>{destroyed++;}})})}),e=>e.code==='locked');
+await assert.rejects(()=>extractPdfText(fixture(),{limits:{...PDF_LIMITS,timeoutMs:5},loadEngine:async()=>({GlobalWorkerOptions:{},getDocument:()=>({promise:new Promise(()=>{}),destroy:async()=>{destroyed++;}})})}),e=>e.code==='timeout');
+const source=fs.readFileSync(new URL('../assets/cv-pdf-checker.mjs',import.meta.url),'utf8');
+assert.doesNotMatch(source,/\b(fetch|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|innerHTML|eval)\b/,'local PDF checker has no upload/storage/HTML-execution sinks');
+console.log('PASS: bounded local PDF text extraction, header/type/size/page/text/time limits, scanned/locked fallbacks, cleanup and no network/storage/HTML sinks');
