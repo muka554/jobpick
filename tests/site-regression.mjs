@@ -250,3 +250,20 @@ for (const file of ['jobpick-fictional-cv.pdf','jobpick-cv-application-workbook.
  const bytes=fs.readFileSync(path.join(root,'assets/worksheets',file));assert.equal(bytes.subarray(0,5).toString(),'%PDF-','Real PDF asset');assert.ok(bytes.length<100000,'Lightweight worksheets');
 }
 assert.ok(cvWorkshop.includes('<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>'),'Preserve intended CV fonts with literal query separators for live host rewriting');
+
+// Role workshops preserve old routes/IDs and distinguish practice from outcomes.
+for (const name of ['technical-support-jobs-uae/index.html','customer-service-jobs-dubai/index.html']) {
+ const html=read(name);
+ for (const id of ['main-content','guide-section-1','guide-section-2','guide-section-3','guide-section-4','guide-section-5','guide-section-6','guide-section-7']) assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,1,name+' legacy fragment '+id);
+ for (const phrase of ['22 November 2026','fictional','Self-review, not','workshop-sources','/tools/interview-prep/','/guides/uae-cv-guide/']) assert.ok(html.includes(phrase),name+' practice boundary '+phrase);
+ assert.ok(html.includes('family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;600;700&family=Manrope:wght@700;800&display=swap'),'Role guide fonts must survive live rewriting');
+ assert.ok(!/35-45 tickets|1,200-user|60-80 inbound|most copied listings|hiring in Dubai concentrates|without warning/.test(html),'Remove unsupported role-market and metric assertions');
+ assert.match(html,/\.cta \.btn\{max-width:100%;white-space:normal;overflow-wrap:anywhere\}/,'Role CTA wraps with actual fonts');
+}
+const supportWorkshop=read('technical-support-jobs-uae/index.html');
+for (const text of ['JP-LAB-101','HTTP 403','TRAINING-ID-101','Unresolved; no fix','acceptance pending','09:30','No live logs queried']) assert.ok(supportWorkshop.includes(text),'Support evidence limit: '+text);
+for (const id of ['ticket-pack','ticket-reasoning','support-handover','support-update','support-interview']) assert.equal((supportWorkshop.match(new RegExp('id="'+id+'"','g'))||[]).length,1,'Support exercise target '+id);
+const serviceWorkshop=read('customer-service-jobs-dubai/index.html');
+for (const text of ['JP-CASE-201','TRAINING-L201','refund request','not a published service standard','cannot confirm approval','Status remains open','not an actual follow-up']) assert.ok(serviceWorkshop.includes(text),'Complaint evidence limit: '+text);
+for (const id of ['complaint-pack','complaint-reply','customer-reply-copy','service-handover','service-followup','service-interview']) assert.equal((serviceWorkshop.match(new RegExp('id="'+id+'"','g'))||[]).length,1,'Service exercise target '+id);
+const customerReply=serviceWorkshop.match(/id="customer-reply-copy">([\s\S]*?)<\/p>/)[1];assert.ok(customerReply.trim().split(/\s+/).length<=100,'Customer reply respects exercise limit');
