@@ -107,3 +107,12 @@ boundary.skills='SQL, PostgreSQL'; assert.deepEqual(requirementMatches(boundary)
 assert.ok((await docxFile(cvBlocks(signed)).text()).includes('-20% change'));
 assert.ok((await docxFile(cvBlocks(signed)).text()).includes('-5°C storage'));
 assert.ok((await docxFile(letterBlocks(signed)).text()).includes('-20% change'));
+
+for (const point of ['-$20 change','- $20 change','-€20 change','- €20 change','-.5% change','- .5% change','- USD 20 change','- AED .50 change','- usd 20 change','- USD $20 change','- US$20 change']) {
+ assert.deepEqual(lines(point),[point]);
+ const signedAmount=sampleDraft(); signedAmount.experience[0].bullets=point; signedAmount.target.evidence=point;
+ assert.ok(cvBlocks(signedAmount).some(b => b.text === point));
+ assert.ok(letterBlocks(signedAmount).some(b => b.text === point));
+ assert.ok((await docxFile(cvBlocks(signedAmount)).text()).includes(point));
+ assert.ok((await docxFile(letterBlocks(signedAmount)).text()).includes(point));
+}
