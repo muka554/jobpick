@@ -1,3 +1,5 @@
+import './cv-pdf-checker.mjs';
+import './tools-simplification.mjs';
 import './accessibility-markup.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
