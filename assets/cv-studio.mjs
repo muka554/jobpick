@@ -1,4 +1,4 @@
-import { blankDraft, sampleDraft, normalizeDraft, cvBlocks, letterBlocks, plainText, requirementMatches, reviewDraft, LIMITS } from './cv-studio-model.mjs';
+import { blankDraft, sampleDraft, normalizeDraft, cvBlocks, letterBlocks, plainText, requirementMatches, reviewDraft, jobRequirementLines, matchingJobFacts, LIMITS } from './cv-studio-model.mjs';
 import { docxFile, downloadFile, safeFilename } from './cv-studio-export.mjs';
 
 const $ = id => document.getElementById(id);
@@ -62,14 +62,33 @@ function rebuildFields() {
     nodes.push(field('Skills and tools', 'skills', { area: true, placeholder: 'One skill or tool per line', hint: 'Choose skills you can explain with an example. Vacancy keywords are not automatically added.' }), field('Languages', 'languages', { area: true, optional: true, placeholder: 'e.g. Arabic: native\nEnglish: professional working proficiency', hint: 'Describe your level accurately.' }), field('Certifications', 'certifications', { area: true, optional: true, placeholder: 'Certification | Issuer | Date', hint: 'Include the status or expiry when relevant. Never imply a licence you do not hold.' }));
   }
   if (step === 4) {
-    nodes.push(row(field('Target role', 'target.role', { placeholder: 'Exact vacancy title' }), field('Employer', 'target.company', { placeholder: 'Company you are applying to' })), field('Requirements to check', 'target.requirements', { area: true, placeholder: 'Paste one specific skill or phrase per line', hint: 'Exact phrase check against your CV text, not an AI assessment. Up to 40 lines. Similar wording may not match.' }));
+    nodes.push(field('Paste the job description', 'target.jobDescription', { area: true, rows: 7, optional: true, placeholder: 'Paste the advert here. It stays on your device.', hint: 'No AI or upload. We can prioritize your existing points, not write new claims.' }), button('Tailor using my existing facts', () => {
+      if (!draft.target.jobDescription.trim()) { announce('Paste a job description first.'); return; }
+      draft.target.requirements = jobRequirementLines(draft.target.jobDescription).join('\n');
+      draft.tailorToJob = true; changed(); rebuildFields(); showDocument('cv');
+      announce('Matching points and skills are prioritized. No facts were added or removed. Review the gaps below, then save this job version.');
+    }, 'primary'), button('Start another job', async () => {
+      if (Object.values(draft.target).some(Boolean) && !await confirmReplace('Clear the current job and letter? Your CV facts stay unchanged. Save a draft file first if you want to keep this job version.', 'Start another job?', 'Clear job only')) return;
+      draft.target = blankDraft().target; draft.tailorToJob = false; changed(); rebuildFields(); announce('Ready for a new job. Your original CV facts are unchanged.');
+    }, 'quiet'), checkbox('Prioritize matching points in my CV', 'tailorToJob'));
+    nodes.push(el('p', null, {id:'jobVersionStatus',class:'field-hint'}));
+    nodes.push(row(field('Target role', 'target.role', { placeholder: 'Exact vacancy title' }), field('Employer', 'target.company', { placeholder: 'Company you are applying to' })), field('Requirements to check', 'target.requirements', { area: true, placeholder: 'Paste one specific skill or phrase per line', hint: 'The job description is split into lines for a conservative exact-phrase check. Edit these to short requirements if needed. Similar wording can show as a gap even when you have relevant facts. Up to 40 lines.' }));
     const matches = el('div', null, { id: 'requirementMatches', role: 'region', 'aria-label': 'Phrase comparisons' }); nodes.push(matches, tip('Missing is a prompt, not permission.', 'A phrase match does not prove competence. If a requirement is missing, add genuine evidence only if you have it. Never copy requirements into your skills as a shortcut.'));
+    const matchingFacts = matchingJobFacts(normalizeDraft(draft));
+    if (draft.target.jobDescription && matchingFacts.length) {
+      const facts = el('div', null, { class: 'job-facts' }); facts.append(el('h3', 'Relevant facts already in your CV'));
+      for (const fact of matchingFacts) facts.append(el('p', fact));
+      nodes.push(facts);
+    }
+    const letterStart = nodes.length;
     nodes.push(el('h3', 'Your matching cover letter'), field('Recipient name or team', 'target.recipient', { optional: true, placeholder: 'Leave blank for Hiring Team' }), field('Letter date', 'target.date', { optional: true, placeholder: 'e.g. 22 November 2026' }), field('Why this role and employer?', 'target.motivation', { area: true, optional: true, hint: 'Write your real reason. No employer claims are filled in for you.' }));
     const picker = el('details', null, { class: 'writing-tip' }); picker.append(el('summary', 'Choose evidence from your experience'));
     const evidence = draft.experience.flatMap(e => e.bullets.split('\n').map(s => s.replace(/^\s*[-•]\s*/, '').trim()).filter(Boolean));
     if (!evidence.length) picker.append(el('p', 'Add experience first, or write your own evidence below.'));
     for (const text of evidence) picker.append(button(`+ ${text}`, () => { const existing = draft.target.evidence; const value = [existing, text].filter(Boolean).join('\n'); if (value.length > LIMITS.text) { announce('The letter evidence has reached the text limit.'); return; } draft.target.evidence = value; changed(); rebuildFields(); announce('Copied your exact experience into the letter. Review it in context.'); }, 'text-button'));
     nodes.push(picker, field('Relevant evidence for this letter', 'target.evidence', { area: true, hint: 'One point per line. These are your assertions. Check each against your real experience.' }), field('Closing paragraph', 'target.closing', { area: true, optional: true, hint: 'Leave blank for a short, neutral thank-you. No availability or qualifications are assumed.' }));
+    const letterOptions = el('details', null, {id:'letterOptions',class:'writing-tip'});
+    letterOptions.append(el('summary','Add a cover letter (optional)'), ...nodes.splice(letterStart)); nodes.push(letterOptions);
   }
   if (step === 5) {
     const issues = reviewDraft(normalizeDraft(draft));
@@ -77,7 +96,7 @@ function rebuildFields() {
     const list = el('ul', null, { class: 'check-list' });
     for (const issue of issues) { const item = el('li'); item.append(button(issue.text, () => goStep(issue.step), 'text-button')); list.append(item); }
     if (!issues.length) list.append(el('li', 'The basic editing checks are complete. Read every line before sending.'));
-    nodes.push(button('Add education & projects', () => goStep(2), 'secondary'), button('Add skills & languages', () => goStep(3), 'secondary'), button('Create a cover letter', () => goStep(4), 'secondary'), list, tip('Your final review', 'Check names, dates, contact details, spelling and evidence. Verify that text copies in the right order. Follow the vacancy file requirements. Save separate draft files for different applications.'), button('Preview cover letter', () => showDocument('letter'), 'secondary'), el('p', 'Export controls are below the live preview. Word files remain editable. Print / save PDF uses your browser, so check page breaks there.', { class: 'review-copy' }));
+    nodes.push(button('Add education & projects', () => goStep(2), 'secondary'), button('Add skills & languages', () => goStep(3), 'secondary'), button('Tailor to a job / cover letter', () => goStep(4), 'secondary'), list, tip('Your final review', 'Check names, dates, contact details, spelling and evidence. Verify that text copies in the right order. Follow the vacancy file requirements. Save separate draft files for different applications.'), button('Preview cover letter', () => showDocument('letter'), 'secondary'), el('p', 'Export controls are below the live preview. Word files remain editable. Print / save PDF uses your browser, so check page breaks there.', { class: 'review-copy' }));
   }
   $('fields').replaceChildren(...nodes);
   $('previous').disabled = step === 0; $('next').hidden = step === 5;
@@ -99,7 +118,7 @@ function goStep(n) { step = Math.max(0, Math.min(5, n)); rebuildFields(); $('edi
 function renderMatches() {
   const target = $('requirementMatches'); if (!target) return;
   const matches = requirementMatches(normalizeDraft(draft));
-  target.replaceChildren(...matches.map(m => { const n = el('div', null, { class: 'requirement' }); n.append(el('span', m.found ? 'Phrase found' : 'Not found', { class: `match-tag${m.found ? '' : ' missing'}` }), el('span', m.term)); return n; }));
+  target.replaceChildren(...matches.map(m => { const n = el('div', null, { class: 'requirement' }); n.append(el('span', m.found ? 'Exact phrase found' : 'Gap / confirm', { class: `match-tag${m.found ? '' : ' missing'}` }), el('span', m.term)); return n; }));
 }
 function currentBlocks() { const d = normalizeDraft(draft), blocks = documentKind === 'cv' ? cvBlocks(d) : letterBlocks(d); return d.sample ? [{ type: 'sample', text: 'FICTIONAL SAMPLE - design example only, not applicant evidence.' }, ...blocks] : blocks; }
 function resizePaper() {
@@ -115,15 +134,43 @@ function renderPreview() {
   const paper = $('paper'); paper.className = `paper ${draft.template}`; paper.dir = draft.direction;
   paper.lang = draft.direction === 'rtl' ? 'ar' : 'en';
   const content = el('div', null, { class: documentKind === 'letter' ? 'letter-document' : 'cv-document' });
+  let section = content, entry = null;
+  const header = el('div', null, { class: 'cv-header' });
+  const sections = el('div', null, { class: 'cv-sections' });
+  if (documentKind === 'cv') { content.append(header, sections); section = header; }
+  const sectionNames = { 'Professional Summary':'summary', 'Work Experience':'experience', Education:'education', Projects:'projects', Skills:'skills', Certifications:'certifications', Languages:'languages' };
   for (const b of blocks) {
+    if (documentKind === 'cv' && b.type === 'heading') {
+      section = el('section', null, { class: `cv-section section-${sectionNames[b.text] || 'other'}` });
+      sections.append(section); entry = null;
+    }
+    if (documentKind === 'cv' && b.type === 'subheading') {
+      entry = el('div', null, { class: 'cv-entry' }); section.append(entry);
+    }
     const tag = b.type === 'name' ? 'h2' : b.type === 'heading' ? 'h3' : 'p';
-    content.append(el(tag, b.text, { class: b.type === 'sample' ? 'sample-stamp' : `cv-${b.type}`, dir: 'auto' }));
+    (entry || section).append(el(tag, b.text, { class: b.type === 'sample' ? 'sample-stamp' : `cv-${b.type}`, dir: 'auto' }));
   }
+  if (documentKind === 'cv' && draft.template === 'executive') {
+    const main = el('div', null, { class: 'cv-main' }), side = el('div', null, { class: 'cv-sidebar' });
+    for (const node of [...sections.children]) (node.matches('.section-skills,.section-certifications,.section-languages') ? side : main).append(node);
+    sections.append(main, side);
+    if (!side.children.length) sections.classList.add('without-sidebar');
+  }
+  const layoutNotes = {
+    professional:'Professional: a traditional, single-column CV. A good default for automated application forms.',
+    editorial:'Editorial: a large serif masthead and clearly separated sections in one column.',
+    compact:'Compact: tighter type and spacing for shorter output. It never removes facts or forces a page limit.',
+    executive:'Sidebar: experience in the main column, skills and languages in a separate rail. For automated forms, prefer Professional or the linear Word export.',
+    minimal:'Skills first: skills, projects and certifications before employment. The same order is used in Word and text.',
+    contemporary:'Timeline: a date rail beside each job. For automated forms, prefer Professional or the linear Word export.'
+  };
+  $('layoutDescription').textContent = documentKind === 'letter' ? 'Cover letters use a simple single-column layout in every design.' : layoutNotes[draft.template];
   paper.replaceChildren(content);
   $('sampleBanner').hidden = !draft.sample;
   $('draftLabel').textContent = draft.profile.name.trim() ? `${draft.profile.name.trim()} · CV` : 'Untitled CV';
   $('template').value = draft.template; $('direction').value = draft.direction;
   for (const id of ['printDocument', 'downloadWord', 'downloadText']) $(id).disabled = !hasContent;
+  const jobStatus = $('jobVersionStatus'); if (jobStatus) jobStatus.textContent = draft.tailorToJob && draft.target.jobDescription ? 'Job-specific ordering is on. Only your existing points and skills are reordered. Save a separate draft for each job.' : 'Your original fact order is shown. Paste a job description, then use the tailor button.';
   renderMatches(); resizePaper();
 }
 function showDocument(kind) { documentKind = kind; $('showCv').setAttribute('aria-pressed', String(kind === 'cv')); $('showLetter').setAttribute('aria-pressed', String(kind === 'letter')); renderPreview(); }
@@ -148,7 +195,7 @@ async function replaceDraft(next) {
   if (hasDraftContent() && !await confirmReplace()) return false;
   draft = normalizeDraft(next); documentKind = 'cv'; step = 0; changed(); rebuildFields(); showDocument('cv'); return true;
 }
-$('fields').addEventListener('input', event => { const input = event.target; if (!input.dataset.path) return; setPath(input.dataset.path, input.type === 'checkbox' ? input.checked : input.value); changed(); });
+$('fields').addEventListener('input', event => { const input = event.target; if (!input.dataset.path) return; setPath(input.dataset.path, input.type === 'checkbox' ? input.checked : input.value); if (input.dataset.path === 'target.jobDescription') { draft.tailorToJob = false; draft.target.requirements = ''; const toggle = $('fields').querySelector('[data-path=tailorToJob]'); if (toggle) toggle.checked = false; const requirements = $('field-target-requirements'); if (requirements) requirements.value = ''; $('fields').querySelector('.job-facts')?.remove(); } changed(); });
 $('previous').addEventListener('click', () => goStep(step === 1 ? 0 : 1)); $('next').addEventListener('click', () => goStep(step === 0 ? 1 : 5));
 document.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => goStep(Number(b.dataset.step))));
 for (const id of ['loadSample', 'emptySample']) $(id).addEventListener('click', async () => { if (await replaceDraft(sampleDraft())) announce('Fictional sample loaded. Its details are not yours. Start blank to build your own CV.'); });
