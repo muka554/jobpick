@@ -61,10 +61,5 @@
 </main>
 <footer><p>Middle East Job Hub publishes independently maintained job-search resources and links to public employer and platform sources. Employer review does not guarantee placement, ranking, application success, or hiring outcomes.</p><div aria-label="Site information" class="jobpick-footer-links"><a href="/privacy-policy/">Privacy policy</a><a href="/terms-of-use/">Terms of Use</a><a href="/advertising-disclosure/">Advertising Disclosure</a><a href="/editorial-standards/">Editorial standards</a><a href="/how-we-review-job-platforms/">Methodology</a><a href="/corrections/">Corrections</a><a href="/contact/">Contact</a><a href="/employers/">For employers</a><a href="/partners/">Partnerships</a></div></footer>
 </div>
-<script>
-const employerCopy={en:{title:'For Employers — List a Middle East Job',intro:'Share a verified Middle East vacancy with JobPick and reach focused candidates through a transparent employer-first listing pathway.'},ar:{title:'لأصحاب العمل — أضف وظيفة في الشرق الأوسط',intro:'شارك وظيفة موثقة في الشرق الأوسط مع JobPick ووصل إلى مرشحين مهتمين عبر مسار شفاف يضع صاحب العمل أولاً.'},hi:{title:'नियोक्ताओं के लिए — मध्य पूर्व की नौकरी सूचीबद्ध करें',intro:'JobPick के साथ सत्यापित मध्य पूर्वी रिक्ति साझा करें और पारदर्शी नियोक्ता-केंद्रित मार्ग से लक्षित उम्मीदवारों तक पहुँचें।'},ur:{title:'آجروں کے لیے — مشرق وسطیٰ کی ملازمت شامل کریں',intro:'JobPick کے ساتھ تصدیق شدہ مشرق وسطیٰ کی آسامی شیئر کریں اور شفاف، آجر پر مبنی راستے سے متعلقہ امیدواروں تک پہنچیں۔'}};
-function applyEmployerLanguage(lang){const c=employerCopy[lang]||employerCopy.en;document.documentElement.lang=lang;document.documentElement.dir=(lang==='ar'||lang==='ur')?'rtl':'ltr';document.title=c.title;const d=document.querySelector('meta[name="description"]');if(d)d.content=c.intro;}
-const select=document.getElementById('language');select.addEventListener('change',()=>{try{localStorage.setItem('jobhub_site_language',select.value)}catch(e){}applyEmployerLanguage(select.value)});let initial='en';try{initial=localStorage.getItem('jobhub_site_language')||'en'}catch(e){}select.value=employerCopy[initial]?initial:'en';applyEmployerLanguage(select.value);
-</script>
 </body>
-  </html>
+</html>

@@ -295,3 +295,16 @@ assert.match(read('guides/dubai-vs-abu-dhabi-job-search/index.html'),/<p class="
 
 // The live host must receive literal separators to retain every intended font family.
 for(const file of ['guides/uae-job-search-playbook/index.html','guides/dubai-vs-abu-dhabi-job-search/index.html']) assert.ok(read(file).includes('href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"'),'Preserve exact original font configuration with literal query separators: '+file);
+
+// Keep the audited public-page repairs narrow and prevent their return.
+const employerPage=read('employers/index.html');
+assert.ok(!employerPage.includes('employerCopy') && !employerPage.includes("getElementById('language')"),'Remove the obsolete employer language block');
+assert.match(employerPage,/<script src="\/assets\/site-localization\.js[^" ]*" defer><\/script>/,'Keep the shared language controller');
+const missingPage=read('404.html');
+assert.match(missingPage,/<meta name="robots" content="noindex,follow"/,'Keep the missing-page noindex policy');
+assert.ok(missingPage.includes('For employers</a> · <a href="/tools/">Tools</a> · <a href="/partners/">Partnerships</a>'),'Separate the recovery links');
+for(const file of ['about','advertising-disclosure','contact','cities/dubai-jobs','cities/abu-dhabi-jobs','cities/riyadh-jobs']) {
+ const html=read(file+'/index.html');
+ assert.ok(!html.includes('Special:FilePath'),'No blocked remote background on '+file);
+ assert.ok(html.includes('linear-gradient(180deg, rgba(10,15,20,0.78) 0%, rgba(10,15,20,0.85) 100%);'),'Keep existing gradient fallback on '+file);
+}
