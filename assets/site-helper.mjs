@@ -1,4 +1,4 @@
-import { CATALOGUE } from './helper-catalogue.mjs?release=20261122-city-merge1';
+import { CATALOGUE } from './helper-catalogue.mjs?release=20261122-city-merge2';
 export { CATALOGUE };
 export const ANSWERS = [
   {
@@ -368,4 +368,4 @@ if(typeof document!=='undefined'){
   input.addEventListener('input',()=>{detail.replaceChildren();results.replaceChildren();status.textContent='Query changed. Choose Find help to search locally.';});
   root.querySelector('#sh-clear').addEventListener('click',()=>{clear();input.focus();});window.addEventListener('pagehide',clear);render();
  }
-}
+                                                            }
