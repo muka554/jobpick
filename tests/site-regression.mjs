@@ -174,3 +174,16 @@ for (const country of ['oman','kuwait','jordan','bahrain','egypt','uae']) {
 }
 assert.match(read('guides/oman-job-search-guide/index.html'), /https:\/\/www.mol.gov.om\/Laborlaw/, 'Oman restrictions must link to Ministry law');
 assert.match(read('corrections/index.html'), /correction-20261122-country/, 'Country claim corrections need a public record');
+
+for (const country of ['oman','kuwait','jordan','bahrain','egypt','uae']) {
+ assert.match(read('guides/' + country + '-job-search-guide/index.html'), /"dateModified"\s*:\s*"2026-11-22/, country + ' structured review date must match this correction');
+}
+
+for (const city of ['amman','cairo','doha','kuwait-city','manama','muscat']) {
+ const html = read('cities/' + city + '-jobs/index.html');
+ assert.match(html, /What changed on 22 November 2026/, city + ' needs a claim-correction note');
+ for (const claim of ['meaningful share of Amman','largest commercial district by office stock','Most of Manama','Oman’s largest industrial park','can surface roles that a broad city-wide search misses']) {
+  assert.ok(!html.includes(claim), city + ' must not restore unsupported hiring-share or productivity claims');
+ }
+}
+assert.match(read('corrections/index.html'), /correction-20261122-city/, 'City corrections need a public record');
