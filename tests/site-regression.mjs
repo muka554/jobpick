@@ -2,13 +2,14 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { moduleScripts, hasExactLink } from '../scripts/lib/content-parsing.mjs';
 
 const root = path.resolve(new URL('..', import.meta.url).pathname);
 const read = (p) => fs.readFileSync(path.join(root, p), 'utf8');
 const htmlFiles = [];
 function walk(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (entry.name === '.git') continue;
+    if (entry.name === '.git' || entry.name === 'node_modules') continue;
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) walk(full);
     else if (entry.name === 'index.html') htmlFiles.push(full);
@@ -92,9 +93,8 @@ assert.match(tools, /function cleanGeneratedCv\(text\)/, 'CV output must be norm
 assert.match(tools, /EDITOR NOTES/, 'CV output sanitizer must recognize editor notes');
 
 // Parse browser modules as modules: checking a .js file can miss import-related failures.
-for (const [index, match] of [...tools.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)].entries()) {
-  if (!/type=["']module["']/i.test(match[1])) continue;
-  const checked = spawnSync(process.execPath, ['--check', '--input-type=module'], { input: match[2], encoding: 'utf8' });
+for (const [index, source] of moduleScripts(tools).entries()) {
+  const checked = spawnSync(process.execPath, ['--check', '--input-type=module'], { input: source, encoding: 'utf8' });
   assert.equal(checked.status, 0, `CV tools inline module ${index} must parse: ${checked.stderr}`);
 }
 
@@ -172,7 +172,7 @@ for (const country of ['oman','kuwait','jordan','bahrain','egypt','uae']) {
  assert.match(html, /What changed on 22 November 2026/, country + ' needs an honest claim-correction note');
  assert.ok(!html.includes('affect hiring pace, not eligibility'), country + ' must not reduce eligibility restrictions to hiring speed');
 }
-assert.match(read('guides/oman-job-search-guide/index.html'), /https:\/\/www.mol.gov.om\/Laborlaw/, 'Oman restrictions must link to Ministry law');
+assert.ok(hasExactLink(read('guides/oman-job-search-guide/index.html'), 'https://www.mol.gov.om/Laborlaw'), 'Oman restrictions must link to Ministry law');
 assert.match(read('corrections/index.html'), /correction-20261122-country/, 'Country claim corrections need a public record');
 
 for (const country of ['oman','kuwait','jordan','bahrain','egypt','uae']) {
@@ -217,8 +217,8 @@ for (const name of ['guides/oman-job-search-guide/index.html','guides/kuwait-job
  assert.ok(read(name).includes('family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;600;700&family=Manrope:wght@700;800&display=swap'),'city consolidation must preserve the original multi-family font URL: '+name);
 }
 
-assert.match(read('guides/jordan-job-search-guide/index.html'),/https:\/\/www.sajjil.gov.jo\/nep/,'programme criteria need their own source');
-assert.match(read('guides/jordan-job-search-guide/index.html'),/https:\/\/mol.gov.jo\/EN\/Pages\/NonJordanian_workers/,'use publisher guide index, not an old fixed PDF as current rules');
+assert.ok(hasExactLink(read('guides/jordan-job-search-guide/index.html'),'https://www.sajjil.gov.jo/nep'),'programme criteria need their own source');
+assert.ok(hasExactLink(read('guides/jordan-job-search-guide/index.html'),'https://mol.gov.jo/EN/Pages/NonJordanian_workers'),'use publisher guide index, not an old fixed PDF as current rules');
 assert.match(read('guides/bahrain-job-search-guide/index.html'),/Tamkeen.*National Employment Program/,'enterprise support must stay separate from job applications');
 
 // Employer checks are evidence exercises, not authenticity certification.
@@ -233,7 +233,7 @@ assert.equal((employerGuide.match(/class="case-study"/g)||[]).length,3,'three wo
 for(const text of ['Fictional exercise','No details were entered','Enquiry for Job Offer','responsible authority','JobPick does not collect','22 November 2026']) assert.ok(employerGuide.includes(text),'preserve evidence limits: '+text);
 assert.ok(!/catch most of these patterns|Every company operating in the UAE holds|Browse verified employer feeds/i.test(employerGuide),'do not restore unsupported assurances');
 assert.ok(!employerGuide.includes('receipts.mohre.gov.ae/OfferInquiry'),'use the observed labelled job-offer inquiry route');
-assert.ok(employerGuide.includes('https://inquiry.mohre.gov.ae/'),'official inquiry entry point');
+assert.ok(hasExactLink(employerGuide,'https://inquiry.mohre.gov.ae/'),'official inquiry entry point');
 
 assert.ok(employerGuide.includes("<link href=\"https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">"),'preserve the employer guide original font markup');
 

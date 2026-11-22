@@ -1,0 +1,15 @@
+{
+  "name": "jobpick-regression-checks",
+  "private": true,
+  "workspaces": [
+    "cv-service-google-oauth"
+  ],
+  "scripts": {
+    "test:security": "node tests/security-hardening.mjs && node tests/oauth-rate-limit.mjs"
+  },
+  "devDependencies": {
+    "entities": "9.0.0",
+    "parse5": "8.1.1",
+    "jsdom": "27.4.0"
+  }
+}

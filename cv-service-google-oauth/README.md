@@ -27,7 +27,7 @@ This package is a backend reference implementation for replacing the current Man
 Install the dependencies in the CV service:
 
 ```sh
-npm install express cookie-parser google-auth-library
+npm install express cookie-parser google-auth-library express-rate-limit
 ```
 
 Mount `createGoogleOAuthRouter` under `/api/oauth` and provide adapters for the existing data/session layer:
@@ -83,3 +83,17 @@ The repository tests intentionally verify the public UI, CORS, and unauthenticat
 ## Database migration
 
 Apply [`supabase/migrations/20260902220000_create_google_account_identities.sql`](../supabase/migrations/20260902220000_create_google_account_identities.sql) before enabling the callback. It creates a backend-managed `public.user_identities` table with unique `(provider, provider_subject)` and `(user_id, provider)` constraints, denies browser-role access, and exposes only a `service_role` security-definer upsert function. The CV service should call that function after verifying the Google ID token and after ensuring the local `auth.users` row exists.
+
+## Request-rate limits in this reference implementation
+
+The reference router applies separate per-client budgets before any state-store, Google-token or user-store work: 30 login requests and 60 callback requests per minute by default. Over-limit requests receive HTTP 429 and a Retry-After header. Login throttling does not consume the callback budget. Rate-limit settings must be positive safe integers.
+
+The default store is process-local memory. Before deploying this reference behind a proxy or across multiple instances, configure Express to trust only the actual proxy hops and use a shared store supported by express-rate-limit. Do not trust arbitrary X-Forwarded-For headers or set trust proxy to true without a bounded topology. No proxy or deployment configuration is changed by this repository update.
+
+As checked on 22 November 2026, the live tools page and shared authentication script use Supabase OAuth and do not reference this router. The example server still contains unimplemented adapters. This establishes that the current static frontend does not use this reference route; it does not establish whether an independent external service once copied this code. No external backend has been deployed or modified here.
+
+Run the isolated limiter regression tests from the repository root after npm ci --ignore-scripts:
+
+```sh
+node tests/oauth-rate-limit.mjs
+```

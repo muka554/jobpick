@@ -1,19 +1,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { decodeXML } from 'entities';
+import { pageMetadata } from './lib/content-parsing.mjs';
 const root=process.cwd();
-const decode=text=>text.replace(/&(?:amp|lt|gt|quot|apos|#39|#\d+|#x[\da-f]+);/gi,entity=>({ '&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"','&apos;':"'",'&#39;':"'" }[entity.toLowerCase()]??String.fromCodePoint(entity[2]?.toLowerCase()==='x'?parseInt(entity.slice(3,-1),16):parseInt(entity.slice(2,-1),10))));
-const strip=text=>decode(text.replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim());
-const locations=[...fs.readFileSync('sitemap.xml','utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>decode(m[1]));
+const locations=[...fs.readFileSync('sitemap.xml','utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>decodeXML(m[1]));
 const catalogue=[];
 for(const location of locations){
  const url=new URL(location);if(url.hostname!=='jobpick20.com')throw new Error('Unexpected sitemap host');
  if(url.pathname==='/tools/site-helper/')continue;
  const file=path.join(root,decodeURIComponent(url.pathname),'index.html');
  const html=fs.readFileSync(file,'utf8');
- const title=strip(html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]??'');
- const tag=[...html.matchAll(/<meta\b[^>]*>/gi)].map(m=>m[0]).find(m=>/\bname=["']description["']/i.test(m));
- const description=strip(tag?.match(/\bcontent=(["'])([\s\S]*?)\1/i)?.[2]??'');
- const lang=html.match(/<html\b[^>]*\blang=["']([^"']+)/i)?.[1]??'en';
+ const {title,description,lang}=pageMetadata(html);
  if(!title)throw new Error('Missing title '+file);
  catalogue.push({path:url.pathname,title,description,lang});
 }

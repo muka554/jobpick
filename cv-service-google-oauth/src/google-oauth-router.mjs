@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import express from 'express';
+import { rateLimit } from 'express-rate-limit';
 import { OAuth2Client } from 'google-auth-library';
 
 const GOOGLE_SCOPES = ['openid', 'email', 'profile'];
@@ -46,6 +47,9 @@ export function createGoogleOAuthRouter({
   redirectUri = process.env.GOOGLE_REDIRECT_URI,
   frontendOrigin = process.env.FRONTEND_ORIGIN || 'https://jobpick20.com',
   frontendReturnPath = process.env.FRONTEND_RETURN_PATH || '/tools/',
+  rateLimitWindowMs = 60_000,
+  loginRequestLimit = 30,
+  callbackRequestLimit = 60,
   stateStore,
   userStore,
   session,
@@ -53,11 +57,17 @@ export function createGoogleOAuthRouter({
   if (!clientId || !clientSecret || !redirectUri || !stateStore || !userStore || !session) {
     throw new Error('Google OAuth configuration or adapter missing');
   }
+  for (const value of [rateLimitWindowMs, loginRequestLimit, callbackRequestLimit]) {
+    if (!Number.isSafeInteger(value) || value < 1) throw new Error('Invalid OAuth rate-limit configuration');
+  }
   const google = new OAuth2Client(clientId, clientSecret, redirectUri);
   const router = express.Router();
   const cookieOptions = { httpOnly: true, secure: true, sameSite: 'lax', maxAge: 10 * 60 * 1000, path: '/api/oauth' };
 
-  router.get('/login', async (req, res, next) => {
+  const loginLimiter = rateLimit({ windowMs: rateLimitWindowMs, limit: loginRequestLimit, standardHeaders: 'draft-8', legacyHeaders: false });
+  const callbackLimiter = rateLimit({ windowMs: rateLimitWindowMs, limit: callbackRequestLimit, standardHeaders: 'draft-8', legacyHeaders: false });
+
+  router.get('/login', loginLimiter, async (req, res, next) => {
     try {
       if (req.query.provider && req.query.provider !== 'google') return res.status(400).json({ error: 'Unsupported OAuth provider' });
       const state = base64Url(crypto.randomBytes(32));
@@ -80,7 +90,7 @@ export function createGoogleOAuthRouter({
     }
   });
 
-  router.get('/google/callback', async (req, res, next) => {
+  router.get('/google/callback', callbackLimiter, async (req, res, next) => {
     const state = String(req.query.state || '');
     const code = String(req.query.code || '');
     try {
@@ -105,4 +115,4 @@ export function createGoogleOAuthRouter({
   });
 
   return router;
-}
+  }
