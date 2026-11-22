@@ -1,3 +1,4 @@
+import './accessibility-markup.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -307,4 +308,4 @@ for(const file of ['about','advertising-disclosure','contact','cities/dubai-jobs
  const html=read(file+'/index.html');
  assert.ok(!html.includes('Special:FilePath'),'No blocked remote background on '+file);
  assert.ok(html.includes('linear-gradient(180deg, rgba(10,15,20,0.78) 0%, rgba(10,15,20,0.85) 100%);'),'Keep existing gradient fallback on '+file);
-}
+             }
