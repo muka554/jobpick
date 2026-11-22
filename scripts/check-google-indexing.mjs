@@ -10,6 +10,7 @@
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
+import { decodeXML } from 'entities';
 
 const DEFAULT_SITE = 'https://jobpick20.com/';
 const DEFAULT_SITEMAP = `${DEFAULT_SITE}sitemap.xml`;
@@ -42,7 +43,7 @@ if (!siteUrl.endsWith('/')) {
 }
 
 function decodeXml(value) {
-  return value.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+  return decodeXML(value);
 }
 
 function textBetween(block, tag) {
