@@ -249,4 +249,4 @@ for (const file of ['jobpick-fictional-cv.pdf','jobpick-cv-application-workbook.
  assert.ok(cvWorkshop.includes('/assets/worksheets/'+file),'PDF link must exist');
  const bytes=fs.readFileSync(path.join(root,'assets/worksheets',file));assert.equal(bytes.subarray(0,5).toString(),'%PDF-','Real PDF asset');assert.ok(bytes.length<100000,'Lightweight worksheets');
 }
-assert.ok(cvWorkshop.includes('<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&amp;family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>'),'Preserve raw CV font tag');
+assert.ok(cvWorkshop.includes('<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>'),'Preserve intended CV fonts with literal query separators for live host rewriting');
