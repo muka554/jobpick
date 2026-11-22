@@ -16,19 +16,19 @@ export function zipStore(files) {
   return new Blob([...local, ...central, end], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
 }
 export function docxFile(blocks, { template = 'professional', direction = 'ltr' } = {}) {
-  const rtl = direction === 'rtl';
+  const rtl = direction === 'rtl', compact = template === 'compact';
   const serif = ['editorial','executive'].includes(template);
   const accent = ({professional:'156A61',editorial:'6C4630',compact:'263444',executive:'243C60',minimal:'293038',contemporary:'673F61'})[template] || '156A61';
   const runs = blocks.map(b => {
     const heading = ['name', 'heading', 'subheading'].includes(b.type);
-    const size = b.type === 'name' ? 48 : b.type === 'role' ? 26 : 22;
+    const size = b.type === 'name' ? (compact ? 40 : 48) : b.type === 'role' ? (compact ? 23 : 26) : (compact ? 19 : 22);
     const color = ['name', 'heading', 'role'].includes(b.type) ? accent : '202A35';
-    const before = b.type === 'heading' ? 240 : b.type === 'subheading' ? 120 : 0;
-    const after = b.type === 'name' ? 80 : 100;
+    const before = b.type === 'heading' ? (compact ? 100 : 240) : b.type === 'subheading' ? (compact ? 60 : 120) : 0;
+    const after = compact ? 45 : b.type === 'name' ? 80 : 100;
     const text = (b.type === 'bullet' ? '• ' : '') + b.text;
     const textRtl = /^[^A-Za-z\u0600-\u06ff]*[\u0600-\u06ff]/u.test(b.text);
     const align = template === 'minimal' && ['name','role','contact'].includes(b.type) ? 'center' : textRtl ? (rtl ? 'start' : 'end') : (rtl ? 'right' : 'left');
-    return `<w:p><w:pPr><w:bidi w:val="${textRtl ? 1 : 0}"/><w:jc w:val="${align}"/>${['heading', 'subheading', 'name', 'role', 'meta'].includes(b.type) ? '<w:keepNext/>' : ''}<w:widowControl/><w:spacing w:before="${before}" w:after="${after}" w:line="288" w:lineRule="auto"/>${b.type === 'heading' ? `<w:pBdr><w:bottom w:val="single" w:sz="4" w:color="${accent}"/></w:pBdr>` : ''}</w:pPr><w:r><w:rPr><w:rFonts w:ascii="${serif ? 'Georgia' : 'Arial'}" w:hAnsi="${serif ? 'Georgia' : 'Arial'}" w:cs="Arial"/>${heading ? '<w:b/><w:bCs/>' : ''}<w:color w:val="${color}"/><w:sz w:val="${size}"/><w:szCs w:val="${size}"/><w:rtl w:val="${textRtl ? 1 : 0}"/></w:rPr><w:t xml:space="preserve">${xml(text)}</w:t></w:r></w:p>`;
+    return `<w:p><w:pPr><w:bidi w:val="${textRtl ? 1 : 0}"/><w:jc w:val="${align}"/>${['heading', 'subheading', 'name', 'role', 'meta'].includes(b.type) ? '<w:keepNext/>' : ''}<w:widowControl/><w:spacing w:before="${before}" w:after="${after}" w:line="${compact ? 264 : 288}" w:lineRule="auto"/>${b.type === 'heading' ? `<w:pBdr><w:bottom w:val="single" w:sz="4" w:color="${accent}"/></w:pBdr>` : ''}</w:pPr><w:r><w:rPr><w:rFonts w:ascii="${serif ? 'Georgia' : 'Arial'}" w:hAnsi="${serif ? 'Georgia' : 'Arial'}" w:cs="Arial"/>${heading ? '<w:b/><w:bCs/>' : ''}<w:color w:val="${color}"/><w:sz w:val="${size}"/><w:szCs w:val="${size}"/><w:rtl w:val="${textRtl ? 1 : 0}"/></w:rPr><w:t xml:space="preserve">${xml(text)}</w:t></w:r></w:p>`;
   }).join('');
   return zipStore([
     ['[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'],
