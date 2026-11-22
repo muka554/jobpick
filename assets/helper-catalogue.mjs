@@ -62,7 +62,7 @@ export const CATALOGUE = [
   },
   {
     "path": "/ar/guides/uae-cv-guide/",
-    "title": "دليل السيرة الذاتية في الإمارات: طلب واضح تدعمه خبرتك الحقيقية | JobPick",
+    "title": "السيرة الذاتية في الإمارات: دليل عملي | JobPick",
     "description": "اربط متطلبات الوظيفة بأدلة حقيقية، وحسّن صياغة سيرتك من دون اختلاق أرقام، وراجع الملف قبل إرسال طلب التوظيف.",
     "lang": "ar"
   },
@@ -206,7 +206,7 @@ export const CATALOGUE = [
   },
   {
     "path": "/guides/gulf-job-platforms-explained/",
-    "title": "UAE Employment Routes: Portals, Boards, Agencies and Employers | JobPick",
+    "title": "UAE Employment Routes: A Six-Route Comparison | JobPick",
     "description": "Compare six employment-route examples, their audiences, account limits and application paths, with a practical vacancy-verification workflow.",
     "lang": "en"
   },
