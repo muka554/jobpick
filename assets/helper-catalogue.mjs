@@ -277,21 +277,9 @@ export const CATALOGUE = [
     "lang": "en"
   },
   {
-    "path": "/guides/uae-job-market-guide/",
-    "title": "UAE Job Market Guide: Official Portals | JobPick",
-    "description": "UAE job-market guide with official portals, preparation, work-permit context, and application checks.",
-    "lang": "en"
-  },
-  {
-    "path": "/guides/uae-job-search-guide/",
-    "title": "UAE Jobs: Websites & Application Guide | Middle East Job Hub",
-    "description": "Search for UAE jobs using practical job websites, employer career pages, application tracking, and realistic follow-up guidance.",
-    "lang": "en"
-  },
-  {
     "path": "/guides/uae-job-search-playbook/",
     "title": "UAE Job Search Playbook | JobPick",
-    "description": "UAE job-search playbook covering role targeting, platforms, verification, CVs, follow-up, and offer checks.",
+    "description": "Plan a UAE job search with official employment routes, vacancy checks, application evidence, follow-up steps and a printable 16-point checklist.",
     "lang": "en"
   },
   {
