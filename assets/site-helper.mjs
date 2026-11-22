@@ -1,4 +1,4 @@
-import { CATALOGUE } from './helper-catalogue.mjs?release=20261122-employer-checks';
+import { CATALOGUE } from './helper-catalogue.mjs?release=20261122-cv-workshop';
 export { CATALOGUE };
 export const ANSWERS = [
   {

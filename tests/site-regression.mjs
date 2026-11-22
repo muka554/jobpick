@@ -236,3 +236,17 @@ assert.ok(!employerGuide.includes('receipts.mohre.gov.ae/OfferInquiry'),'use the
 assert.ok(employerGuide.includes('https://inquiry.mohre.gov.ae/'),'official inquiry entry point');
 
 assert.ok(employerGuide.includes("<link href=\"https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">"),'preserve the employer guide original font markup');
+
+// Complete CV practice remains fictional, evidence-bound, printable and backwards-compatible.
+const cvWorkshop=read('guides/uae-cv-guide/index.html');
+for (const id of ["main-content", "contents-title", "requirements", "structure", "bullets", "format", "context", "tools", "send", "sources"]) assert.equal((cvWorkshop.match(new RegExp('id="' + id + '"', 'g')) || []).length,1,'Preserve unique CV legacy ID: '+id);
+for (const id of ['practice-brief','evidence-map','worked-cv','application-answer','application-message','blank-workbook','blank-print']) assert.equal((cvWorkshop.match(new RegExp('id="'+id+'"','g'))||[]).length,1,'CV workshop target: '+id);
+for (const text of ['All people, employers, qualifications, dates and results','invented for teaching','drafted, not submitted','I have not used an ERP system','not a UAE legal requirement','100 MB','2.5 MB','not fillable fields','22 November 2026']) assert.ok(cvWorkshop.includes(text),'CV evidence boundary: '+text);
+assert.equal((cvWorkshop.match(/class="worksheet-sheet"/g)||[]).length,3,'Three blank workbook sheets');
+const statement=cvWorkshop.match(/id="application-answer"[\s\S]*?<p class="application-copy">([\s\S]*?)<\/p>/)[1];
+assert.ok(statement.trim().split(/\s+/).length<=120,'Practice statement respects its own limit');
+for (const file of ['jobpick-fictional-cv.pdf','jobpick-cv-application-workbook.pdf']) {
+ assert.ok(cvWorkshop.includes('/assets/worksheets/'+file),'PDF link must exist');
+ const bytes=fs.readFileSync(path.join(root,'assets/worksheets',file));assert.equal(bytes.subarray(0,5).toString(),'%PDF-','Real PDF asset');assert.ok(bytes.length<100000,'Lightweight worksheets');
+}
+assert.ok(cvWorkshop.includes('<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&amp;family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>'),'Preserve raw CV font tag');
