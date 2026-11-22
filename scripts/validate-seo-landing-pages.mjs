@@ -9,7 +9,12 @@ import { join, relative, resolve } from 'node:path';
 
 const root = process.cwd();
 const siteOrigin = 'https://jobpick20.com';
-const approvedRedirects = new Map([['guides/uae-job-search-guide/index.html','target'],['guides/uae-job-market-guide/index.html','official-routes']]);
+const approvedRedirects = new Map([
+  ['guides/uae-job-search-guide/index.html','/guides/uae-job-search-playbook/#target'],
+  ['guides/uae-job-market-guide/index.html','/guides/uae-job-search-playbook/#official-routes'],
+  ['cities/muscat-jobs/index.html','/guides/oman-job-search-guide/#muscat'],
+  ['cities/kuwait-city-jobs/index.html','/guides/kuwait-job-search-guide/#kuwait-city']
+]);
 const jsonPath = process.argv.includes('--json') ? process.argv[process.argv.indexOf('--json') + 1] : null;
 const failures = [];
 const warnings = [];
@@ -51,7 +56,7 @@ function linkHref(html, relValue) {
 
 function expectedUrl(file) {
   const rel = relative(root, file).replaceAll('\\', '/');
-  if (approvedRedirects.has(rel)) return `${siteOrigin}/guides/uae-job-search-playbook/`;
+  if (approvedRedirects.has(rel)) return siteOrigin + approvedRedirects.get(rel).split('#')[0];
   if (rel === 'index.html') return `${siteOrigin}/`;
   return `${siteOrigin}/${rel.replace(/index\.html$/, '')}`;
 }
@@ -68,7 +73,7 @@ for (const file of files) {
   const pageWarnings = [];
   if (approvedRedirects.has(rel)) {
     const refresh = metaContent(html, 'http-equiv', 'refresh');
-    const target = expected + '#' + approvedRedirects.get(rel);
+    const target = siteOrigin + approvedRedirects.get(rel);
     if (refresh !== '0; url=' + target) addFailure(file, 'approved HTML redirect must be immediate and target the retained section');
     if (!html.includes('href="' + target + '"')) addFailure(file, 'redirect needs a visible fallback link');
   }
