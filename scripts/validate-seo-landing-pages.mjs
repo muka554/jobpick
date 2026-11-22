@@ -9,6 +9,7 @@ import { join, relative, resolve } from 'node:path';
 
 const root = process.cwd();
 const siteOrigin = 'https://jobpick20.com';
+const approvedRedirects = new Map([['guides/uae-job-search-guide/index.html','target'],['guides/uae-job-market-guide/index.html','official-routes']]);
 const jsonPath = process.argv.includes('--json') ? process.argv[process.argv.indexOf('--json') + 1] : null;
 const failures = [];
 const warnings = [];
@@ -50,6 +51,7 @@ function linkHref(html, relValue) {
 
 function expectedUrl(file) {
   const rel = relative(root, file).replaceAll('\\', '/');
+  if (approvedRedirects.has(rel)) return `${siteOrigin}/guides/uae-job-search-playbook/`;
   if (rel === 'index.html') return `${siteOrigin}/`;
   return `${siteOrigin}/${rel.replace(/index\.html$/, '')}`;
 }
@@ -64,12 +66,17 @@ for (const file of files) {
   const rel = relative(root, file).replaceAll('\\', '/');
   const expected = expectedUrl(file);
   const pageWarnings = [];
+  if (approvedRedirects.has(rel)) {
+    const refresh = metaContent(html, 'http-equiv', 'refresh');
+    const target = expected + '#' + approvedRedirects.get(rel);
+    if (refresh !== '0; url=' + target) addFailure(file, 'approved HTML redirect must be immediate and target the retained section');
+    if (!html.includes('href="' + target + '"')) addFailure(file, 'redirect needs a visible fallback link');
+  }
   const title = (html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1] || '').replace(/\s+/g, ' ').trim();
   const description = metaContent(html, 'name', 'description');
   const descriptions = (html.match(/<meta\b[^>]*\bname=["']description["'][^>]*>/gi) || []);
   const canonical = linkHref(html, 'canonical');
-  const canonicalTags = (html.match(/<link\b[^>]*\brel=["'][^"']*canonical[^"']*["'][^>]*>/gi) || []).length
-    + (html.match(/<link\b[^>]*\bhref=["'][^"']*["'][^>]*rel=["'][^"']*canonical[^"']*["'][^>]*>/gi) || []).length;
+  const canonicalTags = (html.match(/<link\b[^>]*\brel=["'][^"']*canonical[^"']*["'][^>]*>/gi) || []).length;
   const robots = metaContent(html, 'name', 'robots');
   const ogTitle = metaContent(html, 'property', 'og:title');
   const ogDescription = metaContent(html, 'property', 'og:description');
