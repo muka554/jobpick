@@ -267,3 +267,17 @@ const serviceWorkshop=read('customer-service-jobs-dubai/index.html');
 for (const text of ['JP-CASE-201','TRAINING-L201','refund request','not a published service standard','cannot confirm approval','Status remains open','not an actual follow-up']) assert.ok(serviceWorkshop.includes(text),'Complaint evidence limit: '+text);
 for (const id of ['complaint-pack','complaint-reply','customer-reply-copy','service-handover','service-followup','service-interview']) assert.equal((serviceWorkshop.match(new RegExp('id="'+id+'"','g'))||[]).length,1,'Service exercise target '+id);
 const customerReply=serviceWorkshop.match(/id="customer-reply-copy">([\s\S]*?)<\/p>/)[1];assert.ok(customerReply.trim().split(/\s+/).length<=100,'Customer reply respects exercise limit');
+
+// Dated route evidence must not collapse browsing, accounts and submission.
+const routeGuide=read('guides/gulf-job-platforms-explained/index.html');
+for (const id of ['main-content','contents-title','choose','library','eligibility','trace','accounts','routine','sources']) assert.equal((routeGuide.match(new RegExp('id="'+id+'"','g'))||[]).length,1,'Platform guide preserves unique legacy target '+id);
+assert.match(routeGuide,/<h2 id="contents-title">/,'Preserve original contents heading target');
+assert.equal((routeGuide.match(/class="route-card"/g)||[]).length,6,'Six existing route cards');
+assert.equal((routeGuide.match(/class="route-walkthrough"/g)||[]).length,6,'Six native observed walkthroughs');
+for (const id of ['fahr','dubai','bayt','hays','dhl','accor']) assert.match(routeGuide,new RegExp('<details class="route-walkthrough" id="route-'+id+'">'),'Native disclosure '+id);
+for (const phrase of ['22 November 2026','No results found','UAE Only','All three were checked in the session','create a My Hays account','might have closed','did not select Next','not successful applications','No applications, accounts, uploads','historical observations','not universal platform rules']) assert.ok(routeGuide.includes(phrase),'Preserve observation boundary '+phrase);
+assert.ok(!routeGuide.includes('register on the Federal Government IRecruitment Portal to browse openings'),'Remove gateway-only account implication');
+assert.ok(!routeGuide.includes('_gl='),'No session-tracking URL published');
+assert.ok(!/increase my visibility by 80%|guaranteed placement|all DHL applications are broken/.test(routeGuide),'No unverified promotion or platform-wide failure claim');
+assert.ok(routeGuide.includes('family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap'),'Keep exact platform-guide font request with literal separators');
+assert.match(routeGuide,/"dateModified": "2026-11-22T/,'Material review date');
