@@ -13,7 +13,9 @@ const approvedRedirects = new Map([
   ['guides/uae-job-search-guide/index.html','/guides/uae-job-search-playbook/#target'],
   ['guides/uae-job-market-guide/index.html','/guides/uae-job-search-playbook/#official-routes'],
   ['cities/muscat-jobs/index.html','/guides/oman-job-search-guide/#muscat'],
-  ['cities/kuwait-city-jobs/index.html','/guides/kuwait-job-search-guide/#kuwait-city']
+  ['cities/kuwait-city-jobs/index.html','/guides/kuwait-job-search-guide/#kuwait-city'],
+  ['cities/amman-jobs/index.html','/guides/jordan-job-search-guide/#amman'],
+  ['cities/manama-jobs/index.html','/guides/bahrain-job-search-guide/#manama']
 ]);
 const jsonPath = process.argv.includes('--json') ? process.argv[process.argv.indexOf('--json') + 1] : null;
 const failures = [];

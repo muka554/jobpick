@@ -103,12 +103,6 @@ export const CATALOGUE = [
     "lang": "en"
   },
   {
-    "path": "/cities/amman-jobs/",
-    "title": "Amman Jobs: Websites & Search Guide | Middle East Job Hub",
-    "description": "Find jobs in Amman with practical Jordan job websites, employer research, application planning, and safer vacancy verification.",
-    "lang": "en"
-  },
-  {
     "path": "/cities/cairo-jobs/",
     "title": "Cairo Jobs: Websites & Search Guide | Middle East Job Hub",
     "description": "Find jobs in Cairo with practical Egypt job websites, commuting-aware search planning, employer research, and application follow-up.",
@@ -124,12 +118,6 @@ export const CATALOGUE = [
     "path": "/cities/dubai-jobs/",
     "title": "Dubai Jobs: Websites & Search Guide | Middle East Job Hub",
     "description": "Find Dubai jobs through job websites, employer career pages, and a practical guide to searching roles by sector and location.",
-    "lang": "en"
-  },
-  {
-    "path": "/cities/manama-jobs/",
-    "title": "Manama Jobs: Websites & Search Guide | Middle East Job Hub",
-    "description": "Find jobs in Manama with useful Bahrain job websites, structured applications, recruiter communication, and listing verification.",
     "lang": "en"
   },
   {
@@ -171,7 +159,7 @@ export const CATALOGUE = [
   {
     "path": "/guides/bahrain-job-search-guide/",
     "title": "Bahrain Jobs: Public & Employer Routes | JobPick",
-    "description": "Bahrain job-search guide covering public registration, employer routes, and practical evidence checks.",
+    "description": "Compare Bahrain jobseeker registration, Tamkeen enterprise support and employer applications, with Manama worksite and BAC employer checks.",
     "lang": "en"
   },
   {
@@ -219,7 +207,7 @@ export const CATALOGUE = [
   {
     "path": "/guides/jordan-job-search-guide/",
     "title": "Jordan Jobs: Matching & Employer Routes | JobPick",
-    "description": "Jordan job-search guide covering Sajjil context, career guidance, and direct employer applications.",
+    "description": "Compare Sajjil matching, career guidance, programme criteria and employer applications, with Amman worksite and business-park checks.",
     "lang": "en"
   },
   {

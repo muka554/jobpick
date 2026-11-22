@@ -11,5 +11,5 @@ for(const query of [null,{},'x'.repeat(161)])assert.ok(searchHelp(query).error);
 const module=fs.readFileSync('assets/site-helper.mjs','utf8'),html=fs.readFileSync('tools/site-helper/index.html','utf8');assert.ok(!/\b(?:fetch|XMLHttpRequest|sendBeacon|eval)\s*\(/.test(module));assert.ok(!/\b(?:localStorage|sessionStorage|innerHTML)\b/.test(module));assert.ok(html.includes("connect-src 'none'"));assert.ok(html.includes("script-src 'self'"));assert.ok(!html.includes('fonts.googleapis'));assert.ok(html.includes('not an AI service or a live adviser'));assert.equal((html.match(/dir="auto" lang=/g)||[]).length,CATALOGUE.length);
 console.log('PASS: sixteen sourced prepared answers, '+CATALOGUE.length+' exact sitemap paths, all destinations, search/topic/no-result/input bounds and no network/storage/HTML sinks');
 
-assert.match(module,/helper-catalogue\.mjs\?release=20261122-city-merge1/);
-assert.match(html,/src="\/assets\/site-helper\.mjs\?release=20261122-city-merge1"/);
+assert.match(module,/helper-catalogue\.mjs\?release=20261122-city-merge2/);
+assert.match(html,/src="\/assets\/site-helper\.mjs\?release=20261122-city-merge2"/);
