@@ -292,3 +292,6 @@ for (const href of categoryPaths) {
 for(const href of ['/it-jobs-uae/','/technical-support-jobs-uae/','/customer-service-jobs-dubai/','/sales-jobs-uae/']) assert.match(read('guides/uae-job-search-playbook/index.html'),new RegExp('<p class="route-context">[\\s\\S]*?href="'+href+'"'),'Role guidance has ordinary contextual links '+href);
 assert.match(read('guides/uae-cv-guide/index.html'),/<p class="route-context">[\s\S]*?href="\/tools\/"/,'CV guide links tools directory in its tools section');
 assert.match(read('guides/dubai-vs-abu-dhabi-job-search/index.html'),/<p class="route-context">[\s\S]*?href="\/jobs-in-uae\/"/,'City comparison links UAE city-and-role directory');
+
+// The live host must receive literal separators to retain every intended font family.
+for(const file of ['guides/uae-job-search-playbook/index.html','guides/dubai-vs-abu-dhabi-job-search/index.html']) assert.ok(read(file).includes('href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"'),'Preserve exact original font configuration with literal query separators: '+file);
