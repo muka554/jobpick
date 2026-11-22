@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { JSDOM } from 'jsdom';
-import { blankDraft, normalizeDraft, sampleDraft, cvBlocks, letterBlocks, plainText, reviewDraft, requirementMatches, jobRequirementLines, prioritizeFacts } from '../assets/cv-studio-model.mjs';
+import { blankDraft, normalizeDraft, importDraft, lines, sampleDraft, cvBlocks, letterBlocks, plainText, reviewDraft, requirementMatches, jobRequirementLines, prioritizeFacts } from '../assets/cv-studio-model.mjs';
 import { docxFile, safeFilename } from '../assets/cv-studio-export.mjs';
 
 const blank = blankDraft();
@@ -93,3 +93,17 @@ for (const template of ['professional','editorial','compact','executive','minima
  const headings = doc.filter(b => b.type === 'heading').map(b => b.text);
  if (template === 'minimal') assert.ok(headings.indexOf('Skills') < headings.indexOf('Work Experience'));
   }
+
+assert.deepEqual(lines('-20% change\n- 20% change\n-5°C\n−5°C\n- Confirmed action\n• -12%'), ['-20% change','- 20% change','-5°C','−5°C','Confirmed action','-12%']);
+const signed = sampleDraft(); signed.experience[0].bullets='-20% change\n-5°C storage'; signed.target.evidence='-20% change';
+assert.ok(cvBlocks(signed).some(b => b.text === '-20% change'));
+assert.ok(letterBlocks(signed).some(b => b.text === '-20% change'));
+assert.throws(() => importDraft({...sampleDraft(),experience:Array(21).fill({title:'Keep every entry'})}),/more than 20 entries/);
+assert.throws(() => importDraft({...sampleDraft(),skills:'a'.repeat(6001)}),/exceeds/);
+assert.throws(() => importDraft({...sampleDraft(),profile:{name:'a'.repeat(181)}}),/exceeds/);
+const boundary = blankDraft(); boundary.skills='NoSQL'; boundary.target.requirements='SQL\nNoSQL';
+assert.deepEqual(requirementMatches(boundary).map(m => m.found),[false,true]);
+boundary.skills='SQL, PostgreSQL'; assert.deepEqual(requirementMatches(boundary).map(m => m.found),[true,false]);
+assert.ok((await docxFile(cvBlocks(signed)).text()).includes('-20% change'));
+assert.ok((await docxFile(cvBlocks(signed)).text()).includes('-5°C storage'));
+assert.ok((await docxFile(letterBlocks(signed)).text()).includes('-20% change'));
