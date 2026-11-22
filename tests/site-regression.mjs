@@ -210,3 +210,8 @@ for (const [city,country] of [['muscat','oman'],['kuwait-city','kuwait']]) {
 }
 assert.match(read('guides/oman-job-search-guide/index.html'),/https:\/\/gov.om\/w\/register-job-seeker-s-data-in-manpower-records/,'preserve the Arabic source, not a false correction based only on English');
 assert.match(read('guides/kuwait-job-search-guide/index.html'),/EmploymentServiceEnglish.aspx/,'keep worker services distinct from vacancy applications');
+
+// Preserve the established multi-family request through the live font rewrite.
+for (const name of ['guides/oman-job-search-guide/index.html','guides/kuwait-job-search-guide/index.html','cities/muscat-jobs/index.html','cities/kuwait-city-jobs/index.html']) {
+ assert.ok(read(name).includes('family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;600;700&family=Manrope:wght@700;800&display=swap'),'city consolidation must preserve the original multi-family font URL: '+name);
+}
