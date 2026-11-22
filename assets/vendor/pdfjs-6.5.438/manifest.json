@@ -1,0 +1,53 @@
+{
+  "version": "6.5.438",
+  "source_commit": "0a4153349dc473ba950fc17941c5ca7eda43c1de",
+  "webpack": "5.112.2",
+  "package_lock_sha256": "c5fd587a68a583172c7b63e900a8b3440b3923a79c7d8696f2765b7e24715c56",
+  "files": {
+    "LICENSE": {
+      "bytes": 10174,
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    "pdf.min.mjs": {
+      "bytes": 474416,
+      "sha256": "4699e95879027d1f6f9aaf286a88f6cd132ddf9793109d680c6795db296eb434"
+    },
+    "pdf.worker.min.mjs": {
+      "bytes": 172466,
+      "sha256": "7f6b3d3bf62766e04ec529523c4c5d86de8e7869000543b24d43e5ba2a01499e"
+    },
+    "pdf.worker.part-1092366f34e9.mjs": {
+      "bytes": 54622,
+      "sha256": "1937a192a3a95a1064fa9088ec8af88a6d17d6953ece646269488c1a46ec9581"
+    },
+    "pdf.worker.part-269e36818006.mjs": {
+      "bytes": 229776,
+      "sha256": "95226f3eead653bb965f2e24205340c094c1b72791659daef6318bab73598bb8"
+    },
+    "pdf.worker.part-32f923d83704.mjs": {
+      "bytes": 204026,
+      "sha256": "633be303662cdf986e5aa1cb35151ceec6bdb8300ea478a30e18a2ce4b7b59c4"
+    },
+    "pdf.worker.part-42f1cc377cdd.mjs": {
+      "bytes": 13174,
+      "sha256": "134b6a73ea190df22ee084b1d536988805991d9e48f9323e74c9e11005eb80b5"
+    },
+    "pdf.worker.part-435dd0840591.mjs": {
+      "bytes": 248842,
+      "sha256": "06c1b2e41aba86286b8d32d06ddca66c013680174892695afed81264917fa359"
+    },
+    "pdf.worker.part-97a70154f573.mjs": {
+      "bytes": 26895,
+      "sha256": "e1e50d49d05feb743ead296bfdd3f163fc7a207393465d6acea75a4db6ea350e"
+    },
+    "pdf.worker.part-e735ac192a28.mjs": {
+      "bytes": 137939,
+      "sha256": "1f9beaf738df399d895d5b113f5f9b1684ac35ecda7b55868bb2598d4d685763"
+    },
+    "pdf.worker.part-f4a2d1ec39d4.mjs": {
+      "bytes": 237401,
+      "sha256": "367f412966285ef7c055823497b050eebdc008afc63e806799bbef743ef4464f"
+    }
+  },
+  "upstream_main_sha256": "3a88402882cfa3e7e72c2c9b5149f52f0f88baf1c5b62aa11a41abdbc2072440"
+}
