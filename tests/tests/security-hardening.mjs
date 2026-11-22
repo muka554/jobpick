@@ -1,0 +1,50 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { JSDOM } from 'jsdom';
+import { decodeXML } from 'entities';
+import { pageMetadata, moduleScripts, hasExactLink, isSiteUrl, sitemapContainsUrl } from '../scripts/lib/content-parsing.mjs';
+import { jobDescriptionText, renderLocalCvPreview } from '../assets/safe-text.mjs';
+
+const dom = new JSDOM('<!doctype html><div id="preview"></div>');
+globalThis.DOMParser = dom.window.DOMParser;
+const container = dom.window.document.getElementById('preview');
+const hostile = '</textarea><img src="x" onerror="globalThis.injected=1"><script>globalThis.injected=1</script>&lt;svg onload=globalThis.injected=1&gt;';
+assert.equal(jobDescriptionText('<p>First &amp; second</p><p>Next</p>'), 'First & second Next');
+assert.equal(jobDescriptionText('&amp;lt;b&amp;gt;literal&amp;lt;/b&amp;gt;'), '&lt;b&gt;literal&lt;/b&gt;');
+const extracted = jobDescriptionText(hostile);
+assert.ok(!extracted.includes('globalThis.injected=1</script>'));
+assert.equal(globalThis.injected, undefined);
+assert.equal(await renderLocalCvPreview(container, { name: 'hostile.txt', type: 'text/plain', text: async () => hostile }), 'text');
+assert.equal(container.querySelector('pre').textContent, hostile);
+assert.equal(container.querySelectorAll('script,img,svg,iframe').length, 0);
+assert.equal(await renderLocalCvPreview(container, { name: hostile + '.docx', type: 'application/octet-stream', size: 1025 }), 'docx');
+assert.ok(container.textContent.includes(hostile + '.docx · 2 KB'));
+assert.equal(container.querySelectorAll('script,img,svg,iframe').length, 0);
+assert.equal(globalThis.injected, undefined);
+const pdf = new Blob(['local fixture'], { type: 'application/pdf' });
+Object.defineProperty(pdf, 'name', { value: 'fixture.pdf' });
+assert.equal(await renderLocalCvPreview(container, pdf), 'pdf');
+assert.ok(container.querySelector('iframe').src.startsWith('blob:'));
+assert.equal(container.querySelector('iframe').title, 'Uploaded CV PDF preview');
+await renderLocalCvPreview(container, { name: 'next.txt', type: 'text/plain', text: async () => 'next preview' });
+assert.equal(container.querySelectorAll('iframe').length, 0);
+
+const meta = pageMetadata('<html lang="ar"><title>A &amp;lt;b&amp;gt; &amp; B</title><meta name="description" content="&lt;img src=x&gt; &amp; safe"></html>');
+assert.deepEqual(meta, { title: 'A &lt;b&gt; & B', description: '<img src=x> & safe', lang: 'ar' });
+assert.equal(decodeXML('&amp;lt;tag&amp;gt;'), '&lt;tag&gt;');
+const wanted = 'https://www.sajjil.gov.jo/nep';
+assert.ok(hasExactLink('<a href="' + wanted + '">official</a>', wanted));
+for (const bad of ['https://wwwXsajjilYgovZjo/nep', wanted + '.evil.test/', 'https://www.sajjil.gov.jo.evil.test/nep', 'https://www.sajjil.gov.jo@evil.test/nep', wanted + '?redirect=evil', 'https://user@www.sajjil.gov.jo/nep']) {
+  assert.ok(!hasExactLink('<a href="' + bad + '">not official</a>', wanted), bad);
+}
+assert.ok(!hasExactLink('<p>' + wanted + '</p>', wanted));
+assert.ok(isSiteUrl('https://jobpick20.com/guide/'));
+for (const bad of ['https://jobpick20.com.evil.test/', 'https://evil.test/?next=https://jobpick20.com/', 'https://user@jobpick20.com/', 'http://jobpick20.com/']) assert.ok(!isSiteUrl(bad), bad);
+assert.ok(sitemapContainsUrl('<urlset><url><loc>https://jobpick20.com/a/?x=1&amp;y=2</loc></url></urlset>', 'https://jobpick20.com/a/?x=1&y=2'));
+assert.ok(!sitemapContainsUrl('<urlset><url><loc>https://evil.test/?next=https://jobpick20.com/authors/jobpick-editorial-team/</loc></url></urlset>', 'https://jobpick20.com/authors/jobpick-editorial-team/'));
+assert.deepEqual(moduleScripts('<SCRIPT TYPE="module">const a = 1;</SCRIPT><script type="module" src="x.js"></script><script type="text/plain">ignored</script>'), ['const a = 1;']);
+const tools = readFileSync(new URL('../tools/index.html', import.meta.url), 'utf8');
+const jobs = readFileSync(new URL('../jobs/index.html', import.meta.url), 'utf8');
+assert.ok(tools.includes('await renderLocalCvPreview(cvPreview,file)'));
+assert.ok(jobs.includes('function clean(raw){return jobDescriptionText(raw)}'));
+console.log('PASS: hostile text stays text, one-pass entities, exact URL checks, inert module parsing and live-page wiring');
