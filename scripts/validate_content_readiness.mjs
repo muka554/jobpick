@@ -2,6 +2,7 @@ import { readFile, writeFile, readdir, stat } from 'node:fs/promises';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import path from 'node:path';
+import { isSiteUrl, sitemapContainsUrl } from './lib/content-parsing.mjs';
 
 const execFileAsync = promisify(execFile);
 
@@ -38,7 +39,7 @@ for (const file of cityFiles) {
   const links = hrefs(html);
   const main = html.match(/<main[^>]*>([\s\S]*?)<\/main>/i)?.[1] ?? '';
   const sourceList = main.match(/<ol class="source-list">([\s\S]*?)<\/ol>/i)?.[1] ?? '';
-  const external = hrefs(sourceList).filter(isExternal).filter((url) => !url.includes('jobpick20.com'));
+  const external = hrefs(sourceList).filter(isExternal).filter((url) => !isSiteUrl(url));
   const author = html.includes('href="/authors/jobpick-editorial-team/"') || html.includes("href='/authors/jobpick-editorial-team/'");
   const sources = /Sources and official routes/i.test(main) && Boolean(sourceList);
   const reviewed = html.includes('Last reviewed: August 26, 2026');
@@ -73,7 +74,7 @@ const robots = await readFile(path.join(root, 'robots.txt'), 'utf8');
 const crawlSignals = [
   ['Robots allows crawling', /^User-agent:\s*\*\s*\nAllow:\s*\//mi.test(robots)],
   ['Robots advertises sitemap', /Sitemap:\s*https:\/\/jobpick20\.com\/sitemap\.xml/i.test(robots)],
-  ['Author profile in sitemap', sitemap.includes('https://jobpick20.com/authors/jobpick-editorial-team/')],
+  ['Author profile in sitemap', sitemapContainsUrl(sitemap, 'https://jobpick20.com/authors/jobpick-editorial-team/')],
   ['All revised city URLs carry 2026-08-26 lastmod', cityDirs.every((slug) => new RegExp(`<loc>https://jobpick20\\.com/cities/${slug}/<\/loc>\\s*<lastmod>2026-08-26<\/lastmod>`).test(sitemap))],
   ['All guide URLs carry 2026-08-26 lastmod', guideDirs.every((slug) => new RegExp(`<loc>https://jobpick20\\.com/guides/${slug}/<\/loc>\\s*<lastmod>2026-08-26<\/lastmod>`).test(sitemap))]
 ];
