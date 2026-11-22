@@ -233,7 +233,7 @@ $('downloadText').addEventListener('click', () => { if (!exportCheck()) return; 
 $('printDocument').addEventListener('click', () => { if (!exportCheck()) return; window.print(); });
 window.addEventListener('beforeunload', event => { if (dirty && hasDraftContent()) { event.preventDefault(); event.returnValue = ''; } });
 window.addEventListener('pagehide', () => { if (savingEnabled) persistDraft(); });
-window.addEventListener('storage', event => { if (event.key === STORE) { clearTimeout(saveTimer); savingEnabled = false; $('rememberDraft').checked = false; dirty = true; $('saveState').textContent = 'Browser draft changed elsewhere'; announce('Another tab changed the saved draft. This tab has stopped saving to avoid overwriting it. Export this tab\'s draft file if you want to keep it.'); } });
+window.addEventListener('storage', event => { if (event.key === STORE || event.key === null) { clearTimeout(saveTimer); savingEnabled = false; $('rememberDraft').checked = false; dirty = true; $('saveState').textContent = 'Browser draft changed elsewhere'; announce('Another tab changed the saved draft. This tab has stopped saving to avoid overwriting it. Export this tab\'s draft file if you want to keep it.'); } });
 new ResizeObserver(resizePaper).observe($('paperViewport'));
 try { const saved = localStorage.getItem(STORE); if (saved) { draft = importDraft(JSON.parse(saved)); savingEnabled = true; $('rememberDraft').checked = true; $('saveState').textContent = 'Restored from this device'; announce('Restored the CV previously saved on this device. Turn off browser saving to delete the stored copy.'); } }
 catch { announce('A saved draft could not be restored. Start fresh or open a draft file.'); }
