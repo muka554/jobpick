@@ -133,7 +133,7 @@ assert(helperLayoutHtml.indexOf('id="sh-query"') < helperLayoutHtml.indexOf('id=
 assert(helperLayoutHtml.includes('href="#helper-limits"'), 'Helper short safety notice must link to full limits');
 
 // Reading-layout additions preserve native no-JavaScript section links.
-for (const name of ["guides/saudi-job-search-guide/index.html", "guides/recruitment-scam-warning-signs/index.html", "guides/egypt-job-search-guide/index.html", "guides/uae-job-market-guide/index.html", "guides/qatar-job-search-guide/index.html", "guides/kuwait-job-search-guide/index.html", "guides/jeddah-job-search-guide/index.html", "guides/oman-job-search-guide/index.html", "guides/jordan-job-search-guide/index.html", "guides/uae-job-search-guide/index.html", "guides/bahrain-job-search-guide/index.html", "cities/doha-jobs/index.html", "cities/riyadh-jobs/index.html", "cities/kuwait-city-jobs/index.html", "cities/dubai-jobs/index.html", "cities/cairo-jobs/index.html", "cities/abu-dhabi-jobs/index.html", "cities/muscat-jobs/index.html", "cities/amman-jobs/index.html", "cities/manama-jobs/index.html", "jobs-in-uae/index.html", "it-jobs-uae/index.html", "sales-jobs-uae/index.html", "customer-service-jobs-dubai/index.html", "technical-support-jobs-uae/index.html"]) {
+for (const name of ["guides/saudi-job-search-guide/index.html", "guides/recruitment-scam-warning-signs/index.html", "guides/egypt-job-search-guide/index.html", "guides/qatar-job-search-guide/index.html", "guides/kuwait-job-search-guide/index.html", "guides/jeddah-job-search-guide/index.html", "guides/oman-job-search-guide/index.html", "guides/jordan-job-search-guide/index.html", "guides/bahrain-job-search-guide/index.html", "cities/doha-jobs/index.html", "cities/riyadh-jobs/index.html", "cities/kuwait-city-jobs/index.html", "cities/dubai-jobs/index.html", "cities/cairo-jobs/index.html", "cities/abu-dhabi-jobs/index.html", "cities/muscat-jobs/index.html", "cities/amman-jobs/index.html", "cities/manama-jobs/index.html", "jobs-in-uae/index.html", "it-jobs-uae/index.html", "sales-jobs-uae/index.html", "customer-service-jobs-dubai/index.html", "technical-support-jobs-uae/index.html"]) {
  const html = read(name);
  assert.match(html, /<details class="guide-section-links">/, name + ' needs a compact section index');
  const details = html.match(/<details class="guide-section-links">([\s\S]*?)<\/details>/)?.[1] || '';
@@ -148,7 +148,7 @@ assert.equal((homePriorities.match(/id="applicationTracker"/g) || []).length, 1,
 
 for (const full of htmlFiles) {
  const html = fs.readFileSync(full, 'utf8');
- const primary = html.match(/<nav class="sitenav jobpick-primary-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+ const primary = html.match(/<nav\b(?=[^>]*\bclass="sitenav jobpick-primary-nav")[^>]*>([\s\S]*?)<\/nav>/)?.[1];
  assert.ok(primary, full + ' needs shared navigation');
  for (const href of ['/', '/jobs/', '/resources/', '/tools/', '/about/']) assert.ok(primary.includes('href="' + href + '"'), full + ' missing primary ' + href);
  for (const href of ['/privacy-policy/', '/terms-of-use/', '/advertising-disclosure/']) assert.ok(!primary.includes('href="' + href + '"'), full + ' legal links belong in footer');
@@ -168,7 +168,7 @@ assert.match(qatarMobility, /mol.gov.qa\/admin\/EServices/, 'Qatar employer-chan
 assert.match(read('corrections/index.html'), /correction-20261122-qatar/, 'Material Qatar correction needs a public record');
 
 for (const country of ['oman','kuwait','jordan','bahrain','egypt','uae']) {
- const html = read('guides/' + country + '-job-search-guide/index.html');
+ const html = read(country === 'uae' ? 'guides/uae-job-search-playbook/index.html' : 'guides/' + country + '-job-search-guide/index.html');
  assert.match(html, /What changed on 22 November 2026/, country + ' needs an honest claim-correction note');
  assert.ok(!html.includes('affect hiring pace, not eligibility'), country + ' must not reduce eligibility restrictions to hiring speed');
 }
@@ -176,7 +176,7 @@ assert.match(read('guides/oman-job-search-guide/index.html'), /https:\/\/www.mol
 assert.match(read('corrections/index.html'), /correction-20261122-country/, 'Country claim corrections need a public record');
 
 for (const country of ['oman','kuwait','jordan','bahrain','egypt','uae']) {
- assert.match(read('guides/' + country + '-job-search-guide/index.html'), /"dateModified"\s*:\s*"2026-11-22/, country + ' structured review date must match this correction');
+ assert.match(read(country === 'uae' ? 'guides/uae-job-search-playbook/index.html' : 'guides/' + country + '-job-search-guide/index.html'), /"dateModified"\s*:\s*"2026-11-22/, country + ' structured review date must match this correction');
 }
 
 for (const city of ['amman','cairo','doha','kuwait-city','manama','muscat']) {
@@ -187,3 +187,13 @@ for (const city of ['amman','cairo','doha','kuwait-city','manama','muscat']) {
  }
 }
 assert.match(read('corrections/index.html'), /correction-20261122-city/, 'City corrections need a public record');
+
+// Reviewed UAE consolidation: preserve useful assets and use explicit static-host redirects.
+const consolidated = read('guides/uae-job-search-playbook/index.html');
+assert.equal((consolidated.match(/type="checkbox"/g)||[]).length,16,'preserve the 16-point printable checklist');
+for (const id of ['official-routes','checklist-section','checklistPrint']) assert.ok(consolidated.includes('id="'+id+'"'));
+for (const [old,anchor] of [['uae-job-search-guide','target'],['uae-job-market-guide','official-routes']]) {
+ const moved=read('guides/'+old+'/index.html');
+ assert.ok(moved.includes('content="0; url=https://jobpick20.com/guides/uae-job-search-playbook/#'+anchor+'"'),'instant redirect target');
+ assert.ok(!sitemapUrls.includes('https://jobpick20.com/guides/'+old+'/'),'moved article must leave sitemap');
+              }
