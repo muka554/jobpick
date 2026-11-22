@@ -5,8 +5,8 @@
   "package_lock_sha256": "c5fd587a68a583172c7b63e900a8b3440b3923a79c7d8696f2765b7e24715c56",
   "files": {
     "LICENSE": {
-      "bytes": 10174,
-      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+      "bytes": 10173,
+      "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9"
     },
     "pdf.min.mjs": {
       "bytes": 474416,
