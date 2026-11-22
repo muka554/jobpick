@@ -160,3 +160,9 @@ assert.match(standardsPhone, /class="standards-table-wrap" role="region"/, 'Stan
 assert.match(standardsPhone, /standards-table-wrap\{max-width:100%;overflow-x:auto/, 'Standards table overflow must stay inside its wrapper');
 const employerPhone = read('guides/verify-uae-employer/index.html');
 assert.match(employerPhone, /a\.button\{max-width:100%;white-space:normal;box-sizing:border-box/, 'Employer CTA must wrap within narrow screens');
+
+const qatarMobility = read('guides/qatar-job-search-guide/index.html');
+assert.ok(!qatarMobility.includes('generally still requires either a No-Objection'), 'Do not restore the incorrect Qatar NOC requirement');
+assert.match(qatarMobility, /without a No-Objection Certificate/, 'Qatar guide must explain NOC removal');
+assert.match(qatarMobility, /mol.gov.qa\/admin\/EServices/, 'Qatar employer-change guidance must link to Ministry procedure');
+assert.match(read('corrections/index.html'), /correction-20261122-qatar/, 'Material Qatar correction needs a public record');
