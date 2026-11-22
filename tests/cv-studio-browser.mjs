@@ -155,6 +155,15 @@ try {
  await page.locator('[data-step="0"]').click(); await page.locator('#field-profile-name').fill('Current tab unsaved');
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('jobpick.cv-studio.v1')).profile.name),'Other tab candidate');
  await other.close();
+ await page.locator('#rememberDraft').check(); await page.locator('#acceptConfirm').click();
+ const clearingTab=await context.newPage(); await clearingTab.goto(origin+'/__qa_empty.html');
+ await clearingTab.evaluate(()=>localStorage.clear());
+ await page.waitForFunction(()=>!document.getElementById('rememberDraft').checked);
+ assert.ok((await page.locator('#saveState').textContent()).includes('changed elsewhere'));
+ await page.locator('#field-profile-name').fill('Do not restore deleted storage');
+ assert.equal(await page.evaluate(()=>localStorage.length),0);
+ assert.equal(await page.locator('#rememberDraft').isChecked(),false);
+ await clearingTab.close();
  const blocked=await browser.newContext();
  await blocked.addInitScript(()=>Object.defineProperty(window,'localStorage',{get(){throw new DOMException('blocked','SecurityError');}}));
  const blockedPage=await blocked.newPage();await blockedPage.goto(origin+'/tools/cv-studio.html');
@@ -164,6 +173,17 @@ try {
  assert.ok((await blockedPage.locator('#notice').innerText()).includes('unavailable'));
  await blocked.close();
 
+ // The letter evidence picker must preserve numeric signs through the shared cleanup.
+ await page.locator('[data-step="1"]').click();
+ await page.locator('#field-experience-0-bullets').fill('-20% change\n-5°C storage');
+ await page.locator('#optionalSections').evaluate(n=>n.open=true);
+ await page.locator('[data-step="4"]').click();
+ await page.locator('#letterOptions').evaluate(n=>n.open=true);
+ await page.getByText('Choose evidence from your experience',{exact:true}).click();
+ await page.getByRole('button',{name:'+ -20% change',exact:true}).click();
+ assert.equal(await page.locator('#field-target-evidence').inputValue(),'-20% change');
+ await page.locator('#showLetter').click();
+ assert.ok((await page.locator('#paper').textContent()).includes('-20% change'));
  assert.deepEqual(errors,[]); assert.deepEqual(external,[]);
  console.log('PASS browser: three-step core and optional editors, six structural layouts and letter styles, job tailoring/gaps, axe, DOCX/PDF, RTL, hostile text, local-only behavior, storage controls/failure/cross-tab, invalid imports, long output, reorder/cancel and five viewport widths');
 } finally { await browser.close(); await new Promise(r=>server.close(r)); }
