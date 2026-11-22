@@ -120,6 +120,10 @@ try {
  await page.waitForFunction(()=>document.getElementById('notice').innerText.includes('Could not open'));
  assert.ok((await page.locator('#paper').textContent()).includes('Mira Nasser'));
  await page.locator('#saveDraft').click();
+ // Oversized factual imports must fail visibly rather than lose entry 21.
+ await page.locator('#importDraft').setInputFiles({name:'too-many.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({version:1,experience:Array(21).fill({title:'Do not lose me'})}))});
+ await page.waitForFunction(()=>document.getElementById('notice').innerText.includes('more than 20 entries'));
+ assert.ok((await page.locator('#paper').textContent()).includes('Mira Nasser'));
  // Long input is wrapped, never clipped out of the document or silently shortened.
  await page.locator('[data-step="0"]').click();
  await page.locator('#field-profile-summary').fill('START-LONG '+ 'exampleword'.repeat(180)+' END-LONG');
