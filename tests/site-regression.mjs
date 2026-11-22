@@ -133,7 +133,7 @@ assert(helperLayoutHtml.indexOf('id="sh-query"') < helperLayoutHtml.indexOf('id=
 assert(helperLayoutHtml.includes('href="#helper-limits"'), 'Helper short safety notice must link to full limits');
 
 // Reading-layout additions preserve native no-JavaScript section links.
-for (const name of ["guides/saudi-job-search-guide/index.html", "guides/recruitment-scam-warning-signs/index.html", "guides/egypt-job-search-guide/index.html", "guides/qatar-job-search-guide/index.html", "guides/kuwait-job-search-guide/index.html", "guides/jeddah-job-search-guide/index.html", "guides/oman-job-search-guide/index.html", "guides/jordan-job-search-guide/index.html", "guides/bahrain-job-search-guide/index.html", "cities/doha-jobs/index.html", "cities/riyadh-jobs/index.html", "cities/kuwait-city-jobs/index.html", "cities/dubai-jobs/index.html", "cities/cairo-jobs/index.html", "cities/abu-dhabi-jobs/index.html", "cities/muscat-jobs/index.html", "cities/amman-jobs/index.html", "cities/manama-jobs/index.html", "jobs-in-uae/index.html", "it-jobs-uae/index.html", "sales-jobs-uae/index.html", "customer-service-jobs-dubai/index.html", "technical-support-jobs-uae/index.html"]) {
+for (const name of ["guides/saudi-job-search-guide/index.html", "guides/recruitment-scam-warning-signs/index.html", "guides/egypt-job-search-guide/index.html", "guides/qatar-job-search-guide/index.html", "guides/kuwait-job-search-guide/index.html", "guides/jeddah-job-search-guide/index.html", "guides/oman-job-search-guide/index.html", "guides/jordan-job-search-guide/index.html", "guides/bahrain-job-search-guide/index.html", "cities/doha-jobs/index.html", "cities/riyadh-jobs/index.html", "cities/dubai-jobs/index.html", "cities/cairo-jobs/index.html", "cities/abu-dhabi-jobs/index.html", "cities/amman-jobs/index.html", "cities/manama-jobs/index.html", "jobs-in-uae/index.html", "it-jobs-uae/index.html", "sales-jobs-uae/index.html", "customer-service-jobs-dubai/index.html", "technical-support-jobs-uae/index.html"]) {
  const html = read(name);
  assert.match(html, /<details class="guide-section-links">/, name + ' needs a compact section index');
  const details = html.match(/<details class="guide-section-links">([\s\S]*?)<\/details>/)?.[1] || '';
@@ -180,7 +180,7 @@ for (const country of ['oman','kuwait','jordan','bahrain','egypt','uae']) {
 }
 
 for (const city of ['amman','cairo','doha','kuwait-city','manama','muscat']) {
- const html = read('cities/' + city + '-jobs/index.html');
+ const html = read(city === 'muscat' ? 'guides/oman-job-search-guide/index.html' : city === 'kuwait-city' ? 'guides/kuwait-job-search-guide/index.html' : 'cities/' + city + '-jobs/index.html');
  assert.match(html, /What changed on 22 November 2026/, city + ' needs a claim-correction note');
  for (const claim of ['meaningful share of Amman','largest commercial district by office stock','Most of Manama','Oman’s largest industrial park','can surface roles that a broad city-wide search misses']) {
   assert.ok(!html.includes(claim), city + ' must not restore unsupported hiring-share or productivity claims');
@@ -199,3 +199,14 @@ for (const [old,anchor] of [['uae-job-search-guide','target'],['uae-job-market-g
               }
 
 assert.match(read('guides/uae-job-search-playbook/index.html'), /\.cta \.button\{max-width:100%;white-space:normal;overflow-wrap:anywhere\}/, 'playbook CTA must wrap with the live font on narrow phones');
+
+// City/country consolidation retains bounded source decisions and explicit redirects.
+for (const [city,country] of [['muscat','oman'],['kuwait-city','kuwait']]) {
+ const destination='https://jobpick20.com/guides/'+country+'-job-search-guide/';
+ const moved=read('cities/'+city+'-jobs/index.html');
+ assert.ok(moved.includes('content="0; url='+destination+'#'+city+'"'),'city redirect must be immediate');
+ assert.ok(!sitemapUrls.includes('https://jobpick20.com/cities/'+city+'-jobs/'),'moved city must leave sitemap');
+ assert.ok(read('guides/'+country+'-job-search-guide/index.html').includes('id="'+city+'"'),'retained city decision needs an anchor');
+}
+assert.match(read('guides/oman-job-search-guide/index.html'),/https:\/\/gov.om\/w\/register-job-seeker-s-data-in-manpower-records/,'preserve the Arabic source, not a false correction based only on English');
+assert.match(read('guides/kuwait-job-search-guide/index.html'),/EmploymentServiceEnglish.aspx/,'keep worker services distinct from vacancy applications');
