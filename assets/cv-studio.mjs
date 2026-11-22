@@ -161,7 +161,7 @@ $('rememberDraft').addEventListener('change', async () => {
   clearTimeout(saveTimer);
   if ($('rememberDraft').checked) {
     if (!await confirmReplace('Save this CV on this device? Anyone using this browser profile may be able to see it. Avoid this on a shared or public device.', 'Save on this device?', 'Save locally')) { $('rememberDraft').checked = false; return; }
-    savingEnabled = true; persistDraft(); announce('Browser saving enabled. Turn it off to delete the stored copy. Exported files are separate.');
+    savingEnabled = true; persistDraft(); if (savingEnabled) announce('Browser saving enabled. Turn it off to delete the stored copy. Exported files are separate.');
   } else {
     try { localStorage.removeItem(STORE); savingEnabled = false; dirty = true; $('saveState').textContent = 'Not saved'; announce('Stored browser copy deleted. Your current draft is still open. Draft files you exported are not deleted.'); }
     catch { $('rememberDraft').checked = true; announce('The browser could not delete its stored copy. Clear this site\'s storage in browser settings on this device.'); }
