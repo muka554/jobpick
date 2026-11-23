@@ -1,0 +1,251 @@
+{
+  "version": 1,
+  "host": "jobpick20.com",
+  "scheme": "https",
+  "phase": "http_request_dynamic_redirect",
+  "position": "last",
+  "rules": [
+    {
+      "name": "JobPick legacy home redirect",
+      "path": "/home",
+      "destination": "https://jobpick20.com/",
+      "expression": "(http.host eq \"jobpick20.com\" and http.request.scheme eq \"https\" and http.request.uri.path eq \"/home\")",
+      "statusCode": 301,
+      "preserveQueryString": true
+    },
+    {
+      "name": "JobPick legacy privacy-policy.html redirect",
+      "path": "/privacy-policy.html",
+      "destination": "https://jobpick20.com/privacy-policy/",
+      "expression": "(http.host eq \"jobpick20.com\" and http.request.scheme eq \"https\" and http.request.uri.path eq \"/privacy-policy.html\")",
+      "statusCode": 301,
+      "preserveQueryString": true
+    },
+    {
+      "name": "JobPick legacy about.html redirect",
+      "path": "/about.html",
+      "destination": "https://jobpick20.com/about/",
+      "expression": "(http.host eq \"jobpick20.com\" and http.request.scheme eq \"https\" and http.request.uri.path eq \"/about.html\")",
+      "statusCode": 301,
+      "preserveQueryString": true
+    },
+    {
+      "name": "JobPick legacy advertising-disclosure.html redirect",
+      "path": "/advertising-disclosure.html",
+      "destination": "https://jobpick20.com/advertising-disclosure/",
+      "expression": "(http.host eq \"jobpick20.com\" and http.request.scheme eq \"https\" and http.request.uri.path eq \"/advertising-disclosure.html\")",
+      "statusCode": 301,
+      "preserveQueryString": true
+    },
+    {
+      "name": "JobPick legacy terms-of-use.html redirect",
+      "path": "/terms-of-use.html",
+      "destination": "https://jobpick20.com/terms-of-use/",
+      "expression": "(http.host eq \"jobpick20.com\" and http.request.scheme eq \"https\" and http.request.uri.path eq \"/terms-of-use.html\")",
+      "statusCode": 301,
+      "preserveQueryString": true
+    },
+    {
+      "name": "JobPick legacy contact.html redirect",
+      "path": "/contact.html",
+      "destination": "https://jobpick20.com/contact/",
+      "expression": "(http.host eq \"jobpick20.com\" and http.request.scheme eq \"https\" and http.request.uri.path eq \"/contact.html\")",
+      "statusCode": 301,
+      "preserveQueryString": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "/",
+      "status": 200,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/privacy-policy/",
+      "status": 200,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/about/",
+      "status": 200,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/advertising-disclosure/",
+      "status": 200,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/terms-of-use/",
+      "status": 200,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/contact/",
+      "status": 200,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/tools/",
+      "status": 200,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/tools/cv-studio.html",
+      "status": 200,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/guides/egypt-job-search-guide/",
+      "status": 200,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline' https://ep2.adtrafficquality.google; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org https://pagead2.googlesyndication.com https://ep1.adtrafficquality.google; connect-src https://ep1.adtrafficquality.google 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://googleads.g.doubleclick.net https://www.googletagmanager.com https://accounts.google.com https://ep2.adtrafficquality.google https://www.google.com/recaptcha/; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/home/",
+      "status": 301,
+      "location": "https://jobpick20.com/",
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/home/unchanged-child",
+      "status": 301,
+      "location": "https://jobpick20.com/",
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/about",
+      "status": 301,
+      "location": "https://jobpick20.com/about/",
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/missing-page-audit-check",
+      "status": 404,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/about.html/",
+      "status": 404,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/about.html/child",
+      "status": 404,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    },
+    {
+      "path": "/ABOUT.html",
+      "status": 404,
+      "location": null,
+      "headers": {
+        "content-security-policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://static.cloudflareinsights.com https://esm.sh https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://commons.wikimedia.org; connect-src 'self' https://ipwho.is https://www.google-analytics.com https://region1.google-analytics.com https://*.supabase.co https://esm.sh https://jobpickcv-5ouvegg7.manus.space https://api.lever.co https://api.ashbyhq.com https://boards-api.greenhouse.io; frame-src https://www.googletagmanager.com https://accounts.google.com; upgrade-insecure-requests",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(self)",
+        "referrer-policy": "same-origin, strict-origin-when-cross-origin",
+        "x-frame-options": "SAMEORIGIN, SAMEORIGIN",
+        "x-content-type-options": "nosniff, nosniff"
+      }
+    }
+  ]
+}
