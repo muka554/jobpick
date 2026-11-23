@@ -65,6 +65,9 @@ jobs:
       - name: Check exact ad-page CSP scope
         run: node tests/adsense-csp.mjs
 
+      - name: Check exact legacy redirect scope
+        run: node tests/legacy-redirects.mjs
+
       - name: Check JavaScript syntax
         shell: bash
         run: |
