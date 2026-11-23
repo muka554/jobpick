@@ -49,3 +49,9 @@ Controls cover all six destinations, tools, Studio, Egypt guide, existing `/home
 Disable or delete only the six newly named rules. Never disable the existing `Legacy home permanent redirect` or any CSP/cache rule. The preflight then expects the original six 404s and unchanged controls. Permanent redirects may be cached in visitors' browsers, so disabling the rule cannot retract an already cached 301; this is why exact mappings and pre-deploy review matter. Stop and roll back the new rules if any control path changes or a target loops.
 
 Reference, including static target, 301 and query settings: https://developers.cloudflare.com/rules/url-forwarding/single-redirects/settings/
+
+## Corrected HTTPS field
+
+The first deployment attempt was rejected before any rule was created because `http.request.scheme` is not a Cloudflare field. Use the documented Boolean `ssl` in each exact filter. This preserves HTTPS-only scope; all paths, destinations, status codes and query settings stay unchanged. No redirects from the rejected attempt went live.
+
+Field reference: https://developers.cloudflare.com/ruleset-engine/rules-language/fields/reference/ssl/
