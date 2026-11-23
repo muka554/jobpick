@@ -9,7 +9,7 @@
       "name": "JobPick legacy home redirect",
       "path": "/home",
       "destination": "https://jobpick20.com/",
-      "expression": "(http.host eq \"jobpick20.com\" and http.request.scheme eq \"https\" and http.request.uri.path eq \"/home\")",
+      "expression": "(http.host eq \"jobpick20.com\" and ssl and http.request.uri.path eq \"/home\")",
       "statusCode": 301,
       "preserveQueryString": true
     },
@@ -17,7 +17,7 @@
       "name": "JobPick legacy privacy-policy.html redirect",
       "path": "/privacy-policy.html",
       "destination": "https://jobpick20.com/privacy-policy/",
-      "expression": "(http.host eq \"jobpick20.com\" and http.request.scheme eq \"https\" and http.request.uri.path eq \"/privacy-policy.html\")",
+      "expression": "(http.host eq \"jobpick20.com\" and ssl and http.request.uri.path eq \"/privacy-policy.html\")",
       "statusCode": 301,
       "preserveQueryString": true
     },
@@ -25,7 +25,7 @@
       "name": "JobPick legacy about.html redirect",
       "path": "/about.html",
       "destination": "https://jobpick20.com/about/",
-      "expression": "(http.host eq \"jobpick20.com\" and http.request.scheme eq \"https\" and http.request.uri.path eq \"/about.html\")",
+      "expression": "(http.host eq \"jobpick20.com\" and ssl and http.request.uri.path eq \"/about.html\")",
       "statusCode": 301,
       "preserveQueryString": true
     },
@@ -33,7 +33,7 @@
       "name": "JobPick legacy advertising-disclosure.html redirect",
       "path": "/advertising-disclosure.html",
       "destination": "https://jobpick20.com/advertising-disclosure/",
-      "expression": "(http.host eq \"jobpick20.com\" and http.request.scheme eq \"https\" and http.request.uri.path eq \"/advertising-disclosure.html\")",
+      "expression": "(http.host eq \"jobpick20.com\" and ssl and http.request.uri.path eq \"/advertising-disclosure.html\")",
       "statusCode": 301,
       "preserveQueryString": true
     },
@@ -41,7 +41,7 @@
       "name": "JobPick legacy terms-of-use.html redirect",
       "path": "/terms-of-use.html",
       "destination": "https://jobpick20.com/terms-of-use/",
-      "expression": "(http.host eq \"jobpick20.com\" and http.request.scheme eq \"https\" and http.request.uri.path eq \"/terms-of-use.html\")",
+      "expression": "(http.host eq \"jobpick20.com\" and ssl and http.request.uri.path eq \"/terms-of-use.html\")",
       "statusCode": 301,
       "preserveQueryString": true
     },
@@ -49,7 +49,7 @@
       "name": "JobPick legacy contact.html redirect",
       "path": "/contact.html",
       "destination": "https://jobpick20.com/contact/",
-      "expression": "(http.host eq \"jobpick20.com\" and http.request.scheme eq \"https\" and http.request.uri.path eq \"/contact.html\")",
+      "expression": "(http.host eq \"jobpick20.com\" and ssl and http.request.uri.path eq \"/contact.html\")",
       "statusCode": 301,
       "preserveQueryString": true
     }
