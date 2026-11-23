@@ -23,7 +23,7 @@ for (const rule of manifest.rules) {
   assert.deepEqual(Object.keys(rule).sort(), ['name', 'path', 'destination', 'expression', 'statusCode', 'preserveQueryString'].sort());
   assert.equal(rule.name, `JobPick legacy ${rule.path.slice(1)} redirect`);
   assert.equal(rule.destination, `https://jobpick20.com${expected.find(([source]) => source === rule.path)[1]}`);
-  assert.equal(rule.expression, `(http.host eq "jobpick20.com" and http.request.scheme eq "https" and http.request.uri.path eq ${JSON.stringify(rule.path)})`);
+  assert.equal(rule.expression, `(http.host eq "jobpick20.com" and ssl and http.request.uri.path eq ${JSON.stringify(rule.path)})`);
   assert.equal(rule.statusCode, 301);
   assert.equal(rule.preserveQueryString, true);
   assert(!manifest.rules.some(other => new URL(rule.destination).pathname === other.path), 'No redirect loop or chain');
@@ -83,4 +83,4 @@ if (mode) {
     await response.body?.cancel();
     console.log(`PASS ${mode}: unchanged control ${control.path}`);
   }
-}
+                                        }
