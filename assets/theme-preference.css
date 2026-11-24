@@ -63,3 +63,4 @@ html[data-theme="light"] body[data-page="home"] header.top a{color:#006e60!impor
 
 html[data-theme="dark"]:has(#studioTitle) .sample-banner button{color:#ffe5a0}
 html[data-theme="dark"]:has(#studioTitle) .top-actions .quiet{background:#294333;color:#e0f3e8;border-color:#6f8e7f}
+html[data-theme="dark"]:has(#studioTitle) #documentStats{color:#c6d9cd}
