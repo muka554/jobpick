@@ -1,4 +1,4 @@
-import { blankDraft, sampleDraft, normalizeDraft, importDraft, lines, cvBlocks, letterBlocks, plainText, requirementMatches, reviewDraft, jobRequirementLines, matchingJobFacts, suggestedJobPhrases, writingFeedback, LIMITS } from './cv-studio-model.mjs?v=20261124-1';
+import { blankDraft, sampleDraft, normalizeDraft, importDraft, lines, cvBlocks, letterBlocks, plainText, requirementMatches, reviewDraft, jobRequirementLines, matchingJobFacts, suggestedJobPhrases, writingFeedback, LIMITS } from './cv-studio-model.mjs?v=20261124-2';
 import { docxFile, downloadFile, safeFilename } from './cv-studio-export.mjs';
 
 const $ = id => document.getElementById(id);
@@ -61,6 +61,7 @@ function rebuildFields() {
   if (step === 3) {
     nodes.push(field('Skills and tools', 'skills', { area: true, placeholder: 'One skill or tool per line', hint: 'Choose skills you can explain with an example. Vacancy keywords are not automatically added.' }), field('Languages', 'languages', { area: true, optional: true, placeholder: 'e.g. Arabic: native\nEnglish: professional working proficiency', hint: 'Describe your level accurately.' }), field('Certifications', 'certifications', { area: true, optional: true, placeholder: 'Certification | Issuer | Date', hint: 'Include the status or expiry when relevant. Never imply a licence you do not hold.' }));
   }
+  if (step === 3 || (step === 5 && draft.importedDetails)) { nodes.push(field('Other imported details', 'importedDetails', {area:true, optional:true, hint:'Unsorted text from your CV. Included in exports. Move facts into the right fields, then remove duplicates here.'})); }
   if (step === 4) {
     nodes.push(field('Paste the job description', 'target.jobDescription', { area: true, rows: 7, optional: true, placeholder: 'Paste the advert here. It stays on your device.', hint: 'No AI or upload. We can prioritize your existing points, not write new claims.' }), button('Find phrases to check', () => rebuildFields(), 'secondary'), button('Tailor using my existing facts', async () => {
       if (!draft.target.jobDescription.trim()) { announce('Paste a job description first.'); return; }
@@ -147,7 +148,7 @@ function renderPreview() {
   const header = el('div', null, { class: 'cv-header' });
   const sections = el('div', null, { class: 'cv-sections' });
   if (documentKind === 'cv') { content.append(header, sections); section = header; }
-  const sectionNames = { 'Professional Summary':'summary', 'Work Experience':'experience', Education:'education', Projects:'projects', Skills:'skills', Certifications:'certifications', Languages:'languages' };
+  const sectionNames = { 'Professional Summary':'summary', 'Work Experience':'experience', Education:'education', Projects:'projects', Skills:'skills', Certifications:'certifications', Languages:'languages', 'Other imported details':'imported' };
   for (const b of blocks) {
     if (documentKind === 'cv' && b.type === 'heading') {
       section = el('section', null, { class: `cv-section section-${sectionNames[b.text] || 'other'}` });
@@ -250,3 +251,34 @@ new ResizeObserver(resizePaper).observe($('paperViewport'));
 try { const saved = localStorage.getItem(STORE); if (saved) { draft = importDraft(JSON.parse(saved)); savingEnabled = true; $('rememberDraft').checked = true; $('saveState').textContent = 'Restored from this device'; announce('Restored the CV previously saved on this device. Turn off browser saving to delete the stored copy.'); } }
 catch { announce('A saved draft could not be restored. Start fresh or open a draft file.'); }
 rebuildFields(); renderPreview();
+
+// Import review is separate from the current draft. Failed reads never replace it.
+let importCandidate=null,importBusy=false;
+function invalidateImport(){importCandidate=null;$('cvImportReview').hidden=true;}
+$('openCvImport').addEventListener('click',()=>{const open=$('cvImportPanel').hidden;$('cvImportPanel').hidden=!open;$('openCvImport').setAttribute('aria-expanded',String(open));if(open)$('cvDocumentFile').focus();});
+$('cvImportText').addEventListener('input',invalidateImport);
+$('discardCvImport').addEventListener('click',()=>{if(importBusy)return;$('cvImportText').value='';$('cvImportStatus').textContent='Import text cleared. Your current draft is unchanged.';invalidateImport();});
+$('cvDocumentFile').addEventListener('change',async event=>{
+ const file=event.target.files?.[0];event.target.value='';if(!file||importBusy)return;
+ if(!file.size||file.size>8*1024*1024){$('cvImportStatus').textContent='Choose a nonempty file up to 8 MB. Your current work is unchanged.';return;}
+ const ext=file.name.toLowerCase().split('.').pop();if(!['pdf','docx'].includes(ext)){$('cvImportStatus').textContent='Choose PDF or DOCX, or paste your CV text. Old .doc files are not supported.';return;}
+ importBusy=true;for(const id of ['cvDocumentFile','reviewCvImport','discardCvImport'])$(id).disabled=true;$('cvImportText').readOnly=true;invalidateImport();$('cvImportStatus').textContent='Reading on your device. No upload is made.';
+ try{
+  const text=ext==='pdf'?await (await import('./cv-pdf-checker.mjs')).extractPdfText(file):await (await import('./cv-docx-reader.mjs')).extractDocxText(file);
+  $('cvImportText').value=text;$('cvImportStatus').textContent='Text extracted locally. Check the reading order and completeness, then review the details below.';
+ }catch(error){const messages={scanned:'No usable text found. This may be an image-only scan. Use OCR on your device, then paste the text.',locked:'Use an unlocked PDF copy, or paste text. Do not share its password.',pages:'Use a PDF with 30 pages or fewer.',size:'Use a file up to 8 MB.',length:'Too much text for a safe import. Split the document or paste the sections you need.',unsupported:'This Word file uses an unsupported or protected format. Save a regular DOCX copy or paste the text.',timeout:'Reading took too long. Try a smaller document or paste text.'};$('cvImportStatus').textContent=(messages[error?.code]||'This file could not be read. Try another PDF/DOCX or paste your CV text.')+' Your draft and previous import text are unchanged.';
+ }finally{importBusy=false;for(const id of ['cvDocumentFile','reviewCvImport','discardCvImport'])$(id).disabled=false;$('cvImportText').readOnly=false;}
+});
+$('reviewCvImport').addEventListener('click',async()=>{
+ if(importBusy)return;invalidateImport();
+ try{const {mapCvText}=await import('./cv-import-map.mjs');importCandidate=mapCvText($('cvImportText').value);$('cvImportWarnings').replaceChildren(...importCandidate.warnings.map(text=>el('li',text)));const d=importCandidate.draft;const summary=[];
+ for(const [label,value] of Object.entries(d.profile))if(value)summary.push(el('p',`${label}: ${value}`,{dir:'auto'}));
+ for(const [label,value] of [['Work experience',d.experience.map(e=>Object.values(e).filter(Boolean).join(' | ')).join('\n')],['Education',d.education.map(e=>Object.values(e).filter(Boolean).join(' | ')).join('\n')],['Skills',d.skills],['Languages',d.languages],['Certifications',d.certifications],['Projects',d.projects],['Other imported details',d.importedDetails]])if(value)summary.push(el('p',`${label}: ${value}`,{dir:'auto'}));
+ $('cvImportSummary').replaceChildren(...summary);$('cvImportReview').hidden=false;$('cvImportStatus').textContent='Suggested fields are ready for your review. No draft has been replaced.';
+ }catch(error){$('cvImportStatus').textContent=error.message;}
+});
+$('applyCvImport').addEventListener('click',async()=>{
+ if(!importCandidate||importBusy)return;const candidate=importCandidate;importBusy=true;
+ try{if(await replaceDraft(candidate.draft)){step=0;rebuildFields();$('cvImportStatus').textContent='Imported. Review every field and Other imported details. Your extracted text remains here until you clear it.';announce('CV imported locally. Check every field, move unsorted details, then choose a design and save.');$('cvImportPanel').hidden=true;$('openCvImport').setAttribute('aria-expanded','false');goStep(0);}}
+ finally{importBusy=false;}
+});
