@@ -34,6 +34,7 @@
   apply();
   function mount() {
     if (document.getElementById('jobpick-theme-toggle')) return;
+    if (!document.body) { setTimeout(mount, 50); return; }
     const controls = document.createElement('div');
     controls.className = 'jobpick-theme-controls';
     button = document.createElement('button');
@@ -48,6 +49,7 @@
     new MutationObserver(apply).observe(root, {attributes: true, attributeFilter: ['lang']});
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, {once: true}); else mount();
+  setTimeout(mount, 0);
   if (media) { if (media.addEventListener) media.addEventListener('change', apply); else if (media.addListener) media.addListener(apply); }
   addEventListener('storage', event => { if (event.key !== key && event.key !== null) return; preference = event.newValue === 'light' || event.newValue === 'dark' ? event.newValue : null; apply(); });
 })();
