@@ -15,7 +15,7 @@ export function blankDraft() {
     experience: [{ title: '', employer: '', location: '', start: '', end: '', bullets: '' }],
     education: [{ qualification: '', institution: '', dates: '', detail: '' }],
     skills: '', languages: '', certifications: '', projects: '',
-    target: { role: '', company: '', jobDescription: '', requirements: '', recipient: '', motivation: '', evidence: '', closing: '', date: '' } };
+    target: { role: '', company: '', jobDescription: '', requirements: '', recipient: '', opening: '', motivation: '', evidence: '', closing: '', date: '' } };
 }
 export function normalizeDraft(raw) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw) || raw.version !== VERSION) throw new Error('Use a CV Studio version 1 draft. Other file formats are not supported.');
@@ -26,7 +26,7 @@ export function normalizeDraft(raw) {
   d.educationFirst = raw.educationFirst === true;
   d.tailorToJob = raw.tailorToJob === true;
   for (const key of Object.keys(d.profile)) d.profile[key] = clean(raw.profile?.[key], key === 'summary' ? 3000 : LIMITS.short);
-  for (const key of Object.keys(d.target)) d.target[key] = clean(raw.target?.[key], ['jobDescription', 'requirements', 'evidence', 'motivation', 'closing'].includes(key) ? LIMITS.text : LIMITS.short);
+  for (const key of Object.keys(d.target)) d.target[key] = clean(raw.target?.[key], ['jobDescription', 'requirements', 'evidence', 'opening', 'motivation', 'closing'].includes(key) ? LIMITS.text : LIMITS.short);
   for (const kind of ['experience', 'education']) {
     const schema = d[kind][0];
     d[kind] = (Array.isArray(raw[kind]) ? raw[kind] : []).slice(0, LIMITS.entries).map(entry => Object.fromEntries(Object.keys(schema).map(k => [k, clean(entry?.[k], ['bullets', 'detail'].includes(k) ? LIMITS.text : LIMITS.short)])));
@@ -44,7 +44,7 @@ export function importDraft(raw) {
     if (value.length > max) throw new Error(`${label} exceeds the ${max}-character limit. No data was imported.`);
   };
   for (const key of Object.keys(schema.profile)) text(raw.profile?.[key], key === 'summary' ? 3000 : LIMITS.short, `Profile ${key}`);
-  for (const key of Object.keys(schema.target)) text(raw.target?.[key], ['jobDescription','requirements','evidence','motivation','closing'].includes(key) ? LIMITS.text : LIMITS.short, `Job ${key}`);
+  for (const key of Object.keys(schema.target)) text(raw.target?.[key], ['jobDescription','requirements','evidence','opening','motivation','closing'].includes(key) ? LIMITS.text : LIMITS.short, `Job ${key}`);
   for (const kind of ['experience','education']) {
     if (raw[kind] !== undefined && !Array.isArray(raw[kind])) throw new Error(`${kind} must be a list.`);
     if ((raw[kind]?.length || 0) > LIMITS.entries) throw new Error(`${kind} has more than ${LIMITS.entries} entries. No data was imported.`);
@@ -72,6 +72,11 @@ export function sampleDraft() {
 const jobStopWords = new Set('the and for with from that this will your have has are our you work role must should able experience skills required requirements responsibilities candidates candidate company job team position about their they into through using support'.split(' '));
 export function jobRequirementLines(description) {
   return clean(description).split(/\n|(?<=[.!?])\s+/u).map(v => stripListMarker(v).replace(/^\d+[.)]\s+/, '').trim()).filter(v => v.length > 2 && !/^(?:requirements|responsibilities|qualifications|about us|job description)[:\s]*$/i.test(v)).slice(0, 40);
+}
+const recognizablePhrases = ['Microsoft 365','Office 365','Microsoft Office','Microsoft Excel','Excel','Microsoft Word','PowerPoint','Active Directory','Azure AD','Entra ID','Windows 10','Windows 11','Windows Server','Outlook','Microsoft Teams','ServiceNow','Jira','ITIL','Intune','SCCM','VPN','TCP/IP','DNS','DHCP','SQL','Python','JavaScript','Power BI','Salesforce','CRM','customer service','customer enquiries','technical support','troubleshooting','helpdesk','help desk','service desk','desktop support','remote support','ticketing','incident management','data entry','reconciliation','accounts payable','procurement','inventory','English','Arabic','driving licence'];
+export function suggestedJobPhrases(description) {
+  const text = clean(description);
+  return recognizablePhrases.filter(term => new RegExp('(?<![\\p{L}\\p{N}_])' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![\\p{L}\\p{N}_])', 'iu').test(text)).filter((term, _, all) => !all.some(other => other.length > term.length && other.toLowerCase().includes(term.toLowerCase()))).slice(0, 25);
 }
 function jobScore(text, description) {
   const terms = [...new Set((clean(description).toLocaleLowerCase().match(/[\p{L}\p{N}+#.]+/gu) || []).filter(v => v.length > 2 && !jobStopWords.has(v)))].slice(0, 300);
@@ -130,17 +135,50 @@ export function letterBlocks(d) {
   add('paragraph', t.company);
   add('subheading', t.role ? `Application: ${t.role}` : 'Application');
   add('paragraph', t.recipient ? `Dear ${t.recipient},` : 'Dear Hiring Team,');
-  add('paragraph', t.role ? `I am applying for the ${t.role} position${t.company ? ` at ${t.company}` : ''}.` : 'I am writing to apply for the advertised position.');
+  add('paragraph', t.opening || (t.role ? `I am applying for the ${t.role} position${t.company ? ` at ${t.company}` : ''}.` : 'I am writing to apply for the advertised position.'));
   add('paragraph', t.motivation);
-  if (t.evidence) { add('paragraph', 'Relevant experience I would bring to this role:'); for (const b of lines(t.evidence)) add('bullet', b); }
+  if (t.evidence) { for (const point of lines(t.evidence)) add('paragraph', point); }
   add('paragraph', t.closing || 'Thank you for considering my application. I would welcome the opportunity to discuss the role.');
   add('paragraph', 'Kind regards,'); add('paragraph', p.name);
   return out;
 }
 export function plainText(blocks) { return blocks.map(b => `${b.type === 'bullet' ? '• ' : ''}${b.text}`).join('\n\n'); }
 export function requirementMatches(d) {
-  const evidence = cvBlocks(d).filter(b => !['heading', 'role'].includes(b.type)).map(b => b.text).join('\n').toLocaleLowerCase();
-  return lines(d.target.requirements).slice(0, 40).map(term => ({ term, found: new RegExp('(?<![\\p{L}\\p{N}_])' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![\\p{L}\\p{N}_])', 'iu').test(evidence) }));
+  const sources = [
+    ...d.experience.flatMap(e => lines(e.bullets).map(text => ({ text, source: [e.title, e.employer].filter(Boolean).join(' | ') || 'Experience' }))),
+    ...lines(d.skills).map(text => ({text, source:'Skills'})),
+    ...lines(d.certifications).map(text => ({text, source:'Certifications'})),
+    ...lines(d.projects).map(text => ({text, source:'Projects'})),
+    ...lines(d.languages).map(text => ({text, source:'Languages'})),
+    ...d.education.flatMap(e => [e.qualification,e.detail].filter(Boolean).map(text => ({text, source:'Education'}))),
+    ...(d.profile.summary ? [{text:d.profile.summary, source:'Summary'}] : [])
+  ];
+  return lines(d.target.requirements).slice(0, 40).map(term => {
+    const pattern = new RegExp('(?<![\\p{L}\\p{N}_])' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![\\p{L}\\p{N}_])', 'iu');
+    const hit = sources.find(s => pattern.test(s.text));
+    return {term, found:!!hit, evidence:hit?.text || '', source:hit?.source || ''};
+  });
+}
+export function writingFeedback(d) {
+  const tips = [];
+  const add = (text, step) => tips.push({text, step});
+  const summaryWords = d.profile.summary.split(/\s+/u).filter(Boolean).length;
+  if (summaryWords > 85) add('Shorten the summary to a few specific lines. Move detailed examples into experience.', 0);
+  if (/hard.?working|results.?driven|dynamic professional|go.?getter|team player|think outside|responsible for/iu.test(d.profile.summary)) add('Replace generic summary claims with your actual field, tools and type of work.', 0);
+  for (const [i, e] of d.experience.entries()) {
+    const bullets = lines(e.bullets);
+    if (bullets.some(b => /^(?:responsible for|duties include|tasked with|worked on|helped with)\b/iu.test(b))) add(`Experience ${i+1}: start points with the action you took, then add context or an outcome you can support.`, 1);
+    if (bullets.some(b => b.split(/\s+/u).length > 45)) add(`Experience ${i+1}: split long points into one clear action and outcome per point.`, 1);
+    if (bullets.length > 7) add(`Experience ${i+1}: consider keeping the most relevant points. Nothing is removed automatically.`, 1);
+  }
+  if (d.target.role || d.target.company || d.target.evidence) {
+    if (!d.target.role || !d.target.company) add('Name the role and employer so the letter is specific to this application.', 4);
+    if (!d.target.motivation) add('Add one genuine reason for this role or employer. The tool will not invent company praise.', 4);
+    if (!d.target.evidence) add('Choose one or two concrete experience points for the letter.', 4);
+    const words = plainText(letterBlocks(d)).split(/\s+/u).filter(Boolean).length;
+    if (words > 400) add('Shorten the letter to fit one page. Keep the strongest one or two examples.', 4);
+  }
+  return tips.slice(0, 12);
 }
 export function reviewDraft(d) {
   const issues = [];
@@ -149,6 +187,8 @@ export function reviewDraft(d) {
   if (!d.profile.email && !d.profile.phone) add('Add an email address or phone number.', 0);
   if (d.profile.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.profile.email)) add('Check your email address.', 0);
   if (!d.profile.title) add('Add a professional headline that describes you truthfully.', 0);
+  if (d.profile.phone && !/[0-9٠-٩۰-۹]/u.test(d.profile.phone)) add('Check your phone number.', 0);
+  if (d.profile.link && !/^(?:https?:\/\/)?(?:[a-z0-9-]+\.)+[a-z]{2,}(?:[\/:?#]|$)/iu.test(d.profile.link)) add('Check your professional profile URL.', 0);
   if (!d.profile.summary) add('Write a short, factual professional summary.', 0);
   const exp = d.experience.filter(e => Object.values(e).some(Boolean));
   const edu = d.education.some(e => Object.values(e).some(Boolean));
@@ -163,9 +203,9 @@ export function reviewDraft(d) {
   for (const [i, e] of d.education.entries()) if (Object.values(e).some(Boolean) && (!e.qualification || !e.institution || !e.dates)) add(`Complete the qualification, institution and dates for education ${i + 1}.`, 2);
   if (d.sample) add('This is a fictional sample. Start a blank CV before making your application.', 0);
   if (cvBlocks(d).some(b => /\[[^\]]+\]|lorem ipsum|your name|insert here/i.test(b.text))) add('Look for unfinished placeholders in your CV.', 5);
-  if (['recipient','motivation','evidence','closing','date'].some(key => d.target[key])) {
+  if (['recipient','opening','motivation','evidence','closing','date'].some(key => d.target[key])) {
     if (!d.target.role || !d.target.company) add('For your cover letter, add the target role and employer.', 4);
     if (!d.target.evidence) add('For your cover letter, choose or write the evidence you want to use.', 4);
   }
   return issues;
-  }
+}
