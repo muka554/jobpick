@@ -1,3 +1,4 @@
+import './cv-document-import.mjs';
 import './theme-preference.mjs';
 import './cv-pdf-checker.mjs';
 import './cv-pdf-assets.mjs';
