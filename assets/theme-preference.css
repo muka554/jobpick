@@ -1,0 +1,65 @@
+/* Shared light/dark interface palettes. Application documents keep their paper colors. */
+html[data-theme="light"] {color-scheme:light;--bg:#f5f7fa;--panel:#fff;--board:#fff;--ink:#162d3d;--ink-dim:#4c6070;--muted:#4c6070;--dim:#4c6070;--line:#c6d1dc;--teal:#006e60;--amber:#835000;--purple:#6342a0;--red:#a52d36}
+html[data-theme="dark"] {color-scheme:dark}
+.jobpick-theme-controls{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-inline-start:auto;position:relative;z-index:2;font:600 12px/1.4 Arial,Helvetica,sans-serif;text-transform:none;letter-spacing:0}
+.jobpick-theme-controls button{min-height:40px;border:1px solid #9baebc;border-radius:8px;padding:8px 11px;font:inherit;cursor:pointer;background:#fff;color:#173449;white-space:normal}
+.jobpick-theme-controls button:focus-visible{outline:3px solid #c78000;outline-offset:3px}
+.jobpick-theme-controls button:hover{border-color:#007b6d}
+.jobpick-theme-controls .jobpick-theme-system{font-size:11px;text-decoration:underline;text-underline-offset:3px;background:transparent;color:inherit}
+.jobpick-theme-controls [hidden]{display:none!important}
+html[data-theme="dark"] .jobpick-theme-controls button{background:#172936;color:#f0f5f8;border-color:#718999}
+html[data-theme="dark"] .jobpick-theme-controls .jobpick-theme-system{background:transparent;color:#c8d6e1}
+html[data-theme="light"] body{background:var(--bg)!important;color:var(--ink)!important}
+html[data-theme="light"] :is(.jobpick-primary-nav,.jobpick-footer-links) a{color:#365365!important}
+html[data-theme="light"] .jobpick-primary-nav .brand{color:#006e60!important}
+html[data-theme="light"] :is(.jobpick-primary-nav .links a:hover,.jobpick-primary-nav .links a[aria-current=page]){color:#006e60!important}
+html[data-theme="light"] :is(.searchpanel,.searchpanel .field,.selector-menu,.application-tracker,.application-item,.filter-panel,.country-platform-guidance,.home-next-steps,.tailor-start,.tool-link,.template-preview,.preview-card,.result,.rescard,.card,.panel,.guide-review,.guide-section,.job-card,.resource-card,.stat,.faq,.notice,.notice-box,.info-box,.step,.workflow-step){background:var(--panel)!important;border-color:var(--line)!important;color:var(--ink)!important;box-shadow:none}
+html[data-theme="light"] :is(input,textarea,select,.selector-toggle){background:#fff!important;color:#162d3d!important;border-color:#718697!important}
+html[data-theme="light"] :is(input,textarea)::placeholder{color:#5a6e7b!important;opacity:1}
+html[data-theme="light"] :is(.selector-option[aria-selected=true],.selector-option:hover){background:#d9eee9!important;color:#12473f!important}
+html[data-theme="light"] :is(.go,.sync-email-form button,.application-save,.opensearch a){background:#006e60!important;color:#fff!important}
+html[data-theme="light"] :is(.button,.live-jobs-cta,.step-number,.workflow-step.active,.skip-link){background:#835000!important;color:#fff!important}
+html[data-theme="light"] :is(.reset-search,.share-search,.application-cancel,.application-clear){background:#fff!important;color:#294859!important;border-color:#718697!important}
+html[data-theme="light"] :is(.note,.footer,.location-country__privacy){color:#4c6070!important}
+html[data-theme="light"] :is(.quick-country[aria-pressed=true],.location-country:hover,.location-country--approx:hover){background:#e2eee9!important;color:#214d43!important}
+html[data-theme="light"] :is(.match-pill,.workflow-step.done){background:#d8eee5!important;color:#155a45!important}
+html[data-theme="light"] :is(.match-pill.transferable,.dirty-warning){background:#fff0ca!important;color:#704900!important}
+html[data-theme="light"] :is(.match-pill.unmatched,.match-status.unmatched,.ats-score-value.low){background:#fce5e8!important;color:#922432!important}
+html[data-theme="light"] :is(.preview-card .mini-head){color:#284d63!important}
+html[data-theme="light"] .mini-line{background:#8295a4!important}
+/* CV Studio has its own light palette. Only its surrounding editor changes in dark mode. */
+html[data-theme="dark"]:has(#studioTitle){--ink:#e3eeeb;--muted:#adc1b9;--green:#75d9bd;--line:#3d554c;--cream:#101b17;--white:#1a2b24;--focus:#f2c36d;background:#101b17}
+html[data-theme="dark"]:has(#studioTitle) :is(.topbar,.editor-panel,.editor-content,.step-footer){background:#16261e;color:#e3eeeb;border-color:#3d554c}
+html[data-theme="dark"]:has(#studioTitle) :is(input,textarea,select){background:#101c16;color:#e3eeeb;border-color:#6f8e7f}
+html[data-theme="dark"]:has(#studioTitle) :is(input,textarea)::placeholder{color:#adc1b9;opacity:1}
+html[data-theme="dark"]:has(#studioTitle) :is(.privacy-card,.writing-tip,.info-panel,.notice,.job-facts,.writing-coach,.phrase-picker,.match-evidence,.writing-feedback,.workspace-shortcuts){background:#21382b;color:#d9eee2;border-color:#476452}
+html[data-theme="dark"]:has(#studioTitle) :is(.preview-panel,.preview-top,.design-bar,.layout-description,.preview-canvas,.export-help){background:#1c2e23;color:#c6d9cd;border-color:#476452}
+html[data-theme="dark"]:has(#studioTitle) :is(.workspace,.entry-card){background:#16261e;border-color:#476452}
+html[data-theme="dark"]:has(#studioTitle) :is(.steps button[aria-current],.steps button:hover,.document-switch){background:#2c4a37;color:#e0f3e8}
+html[data-theme="dark"]:has(#studioTitle) :is(.primary,.export-bar button:first-child){background:#80d5b3;color:#102a1c;border-color:#80d5b3}
+html[data-theme="dark"]:has(#studioTitle) :is(.secondary,.small-button,.document-switch button[aria-pressed=true]){background:#294333;color:#e0f3e8;border-color:#6f8e7f}
+html[data-theme="dark"]:has(#studioTitle) :is(.sample-banner,.confirm-dialog){background:#352f19;color:#ffe5a0;border-color:#9c8243}
+html[data-theme="dark"]:has(#studioTitle) .paper{color:#25343b;color-scheme:light;--ink:#19342e;--muted:#62716b;--green:#176c58;--line:#dce3dc;--cream:#f6f7f2;--white:#fff}
+@media(max-width:700px){.jobpick-theme-controls{gap:5px}.jobpick-theme-controls button{min-height:44px;padding:8px 10px}.topbar .jobpick-theme-controls{margin-inline-start:0}.jobpick-theme-controls .jobpick-theme-system{max-width:125px}}
+@media print{.jobpick-theme-controls{display:none!important}html[data-theme] {color-scheme:light}}
+
+html[data-theme="light"] :is(article,h2,table,thead,tbody,tr,th,td,caption,.role-card,.workspace-summary){background:#fff!important;border-color:#c6d1dc!important}
+html[data-theme="light"] :is(.lead,.lede,.callout,.sub,.eyebrow,.warning strong){color:#365365!important;opacity:1!important}
+html[data-theme="light"] :is(.btn,#sendBtn){background:#006e60!important;color:#fff!important}
+html[data-theme="light"] body:not(:has(#studioTitle)) a:not(.btn):not(.button):not(.go):not(.live-jobs-cta):not(.opensearch a){color:#006e60}
+html[data-theme="dark"]:has(#studioTitle) :is(.privacy-card p,.document-switch button,#previewTitle,.design-bar label,#emptyPreview p,.preview-note){color:#c6d9cd}
+
+html[data-theme="light"] :is(.source-box,.workspace-disclosure,.quick-country,.live-jobs-promo,.publisher-context,.search-history){background:#fff!important;border-color:#b9cad5!important;color:#294859!important}
+html[data-theme="light"] body[data-page="home"] header.top :is(.eyebrow,.sub){opacity:1!important;color:#365365!important}
+html[data-theme="light"] body[data-page="home"] header.top a{color:#006e60!important}
+html[data-theme="light"] .jobhub-privacy-banner a{color:#7de1ce!important}
+
+html[data-theme="light"] #jobhub-consent-banner{background:#fff;color:#162d3d;border-color:#006e60}
+html[data-theme="light"] #jobhub-consent-banner p{color:#4c6070}
+html[data-theme="light"] #jobhub-consent-banner a{color:#006e60!important}
+
+html[data-theme="light"] body[data-page="home"] header.top{opacity:1!important}
+html[data-theme="light"] body[data-page="home"] header.top a{color:#006e60!important;opacity:1!important}
+
+html[data-theme="dark"]:has(#studioTitle) .sample-banner button{color:#ffe5a0}
+html[data-theme="dark"]:has(#studioTitle) .top-actions .quiet{background:#294333;color:#e0f3e8;border-color:#6f8e7f}
