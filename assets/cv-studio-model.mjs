@@ -14,7 +14,7 @@ export function blankDraft() {
     profile: { name: '', title: '', email: '', phone: '', city: '', link: '', summary: '', availability: '', workStatus: '' },
     experience: [{ title: '', employer: '', location: '', start: '', end: '', bullets: '' }],
     education: [{ qualification: '', institution: '', dates: '', detail: '' }],
-    skills: '', languages: '', certifications: '', projects: '',
+    skills: '', languages: '', certifications: '', projects: '', importedDetails: '',
     target: { role: '', company: '', jobDescription: '', requirements: '', recipient: '', opening: '', motivation: '', evidence: '', closing: '', date: '' } };
 }
 export function normalizeDraft(raw) {
@@ -31,7 +31,7 @@ export function normalizeDraft(raw) {
     const schema = d[kind][0];
     d[kind] = (Array.isArray(raw[kind]) ? raw[kind] : []).slice(0, LIMITS.entries).map(entry => Object.fromEntries(Object.keys(schema).map(k => [k, clean(entry?.[k], ['bullets', 'detail'].includes(k) ? LIMITS.text : LIMITS.short)])));
   }
-  for (const key of ['skills', 'languages', 'certifications', 'projects']) d[key] = clean(raw[key]);
+  for (const key of ['skills', 'languages', 'certifications', 'projects', 'importedDetails']) d[key] = clean(raw[key]);
   return d;
 }
 export function importDraft(raw) {
@@ -53,7 +53,7 @@ export function importDraft(raw) {
       for (const key of Object.keys(schema[kind][0])) text(entry[key], ['bullets','detail'].includes(key) ? LIMITS.text : LIMITS.short, `${kind} ${i + 1} ${key}`);
     }
   }
-  for (const key of ['skills','languages','certifications','projects']) text(raw[key], LIMITS.text, key);
+  for (const key of ['skills','languages','certifications','projects','importedDetails']) text(raw[key], LIMITS.text, key);
   return normalizeDraft(raw);
 }
 export function sampleDraft() {
@@ -122,6 +122,7 @@ export function cvBlocks(d) {
   if (d.template === 'minimal') for (const key of ['skills','projects','certifications']) extra(key);
   if (d.educationFirst) { education(); experience(); } else { experience(); education(); }
   for (const key of d.template === 'minimal' ? ['languages'] : ['projects','skills','certifications','languages']) extra(key);
+  if (d.importedDetails) { add('heading', 'Other imported details'); for (const text of lines(d.importedDetails)) add('paragraph', text); }
   return blocks;
 }
 export function letterBlocks(d) {
@@ -183,6 +184,7 @@ export function writingFeedback(d) {
 export function reviewDraft(d) {
   const issues = [];
   const add = (text, step) => issues.push({ text, step });
+  if (d.importedDetails) add('Review and sort Other imported details. They are included in your export.', 3);
   if (!d.profile.name) add('Add your full name.', 0);
   if (!d.profile.email && !d.profile.phone) add('Add an email address or phone number.', 0);
   if (d.profile.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.profile.email)) add('Check your email address.', 0);
