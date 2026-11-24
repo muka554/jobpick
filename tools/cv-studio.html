@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CV Studio Preview | JobPick</title>
+<title>CV Studio | Free CV &amp; Cover Letter Builder | JobPick</title>
 <meta name="description" content="Build a clear, factual CV and matching cover letter in your browser. A JobPick CV builder preview with optional device saving, Word and print-ready output.">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://jobpick20.com/tools/cv-studio.html">
-<meta property="og:title" content="CV Studio Preview | JobPick">
+<meta property="og:title" content="CV Studio | Free CV &amp; Cover Letter Builder | JobPick">
 <meta property="og:description" content="Your experience, clearly told. Build a CV and matching cover letter locally in your browser.">
 <meta property="og:url" content="https://jobpick20.com/tools/cv-studio.html">
 <meta name="twitter:card" content="summary">
@@ -23,19 +23,19 @@
 </header>
 <main>
 <section class="intro" aria-labelledby="studioTitle">
-<div><p class="eyebrow"><span class="status-dot"></span> YOUR NEXT CHAPTER</p><h1 id="studioTitle">Your experience.<br><em>Exceptionally clear.</em></h1><p class="intro-copy">A CV that sounds like you, with the detail that matters.<br class="desktop-br"> Build it, tailor it, and make your next move.</p></div>
+<div><p class="eyebrow"><span class="status-dot"></span> YOUR APPLICATION WORKSPACE</p><h1 id="studioTitle">A stronger CV.<br><em>For your next role.</em></h1><p class="intro-copy">Build your CV, compare it with a job, and write a focused cover letter.<br class="desktop-br"> Free. Private editing. No account needed.</p></div>
 <aside class="privacy-card"><span class="privacy-icon" aria-hidden="true">◈</span><div><strong>Your story stays with you.</strong><p>No CV uploads. No account needed.<br> CV drafts are saved only if you choose.</p><button class="text-button" id="privacyToggle" aria-expanded="false" aria-controls="privacyDetail">How privacy works ↓</button></div></aside>
 </section>
 <div id="privacyDetail" class="info-panel" hidden>Your CV, target vacancy and letter are processed in this browser. The editor does not upload these fields to an AI or our servers. Browser saving is off by default. If you enable it, anyone using this browser profile may see the draft. Exported files also contain your personal details. This page has no ads. The site host also runs Cloudflare Web Analytics to measure page performance; this is separate from CV editing and draft storage. Your browser, extensions and device are outside this tool's control.</div>
 <div class="workspace-toolbar"><div><span class="document-dot" aria-hidden="true"></span><strong id="draftLabel">Untitled CV</strong><span id="saveState">Not saved</span></div><div class="toolbar-actions"><label class="save-option"><input id="rememberDraft" type="checkbox"> Save on this device</label><button class="quiet" id="saveDraft">Save draft file</button><button class="quiet" id="openDraft">Open draft file</button><input id="importDraft" type="file" accept="application/json,.json" hidden></div></div>
 <div id="sampleBanner" class="sample-banner" hidden>FICTIONAL SAMPLE · This is a design example, not your experience. <button id="sampleBlank" class="text-button">Start your own blank CV</button></div>
 <div id="notice" role="status" aria-live="polite" class="notice"></div>
-<div class="workspace">
+<div class="workspace-shortcuts"><button id="jumpPreview" class="secondary">View document ↓</button><span id="documentStats" aria-live="polite">Your document at a glance</span></div><div class="workspace">
 <section class="editor-panel" id="editor" aria-labelledby="stepTitle" tabindex="-1">
 <nav class="steps" aria-label="CV sections">
-<button data-step="0" aria-current="step"><span>01</span> Your details</button><button data-step="1"><span>02</span> Experience</button><button data-step="5"><span>03</span> Finish</button><details class="optional-sections" id="optionalSections"><summary>Add more to your CV</summary><div><button data-step="2">Education &amp; projects</button><button data-step="3">Skills &amp; languages</button><button data-step="4">Job &amp; cover letter</button></div></details>
+<button data-step="0" aria-current="step"><span>01</span> Details</button><button data-step="1"><span>02</span> Experience</button><button data-step="2"><span>03</span> Education</button><button data-step="3"><span>04</span> Skills</button><button data-step="4"><span>05</span> Job &amp; letter</button><button data-step="5"><span>06</span> Review</button>
 </nav>
-<div class="editor-content"><p class="eyebrow" id="stepKicker">THE INTRODUCTION</p><h2 id="stepTitle">Start with you.</h2><p class="step-help" id="stepHelp">The essentials, without the oversharing.</p><div id="fields"></div><div class="step-footer"><button id="previous" class="quiet">← Back</button><span id="stepCount">1 of 3</span><button id="next" class="primary">Experience →</button></div></div>
+<div class="editor-content"><p class="eyebrow" id="stepKicker">THE INTRODUCTION</p><h2 id="stepTitle">Start with you.</h2><p class="step-help" id="stepHelp">The essentials, without the oversharing.</p><div id="fields"></div><div class="step-footer"><button id="previous" class="quiet">← Back</button><span id="stepCount">1 of 6</span><button id="next" class="primary">Experience →</button></div></div>
 </section>
 <section class="preview-panel" aria-labelledby="previewTitle">
 <div class="preview-top"><div class="document-switch" role="group" aria-label="Document preview"><button id="showCv" aria-pressed="true">CV</button><button id="showLetter" aria-pressed="false">Cover letter</button></div><span id="previewTitle">LIVE PREVIEW · A4</span></div>
@@ -43,7 +43,7 @@
 <p id="layoutDescription" class="layout-description" aria-live="polite"></p>
 <div class="preview-canvas"><div id="emptyPreview" class="empty-preview"><span class="empty-page" aria-hidden="true">Aa</span><h3>A fresh page. A better first impression.</h3><p>Your CV takes shape here as you write.<br>Start with your name, or explore a fictional sample.</p><button id="emptySample" class="primary">Explore the sample →</button></div><div id="paperViewport"><article id="paper" class="paper professional" aria-label="Document preview"></article></div></div>
 <p class="preview-note">Selectable text. No experience is added by a design.<br>Preview is continuous; check final page breaks in Print or Word.</p>
-<div class="export-bar"><button id="printDocument" class="primary">Print / save PDF</button><button id="downloadWord" class="secondary">Word .docx ↓</button><button id="downloadText" class="quiet">Text ↓</button></div>
+<div class="mobile-jump"><button id="jumpEditor" class="quiet">↑ Back to editing</button></div><div class="export-bar"><button id="printDocument" class="primary">Print / save PDF</button><button id="downloadWord" class="secondary">Word .docx ↓</button><button id="downloadText" class="quiet">Text ↓</button></div>
 <p class="export-help">PDF opens your browser's print dialog. Choose A4, 100% scale and turn off browser headers and footers. On phones, use Print or Share → Save PDF where available.</p>
 </section>
 </div>

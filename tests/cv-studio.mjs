@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { JSDOM } from 'jsdom';
-import { blankDraft, normalizeDraft, importDraft, lines, sampleDraft, cvBlocks, letterBlocks, plainText, reviewDraft, requirementMatches, jobRequirementLines, prioritizeFacts } from '../assets/cv-studio-model.mjs';
+import { blankDraft, normalizeDraft, importDraft, lines, sampleDraft, cvBlocks, letterBlocks, plainText, reviewDraft, requirementMatches, jobRequirementLines, prioritizeFacts, writingFeedback, suggestedJobPhrases } from '../assets/cv-studio-model.mjs';
 import { docxFile, safeFilename } from '../assets/cv-studio-export.mjs';
 
 const blank = blankDraft();
@@ -116,3 +116,24 @@ for (const point of ['-$20 change','- $20 change','-€20 change','- €20 chang
  assert.ok((await docxFile(cvBlocks(signedAmount)).text()).includes(point));
  assert.ok((await docxFile(letterBlocks(signedAmount)).text()).includes(point));
 }
+
+// Optimization: evidence attribution never treats contact metadata as a qualification.
+const evidenceCheck = blankDraft(); evidenceCheck.profile.name='CRM'; evidenceCheck.profile.email='python@example.com'; evidenceCheck.profile.city='Excel'; evidenceCheck.profile.title='ITIL';
+evidenceCheck.target.requirements='CRM\nPython\nExcel\nITIL';
+assert.deepEqual(requirementMatches(evidenceCheck).map(x=>x.found),[false,false,false,false]);
+evidenceCheck.skills='CRM';
+assert.equal(requirementMatches(evidenceCheck)[0].source,'Skills');
+assert.equal(requirementMatches(evidenceCheck)[0].evidence,'CRM');
+const suggestions=suggestedJobPhrases('Microsoft Excel and Microsoft 365, Active Directory and CRM. No JavaScript requirement.');
+assert.ok(suggestions.includes('Microsoft Excel')); assert.ok(!suggestions.includes('Excel')); assert.ok(suggestions.includes('JavaScript'), 'phrases are literal wording, not positive requirements or competency claims');
+assert.ok(!suggestedJobPhrases('CRMology and Excelling').length);
+assert.deepEqual(suggestedJobPhrases(''),[]);
+const coaching=blankDraft();coaching.profile.summary='Hard-working dynamic professional';coaching.experience[0].bullets='Responsible for answering calls';coaching.target.role='Support Analyst';
+const coachingBefore=JSON.stringify(coaching);assert.ok(writingFeedback(coaching).length>=3);assert.equal(JSON.stringify(coaching),coachingBefore,'coaching must not rewrite user facts');
+coaching.target.opening='A custom opening using my own evidence.';
+assert.equal(normalizeDraft(coaching).target.opening,coaching.target.opening);
+assert.ok(plainText(letterBlocks(coaching)).includes(coaching.target.opening));
+assert.ok(!plainText(letterBlocks(coaching)).includes('advertised position'));
+const oldDraft=JSON.parse(JSON.stringify(sample));delete oldDraft.target.opening;assert.equal(importDraft(oldDraft).target.opening,'','old v1 drafts remain compatible');
+assert.throws(()=>importDraft({...oldDraft,target:{...oldDraft.target,opening:'x'.repeat(6001)}}));
+console.log('PASS optimization: contact metadata excluded from phrase evidence, attributed excerpts, conservative job phrases, nondestructive writing feedback, editable opening, backwards-compatible drafts');
