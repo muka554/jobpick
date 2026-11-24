@@ -1,4 +1,4 @@
-import { blankDraft, sampleDraft, normalizeDraft, importDraft, lines, cvBlocks, letterBlocks, plainText, requirementMatches, reviewDraft, jobRequirementLines, matchingJobFacts, suggestedJobPhrases, writingFeedback, LIMITS } from './cv-studio-model.mjs';
+import { blankDraft, sampleDraft, normalizeDraft, importDraft, lines, cvBlocks, letterBlocks, plainText, requirementMatches, reviewDraft, jobRequirementLines, matchingJobFacts, suggestedJobPhrases, writingFeedback, LIMITS } from './cv-studio-model.mjs?v=20261124-1';
 import { docxFile, downloadFile, safeFilename } from './cv-studio-export.mjs';
 
 const $ = id => document.getElementById(id);
