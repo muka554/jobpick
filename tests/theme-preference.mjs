@@ -22,3 +22,20 @@ for(const dark of [false,true])for(const blocked of [false,true]){
 }
 assert.doesNotMatch(source,/fetch\(|XMLHttpRequest|sendBeacon|innerHTML|document\.cookie/);
 console.log(`PASS theme: ${count} HTML documents wired, system default/live changes, explicit toggle, local persistence, reset, storage failure/cross-tab and no network APIs`);
+
+// Script optimizers can suppress their replay of DOMContentLoaded.
+for (const initiallyMissingBody of [false,true]) {
+ const dom=new JSDOM('<!doctype html><html><body><nav class="sitenav"></nav></body></html>',{url:'https://jobpick20.com/',runScripts:'outside-only'}),w=dom.window;
+ const doc=w.document,events=doc.addEventListener.bind(doc),timers=[];let loading=true;
+ Object.defineProperty(doc,'readyState',{get:()=>loading?'loading':'complete'});
+ doc.addEventListener=(name,...args)=>{if(name!=='DOMContentLoaded')events(name,...args);};
+ w.setTimeout=fn=>{timers.push(fn);return timers.length;};
+ let body=doc.body;if(initiallyMissingBody)body.remove();
+ w.eval(source);assert.equal(doc.getElementById('jobpick-theme-toggle'),null);
+ timers.shift()();if(initiallyMissingBody){assert.equal(doc.getElementById('jobpick-theme-toggle'),null);doc.documentElement.append(body);timers.shift()();}
+ assert.equal(doc.querySelectorAll('#jobpick-theme-toggle').length,1);
+ // A late event or repeated fallback cannot add duplicate controls.
+ loading=false;doc.dispatchEvent(new w.Event('DOMContentLoaded'));w.eval(source);while(timers.length)timers.shift()();
+ assert.equal(doc.querySelectorAll('#jobpick-theme-toggle').length,1);doc.getElementById('jobpick-theme-toggle').click();assert.equal(doc.documentElement.dataset.theme,'dark');w.close();
+}
+console.log('PASS theme delayed-DOM recovery: suppressed ready event, absent body retry and idempotent repeated mount');
