@@ -23,27 +23,35 @@ try {
  assert.equal(await page.evaluate(()=>localStorage.length),0);
  await page.locator('#field-profile-name').fill('');
  await page.locator('#loadSample').click();
+ assert.equal(await page.locator('.steps button:visible').count(),6);
+ for(let i=1;i<6;i++){await page.locator('#next').click();assert.equal(await page.locator('#stepCount').innerText(),`${i+1} of 6`);}
+ for(let i=4;i>=0;i--){await page.locator('#previous').click();assert.equal(await page.locator('#stepCount').innerText(),`${i+1} of 6`);}
  await page.screenshot({path:out+'/desktop-sample.png',fullPage:true});
  assert.equal((await new AxeBuilder({page}).analyze()).violations.length,0);
  await page.locator('#next').click();
- assert.equal(await page.locator('#stepCount').innerText(),'2 of 3');
+ assert.equal(await page.locator('#stepCount').innerText(),'2 of 6');
  await page.locator('#next').click();
- assert.equal(await page.locator('#stepCount').innerText(),'3 of 3');
+ assert.equal(await page.locator('#stepCount').innerText(),'3 of 6');
  await page.locator('[data-step="1"]').click();
  await page.screenshot({path:out+'/desktop-experience.png',fullPage:true});
  for (let i=0;i<6;i++) {
-  if([2,3,4].includes(i)) await page.locator('#optionalSections').evaluate(n=>n.open=true);
   await page.locator(`[data-step="${i}"]`).click();
   const violations=(await new AxeBuilder({page}).analyze()).violations;
   assert.equal(violations.length,0,`Step ${i}: ${JSON.stringify(violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})))}`);
  }
- await page.locator('#optionalSections').evaluate(n=>n.open=true);
  await page.locator('[data-step="4"]').click();
  await page.locator('#letterOptions').evaluate(n=>n.open=true);
  await page.locator('#field-target-motivation').fill('I am interested in the customer enquiries work described in this role.');
  await page.getByText('Choose evidence from your experience',{exact:true}).click();
  await page.locator('.writing-tip button').filter({hasText:'Prepared a weekly Excel'}).click();
+ await page.getByText('Choose evidence from your experience',{exact:true}).click();
+ await page.locator('.writing-tip button').filter({hasText:'Prepared a weekly Excel'}).click();
+ assert.equal((await page.locator('#field-target-evidence').inputValue()).split('\n').length,1);
+ await page.locator('#field-target-evidence').fill('I prepared a weekly Excel log covering 12 open enquiries for the operations team.');
+ await page.locator('#field-target-opening').fill('I am applying for this role to bring my customer enquiries and reporting experience to your team.');
  await page.locator('#showLetter').click();
+ assert.ok((await page.locator('#paper').innerText()).includes('reporting experience to your team'));
+ await page.pdf({path:out+'/sample-letter.pdf',format:'A4',preferCSSPageSize:true,printBackground:true});
  assert.ok((await page.locator('#paper').innerText()).includes('12 open enquiries'));
  assert.ok(!(await page.locator('#paper').innerText()).includes('CRM administration'));
  await page.screenshot({path:out+'/desktop-letter.png',fullPage:true});
@@ -83,7 +91,9 @@ try {
  for(const width of [390,320,768,1280]) {
   await page.setViewportSize({width,height:950});
   await page.locator('[data-step="0"]').click();
+  await page.evaluate(()=>scrollTo(0,0));
   await page.screenshot({path:out+`/sample-${width}.png`,fullPage:true});
+  if(width===390) await page.screenshot({path:out+'/mobile-viewport.png'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`Overflow at ${width}`);
   assert.equal((await new AxeBuilder({page}).analyze()).violations.length,0,`Mobile axe ${width}`);
  }
@@ -99,22 +109,36 @@ try {
  }
  await page.locator('#template').selectOption('professional');
  // Paste a job, prioritize only existing facts, inspect gaps, and start another job.
- await page.locator('#optionalSections').evaluate(n=>n.open=true);
  await page.locator('[data-step="4"]').click();
  await page.locator('#field-target-jobDescription').fill('Microsoft Excel\nCRM administration\nAviation licence');
+ await page.getByRole('button',{name:'Find phrases to check',exact:true}).click();
+ await page.getByRole('button',{name:'Check: Microsoft Excel',exact:true}).click();
+ assert.ok(!(await page.locator('#paper').textContent()).includes('Aviation licence'));
  await page.getByRole('button',{name:'Tailor using my existing facts',exact:true}).click();
+ await page.locator('#cancelConfirm').click();
+ assert.ok(!(await page.locator('#field-target-requirements').inputValue()).includes('Aviation licence'));
+ await page.getByRole('button',{name:'Tailor using my existing facts',exact:true}).click();
+ await page.locator('#acceptConfirm').click();
+ await page.waitForFunction(()=>document.getElementById('field-target-requirements').value.includes('Aviation licence'));
  assert.equal(await page.locator('#requirementMatches .missing').count(),2);
+ assert.ok((await page.locator('.match-evidence').textContent()).includes('Skills'));
  assert.ok((await page.locator('#paper').textContent()).includes('Mira Nasser'));
  assert.ok(!(await page.locator('#paper').textContent()).includes('Aviation licence'));
  assert.ok(!(await page.locator('#paper').textContent()).includes('CRM administration'));
  assert.ok((await page.locator('.section-experience .cv-bullet').first().textContent()).includes('weekly Excel'));
  assert.equal((await new AxeBuilder({page}).analyze()).violations.length,0);
  await page.screenshot({path:out+'/job-tailoring.png',fullPage:true});
+ const savedChecklist=await page.locator('#field-target-requirements').inputValue();
+ await page.locator('#field-target-jobDescription').fill('Microsoft Excel updated vacancy');
+ assert.equal(await page.locator('#field-target-requirements').inputValue(),savedChecklist);
+ assert.equal(await page.locator('[data-path=tailorToJob]').isChecked(),false);
+ assert.equal(await page.locator('.phrase-picker').count(),0);
+ await page.locator('#field-target-jobDescription').fill('Microsoft Excel\nCRM administration\nAviation licence');
  await page.getByRole('button',{name:'Start another job',exact:true}).click();await page.locator('#cancelConfirm').click();
  assert.ok((await page.locator('#field-target-jobDescription').inputValue()).includes('Aviation licence'));
  await page.getByRole('button',{name:'Start another job',exact:true}).click();await page.locator('#acceptConfirm').click();
  assert.equal(await page.locator('#field-target-jobDescription').inputValue(),'');
- assert.ok((await page.locator('.section-experience .cv-bullet').first().textContent()).includes('Coordinated delivery'));
+ await page.waitForFunction(()=>document.querySelector('.section-experience .cv-bullet').textContent.includes('Coordinated delivery'));
  // Invalid import never replaces the current draft.
  await page.locator('#importDraft').setInputFiles({name:'bad.json',mimeType:'application/json',buffer:Buffer.from('{"version":99}')});
  await page.waitForFunction(()=>document.getElementById('notice').innerText.includes('Could not open'));
@@ -129,7 +153,6 @@ try {
  await page.locator('#field-profile-summary').fill('START-LONG '+ 'exampleword'.repeat(180)+' END-LONG');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  assert.ok((await page.locator('#paper').innerText()).includes('END-LONG'));
- await page.locator('#optionalSections').evaluate(n=>n.open=true);
  await page.locator('[data-step="1"]').click();
  const longPoints=Array.from({length:40},(_,i)=>`TEST-POINT-${i+1}: A factual writing-test line repeated to check pagination and reading order, not an applicant achievement.`).join('\n');
  await page.locator('#field-experience-0-bullets').fill(longPoints);
@@ -176,7 +199,6 @@ try {
  // The letter evidence picker must preserve numeric signs through the shared cleanup.
  await page.locator('[data-step="1"]').click();
  await page.locator('#field-experience-0-bullets').fill('-20% change\n-5°C storage');
- await page.locator('#optionalSections').evaluate(n=>n.open=true);
  await page.locator('[data-step="4"]').click();
  await page.locator('#letterOptions').evaluate(n=>n.open=true);
  await page.getByText('Choose evidence from your experience',{exact:true}).click();
@@ -185,5 +207,5 @@ try {
  await page.locator('#showLetter').click();
  assert.ok((await page.locator('#paper').textContent()).includes('-20% change'));
  assert.deepEqual(errors,[]); assert.deepEqual(external,[]);
- console.log('PASS browser: three-step core and optional editors, six structural layouts and letter styles, job tailoring/gaps, axe, DOCX/PDF, RTL, hostile text, local-only behavior, storage controls/failure/cross-tab, invalid imports, long output, reorder/cancel and five viewport widths');
+ console.log('PASS browser: six visible sections and guided editors, six structural layouts and letter styles, job tailoring/gaps, axe, DOCX/PDF, RTL, hostile text, local-only behavior, storage controls/failure/cross-tab, invalid imports, long output, reorder/cancel and five viewport widths');
 } finally { await browser.close(); await new Promise(r=>server.close(r)); }
